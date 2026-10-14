@@ -1,7 +1,8 @@
 """Local spatial extension of the MDGen-2026 global model.
 
 Shares the original parameter names and temporal SDPA implementation; the
-local classes only replace the global layers' spatial hooks.
+local classes only replace the global layers' spatial hooks. The layers'
+fifth forward argument carries the partitions in place of position_ids.
 """
 from functools import partial
 
@@ -24,9 +25,6 @@ class LocalIPALayer(GlobalIPALayer):
         self.cell_summaries_enabled = cell_summaries_enabled
         self.attention_backend = attention_backend
         self.cell_summaries = CoreCellSummaryExchange(self.embed_dim, self.mha_heads)
-
-    def forward(self, x, t, mask=None, frames=None, partitions=None):
-        return super().forward(x, t, mask, frames, partitions)
 
     def _spatial_ipa(self, x, frames, mask, partitions):
         if partitions is None:
@@ -75,9 +73,6 @@ class LocalLayer(GlobalLayer):
             raise ValueError('ffn_chunk_size must be positive')
         self.ffn_chunk_size = ffn_chunk_size
         self.cell_summaries = CoreCellSummaryExchange(self.embed_dim, self.mha_heads)
-
-    def forward(self, x, t, mask=None, frames=None, partitions=None):
-        return super().forward(x, t, mask, frames, partitions)
 
     def _spatial_ipa(self, x, frames, mask, partitions):
         if partitions is None:
