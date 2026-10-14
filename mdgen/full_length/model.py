@@ -2,6 +2,8 @@
 
 Shares the original parameter names and temporal SDPA implementation.
 """
+from functools import partial
+
 import torch
 from ..model.latent_model import (LatentMDGenModel as GlobalModel,
     IPALayer as GlobalIPALayer, LatentMDGenLayer as GlobalLayer, grad_checkpoint)
@@ -294,10 +296,12 @@ class LocalLatentMDGenModel(GlobalModel):
             )[:, None]
 
         for layer_idx, layer in enumerate(self.layers):
-            if partitions is None:
-                x = grad_checkpoint(layer, (x, t, mask, start_frames), self.args.grad_checkpointing)
-            else:
-                x = layer(x, t, mask, start_frames, partitions=partitions)
+            # Non-reentrant checkpointing accepts the non-tensor partitions.
+            x = grad_checkpoint(
+                partial(layer, partitions=partitions),
+                (x, t, mask, start_frames),
+                self.args.grad_checkpointing,
+            )
 
         if not (self.args.dynamic_mpnn or self.args.mpnn):
             latent = self.emb_to_latent(x, t)

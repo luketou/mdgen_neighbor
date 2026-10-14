@@ -98,3 +98,21 @@ def test_inference_ffn_chunking_preserves_full_outputs_and_gradient_fallback(loc
         kwargs.update(chain_id=torch.zeros(1,12,dtype=torch.long),
                       residue_index=torch.arange(12)[None])
     check_parity(reference,candidate,kwargs,training)
+
+
+@pytest.mark.parametrize('training',[False,True])
+def test_local_grad_checkpointing_is_used_and_preserves_outputs_and_gradients(training,monkeypatch):
+    from mdgen.full_length.model import LocalLatentMDGenModel
+    import mdgen.model.latent_model as latent_model
+    calls=[]
+    original=latent_model.checkpoint
+    def counting_checkpoint(*args,**kwargs):
+        calls.append(1);return original(*args,**kwargs)
+    monkeypatch.setattr(latent_model,'checkpoint',counting_checkpoint)
+    reference=LocalLatentMDGenModel(config(local=True),21)
+    args=config(local=True);args.grad_checkpointing=True
+    candidate=LocalLatentMDGenModel(args,21)
+    kwargs=inputs()|dict(chain_id=torch.zeros(1,12,dtype=torch.long),
+        residue_index=torch.arange(12)[None])
+    check_parity(reference,candidate,kwargs,training)
+    assert calls
