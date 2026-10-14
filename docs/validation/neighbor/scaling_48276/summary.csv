@@ -1,0 +1,9 @@
+mode,length,operation,status,seconds,allocated_gib,reserved_gib,nfe,stage
+global,5000,forward,success,9.130753550678492,20.068384170532227,28.150390625,,forward
+local,5000,forward,success,11.32246071100235,20.08766794204712,21.927734375,,forward
+global,7500,forward,success,17.416428726166487,30.02244234085083,42.1484375,,forward
+local,7500,forward,success,17.026813827455044,30.03768491744995,32.765625,,forward
+global,5000,generation,success,1214.677812743932,22.62834930419922,31.142578125,134,structure_reconstruction
+local,5000,generation,success,1531.2664466314018,22.64472723007202,29.400390625,134,structure_reconstruction
+global,7500,generation,success,2959.3105567507446,33.86512470245361,41.521484375,170,structure_reconstruction
+local,7500,generation,success,1881.4372500665486,33.88019418716431,37.546875,110,structure_reconstruction

@@ -16,7 +16,7 @@ Global 的 dataset、前處理、runtime、主層 FFN／全域 IPA 分批與 man
 
 ## 環境與簡單執行
 
-本 HPC 使用既有 modules 加 venv，不另建 Conda 環境：
+本輪量測使用 PyTorch `2.11.0+cu128`；local 需要提供 `scaled_dot_product_attention` 的 PyTorch。README 下方原論文的舊版安裝指令是歷史環境，不適用於這次 local 整合。本 HPC 使用既有 modules 加 venv，不另建 Conda 環境：
 
 ```bash
 source /etc/profile.d/modules.sh
@@ -54,7 +54,7 @@ python scripts/diagnostics/validate_neighbor_checkpoint.py --outdir results/chec
 python scripts/diagnostics/validate_ode_endpoints.py --outdir results/ode
 ```
 
-資源根目錄包含 `ckpt/atlas.ckpt`、`data/atlas_data/5e3e_A_R1_i40.npy`、`splits/mini_atlas_all.csv`；未設定環境變數時採用 sibling `../mdgen`。需要 CUDA 的測試在無 GPU 時 skip，不能把 CPU-only 結果當作完整驗證。
+資源根目錄包含 `ckpt/atlas.ckpt`、`data/atlas_data/5e3e_A_R1_i40.npy`、`splits/mini_atlas_all.csv`；未設定環境變數時採用 sibling `../mdgen`。`splits/mini_atlas_all.csv` 隨 repo 提供，可複製到外部資源根目錄的 `splits/`；只需準備其中 `5e3e_A` 的 NPY。若 checkpoint 與資料直接放在本 repo 的 `ckpt/`、`data/`，設定 `MDGEN_RESOURCE_ROOT="$PWD"`。需要 CUDA 的測試在無 GPU 時 skip，不能把 CPU-only 結果當作完整驗證。
 
 凍結參考位於 `tests/reference/global2026` 與 `localbaseline`；`manifest.json` 記錄整合前兩邊來源 SHA256，基準模型不使用候選的模型原始碼。額外 frozen helper 用於 core-only 與 ODE 保存比較。正式 checkpoint SHA256：`bc90c66e7539f52c9d0514aeddd96c552061150a1eef3b10c120bc3aaff08015`。
 
@@ -69,6 +69,10 @@ sbatch job/submit_neighbor_scaling.sh
 python scripts/diagnostics/summarize_neighbor_scaling.py results/neighbor_scaling_JOBID
 ```
 
-每例 JSON 記錄 source/checkpoint/input SHA、GPU UUID、時間、allocated/reserved 顯存、NFE、finite 及失敗階段；audit 核對共同條件。**Fixture 是把 5e3e_A 重複放在相隔的 3D lattice，作工程容量測試；成功不表示真實 7500 殘基蛋白或 protein+ligand 的物理品質已驗證。** Global/local 鄰域不同，不能把兩者差異解讀為數值誤差。
+每例 JSON 記錄 source/checkpoint/input SHA、GPU UUID、時間、allocated/reserved 顯存、NFE、finite 及失敗階段；audit 核對共同條件。**Fixture 是把 5e3e_A 重複放在相隔的 3D lattice，作工程容量測試；成功不表示真實 7500 殘基蛋白或 protein+ligand 的物理品質已驗證。** 此 fixture 的 `chain_id` 用於分區；既有 `atom37_to_torsions` 仍沿連續 tensor 編號計算，沒有跨 chain 斷鍵處理。因而它也不是多鏈生物構型驗證。Global/local 鄰域不同，不能把兩者差異解讀為數值誤差。
 
-本輪測試、量測與 review 的最終摘要將記錄於 `docs/NEIGHBOR_VALIDATION.md`。
+主要套件版本記錄於 `docs/validation/neighbor/environment.json`（null 表示沒有 distribution metadata；分析環境未納入本輪推論驗證）。
+
+既有 `LOCAL_*`、`ODE_ENDPOINT_STORAGE_REPORT.md` 等報告保留先前 sibling mdgen 的歷史量測；此次共同基底的結果以本輪驗證紀錄為準。
+
+本輪測試、量測與 review 的最終摘要記錄於 `docs/NEIGHBOR_VALIDATION.md`。

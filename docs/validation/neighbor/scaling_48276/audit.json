@@ -1,0 +1,33 @@
+{
+  "status": "passed",
+  "count": 8,
+  "success": 8,
+  "oom": 0,
+  "controls": {
+    "gpu_uuid": "a78cba9e-11fb-acb6-6ff5-3e12bc8ff2eb",
+    "checkpoint_sha256": "bc90c66e7539f52c9d0514aeddd96c552061150a1eef3b10c120bc3aaff08015",
+    "source_hashes": {
+      "mdgen/wrapper.py": "d3be795e529abb7ec461026aeca2d8668188ffc9f8065aa44fe2c234d3af6391",
+      "mdgen/model/latent_model.py": "6418b0d7e65285430819e46bc46b1c35ddd5db8260a261b540427cac76ba360e",
+      "mdgen/model/ipa.py": "9bd380b05ebffcf92fbd36d2f8e61ac771d73928146d752721191437a63cad0f",
+      "mdgen/model/mha.py": "8d3970838a54373df16c9124e368f87293e34298fba33c2e478036353d46965f",
+      "mdgen/full_length/model.py": "101e14373ce68072d40983a9406c9f4bf0057b2ee6fee1b10b15e57f73e2a365",
+      "mdgen/full_length/attention.py": "77baa0c2ab31c6de8d519db8c8a480036225fedec0441bfe23a7f26546bcbf8e",
+      "mdgen/full_length/partition.py": "e79d8ddb458f298306e43595f634f65e24b7924452f367841152d8d099a500f3",
+      "mdgen/rigid_utils.py": "25b1ce32b5cc2cf1e8e02fec4d5e9fdfd0ea1720435516258c62b0625e4290d5"
+    },
+    "frames": 250,
+    "batch_size": 1,
+    "precision": "float32",
+    "tf32": false,
+    "seed": 137,
+    "summaries": false,
+    "ffn_policy": "chunked",
+    "ffn_chunk_size": 65536,
+    "preprocessing": "native",
+    "sampling_method": "dopri5",
+    "atol": 1e-06,
+    "rtol": 0.001
+  },
+  "engineering_fixture": true
+}
