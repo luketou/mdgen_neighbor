@@ -13,3 +13,11 @@ wandb/
 *.pickle
 data
 ckpt
+
+# Local execution and large artifacts
+.scratch/
+results/
+logs/
+outputs/
+*.xtc
+*.trr

@@ -104,6 +104,14 @@ def parse_train_args(include_runtime_args=False):  # runtime-args-separation
     group.add_argument('--hyena', action='store_true')
     group.add_argument('--no_rope', action='store_true')
     group.add_argument('--manual_attention', action='store_true')  # sdpa-route
+    group.add_argument('--local_spatial', action='store_true')
+    group.add_argument('--cell_summaries', action=argparse.BooleanOptionalAction, default=False)
+    group.add_argument('--spatial_cell_width', type=float, default=16.)
+    group.add_argument('--spatial_contact_radius', type=float, default=16.)
+    group.add_argument('--core_capacity', type=int, default=128)
+    group.add_argument('--ghost_capacity', type=int, default=128)
+    group.add_argument('--group_batch_size', type=int, default=4)
+
     # runtime-args-separation:start
     if include_runtime_args:
         # sdpa-diagnostics:start
@@ -176,6 +184,8 @@ def parse_train_args(include_runtime_args=False):  # runtime-args-separation
     group.add_argument('--cond_interval', type=int, default=None) # for superresolution
     
     args = parser.parse_args()
+    if args.local_spatial and (args.manual_attention or args.no_frames):
+        parser.error('local_spatial requires SDPA and residue frames')
     # deterministic-benchmark-guard:start
     if args.deterministic and args.benchmark:
         parser.error(

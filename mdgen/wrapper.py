@@ -201,11 +201,11 @@ class NewMDGenWrapper(Wrapper):
             latent_dim = 111
         
         self.latent_dim = latent_dim
-        self.model = LatentMDGenModel(
-            args,
-            latent_dim,
-            use_sdpa=use_sdpa,  # sdpa-route
-        )
+        model_class = LatentMDGenModel
+        if getattr(args, 'local_spatial', False):
+            from .full_length.model import LocalLatentMDGenModel
+            model_class = LocalLatentMDGenModel
+        self.model = model_class(args, latent_dim, use_sdpa=use_sdpa)
 
         self.transport = create_transport(
             args,
@@ -355,6 +355,23 @@ class NewMDGenWrapper(Wrapper):
             aatype_mask[:, DESIGN_IDX] = 0
         ######## 
 
+        local_kwargs = {}
+        if getattr(self.args, 'local_spatial', False):
+            from .full_length.partition import build_spatial_partition
+            chain_id = batch.get('chain_id', torch.zeros_like(batch['seqres']))
+            residue_index = batch.get('residue_index',
+                torch.arange(L, device=offsets.device)[None].expand(B, -1))
+            partitions = [build_spatial_partition(
+                rigids.get_trans()[i, 0], mask=batch['mask'][i].bool(),
+                chain_id=chain_id[i], residue_index=residue_index[i],
+                cell_width=getattr(self.args, 'spatial_cell_width', 16.),
+                contact_radius=getattr(self.args, 'spatial_contact_radius', 16.),
+                core_capacity=getattr(self.args, 'core_capacity', 128),
+                ghost_capacity=getattr(self.args, 'ghost_capacity', 128))
+                for i in range(B)]
+            local_kwargs = dict(chain_id=chain_id, residue_index=residue_index,
+                                spatial_partitions=partitions)
+
         return {
             'rigids': rigids,
             'latents': latents,
@@ -366,6 +383,7 @@ class NewMDGenWrapper(Wrapper):
                 'aatype': torch.where(aatype_mask.bool(), batch['seqres'], 20),
                 'x_cond': torch.where(cond_mask.unsqueeze(-1).bool(), latents, 0.0),
                 'x_cond_mask': cond_mask,
+                **local_kwargs,
             }
         }
 
@@ -443,8 +461,11 @@ class NewMDGenWrapper(Wrapper):
         else:
             zs = torch.randn(B, T, L, self.latent_dim, device=self.device)
 
+        # Dopri5 picks its own internal steps; these are saved output points.
+        saved_points = 2 if (self.args.sampling_method == 'dopri5'
+                            and not self.training and not torch.is_grad_enabled()) else 50
         sample_fn = self.transport_sampler.sample_ode(
-            sampling_method=self.args.sampling_method,
+            sampling_method=self.args.sampling_method, num_steps=saved_points,
             atol=getattr(self.args, 'ode_atol', 1e-6),
             rtol=getattr(self.args, 'ode_rtol', 1e-3),
         )

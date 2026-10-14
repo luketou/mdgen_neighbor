@@ -206,7 +206,15 @@ def rot_to_quat(
 
     k = (1./3.) * torch.stack([torch.stack(t, dim=-1) for t in k], dim=-2)
 
-    _, vectors = torch.linalg.eigh(k)
+    if not torch.isfinite(k).all():
+        raise ValueError('Non-finite values in rotation matrices')
+    # Bound batches of tiny CUDA eigendecompositions (cuSOLVER batch limit).
+    if k.is_cuda and k.numel() // 16 > 16_384:
+        flat_k = k.reshape(-1, 4, 4)
+        vectors = torch.cat([torch.linalg.eigh(chunk)[1]
+                             for chunk in flat_k.split(16_384)], dim=0).reshape(k.shape)
+    else:
+        _, vectors = torch.linalg.eigh(k)
     return vectors[..., -1]
 
 
