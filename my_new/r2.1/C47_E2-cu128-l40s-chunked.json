@@ -1,0 +1,36 @@
+{
+  "benchmark": "A4 L-scaling single model forward",
+  "checkpoint": "/share/home/r15543056/.cache/mdgen/atlas.ckpt",
+  "measurement_scope": "Full LatentMDGenModel forward in torch.inference_mode; peak includes model parameters, synthetic inputs, and forward temporaries, but excludes checkpoint-loading peak.",
+  "attention_path": "sdpa",
+  "dtype": "float32",
+  "batch_size": 1,
+  "num_frames": 250,
+  "grad_checkpointing": false,
+  "deterministic": true,
+  "float32_matmul_precision": "highest",
+  "deterministic_algorithms_enabled": true,
+  "cudnn_benchmark": false,
+  "seed": 137,
+  "torch_version": "2.11.0+cu128",
+  "cuda_wheel": "12.8",
+  "gpu": "NVIDIA L40S",
+  "gpu_total_memory_bytes": 47665709056,
+  "lengths_requested": [
+    7500
+  ],
+  "results": [
+    {
+      "length": 7500,
+      "oom": true,
+      "peak_is_pre_oom_lower_bound": true,
+      "baseline_memory_allocated_bytes": 140292608,
+      "baseline_memory_allocated_gib": 0.13065767288208008,
+      "peak_memory_allocated_bytes": 43696492544,
+      "peak_memory_allocated_gib": 40.69552993774414,
+      "peak_memory_reserved_bytes": 45246054400,
+      "peak_memory_reserved_gib": 42.138671875,
+      "error": "CUDA out of memory. Tried to allocate 10.73 GiB. GPU 0 has a total capacity of 44.39 GiB of which 3.16 GiB is free. Including non-PyTorch memory, this process has 41.22 GiB memory in use. Of the allocated memory 40.70 GiB is allocated by PyTorch, and 37.78 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://docs.pytorch.org/docs/stable/notes/cuda.html#optimizing-memory-usage-with-pytorch-cuda-alloc-conf)"
+    }
+  ]
+}

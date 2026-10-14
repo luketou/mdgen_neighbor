@@ -1,0 +1,102 @@
+{
+  "benchmark": "A4 L-scaling single model forward",
+  "checkpoint": "/share/home/r15543056/.cache/mdgen/atlas.ckpt",
+  "measurement_scope": "Full LatentMDGenModel forward in torch.inference_mode; peak includes model parameters, synthetic inputs, and forward temporaries, but excludes checkpoint-loading peak.",
+  "attention_path": "sdpa",
+  "dtype": "float32",
+  "batch_size": 1,
+  "num_frames": 250,
+  "grad_checkpointing": false,
+  "deterministic": true,
+  "float32_matmul_precision": "highest",
+  "deterministic_algorithms_enabled": true,
+  "cudnn_benchmark": false,
+  "seed": 137,
+  "torch_version": "2.11.0+cu128",
+  "cuda_wheel": "12.8",
+  "gpu": "NVIDIA L40S",
+  "gpu_total_memory_bytes": 47665709056,
+  "lengths_requested": [
+    7500
+  ],
+  "results": [
+    {
+      "length": 7500,
+      "oom": false,
+      "baseline_memory_allocated_bytes": 140292608,
+      "baseline_memory_allocated_gib": 0.13065767288208008,
+      "peak_memory_allocated_bytes": 32235991552,
+      "peak_memory_allocated_gib": 30.022106647491455,
+      "peak_memory_reserved_bytes": 45250248704,
+      "peak_memory_reserved_gib": 42.142578125,
+      "output_shape": [
+        1,
+        250,
+        7500,
+        21
+      ],
+      "attention_modules": {
+        "ipa_layers.0.mha_l.attn": {
+          "last_attention_backend": "sdpa",
+          "last_sdpa_fallback_reason": null
+        },
+        "ipa_layers.1.mha_l.attn": {
+          "last_attention_backend": "sdpa",
+          "last_sdpa_fallback_reason": null
+        },
+        "ipa_layers.2.mha_l.attn": {
+          "last_attention_backend": "sdpa",
+          "last_sdpa_fallback_reason": null
+        },
+        "ipa_layers.3.mha_l.attn": {
+          "last_attention_backend": "sdpa",
+          "last_sdpa_fallback_reason": null
+        },
+        "ipa_layers.4.mha_l.attn": {
+          "last_attention_backend": "sdpa",
+          "last_sdpa_fallback_reason": null
+        },
+        "layers.0.mha_t.attn": {
+          "last_attention_backend": "sdpa",
+          "last_sdpa_fallback_reason": null
+        },
+        "layers.0.mha_l.attn": {
+          "last_attention_backend": "sdpa",
+          "last_sdpa_fallback_reason": null
+        },
+        "layers.1.mha_t.attn": {
+          "last_attention_backend": "sdpa",
+          "last_sdpa_fallback_reason": null
+        },
+        "layers.1.mha_l.attn": {
+          "last_attention_backend": "sdpa",
+          "last_sdpa_fallback_reason": null
+        },
+        "layers.2.mha_t.attn": {
+          "last_attention_backend": "sdpa",
+          "last_sdpa_fallback_reason": null
+        },
+        "layers.2.mha_l.attn": {
+          "last_attention_backend": "sdpa",
+          "last_sdpa_fallback_reason": null
+        },
+        "layers.3.mha_t.attn": {
+          "last_attention_backend": "sdpa",
+          "last_sdpa_fallback_reason": null
+        },
+        "layers.3.mha_l.attn": {
+          "last_attention_backend": "sdpa",
+          "last_sdpa_fallback_reason": null
+        },
+        "layers.4.mha_t.attn": {
+          "last_attention_backend": "sdpa",
+          "last_sdpa_fallback_reason": null
+        },
+        "layers.4.mha_l.attn": {
+          "last_attention_backend": "sdpa",
+          "last_sdpa_fallback_reason": null
+        }
+      }
+    }
+  ]
+}

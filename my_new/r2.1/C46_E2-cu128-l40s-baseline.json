@@ -1,0 +1,273 @@
+{
+  "benchmark": "A4 L-scaling single model forward",
+  "checkpoint": "/share/home/r15543056/.cache/mdgen/atlas.ckpt",
+  "measurement_scope": "Full LatentMDGenModel forward in torch.inference_mode; peak includes model parameters, synthetic inputs, and forward temporaries, but excludes checkpoint-loading peak.",
+  "attention_path": "sdpa",
+  "dtype": "float32",
+  "batch_size": 1,
+  "num_frames": 250,
+  "grad_checkpointing": false,
+  "deterministic": true,
+  "float32_matmul_precision": "highest",
+  "deterministic_algorithms_enabled": true,
+  "cudnn_benchmark": false,
+  "seed": 137,
+  "torch_version": "2.11.0+cu128",
+  "cuda_wheel": "12.8",
+  "gpu": "NVIDIA L40S",
+  "gpu_total_memory_bytes": 47665709056,
+  "lengths_requested": [
+    256,
+    2500,
+    5000,
+    7500
+  ],
+  "results": [
+    {
+      "length": 256,
+      "oom": false,
+      "baseline_memory_allocated_bytes": 150620672,
+      "baseline_memory_allocated_gib": 0.14027643203735352,
+      "peak_memory_allocated_bytes": 2034915328,
+      "peak_memory_allocated_gib": 1.895162582397461,
+      "peak_memory_reserved_bytes": 2954887168,
+      "peak_memory_reserved_gib": 2.751953125,
+      "output_shape": [
+        1,
+        250,
+        256,
+        21
+      ],
+      "attention_modules": {
+        "ipa_layers.0.mha_l.attn": {
+          "last_attention_backend": "sdpa",
+          "last_sdpa_fallback_reason": null
+        },
+        "ipa_layers.1.mha_l.attn": {
+          "last_attention_backend": "sdpa",
+          "last_sdpa_fallback_reason": null
+        },
+        "ipa_layers.2.mha_l.attn": {
+          "last_attention_backend": "sdpa",
+          "last_sdpa_fallback_reason": null
+        },
+        "ipa_layers.3.mha_l.attn": {
+          "last_attention_backend": "sdpa",
+          "last_sdpa_fallback_reason": null
+        },
+        "ipa_layers.4.mha_l.attn": {
+          "last_attention_backend": "sdpa",
+          "last_sdpa_fallback_reason": null
+        },
+        "layers.0.mha_t.attn": {
+          "last_attention_backend": "sdpa",
+          "last_sdpa_fallback_reason": null
+        },
+        "layers.0.mha_l.attn": {
+          "last_attention_backend": "sdpa",
+          "last_sdpa_fallback_reason": null
+        },
+        "layers.1.mha_t.attn": {
+          "last_attention_backend": "sdpa",
+          "last_sdpa_fallback_reason": null
+        },
+        "layers.1.mha_l.attn": {
+          "last_attention_backend": "sdpa",
+          "last_sdpa_fallback_reason": null
+        },
+        "layers.2.mha_t.attn": {
+          "last_attention_backend": "sdpa",
+          "last_sdpa_fallback_reason": null
+        },
+        "layers.2.mha_l.attn": {
+          "last_attention_backend": "sdpa",
+          "last_sdpa_fallback_reason": null
+        },
+        "layers.3.mha_t.attn": {
+          "last_attention_backend": "sdpa",
+          "last_sdpa_fallback_reason": null
+        },
+        "layers.3.mha_l.attn": {
+          "last_attention_backend": "sdpa",
+          "last_sdpa_fallback_reason": null
+        },
+        "layers.4.mha_t.attn": {
+          "last_attention_backend": "sdpa",
+          "last_sdpa_fallback_reason": null
+        },
+        "layers.4.mha_l.attn": {
+          "last_attention_backend": "sdpa",
+          "last_sdpa_fallback_reason": null
+        }
+      }
+    },
+    {
+      "length": 2500,
+      "oom": false,
+      "baseline_memory_allocated_bytes": 150620672,
+      "baseline_memory_allocated_gib": 0.14027643203735352,
+      "peak_memory_allocated_bytes": 18509066240,
+      "peak_memory_allocated_gib": 17.237911224365234,
+      "peak_memory_reserved_bytes": 28154265600,
+      "peak_memory_reserved_gib": 26.220703125,
+      "output_shape": [
+        1,
+        250,
+        2500,
+        21
+      ],
+      "attention_modules": {
+        "ipa_layers.0.mha_l.attn": {
+          "last_attention_backend": "sdpa",
+          "last_sdpa_fallback_reason": null
+        },
+        "ipa_layers.1.mha_l.attn": {
+          "last_attention_backend": "sdpa",
+          "last_sdpa_fallback_reason": null
+        },
+        "ipa_layers.2.mha_l.attn": {
+          "last_attention_backend": "sdpa",
+          "last_sdpa_fallback_reason": null
+        },
+        "ipa_layers.3.mha_l.attn": {
+          "last_attention_backend": "sdpa",
+          "last_sdpa_fallback_reason": null
+        },
+        "ipa_layers.4.mha_l.attn": {
+          "last_attention_backend": "sdpa",
+          "last_sdpa_fallback_reason": null
+        },
+        "layers.0.mha_t.attn": {
+          "last_attention_backend": "sdpa",
+          "last_sdpa_fallback_reason": null
+        },
+        "layers.0.mha_l.attn": {
+          "last_attention_backend": "sdpa",
+          "last_sdpa_fallback_reason": null
+        },
+        "layers.1.mha_t.attn": {
+          "last_attention_backend": "sdpa",
+          "last_sdpa_fallback_reason": null
+        },
+        "layers.1.mha_l.attn": {
+          "last_attention_backend": "sdpa",
+          "last_sdpa_fallback_reason": null
+        },
+        "layers.2.mha_t.attn": {
+          "last_attention_backend": "sdpa",
+          "last_sdpa_fallback_reason": null
+        },
+        "layers.2.mha_l.attn": {
+          "last_attention_backend": "sdpa",
+          "last_sdpa_fallback_reason": null
+        },
+        "layers.3.mha_t.attn": {
+          "last_attention_backend": "sdpa",
+          "last_sdpa_fallback_reason": null
+        },
+        "layers.3.mha_l.attn": {
+          "last_attention_backend": "sdpa",
+          "last_sdpa_fallback_reason": null
+        },
+        "layers.4.mha_t.attn": {
+          "last_attention_backend": "sdpa",
+          "last_sdpa_fallback_reason": null
+        },
+        "layers.4.mha_l.attn": {
+          "last_attention_backend": "sdpa",
+          "last_sdpa_fallback_reason": null
+        }
+      }
+    },
+    {
+      "length": 5000,
+      "oom": false,
+      "baseline_memory_allocated_bytes": 155041792,
+      "baseline_memory_allocated_gib": 0.1443939208984375,
+      "peak_memory_allocated_bytes": 36866509824,
+      "peak_memory_allocated_gib": 34.33461284637451,
+      "peak_memory_reserved_bytes": 46512734208,
+      "peak_memory_reserved_gib": 43.318359375,
+      "output_shape": [
+        1,
+        250,
+        5000,
+        21
+      ],
+      "attention_modules": {
+        "ipa_layers.0.mha_l.attn": {
+          "last_attention_backend": "sdpa",
+          "last_sdpa_fallback_reason": null
+        },
+        "ipa_layers.1.mha_l.attn": {
+          "last_attention_backend": "sdpa",
+          "last_sdpa_fallback_reason": null
+        },
+        "ipa_layers.2.mha_l.attn": {
+          "last_attention_backend": "sdpa",
+          "last_sdpa_fallback_reason": null
+        },
+        "ipa_layers.3.mha_l.attn": {
+          "last_attention_backend": "sdpa",
+          "last_sdpa_fallback_reason": null
+        },
+        "ipa_layers.4.mha_l.attn": {
+          "last_attention_backend": "sdpa",
+          "last_sdpa_fallback_reason": null
+        },
+        "layers.0.mha_t.attn": {
+          "last_attention_backend": "sdpa",
+          "last_sdpa_fallback_reason": null
+        },
+        "layers.0.mha_l.attn": {
+          "last_attention_backend": "sdpa",
+          "last_sdpa_fallback_reason": null
+        },
+        "layers.1.mha_t.attn": {
+          "last_attention_backend": "sdpa",
+          "last_sdpa_fallback_reason": null
+        },
+        "layers.1.mha_l.attn": {
+          "last_attention_backend": "sdpa",
+          "last_sdpa_fallback_reason": null
+        },
+        "layers.2.mha_t.attn": {
+          "last_attention_backend": "sdpa",
+          "last_sdpa_fallback_reason": null
+        },
+        "layers.2.mha_l.attn": {
+          "last_attention_backend": "sdpa",
+          "last_sdpa_fallback_reason": null
+        },
+        "layers.3.mha_t.attn": {
+          "last_attention_backend": "sdpa",
+          "last_sdpa_fallback_reason": null
+        },
+        "layers.3.mha_l.attn": {
+          "last_attention_backend": "sdpa",
+          "last_sdpa_fallback_reason": null
+        },
+        "layers.4.mha_t.attn": {
+          "last_attention_backend": "sdpa",
+          "last_sdpa_fallback_reason": null
+        },
+        "layers.4.mha_l.attn": {
+          "last_attention_backend": "sdpa",
+          "last_sdpa_fallback_reason": null
+        }
+      }
+    },
+    {
+      "length": 7500,
+      "oom": true,
+      "peak_is_pre_oom_lower_bound": true,
+      "baseline_memory_allocated_bytes": 160084992,
+      "baseline_memory_allocated_gib": 0.14909076690673828,
+      "peak_memory_allocated_bytes": 25921884160,
+      "peak_memory_allocated_gib": 24.14163589477539,
+      "peak_memory_reserved_bytes": 33657192448,
+      "peak_memory_reserved_gib": 31.345703125,
+      "error": "CUDA out of memory. Tried to allocate 20.12 GiB. GPU 0 has a total capacity of 44.39 GiB of which 17.91 GiB is free. Including non-PyTorch memory, this process has 26.48 GiB memory in use. Of the allocated memory 24.14 GiB is allocated by PyTorch, and 1.83 GiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://docs.pytorch.org/docs/stable/notes/cuda.html#optimizing-memory-usage-with-pytorch-cuda-alloc-conf)"
+    }
+  ]
+}

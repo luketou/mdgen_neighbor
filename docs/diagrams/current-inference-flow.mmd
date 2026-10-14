@@ -1,0 +1,39 @@
+flowchart TD
+    A["輸入：序列、初始結構、預訓練 checkpoint<br/>L = 殘基數；T = 軌跡 frames 數"] --> B["前處理：座標、剛體旋轉、torsion、mask<br/>大型 CUDA 四元數轉換使用分塊計算"]
+    B --> C{"選擇空間 attention"}
+    C -->|global：mdgen2026| G["所有殘基互相看見<br/>全域 SDPA"]
+    C -->|local：sibling mdgen| P["依初始結構建立 neighbor-cell 分區<br/>core：本組負責更新的殘基<br/>ghost：供本組讀取的鄰居"]
+    P --> Q["檢查唯一 core ownership<br/>保留必要同鏈編號鄰居<br/>容量不足時拆分 core，無法容納則報錯"]
+    Q --> I["初始化生成狀態與 conditioning<br/>載入相容的預訓練權重<br/>本次量測關閉 cell summaries"]
+    I --> O["dopri5 自適應 ODE<br/>FP32；atol = 1e-6；rtol = 1e-3"]
+    O --> M
+    subgraph MODEL["每次模型評估：local 模型主幹，逐層執行"]
+      M["當前狀態 x 與 ODE 時間 s<br/>張量概念：B × T × L × C"] --> IPA["IPA：使用結構幾何資訊<br/>local IPA 沿用既有分組路徑"]
+      SU --> TA["時間 attention：SDPA<br/>每個殘基沿 T 個 frames 交換資訊"]
+      IPA --> GA["逐批 gather 鄰域<br/>本次量測每批 4 groups<br/>只配置當批所需的 padding"]
+      GA --> SA["空間 attention：SDPA<br/>Query 只來自 core<br/>Key / Value 來自 core + ghost<br/>保留原權重、RoPE、mask、bias K/V"]
+      SA --> SC["只把 core 結果寫回唯一 owner<br/>ghost 可作為輸入並傳遞梯度<br/>K/V 跨組重複計算仍存在"]
+      SC --> SU["選用 cell summary 交換<br/>本次 benchmark 關閉"]
+      TA --> FD{"eval、停用梯度<br/>且 token 數超過門檻？"}
+      FD -->|是| FC["FFN 分批：預設 65536 tokens<br/>每批 Linear → GELU → Linear<br/>減少擴張後的中間張量"]
+      FD -->|否| FF["完整 FFN<br/>訓練與需要梯度時保留此路徑"]
+      FC --> NX["殘差與 gate 更新<br/>繼續下一層，最後由 output head 給出向量場"]
+      FF --> NX
+    end
+    NX --> D{"ODE 是否到達終點？"}
+    D -->|否：調整內部步長，再評估模型| O
+    D -->|是| S["推論只保存起點與終點<br/>50 個保存點 → 2 個保存點<br/>內部求解步數與模型評估次數不因此變成 2"]
+    S --> R["取最終生成狀態<br/>重建 atom14 原子座標與序列"]
+    R --> OUT["得到 T 個結構 frames<br/>本次 T = 250<br/>正式輸出入口可寫出 PDB / XTC"]
+    G --> GN["global 為另一條模型路徑<br/>同樣區分時間與空間 attention<br/>不使用 core / ghost adapter"]
+    GN --> GO["完成 ODE 與結構重建<br/>local 最新優化未全部移植到 global"]
+    OUT --> V["驗證：舊實作 vs 新實作<br/>輸出、輸入梯度、權重梯度<br/>ODE 最終輸出與模型評估次數"]
+    V --> BM["同一張 L40S 量測<br/>固定 checkpoint、FP32、250 frames、輸入<br/>分開記錄 forward 與完整生成<br/>時間、allocated / reserved 顯存、OOM 階段"]
+    BM --> RES["最新 local 完整生成成功<br/>L5000：19.36 GiB；L7500：28.96 GiB<br/>ODE 少保存中間結果，再省約 20% 顯存"]
+    RES --> LIM["此為合成工程 fixture 的容量結果<br/>下一步：真實大系統的鄰域密度與生成品質驗證"]
+    classDef opt fill:#e5f4ff,stroke:#2878b5,color:#111;
+    classDef check fill:#eaf7e9,stroke:#428642,color:#111;
+    classDef caution fill:#fff3da,stroke:#b38831,color:#111;
+    class TA,GA,SA,FC,S opt;
+    class V,BM,RES check;
+    class LIM,GN caution;
