@@ -118,4 +118,3 @@ def test_owned_output_attention_uses_less_peak_memory_than_ghost_output_referenc
     new = peak(run_pretrained_local_attention)
     print(f'PEAK old={old} new={new} ratio={new/old:.4f}', flush=True)
     assert new < old * fraction, (old, new)
-

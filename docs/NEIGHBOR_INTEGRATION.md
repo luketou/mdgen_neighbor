@@ -58,7 +58,7 @@ python scripts/diagnostics/validate_ode_endpoints.py --outdir results/ode
 
 凍結參考位於 `tests/reference/global2026` 與 `localbaseline`；`manifest.json` 記錄整合前兩邊來源 SHA256，基準模型不使用候選的模型原始碼。額外 frozen helper 用於 core-only 與 ODE 保存比較。正式 checkpoint SHA256：`bc90c66e7539f52c9d0514aeddd96c552061150a1eef3b10c120bc3aaff08015`。
 
-已驗證非零模型權重的輸出、輸入梯度、權重梯度及 train/eval fallback。正式 checkpoint：global 與整合前 2026 輸出／梯度完全一致；local 與整合前 mdgen 輸出完全一致，輸入梯度最大差異約 `1.11e-10`，權重梯度約 `7.45e-9`。50 點改 2 點的最終 atom14 完全一致，NFE 都是 116；這些是指定 fixture 的實測結果，非所有輸入的數學保證。
+已驗證非零模型權重的輸出、輸入梯度、權重梯度及 train/eval fallback。正式 checkpoint：global 與整合前 2026 輸出／梯度完全一致；local 與整合前 mdgen 輸出完全一致，job 48275 的輸入梯度最大差異約 `1.09e-10`，權重梯度約 `2.61e-8`。50 點改 2 點的最終 atom14 完全一致，NFE 都是 116；這些是指定 fixture 的實測結果，非所有輸入的數學保證。
 
 ## 大型資源量測
 
@@ -69,6 +69,6 @@ sbatch job/submit_neighbor_scaling.sh
 python scripts/diagnostics/summarize_neighbor_scaling.py results/neighbor_scaling_JOBID
 ```
 
-每例 JSON 記錄 source/checkpoint/input SHA、GPU UUID、時間、allocated/reserved 顯存、NFE、finite 及失敗階段；audit 核對共同条件。**Fixture 是把 5e3e_A 重複放在相隔的 3D lattice，作工程容量測試；成功不表示真實 7500 殘基蛋白或 protein+ligand 的物理品質已驗證。** Global/local 鄰域不同，不能把兩者差異解讀為數值誤差。
+每例 JSON 記錄 source/checkpoint/input SHA、GPU UUID、時間、allocated/reserved 顯存、NFE、finite 及失敗階段；audit 核對共同條件。**Fixture 是把 5e3e_A 重複放在相隔的 3D lattice，作工程容量測試；成功不表示真實 7500 殘基蛋白或 protein+ligand 的物理品質已驗證。** Global/local 鄰域不同，不能把兩者差異解讀為數值誤差。
 
 本輪測試、量測與 review 的最終摘要將記錄於 `docs/NEIGHBOR_VALIDATION.md`。

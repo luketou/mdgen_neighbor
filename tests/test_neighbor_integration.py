@@ -79,3 +79,22 @@ def test_local_wrapper_preserves_frozen_mdgen_output_and_all_gradients(rope,trai
     check_parity(FrozenLocal(copy.deepcopy(args),21),candidate,inputs()|dict(
         chain_id=torch.zeros(1,12,dtype=torch.long),
         residue_index=torch.arange(12)[None]),training)
+
+
+@pytest.mark.parametrize('local',[False,True])
+@pytest.mark.parametrize('training',[False,True])
+def test_inference_ffn_chunking_preserves_full_outputs_and_gradient_fallback(local,training):
+    from mdgen.full_length.model import LocalLatentMDGenModel
+    args=config(local=local)
+    reference_type=FrozenLocal if local else FrozenGlobal
+    candidate_type=LocalLatentMDGenModel if local else LatentMDGenModel
+    reference=reference_type(copy.deepcopy(args),21)
+    candidate=candidate_type(copy.deepcopy(args),21)
+    # 48 tokens: the candidate must split into multiple inference chunks,
+    # while the frozen reference's 65536 threshold computes the full FFN.
+    for layer in candidate.layers:layer.ffn_chunk_size=7
+    kwargs=inputs()
+    if local:
+        kwargs.update(chain_id=torch.zeros(1,12,dtype=torch.long),
+                      residue_index=torch.arange(12)[None])
+    check_parity(reference,candidate,kwargs,training)
