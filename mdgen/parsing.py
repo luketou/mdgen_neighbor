@@ -24,16 +24,35 @@ def fill_local_defaults(args):
     return args
 
 
-def parse_train_args(include_runtime_args=False):  # runtime-args-separation
-    parser = ArgumentParser()
+# Options an inference run may override on top of the checkpoint's args.
+LOCAL_OVERRIDE_TYPES = dict(
+    local_spatial=argparse.BooleanOptionalAction,
+    cell_summaries=argparse.BooleanOptionalAction,
+    spatial_cell_width=float,
+    spatial_contact_radius=float,
+    core_capacity=int,
+    ghost_capacity=int,
+    group_batch_size=int,
+)
 
-    ## Trainer settings
-    parser.add_argument("--ckpt", type=str, default=None)
-    parser.add_argument("--validate", action='store_true', default=False)
-    parser.add_argument("--num_workers", type=int, default=4)
-    parser.add_argument("--train_seed", type=int, default=None)  # seed-deterministic-args
-    parser.add_argument("--model_dir",type=str,default=None,help="Directory used as MODEL_DIR",)
-    # seed-deterministic-args:start
+
+def add_local_override_args(parser):
+    """None means: keep the value stored in the checkpoint."""
+    for key, kind in LOCAL_OVERRIDE_TYPES.items():
+        if kind is argparse.BooleanOptionalAction:
+            parser.add_argument(f'--{key}', action=kind, default=None)
+        else:
+            parser.add_argument(f'--{key}', type=kind, default=None)
+
+
+def apply_local_overrides(model_args, cli_args):
+    for key in LOCAL_OVERRIDE_TYPES:
+        if getattr(cli_args, key) is not None:
+            setattr(model_args, key, getattr(cli_args, key))
+    return fill_local_defaults(model_args)
+
+
+def add_determinism_args(parser):
     parser.add_argument(
         "--deterministic",
         action=argparse.BooleanOptionalAction,
@@ -46,7 +65,23 @@ def parse_train_args(include_runtime_args=False):  # runtime-args-separation
         default=False,
         help="Enable the cuDNN benchmark autotuner.",
     )
-    # seed-deterministic-args:end
+
+
+def check_determinism_args(parser, args):
+    if args.deterministic and args.benchmark:
+        parser.error("--deterministic and --benchmark cannot both be enabled")
+
+
+def parse_train_args(include_runtime_args=False):  # runtime-args-separation
+    parser = ArgumentParser()
+
+    ## Trainer settings
+    parser.add_argument("--ckpt", type=str, default=None)
+    parser.add_argument("--validate", action='store_true', default=False)
+    parser.add_argument("--num_workers", type=int, default=4)
+    parser.add_argument("--train_seed", type=int, default=None)  # seed-deterministic-args
+    parser.add_argument("--model_dir",type=str,default=None,help="Directory used as MODEL_DIR",)
+    add_determinism_args(parser)  # seed-deterministic-args
     
     ## Epoch settings
     group = parser.add_argument_group("Epoch settings")
@@ -207,12 +242,7 @@ def parse_train_args(include_runtime_args=False):  # runtime-args-separation
     args = parser.parse_args()
     if args.local_spatial and (args.manual_attention or args.no_frames):
         parser.error('local_spatial requires SDPA and residue frames')
-    # deterministic-benchmark-guard:start
-    if args.deterministic and args.benchmark:
-        parser.error(
-            "--deterministic and --benchmark cannot both be enabled"
-        )
-    # deterministic-benchmark-guard:end
+    check_determinism_args(parser, args)  # deterministic-benchmark-guard
     if args.model_dir is not None:
         os.environ["MODEL_DIR"] = os.path.join(args.model_dir, args.run_name)
     else:
