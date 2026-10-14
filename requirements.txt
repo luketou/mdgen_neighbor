@@ -1,0 +1,19 @@
+# Runtime and test dependencies for mdgen_neighbor.
+# Versions with == match the L40S validation environment recorded in
+# docs/validation/neighbor/environment.json (Python 3.11). Install a CUDA or
+# CPU build of torch first from https://download.pytorch.org/whl/ as needed;
+# `torch==2.11.0` also accepts local builds such as 2.11.0+cu128 or +cpu.
+torch==2.11.0
+numpy==2.2.6
+pandas==2.3.2
+pytorch-lightning==2.6.5
+mdtraj==1.11.1.post2
+torchdiffeq==0.2.5
+fair-esm==2.0.0
+einops==0.8.1
+dm-tree==0.1.10
+# Not recorded in environment.json; imported by mdgen.wrapper, mdgen.protein
+# and mdgen.utils / mdgen.model.primitives respectively.
+wandb
+biopython
+scipy
