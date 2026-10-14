@@ -1,6 +1,6 @@
 # MDGen Neighbor（基於 mdgen2026）
 
-此分支保留 mdgen2026 的 global SDPA 預設，新增來自 sibling mdgen 的 local 空間計算與省顯存推論。操作、驗證與量測限制見 [整合說明](docs/NEIGHBOR_INTEGRATION.md)，固定範圍見 [spec](docs/specs/neighbor-integration.md)。本輪使用 module＋venv 與新版 PyTorch；下方 Installation 是原論文歷史環境，local 請依整合說明配置。原論文模型、資料與授權保留如下。
+此分支保留 mdgen2026 的 global SDPA 預設，新增來自 sibling mdgen 的 local 空間計算與省顯存推論。操作、驗證與量測限制見 [整合說明](docs/NEIGHBOR_INTEGRATION.md)，固定範圍見 [spec](docs/specs/neighbor-integration.md)。歷次實作與量測報告見 [docs/reports](docs/reports/README.md)。本輪使用 module＋venv 與新版 PyTorch；下方 Installation 是原論文歷史環境，local 請依整合說明配置。原論文模型、資料與授權保留如下。
 
 Implementation of [Generative Modeling of Molecular Dynamics Trajectories](https://arxiv.org/abs/2409.17808) by Bowen Jing*, Hannes Stark*, Tommi Jaakkola, and Bonnie Berger.
 

@@ -13,7 +13,7 @@
 
 ## MDGen 的實際瓶頸
 
-`mdgen/model/latent_model.py` 的 forward 會執行 `fc2(gelu(fc1(x)))`（可看 [latent_model.py](mdgen/model/latent_model.py)）。若輸入有 `N` 個位置、FFN 隱藏寬度是 `d_ff`，第一層 linear 和 GELU 會處理約 `N × d_ff` 個元素。FP32 單一同尺寸 tensor 的理想大小是 `4 × N × d_ff` bytes；GELU 實作還可能產生除以 √2、erf 和乘法等暫存，所以峰值可能同時包含多個中間結果。
+`mdgen/model/latent_model.py` 的 forward 會執行 `fc2(gelu(fc1(x)))`（可看 [latent_model.py](../../mdgen/model/latent_model.py)）。若輸入有 `N` 個位置、FFN 隱藏寬度是 `d_ff`，第一層 linear 和 GELU 會處理約 `N × d_ff` 個元素。FP32 單一同尺寸 tensor 的理想大小是 `4 × N × d_ff` bytes；GELU 實作還可能產生除以 √2、erf 和乘法等暫存，所以峰值可能同時包含多個中間結果。
 
 專案的 [L-scaling 量測報告](LOCAL_SDPA_L_SCALING_REPORT.md) 記錄：完整生成、250 frames 時，L=5000 在 GELU 配置 `torch.erf(...)` 結果時因還需要約 7.15 GiB 而 OOM；L=7500 在 GELU 的 `x / sqrt(2)` 暫存配置時因還需要約 10.73 GiB 而 OOM。trace 指向 FFN GELU，沒有指向 SDPA attention。這個觀察與「減少 FFN 展開暫存」直接吻合。
 

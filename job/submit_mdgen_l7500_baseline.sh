@@ -17,16 +17,16 @@ module load python/3.11.12-gpu
 module load cuda/12.8
 source /share/home/r15543056/.venvs/mdgen2026/bin/activate
 export OMP_NUM_THREADS="${SLURM_CPUS_PER_TASK}"
-export PYTHONUNBUFFERED=1
+export PYTHONUNBUFFERED=1 PYTHONPATH="$PWD"
 
 nvidia-smi --query-gpu=name,memory.total --format=csv
 python -c "import torch; print('PyTorch:', torch.__version__); print('GPU:', torch.cuda.get_device_name(0)); assert torch.cuda.is_available()"
 
-python benchmark_l_scaling.py \
+python scripts/diagnostics/benchmark_l_scaling.py \
   --sim_ckpt /share/home/r15543056/.cache/mdgen/atlas.ckpt \
-  --output "my_new/r2.1/C46_E2-cu128-l40s-baseline.json" \
+  --output "docs/validation/mdgen2026/r2.1/C46_E2-cu128-l40s-baseline.json" \
   --lengths 256 2500 5000 7500 \
   --continue_after_oom \
   --seed 137 \
   --deterministic \
-  --print_sdpa_backend "my_new/r2.1/C46_E2-cu128-l40s-sdpa-backend.txt"
+  --print_sdpa_backend "docs/validation/mdgen2026/r2.1/C46_E2-cu128-l40s-sdpa-backend.txt"
