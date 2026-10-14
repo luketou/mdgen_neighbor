@@ -2,24 +2,26 @@
 #SBATCH --job-name=neighbor-scaling
 #SBATCH --partition=l40s
 #SBATCH --account=l40s
-#SBATCH --nodelist=node-201
 #SBATCH --cpus-per-task=2
 #SBATCH --gres=gpu:1
 #SBATCH --mem=48G
 #SBATCH --time=04:00:00
 #SBATCH --output=logs/neighbor_scaling_%j.out
 #SBATCH --error=logs/neighbor_scaling_%j.err
-#SBATCH --chdir=/share/home/r15543056/MDgen/mdgen2026
 set -eo pipefail
-source /etc/profile.d/modules.sh
-module load python/3.11.12-gpu cuda/12.8
-source /share/home/r15543056/.venvs/mdgen/bin/activate
+source job/env.sh
 export OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 PYTHONPATH="$PWD"
 python - <<'PY'
 import torch
+import os
 actual=str(torch.cuda.get_device_properties(0).uuid)
-assert actual=='a78cba9e-11fb-acb6-6ff5-3e12bc8ff2eb', actual
-print('Verified original physical L40S:',actual,flush=True)
+# The recorded comparison ran on one physical L40S; pin it to reproduce that.
+expected=os.environ.get('MDGEN_EXPECTED_GPU_UUID')
+if expected:
+    assert actual==expected, actual
+    print('Verified expected physical GPU:',actual,flush=True)
+else:
+    print('GPU UUID (unpinned):',actual,flush=True)
 PY
 neighbor_results="results/neighbor_scaling_${SLURM_JOB_ID}"
 for neighbor_operation in forward generation; do

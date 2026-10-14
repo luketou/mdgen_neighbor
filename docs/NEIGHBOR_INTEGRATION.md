@@ -40,7 +40,7 @@ python sim_inference.py \
   --xtc --save_atom14 --out_dir results/local_smoke
 ```
 
-Global 對照省略 `--local_spatial --no-cell_summaries`；若 checkpoint 本身為 local 可明確指定 `--no-local_spatial`。在其他機器修改資源與環境路徑；Slurm job 的 account、node 與固定 GPU UUID 是本 HPC 的比較條件，不能原樣通用。
+Global 對照省略 `--local_spatial --no-cell_summaries`；若 checkpoint 本身為 local 可明確指定 `--no-local_spatial`。在其他機器修改資源與環境路徑；Slurm job 的提交方式、環境變數與重現同卡比較所需的 node／GPU UUID 見 [job/README.md](../job/README.md)。
 
 ## 可重現驗證
 
@@ -48,7 +48,7 @@ Global 對照省略 `--local_spatial --no-cell_summaries`；若 checkpoint 本�
 python -m pytest tests/test_neighbor_integration.py \
   tests/test_pretrained_local_core_only.py \
   tests/test_ode_endpoint_storage.py tests/test_spatial_partition.py -q
-python test_sdpa.py --device cuda --output_dir results/sdpa
+python scripts/diagnostics/test_sdpa.py --device cuda --output_dir results/sdpa
 export MDGEN_RESOURCE_ROOT=/path/to/resource_directory
 python scripts/diagnostics/validate_neighbor_checkpoint.py --outdir results/checkpoint
 python scripts/diagnostics/validate_ode_endpoints.py --outdir results/ode
@@ -65,7 +65,8 @@ python scripts/diagnostics/validate_ode_endpoints.py --outdir results/ode
 `job/submit_neighbor_scaling.sh` 在同一實體 L40S 分別測 global/local、L=5000/7500、250 frames 的 forward 與完整 generation。每例獨立 Python process；FP32、TF32 off、seed 137、官方 checkpoint、FFN chunk 65536、dopri5、atol=1e-6、rtol=1e-3、summary off。forward 為 warmup 2 次後 5 次的中位數；完整生成一次，包含 GPU 前處理、ODE 與 atom14 重建，不含權重載入與 fixture CPU→GPU 搬移。
 
 ```bash
-sbatch job/submit_neighbor_scaling.sh
+MDGEN_VENV=/path/to/venv MDGEN_EXPECTED_GPU_UUID=a78cba9e-11fb-acb6-6ff5-3e12bc8ff2eb \
+  sbatch --nodelist=node-201 job/submit_neighbor_scaling.sh
 python scripts/diagnostics/summarize_neighbor_scaling.py results/neighbor_scaling_JOBID
 ```
 
@@ -73,6 +74,6 @@ python scripts/diagnostics/summarize_neighbor_scaling.py results/neighbor_scalin
 
 主要套件版本記錄於 `docs/validation/neighbor/environment.json`（null 表示沒有 distribution metadata；分析環境未納入本輪推論驗證）。
 
-既有 `LOCAL_*`、`ODE_ENDPOINT_STORAGE_REPORT.md` 等報告保留先前 sibling mdgen 的歷史量測；此次共同基底的結果以本輪驗證紀錄為準。
+`docs/reports/` 中既有 `LOCAL_*`、`ODE_ENDPOINT_STORAGE_REPORT.md` 等報告保留先前 sibling mdgen 的歷史量測；此次共同基底的結果以本輪驗證紀錄為準。
 
 本輪測試、量測與 review 的最終摘要記錄於 `docs/NEIGHBOR_VALIDATION.md`。

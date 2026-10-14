@@ -1,6 +1,6 @@
 # MDGen Neighbor（基於 mdgen2026）
 
-此分支保留 mdgen2026 的 global SDPA 預設，新增來自 sibling mdgen 的 local 空間計算與省顯存推論。操作、驗證與量測限制見 [整合說明](docs/NEIGHBOR_INTEGRATION.md)，固定範圍見 [spec](docs/specs/neighbor-integration.md)。本輪使用 module＋venv 與新版 PyTorch；下方 Installation 是原論文歷史環境，local 請依整合說明配置。原論文模型、資料與授權保留如下。
+此分支保留 mdgen2026 的 global SDPA 預設，新增來自 sibling mdgen 的 local 空間計算與省顯存推論。操作、驗證與量測限制見 [整合說明](docs/NEIGHBOR_INTEGRATION.md)，固定範圍見 [spec](docs/specs/neighbor-integration.md)。歷次實作與量測報告見 [docs/reports](docs/reports/README.md)。目前環境見下方 Installation；HPC 上的 module＋venv 設定見整合說明。原論文模型、資料與授權保留如下。
 
 Implementation of [Generative Modeling of Molecular Dynamics Trajectories](https://arxiv.org/abs/2409.17808) by Bowen Jing*, Hannes Stark*, Tommi Jaakkola, and Bonnie Berger.
 
@@ -11,6 +11,17 @@ We introduce generative modeling of molecular trajectories as a paradigm for lea
 ![mdgen.png](mdgen.png)
 
 ## Installation
+
+Current environment (Python 3.11, PyTorch 2.11; versions match `docs/validation/neighbor/environment.json`):
+
+```
+pip install torch==2.11.0 --index-url https://download.pytorch.org/whl/cu128  # or .../whl/cpu
+pip install -r requirements.txt
+```
+
+Run the CPU test suite with `pip install pytest==8.4.2 && python -m pytest tests -q`; the same checks run in GitHub Actions (`.github/workflows/tests.yml`). The analysis scripts additionally need PyEMMA; see the conda environments in `envs/environment-mdgen2026-*-pyemma.yml`.
+
+Original paper environment (historical, PyTorch 1.12):
 
 ```
 pip install numpy==1.21.2 pandas==1.5.3

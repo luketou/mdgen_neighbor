@@ -9,17 +9,12 @@
 #SBATCH --time=00:30:00
 #SBATCH --output=logs/flrh_tolerance_%j.out
 #SBATCH --error=logs/flrh_tolerance_%j.err
-#SBATCH --chdir=/share/home/r15543056/MDgen/mdgen2026
 
 set -eo pipefail
-source /etc/profile.d/modules.sh
-module load python/3.11.12-gpu
-module load cuda/12.8
+source job/env.sh
 export CUDA_HOME="$(dirname "$(dirname "$(command -v nvcc)")")"
-source /share/home/r15543056/.venvs/mdgen2026/bin/activate
 export OMP_NUM_THREADS="${SLURM_CPUS_PER_TASK}"
 export PYTHONUNBUFFERED=1
-cd /share/home/r15543056/MDgen/mdgen2026
 
 nvidia-smi --query-gpu=name,memory.total --format=csv
 python -c "import torch; print('PyTorch:', torch.__version__); print('GPU:', torch.cuda.get_device_name(0)); assert torch.cuda.is_available()"
