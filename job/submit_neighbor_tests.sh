@@ -25,7 +25,7 @@ assert 'isfinite' in rot_to_quat.__code__.co_names
 print('rigid source SHA256:', hashlib.sha256(Path('mdgen/rigid_utils.py').read_bytes()).hexdigest(), flush=True)
 CHECK
 python -m pytest tests/test_neighbor_integration.py tests/test_ode_endpoint_storage.py tests/test_pretrained_local_core_only.py -q -s
-python test_sdpa.py --device cuda --output_dir "results/neighbor_tests_${SLURM_JOB_ID}/sdpa"
+python scripts/diagnostics/test_sdpa.py --device cuda --output_dir "results/neighbor_tests_${SLURM_JOB_ID}/sdpa"
 python scripts/diagnostics/validate_ode_endpoints.py --outdir "results/neighbor_tests_${SLURM_JOB_ID}/ode"
 
 python scripts/diagnostics/validate_neighbor_checkpoint.py --outdir "results/neighbor_tests_${SLURM_JOB_ID}/integration"

@@ -48,7 +48,7 @@ Global 對照省略 `--local_spatial --no-cell_summaries`；若 checkpoint 本�
 python -m pytest tests/test_neighbor_integration.py \
   tests/test_pretrained_local_core_only.py \
   tests/test_ode_endpoint_storage.py tests/test_spatial_partition.py -q
-python test_sdpa.py --device cuda --output_dir results/sdpa
+python scripts/diagnostics/test_sdpa.py --device cuda --output_dir results/sdpa
 export MDGEN_RESOURCE_ROOT=/path/to/resource_directory
 python scripts/diagnostics/validate_neighbor_checkpoint.py --outdir results/checkpoint
 python scripts/diagnostics/validate_ode_endpoints.py --outdir results/ode
@@ -73,6 +73,6 @@ python scripts/diagnostics/summarize_neighbor_scaling.py results/neighbor_scalin
 
 主要套件版本記錄於 `docs/validation/neighbor/environment.json`（null 表示沒有 distribution metadata；分析環境未納入本輪推論驗證）。
 
-既有 `LOCAL_*`、`ODE_ENDPOINT_STORAGE_REPORT.md` 等報告保留先前 sibling mdgen 的歷史量測；此次共同基底的結果以本輪驗證紀錄為準。
+`docs/reports/` 中既有 `LOCAL_*`、`ODE_ENDPOINT_STORAGE_REPORT.md` 等報告保留先前 sibling mdgen 的歷史量測；此次共同基底的結果以本輪驗證紀錄為準。
 
 本輪測試、量測與 review 的最終摘要記錄於 `docs/NEIGHBOR_VALIDATION.md`。

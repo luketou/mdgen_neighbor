@@ -47,7 +47,7 @@ cu126與cu130環境使用相同的Python及MDGen相依套件，主要差異只�
 環境差異：
 | 項目 | cu126環境 | cu130環境 |
 |---|---|---|
-| 環境設定檔 | [environment-mdgen2026-cu126.yml](./my_new/environment-mdgen2026-cu126.yml) | [environment-mdgen2026-cu130.yml](./my_new/environment-mdgen2026-cu130.yml) |
+| 環境設定檔 | [environment-mdgen2026-cu126.yml](../../envs/environment-mdgen2026-cu126.yml) | [environment-mdgen2026-cu130.yml](../../envs/environment-mdgen2026-cu130.yml) |
 | Conda環境名稱 | `mdgen2026-cu126` | `mdgen2026-cu130` |
 | PyTorch | 2.12.1+cu126 | 2.12.1+cu130 |
 | PyTorch CUDA runtime | 12.6 | 13.0 |
