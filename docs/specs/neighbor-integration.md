@@ -55,4 +55,4 @@
 - [x] Ticket 1：建立雙基準與 global 回歸；Blocked by：無。保留兩邊 source hash，global 輸出／梯度符合凍結 2026。
 - [x] Ticket 2：local 模型、checkpoint 與 CLI 整合；Blocked by：Ticket 1。同一入口選 local，輸出／梯度符合凍結 mdgen，global 保持預設。
 - [x] Ticket 3：CUDA 四元數分塊與 ODE endpoints；Blocked by：Ticket 2。容差、最後輸出與 NFE 不變，fallback 正確。
-- [ ] Ticket 4：同卡 L40S、雙軸 review 與 GitHub 發布；Blocked by：Ticket 3。保存量測條件、處理 findings、推送可重現整合版本。
+- [x] Ticket 4：同卡 L40S、雙軸 review 與 GitHub 發布；Blocked by：Ticket 3。保存量測條件、處理 findings、推送可重現整合版本。

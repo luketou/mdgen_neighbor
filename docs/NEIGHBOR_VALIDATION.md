@@ -53,4 +53,10 @@ L=5000 local 完整生成較慢；L=7500 local 完整生成較快，但 NFE 為 
 - Standards：初審 1 個 P3，移除了無 caller 的 standalone attention、FlexAttention、backend 比較 helper 與 IPA wrapper。複核 0 未修正問題。
 - Spec：最終複核 0 findings；大型原始結果、共同條件、規格範圍及凍結基準均通過。
 - 最終程式與量測審查範圍為 `383d446...b4c8648`；後續僅更新審查及發布狀態文件。
-- GitHub 發布為最後驗收項目，推送後核對遠端版本並更新 Ticket 4。
+- 已發布至 [luketou/mdgen_neighbor](https://github.com/luketou/mdgen_neighbor) 的 `main`。首次發布 commit `e55bc13` 的遠端 SHA 與本機一致；後续僅提交發布完成狀態。
+
+## 發布與交接
+
+四個 tickets 已完成；[GitHub Issue #1](https://github.com/luketou/mdgen_neighbor/issues/1) 保存規格與驗收狀態。來源歷史與授權保留，既有 `origin` 不變；發布目的地使用 `neighbor` remote。
+
+新增發布內容包含程式、凍結參考、測試、操作文件與量測 JSON／CSV；沒有新加入 checkpoint 或生成軌跡。既有來源歷史的檔案保留，並未改寫 Git 歷史。
