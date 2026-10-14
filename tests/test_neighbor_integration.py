@@ -162,3 +162,55 @@ def test_partitions_default_to_single_chain_position_numbering():
     for a,b in zip(implicit[0].groups,explicit[0].groups):
         assert torch.equal(a.core_indices,b.core_indices)
         assert torch.equal(a.ghost_indices,b.ghost_indices)
+
+
+def variant(name,local):
+    args=config(local=local)
+    if name=='tps':
+        args.sim_condition=False;args.tps_condition=True;return args,28
+    if name=='summaries':
+        args.cell_summaries=True;return args,21
+    args.design=True;args.alpha_max=8.;args.dirichlet_flow_temp=1.
+    args.allow_nan_cfactor=False;args.alpha_scale=2.;args.fix_alpha=None
+    return args,41
+
+
+@pytest.mark.parametrize('name',['tps','summaries','design'])
+@pytest.mark.parametrize('local',[False,True])
+@pytest.mark.parametrize('training',[False,True])
+def test_shared_spatial_hooks_preserve_frozen_variants(name,local,training):
+    """TPS (x_r/x_f IPA), cell summaries and the design flow share the hooks."""
+    from mdgen.full_length.model import LocalLatentMDGenModel
+    args,dim=variant(name,local)
+    reference=(FrozenLocal if local else FrozenGlobal)(copy.deepcopy(args),dim)
+    candidate=(LocalLatentMDGenModel if local else LatentMDGenModel)(copy.deepcopy(args),dim)
+    torch.manual_seed(5)
+    with torch.no_grad():
+        for p in reference.parameters():p.normal_(0,.08)
+    candidate.load_state_dict(reference.state_dict(),strict=True)
+    reference.train(training);candidate.train(training)
+    kwargs=inputs();frames=kwargs['start_frames']
+    kwargs['end_frames']=Rigid(frames.get_rots(),frames.get_trans()+.5)
+    if local:
+        kwargs.update(chain_id=torch.zeros(1,12,dtype=torch.long),
+                      residue_index=torch.arange(12)[None])
+    value=torch.randn(1,4,12,dim)
+    if args.design:value[...,-20:]=torch.softmax(value[...,-20:],-1)
+    # The design flow converts to numpy, so it is compared without gradients.
+    with_grad=not args.design
+    outputs=[];grads=[]
+    for model in (reference,candidate):
+        x=value.clone().requires_grad_(with_grad)
+        with torch.set_grad_enabled(with_grad):
+            out=model.forward_inference(x,torch.tensor([.43]),**kwargs)
+            if with_grad:
+                params=dict(model.named_parameters())
+                cot=torch.linspace(-1,1,out.numel()).reshape_as(out)
+                gradient=torch.autograd.grad((out*cot).sum(),[x,*params.values()],allow_unused=True)
+                grads.append(dict(zip(['input',*params],gradient)))
+        outputs.append(out.detach())
+    torch.testing.assert_close(outputs[0],outputs[1],atol=2e-5,rtol=2e-4)
+    for name_,old in (grads[0].items() if grads else ()):
+        new=grads[1][name_]
+        if old is None:assert new is None,name_
+        else:torch.testing.assert_close(old,new,atol=2e-5,rtol=2e-4,msg=name_)
