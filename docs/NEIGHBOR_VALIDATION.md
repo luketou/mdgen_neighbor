@@ -51,4 +51,6 @@ L=5000 local 完整生成較慢；L=7500 local 完整生成較快，但 NFE 為 
 ## 雙軸 review
 
 - Standards：初審 1 個 P3，移除了無 caller 的 standalone attention、FlexAttention、backend 比較 helper 與 IPA wrapper。複核 0 未修正問題。
-- Spec：程式 review 0 findings。最終大型結果與發布待核查。
+- Spec：最終複核 0 findings；大型原始結果、共同條件、規格範圍及凍結基準均通過。
+- 最終程式與量測審查範圍為 `383d446...b4c8648`；後續僅更新審查及發布狀態文件。
+- GitHub 發布為最後驗收項目，推送後核對遠端版本並更新 Ticket 4。
