@@ -13,7 +13,8 @@ from ..utils import simplex_proj
 from ..rigid_utils import Rigid
 from .attention import run_pretrained_local_attention
 from .local_ipa import run_local_ipa
-from .partition import build_spatial_partition
+from ..parsing import fill_local_defaults
+from .partition import partitions_from_args
 from .summaries import CoreCellSummaryExchange
 
 
@@ -167,6 +168,7 @@ class LocalLatentMDGenModel(GlobalModel):
             raise ValueError('local_spatial requires SDPA; manual_attention is global-only')
         if getattr(args, 'no_frames', False):
             raise ValueError('local_spatial requires residue frames')
+        fill_local_defaults(args)
         super().__init__(args, latent_dim, use_sdpa=use_sdpa)
         ipa_args = dict(c_s=args.embed_dim, c_z=0, c_hidden=args.ipa_head_dim,
             no_heads=args.ipa_heads, no_qk_points=args.ipa_qk,
@@ -174,9 +176,9 @@ class LocalLatentMDGenModel(GlobalModel):
         common = dict(embed_dim=args.embed_dim, ffn_embed_dim=4*args.embed_dim,
             mha_heads=args.mha_heads, dropout=args.dropout,
             use_rotary_embeddings=not args.no_rope, use_sdpa=True,
-            group_batch_size=getattr(args, 'group_batch_size', 4),
-            cell_summaries_enabled=getattr(args, 'cell_summaries', False),
-            attention_backend=getattr(args, 'spatial_attention_backend', 'sdpa'))
+            group_batch_size=args.group_batch_size,
+            cell_summaries_enabled=args.cell_summaries,
+            attention_backend=args.spatial_attention_backend)
         if args.prepend_ipa:
             self.ipa_layers = torch.nn.ModuleList([
                 LocalIPALayer(**common, ipa_args=ipa_args) for _ in range(args.num_layers)])
@@ -184,7 +186,7 @@ class LocalLatentMDGenModel(GlobalModel):
             LocalLayer(**common, num_frames=args.num_frames, hyena=args.hyena,
                 use_time_attention=True,
                 ipa_args=ipa_args if args.interleave_ipa else None,
-                ffn_chunk_size=getattr(args, 'ffn_chunk_size', 65536))
+                ffn_chunk_size=args.ffn_chunk_size)
             for _ in range(args.num_layers)])
         self.initialize_weights()
 
@@ -266,28 +268,14 @@ class LocalLatentMDGenModel(GlobalModel):
         t = self.t_embedder(t * self.args.time_multiplier)[:, None]
 
         partitions = spatial_partitions
-        if getattr(self.args, 'local_spatial', False):
+        if self.args.local_spatial:
             if start_frames is None:
                 raise ValueError('Local spatial execution requires conditioned start_frames')
-            B, _, L = mask.shape
-            if chain_id is None:
-                chain_id = torch.zeros((B, L), dtype=torch.long, device=mask.device)
-            if residue_index is None:
-                residue_index = torch.arange(L, device=mask.device)[None].expand(B, -1)
             if partitions is None:
-                partitions = [
-                    build_spatial_partition(
-                        start_frames.get_trans()[batch_index],
-                        mask=mask[batch_index, 0].bool(),
-                        chain_id=chain_id[batch_index],
-                        residue_index=residue_index[batch_index],
-                        cell_width=getattr(self.args, 'spatial_cell_width', 16.0),
-                        contact_radius=getattr(self.args, 'spatial_contact_radius', 16.0),
-                        core_capacity=getattr(self.args, 'core_capacity', 128),
-                        ghost_capacity=getattr(self.args, 'ghost_capacity', 128),
-                    )
-                    for batch_index in range(B)
-                ]
+                partitions = partitions_from_args(
+                    self.args, start_frames.get_trans(), mask[:, 0],
+                    chain_id=chain_id, residue_index=residue_index,
+                )
 
         if self.args.prepend_ipa:  # IPA doesn't need checkpointing
             x = x + self.run_ipa(

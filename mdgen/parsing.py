@@ -3,6 +3,27 @@ from argparse import ArgumentParser
 import os
 
 
+# Single source for local options; older checkpoint args predate these keys.
+LOCAL_DEFAULTS = dict(
+    local_spatial=False,
+    cell_summaries=False,
+    spatial_cell_width=16.,
+    spatial_contact_radius=16.,
+    core_capacity=128,
+    ghost_capacity=128,
+    group_batch_size=4,
+    ffn_chunk_size=65536,
+    spatial_attention_backend='sdpa',
+)
+
+
+def fill_local_defaults(args):
+    for key, value in LOCAL_DEFAULTS.items():
+        if not hasattr(args, key):
+            setattr(args, key, value)
+    return args
+
+
 def parse_train_args(include_runtime_args=False):  # runtime-args-separation
     parser = ArgumentParser()
 
@@ -105,12 +126,12 @@ def parse_train_args(include_runtime_args=False):  # runtime-args-separation
     group.add_argument('--no_rope', action='store_true')
     group.add_argument('--manual_attention', action='store_true')  # sdpa-route
     group.add_argument('--local_spatial', action='store_true')
-    group.add_argument('--cell_summaries', action=argparse.BooleanOptionalAction, default=False)
-    group.add_argument('--spatial_cell_width', type=float, default=16.)
-    group.add_argument('--spatial_contact_radius', type=float, default=16.)
-    group.add_argument('--core_capacity', type=int, default=128)
-    group.add_argument('--ghost_capacity', type=int, default=128)
-    group.add_argument('--group_batch_size', type=int, default=4)
+    group.add_argument('--cell_summaries', action=argparse.BooleanOptionalAction, default=LOCAL_DEFAULTS['cell_summaries'])
+    group.add_argument('--spatial_cell_width', type=float, default=LOCAL_DEFAULTS['spatial_cell_width'])
+    group.add_argument('--spatial_contact_radius', type=float, default=LOCAL_DEFAULTS['spatial_contact_radius'])
+    group.add_argument('--core_capacity', type=int, default=LOCAL_DEFAULTS['core_capacity'])
+    group.add_argument('--ghost_capacity', type=int, default=LOCAL_DEFAULTS['ghost_capacity'])
+    group.add_argument('--group_batch_size', type=int, default=LOCAL_DEFAULTS['group_batch_size'])
 
     # runtime-args-separation:start
     if include_runtime_args:

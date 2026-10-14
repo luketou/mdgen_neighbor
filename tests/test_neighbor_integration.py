@@ -116,3 +116,47 @@ def test_local_grad_checkpointing_is_used_and_preserves_outputs_and_gradients(tr
         residue_index=torch.arange(12)[None])
     check_parity(reference,candidate,kwargs,training)
     assert calls
+
+
+def test_fill_local_defaults_matches_cli_defaults_and_keeps_saved_values(monkeypatch):
+    from mdgen.parsing import LOCAL_DEFAULTS, fill_local_defaults, parse_train_args
+    monkeypatch.setattr(sys,'argv',['train.py'])
+    cli=parse_train_args()
+    for key in ('local_spatial','cell_summaries','spatial_cell_width',
+                'spatial_contact_radius','core_capacity','ghost_capacity','group_batch_size'):
+        assert getattr(cli,key)==LOCAL_DEFAULTS[key],key
+    # Checkpoints saved before the local options keep their explicit values.
+    saved=SimpleNamespace(core_capacity=7)
+    fill_local_defaults(saved)
+    assert saved.core_capacity==7
+    assert saved.ghost_capacity==LOCAL_DEFAULTS['ghost_capacity']
+    assert saved.local_spatial is False
+
+
+def test_local_model_accepts_args_saved_without_local_options():
+    from mdgen.full_length.model import LocalLatentMDGenModel
+    from mdgen.parsing import LOCAL_DEFAULTS
+    args=config(local=True)
+    for key in LOCAL_DEFAULTS:
+        if key!='local_spatial':delattr(args,key)
+    model=LocalLatentMDGenModel(args,21).eval()
+    assert model.layers[0].group_batch_size==LOCAL_DEFAULTS['group_batch_size']
+    with torch.no_grad():
+        out=model.forward_inference(torch.randn(1,4,12,21),torch.tensor([.43]),**inputs())
+    assert torch.isfinite(out).all()
+
+
+def test_partitions_default_to_single_chain_position_numbering():
+    from mdgen.full_length.partition import partitions_from_args
+    from mdgen.parsing import fill_local_defaults
+    args=fill_local_defaults(config(local=True))
+    frames=inputs()['start_frames']
+    mask=torch.ones(1,12)
+    implicit=partitions_from_args(args,frames.get_trans(),mask)
+    explicit=partitions_from_args(args,frames.get_trans(),mask,
+        chain_id=torch.zeros(1,12,dtype=torch.long),residue_index=torch.arange(12)[None])
+    assert len(implicit)==len(explicit)==1
+    assert len(implicit[0].groups)==len(explicit[0].groups)>1
+    for a,b in zip(implicit[0].groups,explicit[0].groups):
+        assert torch.equal(a.core_indices,b.core_indices)
+        assert torch.equal(a.ghost_indices,b.ghost_indices)
