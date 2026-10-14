@@ -120,7 +120,9 @@ def test_local_grad_checkpointing_is_used_and_preserves_outputs_and_gradients(tr
 
 def test_fill_local_defaults_matches_cli_defaults_and_keeps_saved_values(monkeypatch):
     from mdgen.parsing import LOCAL_DEFAULTS, fill_local_defaults, parse_train_args
-    monkeypatch.setattr(sys,'argv',['train.py'])
+    monkeypatch.setattr(sys,'argv',['train.py','--train_split','a.csv',
+        '--val_split','b.csv','--data_dir','data'])
+    monkeypatch.delenv('MODEL_DIR',raising=False)
     cli=parse_train_args()
     for key in ('local_spatial','cell_summaries','spatial_cell_width',
                 'spatial_contact_radius','core_capacity','ghost_capacity','group_batch_size'):
@@ -138,7 +140,7 @@ def test_local_model_accepts_args_saved_without_local_options():
     from mdgen.parsing import LOCAL_DEFAULTS
     args=config(local=True)
     for key in LOCAL_DEFAULTS:
-        if key!='local_spatial':delattr(args,key)
+        if key!='local_spatial' and hasattr(args,key):delattr(args,key)
     model=LocalLatentMDGenModel(args,21).eval()
     assert model.layers[0].group_batch_size==LOCAL_DEFAULTS['group_batch_size']
     with torch.no_grad():
