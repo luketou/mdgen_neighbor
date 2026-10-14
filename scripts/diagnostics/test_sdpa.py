@@ -4,12 +4,15 @@
 import argparse
 import json
 from pathlib import Path
+import sys
 
 import numpy as np
 import torch
 
 from mdgen.model.mha import MultiheadAttention
-from mdgen.model.mha_legacy import MultiheadAttention as LegacyMultiheadAttention  # sdpa-upstream-reference
+# The upstream legacy manual MHA lives only in the frozen 2026 baseline.
+sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "tests" / "reference"))  # sdpa-upstream-reference
+from global2026.model.mha_legacy import MultiheadAttention as LegacyMultiheadAttention  # sdpa-upstream-reference
 from mdgen.model.latent_model import AttentionWithRoPE  # sdpa-equivalence-test
 
 
