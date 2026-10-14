@@ -9,5 +9,6 @@
 | `my_new/environment-mdgen2026-*.yml` | `envs/` |
 | `my_new/download_atlas.sh` | `scripts/download_atlas.sh` |
 | `test_sdpa.py`、`benchmark_l_scaling.py` | `scripts/diagnostics/`（執行前需 `export PYTHONPATH="$PWD"`） |
+| `mdgen/model/mha_legacy.py` | 已移除；內容相同的凍結副本為 `tests/reference/global2026/model/mha_legacy.py` |
 
 `docs/validation/neighbor/preexisting_archive_manifest.json` 是 #1 整合時的雜湊快照，鍵值仍為搬移前的路徑；其餘檔案可在新位置以相同 SHA256 驗證；以下三個檔案於 #3 有意修改，雜湊不再相符：`docs/reports/FFN_PEAK_MEMORY_RESEARCH.md`（程式碼連結改為新相對路徑）、`job/submit_mdgen_l7500_baseline.sh` 與 `job/submit_mdgen_l7500_chunked.sh`（腳本與輸出路徑改為新位置）。
