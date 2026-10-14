@@ -443,8 +443,11 @@ class NewMDGenWrapper(Wrapper):
         else:
             zs = torch.randn(B, T, L, self.latent_dim, device=self.device)
 
-        sample_fn = self.transport_sampler.sample_ode(sampling_method=self.args.sampling_method)
-        # num_steps=self.args.inference_steps)  # default to ode
+        sample_fn = self.transport_sampler.sample_ode(
+            sampling_method=self.args.sampling_method,
+            atol=getattr(self.args, 'ode_atol', 1e-6),
+            rtol=getattr(self.args, 'ode_rtol', 1e-3),
+        )
 
         samples = sample_fn(
             zs,

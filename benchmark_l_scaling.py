@@ -132,9 +132,15 @@ def write_sdpa_backend_report(
     if not modules:
         lines.append("No attention modules expose backend information.")
     for name, details in modules.items():
-        message = f'{name}: path={details["path"] or "not_executed"}'
-        if details["fallback_reason"] is not None:
-            message += f', fallback={details["fallback_reason"]}'
+        backend_path = details.get(
+            "last_attention_backend", details.get("path")
+        )
+        fallback_reason = details.get(
+            "last_sdpa_fallback_reason", details.get("fallback_reason")
+        )
+        message = f'{name}: path={backend_path or "not_executed"}'
+        if fallback_reason is not None:
+            message += f", fallback={fallback_reason}"
         lines.append(message)
 
     lines.extend(["", "PyTorch SDPA operators observed:"])

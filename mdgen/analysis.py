@@ -2,6 +2,13 @@ import json
 import os
 
 import numpy as np
+import mdtraj
+from types import SimpleNamespace
+
+# PyEMMA 2.5.12 expects the version namespace removed in MDTraj 1.10.
+if not hasattr(mdtraj, 'version'):
+    mdtraj.version = SimpleNamespace(version=mdtraj.__version__)
+
 import pyemma
 from tqdm import tqdm
 

@@ -59,6 +59,8 @@ class InvariantPointAttention(nn.Module):
         self.inf = inf
         self.eps = eps
         self.dropout = dropout
+        # Bound the temporary [query, key, head, point, xyz] tensor during inference.
+        self.query_chunk_size = 256
         # These linear layers differ from their specifications in the
         # supplement. There, they lack bias and use Glorot initialization.
         # Here as in the official source, they have bias and use the default
@@ -89,6 +91,94 @@ class InvariantPointAttention(nn.Module):
         self.softmax = nn.Softmax(dim=-1)
         self.softplus = nn.Softplus()
 
+    def _forward_chunked(self, s, r, frame_mask):
+        q = self.linear_q(s).view(
+            s.shape[:-1] + (self.no_heads, self.c_hidden)
+        )
+        kv = self.linear_kv(s).view(
+            s.shape[:-1] + (self.no_heads, 2 * self.c_hidden)
+        )
+        k, v = torch.split(kv, self.c_hidden, dim=-1)
+
+        q_pts = self.linear_q_points(s)
+        q_pts = torch.stack(torch.split(q_pts, q_pts.shape[-1] // 3, dim=-1), dim=-1)
+        q_pts = r[..., None].apply(q_pts)
+        q_pts = q_pts.view(
+            q_pts.shape[:-2] + (self.no_heads, self.no_qk_points, 3)
+        )
+
+        kv_pts = self.linear_kv_points(s)
+        kv_pts = torch.stack(torch.split(kv_pts, kv_pts.shape[-1] // 3, dim=-1), dim=-1)
+        kv_pts = r[..., None].apply(kv_pts)
+        kv_pts = kv_pts.view(kv_pts.shape[:-2] + (self.no_heads, -1, 3))
+        k_pts, v_pts = torch.split(
+            kv_pts, [self.no_qk_points, self.no_v_points], dim=-2
+        )
+
+        outputs = []
+        residue_count = q.shape[-3]
+        for query_start in range(0, residue_count, self.query_chunk_size):
+            query_slice = slice(
+                query_start, min(query_start + self.query_chunk_size, residue_count)
+            )
+            q_chunk = q[..., query_slice, :, :]
+            q_pts_chunk = q_pts[..., query_slice, :, :, :]
+
+            a = torch.matmul(
+                permute_final_dims(q_chunk, (1, 0, 2)),
+                permute_final_dims(k, (1, 2, 0)),
+            )
+            a *= math.sqrt(1.0 / (3 * self.c_hidden))
+
+            pt_att = q_pts_chunk.unsqueeze(-4) - k_pts.unsqueeze(-5)
+            pt_att = pt_att**2
+            pt_att = sum(torch.unbind(pt_att, dim=-1))
+            head_weights = self.softplus(self.head_weights).view(
+                *((1,) * len(pt_att.shape[:-2]) + (-1, 1))
+            )
+            head_weights = head_weights * math.sqrt(
+                1.0 / (3 * (self.no_qk_points * 9.0 / 2))
+            )
+            pt_att = pt_att * head_weights
+            pt_att = torch.sum(pt_att, dim=-1) * (-0.5)
+            pt_att = permute_final_dims(pt_att, (2, 0, 1))
+
+            a = a + pt_att
+            if frame_mask is not None:
+                query_mask = frame_mask[..., query_slice]
+                square_mask = query_mask.unsqueeze(-1) * frame_mask.unsqueeze(-2)
+                a = a + self.inf * (square_mask.unsqueeze(-3) - 1)
+
+            a = self.softmax(a)
+            a = F.dropout(a, p=self.dropout, training=self.training)
+
+            o = torch.matmul(a, v.transpose(-2, -3).to(dtype=a.dtype)).transpose(
+                -2, -3
+            )
+            o = flatten_final_dims(o, 2)
+
+            o_pt = torch.sum(
+                a[..., None, :, :, None]
+                * permute_final_dims(v_pts, (1, 3, 0, 2))[..., None, :, :],
+                dim=-2,
+            )
+            o_pt = permute_final_dims(o_pt, (2, 0, 3, 1))
+            query_frames = r[..., query_slice]
+            o_pt = query_frames[..., None, None].invert_apply(o_pt)
+            o_pt_norm = flatten_final_dims(
+                torch.sqrt(torch.sum(o_pt**2, dim=-1) + self.eps), 2
+            )
+            o_pt = o_pt.reshape(*o_pt.shape[:-3], -1, 3)
+
+            output = self.linear_out(
+                torch.cat((o, *torch.unbind(o_pt, dim=-1), o_pt_norm), dim=-1).to(
+                    dtype=s.dtype
+                )
+            )
+            outputs.append(output)
+
+        return torch.cat(outputs, dim=-2)
+
     def forward(self, s, r, z=None, frame_mask=None, attn_mask=None):
         """
         Args:
@@ -103,7 +193,16 @@ class InvariantPointAttention(nn.Module):
         Returns:
             [*, N_res, C_s] single representation update
         """
-        
+
+        if (
+            self.c_z == 0
+            and attn_mask is None
+            and not self.training
+            and not torch.is_grad_enabled()
+            and s.shape[-2] > self.query_chunk_size
+        ):
+            return self._forward_chunked(s, r, frame_mask)
+
         z = [z]
 
         #######################################

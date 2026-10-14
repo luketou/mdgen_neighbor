@@ -9,9 +9,12 @@ parser.add_argument('--num_rollouts', type=int, default=100)
 parser.add_argument('--no_frames', action='store_true')
 parser.add_argument('--tps', action='store_true')
 parser.add_argument('--xtc', action='store_true')
+parser.add_argument('--save_atom14', action='store_true', help='Save reconstructed coordinates before PDB/XTC export for diagnostics.')
 parser.add_argument('--out_dir', type=str, default=".")
 parser.add_argument('--split', type=str, default='splits/4AA_test.csv')
 parser.add_argument('--inference_seed', type=int, default=None)  # seed-deterministic-args
+parser.add_argument('--ode_atol', type=float, default=1e-6)
+parser.add_argument('--ode_rtol', type=float, default=1e-3)
 parser.add_argument('--manual_attention', action='store_true')  # sdpa-route
 # seed-deterministic-args:start
 parser.add_argument(
@@ -28,6 +31,8 @@ parser.add_argument(
 )
 # seed-deterministic-args:end
 args = parser.parse_args()
+if not (0 < args.ode_atol < float('inf') and 0 < args.ode_rtol < float('inf')):
+    parser.error('ODE tolerances must be positive and finite')
 # deterministic-benchmark-guard:start
 if args.deterministic and args.benchmark:
     parser.error('--deterministic and --benchmark cannot both be enabled')
@@ -146,6 +151,8 @@ def do(model, name, seqres):
     print(time.time() - start)
     all_atom14 = torch.cat(all_atom14, 1)
     
+    if args.save_atom14:
+        np.save(os.path.join(args.out_dir, f'{name}_atom14.npy'), all_atom14[0].cpu().numpy())
     path = os.path.join(args.out_dir, f'{name}.pdb')
     atom14_to_pdb(all_atom14[0].cpu().numpy(), batch['seqres'][0].cpu().numpy(), path)
 
@@ -162,6 +169,9 @@ def main():
         use_sdpa=not args.manual_attention,  # sdpa-route
         weights_only=False,
     )
+    model.args.ode_atol = args.ode_atol
+    model.args.ode_rtol = args.ode_rtol
+    print(f'ODE: {model.args.sampling_method}, atol={args.ode_atol}, rtol={args.ode_rtol}', flush=True)
     model.eval().float().to('cuda')  # fp32-inference-model
     
     df = pd.read_csv(args.split, index_col='name')

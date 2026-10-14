@@ -443,6 +443,7 @@ class LatentMDGenLayer(nn.Module):
         self.use_time_attention = use_time_attention
         self.use_rotary_embeddings = use_rotary_embeddings
         self.use_sdpa = use_sdpa  # sdpa-route
+        self.ffn_chunk_size = 65536
         self._init_submodules(
             add_bias_kv=True,
             dropout=dropout,
@@ -497,6 +498,35 @@ class LatentMDGenLayer(nn.Module):
 
         self.final_layer_norm = nn.LayerNorm(self.embed_dim, elementwise_affine=False, eps=1e-6)
 
+    def _ffn(self, x):
+        token_count = x.numel() // self.embed_dim
+        if (
+            self.training
+            or torch.is_grad_enabled()
+            or token_count <= self.ffn_chunk_size
+        ):
+            return self.fc2(gelu(self.fc1(x)))
+
+        # The expanded FFN tensor is 10.7 GiB at T=250, L=7500, C=384.
+        # During inference each token is independent, so reuse x as the output
+        # buffer and keep only a bounded number of expanded tokens live.
+        if x.is_contiguous():
+            tokens = x.view(-1, self.embed_dim)
+            for start in range(0, token_count, self.ffn_chunk_size):
+                end = min(start + self.ffn_chunk_size, token_count)
+                token_chunk = tokens[start:end]
+                token_chunk.copy_(self.fc2(gelu(self.fc1(token_chunk))))
+        else:
+            tokens_per_residue = token_count // x.shape[-2]
+            residue_chunk_size = max(
+                1, self.ffn_chunk_size // max(tokens_per_residue, 1)
+            )
+            for start in range(0, x.shape[-2], residue_chunk_size):
+                end = min(start + residue_chunk_size, x.shape[-2])
+                token_chunk = x[..., start:end, :]
+                token_chunk.copy_(self.fc2(gelu(self.fc1(token_chunk))))
+        return x
+
     def forward(self, x, t, mask=None, frames=None, position_ids=None):  # position-id-model-routing
         B, T, L, C = x.shape
 
@@ -547,7 +577,7 @@ class LatentMDGenLayer(nn.Module):
 
         residual = x
         x = modulate(self.final_layer_norm(x), shift_mlp, scale_mlp)
-        x = self.fc2(gelu(self.fc1(x)))
+        x = self._ffn(x)
         x = residual + gate_mlp.unsqueeze(1) * x
 
         return x
