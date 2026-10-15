@@ -54,7 +54,14 @@ MDGEN_VENV=/share/home/r15543056/.venvs/mdgen sbatch \
 
 數值為 max abs difference。global 與凍結基準逐位元相同；local 的 250 frames 推論逐位元相同，4 frames 梯度路徑的前向差異 7.87e-6 在容差內。
 
-與重構前 L40S（job 48275，`docs/validation/neighbor/`）比較：local 輸入梯度 1.09e-10、權重梯度 2.61e-8，4 frames 前向為 0。本次輸入與權重梯度同量級；4 frames 前向的 7.87e-6 屬 3080 與 L40S 的 kernel 差異或重構造成，需 L40S 結果才能區分。
+與重構前 L40S（job 48275，`docs/validation/neighbor/`）比較：local 輸入梯度 1.09e-10、權重梯度 2.61e-8，4 frames 前向為 0。本次輸入與權重梯度同量級。
+
+4 frames 前向的 7.87e-6 不是由 GPU 型號或重構的運算順序造成：
+
+- 凍結基準與候選模型在同一個 job、同一張 3080 上比較，兩者使用相同的 kernel，GPU 型號差異無法解釋兩個模型之間的差。
+- 在 CPU 上以 `tests/test_neighbor_integration.py` 的小型設定（非零權重、eval、開梯度）比較候選模型與凍結基準：global／local × `grad_checkpointing` 開／關四種組合，前向與輸入梯度皆**逐位元相同**（max abs 0）。重構沒有改變任何運算順序。
+
+差異只出現在開梯度的路徑，推論路徑為 0，因此較可能來自 GPU 端的執行差異。最可疑的是 #2 Ticket 1：若 atlas checkpoint 的 hparams 為 `grad_checkpointing=True`，候選模型的 local 層現在會經過 `torch.utils.checkpoint`，凍結基準（修正前）不會，GPU 上可能因此選到不同的 cuBLAS／SDPA 實作或不同的記憶體對齊。CPU 只有固定實作，看不到這類差異。此推論尚待 L40S 驗證（見「尚未完成」）。
 
 ### SDPA 等價性（`test_sdpa.py`）
 
@@ -96,7 +103,10 @@ MDGEN_VENV=/share/home/r15543056/.venvs/mdgen sbatch \
 ## 尚未完成
 
 - **L40S 驗證**：Ticket 4 的 spec 要求 L40S。job 48330（以修正前的腳本提交）仍在排隊；建議取消後以修正後的腳本重送。
-- 3080 與 L40S 的 kernel 不同，L40S 結果出來後應比對 local 4 frames 前向差異是否仍為 7.87e-6。
+- 確認 atlas checkpoint 的 `grad_checkpointing`：
+  `python -c "import torch; print(torch.load('../mdgen/ckpt/atlas.ckpt', map_location='cpu', weights_only=False)['hyper_parameters']['args'].grad_checkpointing)"`
+  若為 `True`，在 L40S 上以 `config.grad_checkpointing=False` 重跑 `validate_neighbor_checkpoint.py`，預期 local 4 frames 前向差異回到 0。
+- `job/env.sh` 的 `GPU_DEVICE_ORDINAL` 修正尚未在 node-201 第二張卡上實際觸發驗證。
 
 ## 檔案
 
