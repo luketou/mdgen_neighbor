@@ -17,6 +17,8 @@ MDGEN_VENV=/path/to/venv sbatch job/submit_neighbor_tests.sh
 | `MDGEN_RESOURCE_ROOT` | 否 | 含 `ckpt/`、`data/`、`splits/` 的資源目錄，預設 `../mdgen`（與 `scripts/diagnostics` 相同） |
 | `MDGEN_EXPECTED_GPU_UUID` | 否 | `submit_neighbor_scaling.sh` 會檢查 GPU UUID 是否相符；未設定時只印出 UUID |
 
+`job/env.sh` 會在 `GPU_DEVICE_ORDINAL` 有值時把 `CUDA_VISIBLE_DEVICES` 設為它：`node-201` 的單 GPU job 若分到第二張卡，Slurm 會把 `CUDA_VISIBLE_DEVICES` 設成主機編號 1，但 job 內只看得到 device 0，導致 `CUDA_ERROR_NO_DEVICE`。
+
 `--partition=l40s` 與 `--account=l40s` 仍寫在腳本中；其他叢集可在提交時覆寫，例如 `sbatch --partition=gpu --account=myacct job/...`。
 
 ## 重現既有量測

@@ -14,3 +14,9 @@ if [ -n "$mdgen_modules" ]; then
 fi
 source "$MDGEN_VENV/bin/activate"
 export PYTHONPATH="$PWD${PYTHONPATH:+:$PYTHONPATH}"
+# Some nodes (e.g. node-201) confine a one-GPU job to its card as device 0 but
+# still set CUDA_VISIBLE_DEVICES to the host index, which fails with
+# CUDA_ERROR_NO_DEVICE on the second card. GPU_DEVICE_ORDINAL is the in-job index.
+if [ -n "${GPU_DEVICE_ORDINAL:-}" ]; then
+    export CUDA_VISIBLE_DEVICES="$GPU_DEVICE_ORDINAL"
+fi
