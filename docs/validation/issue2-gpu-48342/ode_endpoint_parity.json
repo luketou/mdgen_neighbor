@@ -1,0 +1,39 @@
+{
+  "status": "passed",
+  "checkpoint_sha256": "bc90c66e7539f52c9d0514aeddd96c552061150a1eef3b10c120bc3aaff08015",
+  "gpu_uuid": "6f4d0e3a-816a-522a-921f-62ee5cfadde7",
+  "frames": 250,
+  "residues": 104,
+  "precision": "float32",
+  "tf32": false,
+  "seed": 137,
+  "sampling_method": "dopri5",
+  "atol": 1e-06,
+  "rtol": 0.001,
+  "ffn_chunk_size": 65536,
+  "saved_points": [
+    50,
+    2
+  ],
+  "model_evaluations": [
+    122,
+    122
+  ],
+  "output_shape": [
+    1,
+    250,
+    104,
+    14,
+    3
+  ],
+  "output_max_abs_difference": 0.0,
+  "output_exact_equal": true,
+  "output_all_finite": true,
+  "fixture": {
+    "kind": "repeated_5e3e_A_on_3D_lattice",
+    "source": "/share/home/r15543056/MDgen/mdgen/data/atlas_data/5e3e_A_R1_i40.npy",
+    "input_sha256": "eb1b4d1d6bde7e59dcfcfc6836dda39f72c286dacb02d5223b46ac0d1927a8cb",
+    "spacing_angstrom": 72.90625,
+    "chains": 1
+  }
+}
