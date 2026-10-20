@@ -1,3 +1,10 @@
+# 導航
+
+- Remote：`neighbor` = luketou/mdgen_neighbor（issue 與 PR 都在這裡），`origin` = 32176701Jeff/mdgen2026
+- Parity 基準：`tests/reference/global2026`、`tests/reference/localbaseline`
+- GPU 驗證紀錄：`docs/validation/<issue>-<job>/`；L40S 測試用 `sbatch job/submit_neighbor_tests.sh`
+- Review 時依 `CODING_STANDARDS.md`
+
 # AI Agent 開發與寫作規範
 
 本文件為 AI Agent 在此專案中進行 Git Commit、Pull Request (PR) 以及 Issue 發佈時的繁體中文撰寫規範。

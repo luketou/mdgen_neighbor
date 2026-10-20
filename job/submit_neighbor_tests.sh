@@ -5,7 +5,8 @@
 #SBATCH --cpus-per-task=2
 #SBATCH --gres=gpu:1
 #SBATCH --mem=20G
-#SBATCH --time=00:40:00
+# L40S: full pytest + parity takes ~45-50 min (job 48330 hit 40 min).
+#SBATCH --time=01:30:00
 #SBATCH --output=logs/neighbor_tests_%j.out
 #SBATCH --error=logs/neighbor_tests_%j.err
 set -eo pipefail

@@ -18,7 +18,7 @@ Issues and specs for this repository live as GitHub Issues. Use the `gh` CLI for
 - **Apply or remove labels**: `gh issue edit <number> --add-label "..."` or `--remove-label "..."`.
 - **Close an issue**: `gh issue close <number> --comment "..."`.
 
-Issue titles and bodies must follow the Traditional Chinese writing rules in `Agents.md`.
+Issue titles and bodies must follow the Traditional Chinese writing rules in `AGENTS.md`.
 
 ## Pull requests as a triage surface
 
