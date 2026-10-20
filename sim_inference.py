@@ -1,5 +1,7 @@
 import argparse
 import copy
+from mdgen.parsing import (add_determinism_args, add_local_override_args,
+    apply_local_overrides, check_determinism_args)
 parser = argparse.ArgumentParser()
 parser.add_argument('--sim_ckpt', type=str, default=None, required=True)
 parser.add_argument('--data_dir', type=str, default=None, required=True)
@@ -17,35 +19,12 @@ parser.add_argument('--inference_seed', type=int, default=None)  # seed-determin
 parser.add_argument('--ode_atol', type=float, default=1e-6)
 parser.add_argument('--ode_rtol', type=float, default=1e-3)
 parser.add_argument('--manual_attention', action='store_true')  # sdpa-route
-parser.add_argument('--local_spatial', action=argparse.BooleanOptionalAction, default=None)
-parser.add_argument('--cell_summaries', action=argparse.BooleanOptionalAction, default=None)
-parser.add_argument('--spatial_cell_width', type=float, default=None)
-parser.add_argument('--spatial_contact_radius', type=float, default=None)
-parser.add_argument('--core_capacity', type=int, default=None)
-parser.add_argument('--ghost_capacity', type=int, default=None)
-parser.add_argument('--group_batch_size', type=int, default=None)
-
-# seed-deterministic-args:start
-parser.add_argument(
-    '--deterministic',
-    action=argparse.BooleanOptionalAction,
-    default=False,
-    help='Use deterministic algorithms when available.',
-)
-parser.add_argument(
-    '--benchmark',
-    action=argparse.BooleanOptionalAction,
-    default=False,
-    help='Enable the cuDNN benchmark autotuner.',
-)
-# seed-deterministic-args:end
+add_local_override_args(parser)
+add_determinism_args(parser)  # seed-deterministic-args
 args = parser.parse_args()
 if not (0 < args.ode_atol < float('inf') and 0 < args.ode_rtol < float('inf')):
     parser.error('ODE tolerances must be positive and finite')
-# deterministic-benchmark-guard:start
-if args.deterministic and args.benchmark:
-    parser.error('--deterministic and --benchmark cannot both be enabled')
-# deterministic-benchmark-guard:end
+check_determinism_args(parser, args)  # deterministic-benchmark-guard
 
 import os, torch, mdtraj, tqdm, time
 import numpy as np
@@ -176,13 +155,10 @@ def main():
     from mdgen.full_length.checkpoint import load_compatible_state_dict
     checkpoint = torch.load(args.sim_ckpt, map_location='cpu', weights_only=False)
     model_args = copy.deepcopy(checkpoint['hyper_parameters']['args'])
-    for key in ('local_spatial', 'cell_summaries', 'spatial_cell_width',
-                'spatial_contact_radius', 'core_capacity', 'ghost_capacity', 'group_batch_size'):
-        if getattr(args, key) is not None:
-            setattr(model_args, key, getattr(args, key))
+    apply_local_overrides(model_args, args)
     if args.no_frames != bool(getattr(model_args, 'no_frames', False)):
         parser.error('--no_frames must match the checkpoint architecture')
-    if getattr(model_args, 'local_spatial', False) and (args.manual_attention or args.no_frames):
+    if model_args.local_spatial and (args.manual_attention or args.no_frames):
         parser.error('local_spatial requires SDPA and residue frames')
     if getattr(model_args, 'abs_time_emb', False) and args.num_frames != model_args.num_frames:
         parser.error('fixed absolute time embeddings require the checkpoint num_frames')

@@ -1,5 +1,6 @@
 import torch, tqdm, math
 from torch.utils.checkpoint import checkpoint
+from functools import partial
 
 from .standalone_hyena import HyenaOperator
 from ..transport.transport import t_to_alpha
@@ -183,7 +184,7 @@ class LatentMDGenModel(nn.Module):
             end_frames,
             aatype,
             x_d=None,
-            position_ids=None,  # position-id-model-routing
+            spatial=None,  # position_ids (global) or partitions (local)
     ):
         if self.args.sim_condition or self.args.mpnn:
             B, L = mask.shape
@@ -193,10 +194,7 @@ class LatentMDGenModel(nn.Module):
             if self.args.design:
                 x = x + self.x_d_to_emb(x_d)  # pass in only the simplex data
             for layer in self.ipa_layers:
-                x = layer(
-                    x, t, mask, frames=start_frames,
-                    position_ids=position_ids,  # position-id-model-routing
-                )
+                x = layer(x, t, mask, start_frames, spatial)
         elif self.args.tps_condition or self.args.inpainting or self.args.dynamic_mpnn:
             x_f = start_frames.invert().compose(end_frames).to_tensor_7()
             x_r = end_frames.invert().compose(start_frames).to_tensor_7()
@@ -209,14 +207,8 @@ class LatentMDGenModel(nn.Module):
                 x_f = x_f + self.x_d_to_emb(x_d)
                 x_r = x_r + self.x_d_to_emb(x_d)
             for layer in self.ipa_layers:
-                x_r = layer(
-                    x_r, t, mask, frames=start_frames,
-                    position_ids=position_ids,  # position-id-model-routing
-                )
-                x_f = layer(
-                    x_f, t, mask, frames=end_frames,
-                    position_ids=position_ids,  # position-id-model-routing
-                )
+                x_r = layer(x_r, t, mask, start_frames, spatial)
+                x_f = layer(x_f, t, mask, end_frames, spatial)
             x = (x_r + x_f)
 
         # x = x[:, None] + x_latent
@@ -227,6 +219,14 @@ class LatentMDGenModel(nn.Module):
                 x_cond=None, x_cond_mask=None,
                 aatype=None, position_ids=None  # position-id-model-routing
                 ):
+        return self._forward(
+            x, t, mask, start_frames, end_frames, x_cond, x_cond_mask,
+            aatype, position_ids,  # position-id-model-routing
+        )
+
+    def _forward(self, x, t, mask, start_frames, end_frames, x_cond, x_cond_mask,
+                 aatype, spatial):
+        """spatial is passed unchanged to every layer's spatial hooks."""
         if self.args.dynamic_mpnn:
             x = x[:, [0, -1]]
             x_cond = x_cond[:, [0, -1]]
@@ -258,13 +258,13 @@ class LatentMDGenModel(nn.Module):
         if self.args.prepend_ipa:  # IPA doesn't need checkpointing
             x = x + self.run_ipa(
                 t[:, 0], mask[:, 0], start_frames, end_frames, aatype,
-                x_d=x_d, position_ids=position_ids,  # position-id-model-routing
+                x_d=x_d, spatial=spatial,
             )[:, None]
 
         for layer_idx, layer in enumerate(self.layers):
             x = grad_checkpoint(
                 layer,
-                (x, t, mask, start_frames, position_ids),  # position-id-model-routing
+                (x, t, mask, start_frames, spatial),
                 self.args.grad_checkpointing,
             )
 
@@ -285,11 +285,15 @@ class LatentMDGenModel(nn.Module):
                           x_cond=None, x_cond_mask=None,
                           aatype=None, position_ids=None  # position-id-model-routing
                           ):
+        return self._forward_inference(x, t, partial(
+            self.forward, x, t, mask, start_frames, end_frames, x_cond, x_cond_mask,
+            aatype, position_ids,  # position-id-model-routing
+        ))
+
+    def _forward_inference(self, x, t, run_forward):
+        """run_forward() evaluates self.forward on the caller's inputs."""
         if not self.args.design or self.args.dynamic_mpnn or self.args.mpnn:
-            return self.forward(
-                x, t, mask, start_frames, end_frames, x_cond, x_cond_mask,
-                aatype, position_ids  # position-id-model-routing
-            )
+            return run_forward()
         else:
             x_discrete = x[:, :, :, -20:]
             B, T, L, _ = x_discrete.shape
@@ -303,10 +307,7 @@ class LatentMDGenModel(nn.Module):
                     f'them onto the simplex.')
 
                 # x_discrete = simplex_proj(x_discrete)
-            latent = self.forward(
-                x, t, mask, start_frames, end_frames, x_cond, x_cond_mask,
-                aatype, position_ids  # position-id-model-routing
-            )
+            latent = run_forward()
             latent_continuous = latent[:, :, :, :-20]
             logits = latent[:, :, :, -20:]
 
@@ -409,15 +410,26 @@ class IPALayer(nn.Module):
 
         self.final_layer_norm = nn.LayerNorm(self.embed_dim, elementwise_affine=False, eps=1e-6)
 
+    # Spatial hooks; the local model overrides them, the rest of forward is shared.
+    def _spatial_ipa(self, x, frames, mask, spatial):
+        return self.ipa(self.ipa_norm(x), frames, frame_mask=mask)
+
+    def _spatial_attention(self, x, mask, spatial):
+        return self.mha_l(x, mask=mask, position_ids=spatial)  # position-id-model-routing
+
+    def _exchange_spatial(self, x, spatial):
+        return x
+
     def forward(self, x, t, mask=None, frames=None, position_ids=None):  # position-id-model-routing
         shift_msa_l, scale_msa_l, gate_msa_l, \
             shift_mlp, scale_mlp, gate_mlp = self.adaLN_modulation(t).chunk(6, dim=-1)
-        x = x + self.ipa(self.ipa_norm(x), frames, frame_mask=mask)
+        x = x + self._spatial_ipa(x, frames, mask, position_ids)
 
         residual = x
         x = modulate(self.mha_layer_norm(x), shift_msa_l, scale_msa_l)
-        x = self.mha_l(x, mask=mask, position_ids=position_ids)  # position-id-model-routing
+        x = self._spatial_attention(x, mask, position_ids)
         x = residual + gate_msa_l.unsqueeze(1) * x
+        x = self._exchange_spatial(x, position_ids)
 
         residual = x
         x = modulate(self.final_layer_norm(x), shift_mlp, scale_mlp)
@@ -527,7 +539,11 @@ class LatentMDGenLayer(nn.Module):
                 token_chunk.copy_(self.fc2(gelu(self.fc1(token_chunk))))
         return x
 
-    def forward(self, x, t, mask=None, frames=None, position_ids=None):  # position-id-model-routing
+    # Spatial hooks; the local model overrides them, the rest of forward is shared.
+    def _spatial_ipa(self, x, frames, mask, spatial):
+        return self.ipa(self.ipa_norm(x), frames[:, None], frame_mask=mask)
+
+    def _spatial_attention(self, x, mask, position_ids):
         B, T, L, C = x.shape
 
         # position-id-residue-layout:start
@@ -544,22 +560,30 @@ class LatentMDGenLayer(nn.Module):
                 .reshape(B * T, L)
             )
         # position-id-residue-layout:end
+        return self.mha_l(
+            x.reshape(B * T, L, C),
+            mask=mask.reshape(B * T, L),  # [:,None].expand(-1, T, -1).reshape(B * T, L)
+            position_ids=residue_position_ids,  # position-id-residue-layout
+        ).reshape(B, T, L, C)
+
+    def _exchange_spatial(self, x, spatial):
+        return x
+
+    def forward(self, x, t, mask=None, frames=None, position_ids=None):  # position-id-model-routing
+        B, T, L, C = x.shape
 
         shift_msa_l, scale_msa_l, gate_msa_l, \
             shift_msa_t, scale_msa_t, gate_msa_t, \
             shift_mlp, scale_mlp, gate_mlp = self.adaLN_modulation(t).chunk(9, dim=-1)
 
         if hasattr(self, 'ipa'):
-            x = x + self.ipa(self.ipa_norm(x), frames[:, None], frame_mask=mask)
+            x = x + self._spatial_ipa(x, frames, mask, position_ids)
 
         residual = x
         x = modulate(self.mha_layer_norm(x), shift_msa_l, scale_msa_l)
-        x = self.mha_l(
-            x.reshape(B * T, L, C),
-            mask=mask.reshape(B * T, L),  # [:,None].expand(-1, T, -1).reshape(B * T, L)
-            position_ids=residue_position_ids,  # position-id-residue-layout
-        ).reshape(B, T, L, C)
+        x = self._spatial_attention(x, mask, position_ids)
         x = residual + gate_msa_l.unsqueeze(1) * x
+        x = self._exchange_spatial(x, position_ids)
 
         residual = x
         x = modulate(self.mha_layer_norm(x), shift_msa_t, scale_msa_t)

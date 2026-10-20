@@ -1,5 +1,6 @@
 from .ema import ExponentialMovingAverage
 from .logger import get_logger
+from .parsing import fill_local_defaults
 from .residue_constants import aatype_to_str_sequence
 
 logger = get_logger(__name__)
@@ -202,7 +203,8 @@ class NewMDGenWrapper(Wrapper):
         
         self.latent_dim = latent_dim
         model_class = LatentMDGenModel
-        if getattr(args, 'local_spatial', False):
+        fill_local_defaults(args)
+        if args.local_spatial:
             from .full_length.model import LocalLatentMDGenModel
             model_class = LocalLatentMDGenModel
         self.model = model_class(args, latent_dim, use_sdpa=use_sdpa)
@@ -356,19 +358,14 @@ class NewMDGenWrapper(Wrapper):
         ######## 
 
         local_kwargs = {}
-        if getattr(self.args, 'local_spatial', False):
-            from .full_length.partition import build_spatial_partition
+        if self.args.local_spatial:
+            from .full_length.partition import partitions_from_args
             chain_id = batch.get('chain_id', torch.zeros_like(batch['seqres']))
             residue_index = batch.get('residue_index',
                 torch.arange(L, device=offsets.device)[None].expand(B, -1))
-            partitions = [build_spatial_partition(
-                rigids.get_trans()[i, 0], mask=batch['mask'][i].bool(),
-                chain_id=chain_id[i], residue_index=residue_index[i],
-                cell_width=getattr(self.args, 'spatial_cell_width', 16.),
-                contact_radius=getattr(self.args, 'spatial_contact_radius', 16.),
-                core_capacity=getattr(self.args, 'core_capacity', 128),
-                ghost_capacity=getattr(self.args, 'ghost_capacity', 128))
-                for i in range(B)]
+            partitions = partitions_from_args(
+                self.args, rigids[:, 0].get_trans(), batch['mask'],
+                chain_id=chain_id, residue_index=residue_index)
             local_kwargs = dict(chain_id=chain_id, residue_index=residue_index,
                                 spatial_partitions=partitions)
 

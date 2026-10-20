@@ -1,0 +1,351 @@
+{
+  "add_bias_kv": true,
+  "cases": {
+    "residue_no_padding": {
+      "effective_batch_size": 4,
+      "full_padding_row": false,
+      "gradient_relative_error": 8.64153923096782e-07,
+      "gradients_finite": true,
+      "input_grad_max_absolute_error": 3.5762786865234375e-07,
+      "input_grad_relative_error": 4.854460051353715e-07,
+      "manual_path": "upstream_manual",
+      "output_max_absolute_error": 3.2782554626464844e-07,
+      "output_relative_error": 5.595063485659446e-07,
+      "outputs_finite": true,
+      "padding": false,
+      "parameter_grad_relative_error": 8.64153923096782e-07,
+      "parameter_gradient_errors": {
+        "bias_k": {
+          "max_absolute_error": 8.940696716308594e-08,
+          "relative_error": 8.64153923096782e-07
+        },
+        "bias_v": {
+          "max_absolute_error": 3.5762786865234375e-07,
+          "relative_error": 3.8154871130650926e-07
+        },
+        "k_proj.bias": {
+          "max_absolute_error": 2.6226043701171875e-06,
+          "relative_error": 6.418187135198996e-07
+        },
+        "k_proj.weight": {
+          "max_absolute_error": 3.337860107421875e-06,
+          "relative_error": 5.593892364560678e-07
+        },
+        "out_proj.bias": {
+          "max_absolute_error": 0.0,
+          "relative_error": 0.0
+        },
+        "out_proj.weight": {
+          "max_absolute_error": 6.67572021484375e-06,
+          "relative_error": 5.71906171439496e-07
+        },
+        "q_proj.bias": {
+          "max_absolute_error": 2.1457672119140625e-06,
+          "relative_error": 5.854561757430154e-07
+        },
+        "q_proj.weight": {
+          "max_absolute_error": 4.291534423828125e-06,
+          "relative_error": 6.720566104645636e-07
+        },
+        "v_proj.bias": {
+          "max_absolute_error": 1.1444091796875e-05,
+          "relative_error": 3.2254485308727034e-07
+        },
+        "v_proj.weight": {
+          "max_absolute_error": 6.67572021484375e-06,
+          "relative_error": 4.833374923373745e-07
+        }
+      },
+      "passed": true,
+      "position_ids": null,
+      "sdpa_fallback_reason": null,
+      "sdpa_path": "sdpa",
+      "sequence_length": 32
+    },
+    "residue_padding": {
+      "effective_batch_size": 4,
+      "full_padding_row": false,
+      "gradient_relative_error": 8.243401939870318e-07,
+      "gradients_finite": true,
+      "input_grad_max_absolute_error": 4.172325134277344e-07,
+      "input_grad_relative_error": 5.118948644001473e-07,
+      "manual_path": "upstream_manual",
+      "output_max_absolute_error": 2.980232238769531e-07,
+      "output_relative_error": 5.119782429725866e-07,
+      "outputs_finite": true,
+      "padding": true,
+      "parameter_grad_relative_error": 8.243401939870318e-07,
+      "parameter_gradient_errors": {
+        "bias_k": {
+          "max_absolute_error": 7.450580596923828e-08,
+          "relative_error": 6.075306092146841e-07
+        },
+        "bias_v": {
+          "max_absolute_error": 2.980232238769531e-07,
+          "relative_error": 2.315150726035898e-07
+        },
+        "k_proj.bias": {
+          "max_absolute_error": 1.7881393432617188e-06,
+          "relative_error": 6.211547415722967e-07
+        },
+        "k_proj.weight": {
+          "max_absolute_error": 3.814697265625e-06,
+          "relative_error": 6.804234683497621e-07
+        },
+        "out_proj.bias": {
+          "max_absolute_error": 0.0,
+          "relative_error": 0.0
+        },
+        "out_proj.weight": {
+          "max_absolute_error": 5.7220458984375e-06,
+          "relative_error": 5.259898142072479e-07
+        },
+        "q_proj.bias": {
+          "max_absolute_error": 2.6226043701171875e-06,
+          "relative_error": 5.98753243337455e-07
+        },
+        "q_proj.weight": {
+          "max_absolute_error": 4.76837158203125e-06,
+          "relative_error": 8.243401939870318e-07
+        },
+        "v_proj.bias": {
+          "max_absolute_error": 1.1444091796875e-05,
+          "relative_error": 2.513046270291697e-07
+        },
+        "v_proj.weight": {
+          "max_absolute_error": 6.67572021484375e-06,
+          "relative_error": 4.26718685706448e-07
+        }
+      },
+      "passed": true,
+      "position_ids": null,
+      "sdpa_fallback_reason": null,
+      "sdpa_path": "sdpa",
+      "sequence_length": 32
+    },
+    "time_full_row_padding": {
+      "effective_batch_size": 8,
+      "full_padding_row": true,
+      "gradient_relative_error": 6.38585915349051e-07,
+      "gradients_finite": true,
+      "input_grad_max_absolute_error": 4.172325134277344e-07,
+      "input_grad_relative_error": 3.4106900576338406e-07,
+      "manual_path": "upstream_manual",
+      "output_max_absolute_error": 2.682209014892578e-07,
+      "output_relative_error": 3.3250743412732167e-07,
+      "outputs_finite": true,
+      "padding": true,
+      "parameter_grad_relative_error": 6.38585915349051e-07,
+      "parameter_gradient_errors": {
+        "bias_k": {
+          "max_absolute_error": 1.9371509552001953e-07,
+          "relative_error": 5.974065387340477e-07
+        },
+        "bias_v": {
+          "max_absolute_error": 1.9073486328125e-06,
+          "relative_error": 1.6070820893513536e-07
+        },
+        "k_proj.bias": {
+          "max_absolute_error": 2.86102294921875e-06,
+          "relative_error": 5.088831490639179e-07
+        },
+        "k_proj.weight": {
+          "max_absolute_error": 3.5762786865234375e-06,
+          "relative_error": 5.376134436047798e-07
+        },
+        "out_proj.bias": {
+          "max_absolute_error": 0.0,
+          "relative_error": 0.0
+        },
+        "out_proj.weight": {
+          "max_absolute_error": 4.76837158203125e-06,
+          "relative_error": 4.067533420074839e-07
+        },
+        "q_proj.bias": {
+          "max_absolute_error": 1.9073486328125e-06,
+          "relative_error": 3.6692851296899655e-07
+        },
+        "q_proj.weight": {
+          "max_absolute_error": 4.291534423828125e-06,
+          "relative_error": 6.38585915349051e-07
+        },
+        "v_proj.bias": {
+          "max_absolute_error": 5.7220458984375e-06,
+          "relative_error": 2.204854015513206e-07
+        },
+        "v_proj.weight": {
+          "max_absolute_error": 5.7220458984375e-06,
+          "relative_error": 3.505781559659112e-07
+        }
+      },
+      "passed": true,
+      "position_ids": null,
+      "sdpa_fallback_reason": null,
+      "sdpa_path": "sdpa",
+      "sequence_length": 16
+    },
+    "time_no_padding": {
+      "effective_batch_size": 8,
+      "full_padding_row": false,
+      "gradient_relative_error": 5.064959370162172e-07,
+      "gradients_finite": true,
+      "input_grad_max_absolute_error": 4.172325134277344e-07,
+      "input_grad_relative_error": 3.994102422480178e-07,
+      "manual_path": "upstream_manual",
+      "output_max_absolute_error": 2.980232238769531e-07,
+      "output_relative_error": 3.75413113975947e-07,
+      "outputs_finite": true,
+      "padding": false,
+      "parameter_grad_relative_error": 5.064959370162172e-07,
+      "parameter_gradient_errors": {
+        "bias_k": {
+          "max_absolute_error": 1.0803341865539551e-07,
+          "relative_error": 4.5794475405018974e-07
+        },
+        "bias_v": {
+          "max_absolute_error": 4.76837158203125e-07,
+          "relative_error": 2.841590628661434e-07
+        },
+        "k_proj.bias": {
+          "max_absolute_error": 1.9073486328125e-06,
+          "relative_error": 4.21073197680392e-07
+        },
+        "k_proj.weight": {
+          "max_absolute_error": 3.814697265625e-06,
+          "relative_error": 5.064959370162172e-07
+        },
+        "out_proj.bias": {
+          "max_absolute_error": 0.0,
+          "relative_error": 0.0
+        },
+        "out_proj.weight": {
+          "max_absolute_error": 3.814697265625e-06,
+          "relative_error": 3.0959531867110545e-07
+        },
+        "q_proj.bias": {
+          "max_absolute_error": 2.1457672119140625e-06,
+          "relative_error": 4.652732456717181e-07
+        },
+        "q_proj.weight": {
+          "max_absolute_error": 3.814697265625e-06,
+          "relative_error": 4.858079408101321e-07
+        },
+        "v_proj.bias": {
+          "max_absolute_error": 6.198883056640625e-06,
+          "relative_error": 1.908969076815506e-07
+        },
+        "v_proj.weight": {
+          "max_absolute_error": 5.7220458984375e-06,
+          "relative_error": 3.362142787738624e-07
+        }
+      },
+      "passed": true,
+      "position_ids": null,
+      "sdpa_fallback_reason": null,
+      "sdpa_path": "sdpa",
+      "sequence_length": 16
+    },
+    "time_padding": {
+      "effective_batch_size": 8,
+      "full_padding_row": false,
+      "gradient_relative_error": 5.41555664679022e-07,
+      "gradients_finite": true,
+      "input_grad_max_absolute_error": 4.470348358154297e-07,
+      "input_grad_relative_error": 4.228887224148277e-07,
+      "manual_path": "upstream_manual",
+      "output_max_absolute_error": 2.384185791015625e-07,
+      "output_relative_error": 3.1635518335313715e-07,
+      "outputs_finite": true,
+      "padding": true,
+      "parameter_grad_relative_error": 5.41555664679022e-07,
+      "parameter_gradient_errors": {
+        "bias_k": {
+          "max_absolute_error": 8.940696716308594e-08,
+          "relative_error": 3.3470592514279673e-07
+        },
+        "bias_v": {
+          "max_absolute_error": 4.76837158203125e-07,
+          "relative_error": 2.1723298400459231e-07
+        },
+        "k_proj.bias": {
+          "max_absolute_error": 1.9073486328125e-06,
+          "relative_error": 5.41555664679022e-07
+        },
+        "k_proj.weight": {
+          "max_absolute_error": 3.814697265625e-06,
+          "relative_error": 5.004735105001219e-07
+        },
+        "out_proj.bias": {
+          "max_absolute_error": 0.0,
+          "relative_error": 0.0
+        },
+        "out_proj.weight": {
+          "max_absolute_error": 3.814697265625e-06,
+          "relative_error": 3.491626817020773e-07
+        },
+        "q_proj.bias": {
+          "max_absolute_error": 2.0265579223632812e-06,
+          "relative_error": 4.1539482545109433e-07
+        },
+        "q_proj.weight": {
+          "max_absolute_error": 3.814697265625e-06,
+          "relative_error": 5.25438997714603e-07
+        },
+        "v_proj.bias": {
+          "max_absolute_error": 7.62939453125e-06,
+          "relative_error": 2.1489737361025868e-07
+        },
+        "v_proj.weight": {
+          "max_absolute_error": 5.7220458984375e-06,
+          "relative_error": 3.7305911333050886e-07
+        }
+      },
+      "passed": true,
+      "position_ids": null,
+      "sdpa_fallback_reason": null,
+      "sdpa_path": "sdpa",
+      "sequence_length": 16
+    }
+  },
+  "cuda_version": "12.8",
+  "device": "cuda",
+  "dropout": 0.0,
+  "dtype": "float32",
+  "embed_dim": 384,
+  "gpu": "NVIDIA L40S",
+  "gradient_relative_error_limit": 0.0001,
+  "no_rope_padding": {
+    "effective_batch_size": 4,
+    "gradient_relative_error": 6.074293696114058e-06,
+    "input_grad_max_absolute_error": 2.682209014892578e-07,
+    "input_grad_relative_error": 3.4440872713346093e-07,
+    "manual_padding_invariance_error": 0.0,
+    "manual_path": "torch_mha",
+    "output_max_absolute_error": 1.4901161193847656e-07,
+    "output_relative_error": 2.4065658046059166e-07,
+    "padding": true,
+    "padding_invariance_error_limit": 1e-06,
+    "parameter_grad_relative_error": 6.074293696114058e-06,
+    "passed": true,
+    "sdpa_padding_invariance_error": 0.0,
+    "sdpa_path": "sdpa",
+    "sequence_length": 32,
+    "use_rotary_embeddings": false
+  },
+  "num_heads": 16,
+  "output_relative_error_limit": 1e-05,
+  "passed": true,
+  "position_ids": null,
+  "position_ids_non_none": {
+    "manual_raises": true,
+    "no_rope_manual_raises": true,
+    "no_rope_sdpa_raises": true,
+    "passed": true,
+    "sdpa_raises": true
+  },
+  "seed": 137,
+  "tf32_cuda_matmul": false,
+  "tf32_cudnn": false,
+  "torch_version": "2.11.0+cu128",
+  "use_rotary_embeddings": true
+}

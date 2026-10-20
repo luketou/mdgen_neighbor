@@ -346,3 +346,29 @@ def build_spatial_partition(
     if not validation.valid:
         raise RuntimeError(f"Invalid core ownership: {validation}")
     return partition
+
+
+def partitions_from_args(args, ca_coordinates, mask, chain_id=None, residue_index=None):
+    """Build one partition per batch item from the run's local options.
+
+    ca_coordinates is [B, L, 3] and mask is [B, L]; missing chain ids and
+    residue numbers default to a single chain numbered by position.
+    """
+    B, L = mask.shape
+    if chain_id is None:
+        chain_id = torch.zeros((B, L), dtype=torch.long, device=mask.device)
+    if residue_index is None:
+        residue_index = torch.arange(L, device=mask.device)[None].expand(B, -1)
+    return [
+        build_spatial_partition(
+            ca_coordinates[batch_index],
+            mask=mask[batch_index].bool(),
+            chain_id=chain_id[batch_index],
+            residue_index=residue_index[batch_index],
+            cell_width=args.spatial_cell_width,
+            contact_radius=args.spatial_contact_radius,
+            core_capacity=args.core_capacity,
+            ghost_capacity=args.ghost_capacity,
+        )
+        for batch_index in range(B)
+    ]

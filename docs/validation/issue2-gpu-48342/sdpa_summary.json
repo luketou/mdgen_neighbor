@@ -1,0 +1,351 @@
+{
+  "add_bias_kv": true,
+  "cases": {
+    "residue_no_padding": {
+      "effective_batch_size": 4,
+      "full_padding_row": false,
+      "gradient_relative_error": 7.921411532163739e-07,
+      "gradients_finite": true,
+      "input_grad_max_absolute_error": 5.066394805908203e-07,
+      "input_grad_relative_error": 6.877151183003501e-07,
+      "manual_path": "upstream_manual",
+      "output_max_absolute_error": 3.2782554626464844e-07,
+      "output_relative_error": 5.595063485659446e-07,
+      "outputs_finite": true,
+      "padding": false,
+      "parameter_grad_relative_error": 7.921411532163739e-07,
+      "parameter_gradient_errors": {
+        "bias_k": {
+          "max_absolute_error": 8.195638656616211e-08,
+          "relative_error": 7.921411532163739e-07
+        },
+        "bias_v": {
+          "max_absolute_error": 3.5762786865234375e-07,
+          "relative_error": 3.815487598329885e-07
+        },
+        "k_proj.bias": {
+          "max_absolute_error": 2.384185791015625e-06,
+          "relative_error": 5.834715577453632e-07
+        },
+        "k_proj.weight": {
+          "max_absolute_error": 3.337860107421875e-06,
+          "relative_error": 5.593892364560678e-07
+        },
+        "out_proj.bias": {
+          "max_absolute_error": 0.0,
+          "relative_error": 0.0
+        },
+        "out_proj.weight": {
+          "max_absolute_error": 7.62939453125e-06,
+          "relative_error": 6.536071598742722e-07
+        },
+        "q_proj.bias": {
+          "max_absolute_error": 2.384185791015625e-06,
+          "relative_error": 6.505067349889554e-07
+        },
+        "q_proj.weight": {
+          "max_absolute_error": 3.337860107421875e-06,
+          "relative_error": 5.227106579956436e-07
+        },
+        "v_proj.bias": {
+          "max_absolute_error": 1.33514404296875e-05,
+          "relative_error": 3.7630232860181535e-07
+        },
+        "v_proj.weight": {
+          "max_absolute_error": 6.198883056640625e-06,
+          "relative_error": 4.4881338574184776e-07
+        }
+      },
+      "passed": true,
+      "position_ids": null,
+      "sdpa_fallback_reason": null,
+      "sdpa_path": "sdpa",
+      "sequence_length": 32
+    },
+    "residue_padding": {
+      "effective_batch_size": 4,
+      "full_padding_row": false,
+      "gradient_relative_error": 6.804234683497621e-07,
+      "gradients_finite": true,
+      "input_grad_max_absolute_error": 4.172325134277344e-07,
+      "input_grad_relative_error": 5.118947895326291e-07,
+      "manual_path": "upstream_manual",
+      "output_max_absolute_error": 2.980232238769531e-07,
+      "output_relative_error": 5.119782953969362e-07,
+      "outputs_finite": true,
+      "padding": true,
+      "parameter_grad_relative_error": 6.804234683497621e-07,
+      "parameter_gradient_errors": {
+        "bias_k": {
+          "max_absolute_error": 8.195638656616211e-08,
+          "relative_error": 6.682836701361525e-07
+        },
+        "bias_v": {
+          "max_absolute_error": 3.5762786865234375e-07,
+          "relative_error": 2.778180613966803e-07
+        },
+        "k_proj.bias": {
+          "max_absolute_error": 1.7881393432617188e-06,
+          "relative_error": 6.21154638683457e-07
+        },
+        "k_proj.weight": {
+          "max_absolute_error": 3.814697265625e-06,
+          "relative_error": 6.804234683497621e-07
+        },
+        "out_proj.bias": {
+          "max_absolute_error": 0.0,
+          "relative_error": 0.0
+        },
+        "out_proj.weight": {
+          "max_absolute_error": 5.7220458984375e-06,
+          "relative_error": 5.259898603181327e-07
+        },
+        "q_proj.bias": {
+          "max_absolute_error": 2.1457672119140625e-06,
+          "relative_error": 4.898890172760995e-07
+        },
+        "q_proj.weight": {
+          "max_absolute_error": 3.814697265625e-06,
+          "relative_error": 6.594721008266894e-07
+        },
+        "v_proj.bias": {
+          "max_absolute_error": 1.1444091796875e-05,
+          "relative_error": 2.513046270291697e-07
+        },
+        "v_proj.weight": {
+          "max_absolute_error": 5.7220458984375e-06,
+          "relative_error": 3.6575891805585966e-07
+        }
+      },
+      "passed": true,
+      "position_ids": null,
+      "sdpa_fallback_reason": null,
+      "sdpa_path": "sdpa",
+      "sequence_length": 32
+    },
+    "time_full_row_padding": {
+      "effective_batch_size": 8,
+      "full_padding_row": true,
+      "gradient_relative_error": 5.676319650304651e-07,
+      "gradients_finite": true,
+      "input_grad_max_absolute_error": 3.5762786865234375e-07,
+      "input_grad_relative_error": 2.9234486208290064e-07,
+      "manual_path": "upstream_manual",
+      "output_max_absolute_error": 2.980232238769531e-07,
+      "output_relative_error": 3.69452704585913e-07,
+      "outputs_finite": true,
+      "padding": true,
+      "parameter_grad_relative_error": 5.676319650304651e-07,
+      "parameter_gradient_errors": {
+        "bias_k": {
+          "max_absolute_error": 1.7881393432617188e-07,
+          "relative_error": 5.514521389174112e-07
+        },
+        "bias_v": {
+          "max_absolute_error": 1.9073486328125e-06,
+          "relative_error": 1.607081831080111e-07
+        },
+        "k_proj.bias": {
+          "max_absolute_error": 1.9073486328125e-06,
+          "relative_error": 3.392554902564127e-07
+        },
+        "k_proj.weight": {
+          "max_absolute_error": 3.337860107421875e-06,
+          "relative_error": 5.017725833324194e-07
+        },
+        "out_proj.bias": {
+          "max_absolute_error": 0.0,
+          "relative_error": 0.0
+        },
+        "out_proj.weight": {
+          "max_absolute_error": 3.337860107421875e-06,
+          "relative_error": 2.8472733940523874e-07
+        },
+        "q_proj.bias": {
+          "max_absolute_error": 1.9073486328125e-06,
+          "relative_error": 3.669285802872757e-07
+        },
+        "q_proj.weight": {
+          "max_absolute_error": 3.814697265625e-06,
+          "relative_error": 5.676319650304651e-07
+        },
+        "v_proj.bias": {
+          "max_absolute_error": 5.7220458984375e-06,
+          "relative_error": 2.204853853467177e-07
+        },
+        "v_proj.weight": {
+          "max_absolute_error": 5.7220458984375e-06,
+          "relative_error": 3.505781559659112e-07
+        }
+      },
+      "passed": true,
+      "position_ids": null,
+      "sdpa_fallback_reason": null,
+      "sdpa_path": "sdpa",
+      "sequence_length": 16
+    },
+    "time_no_padding": {
+      "effective_batch_size": 8,
+      "full_padding_row": false,
+      "gradient_relative_error": 5.46533900222585e-07,
+      "gradients_finite": true,
+      "input_grad_max_absolute_error": 4.172325134277344e-07,
+      "input_grad_relative_error": 3.994102422480178e-07,
+      "manual_path": "upstream_manual",
+      "output_max_absolute_error": 2.980232238769531e-07,
+      "output_relative_error": 3.754131421629503e-07,
+      "outputs_finite": true,
+      "padding": false,
+      "parameter_grad_relative_error": 5.46533900222585e-07,
+      "parameter_gradient_errors": {
+        "bias_k": {
+          "max_absolute_error": 1.1920928955078125e-07,
+          "relative_error": 5.053183812150924e-07
+        },
+        "bias_v": {
+          "max_absolute_error": 4.76837158203125e-07,
+          "relative_error": 2.841591032393356e-07
+        },
+        "k_proj.bias": {
+          "max_absolute_error": 2.1457672119140625e-06,
+          "relative_error": 4.73707347390441e-07
+        },
+        "k_proj.weight": {
+          "max_absolute_error": 3.814697265625e-06,
+          "relative_error": 5.06495969083486e-07
+        },
+        "out_proj.bias": {
+          "max_absolute_error": 0.0,
+          "relative_error": 0.0
+        },
+        "out_proj.weight": {
+          "max_absolute_error": 4.76837158203125e-06,
+          "relative_error": 3.869941483388818e-07
+        },
+        "q_proj.bias": {
+          "max_absolute_error": 2.384185791015625e-06,
+          "relative_error": 5.169702195169286e-07
+        },
+        "q_proj.weight": {
+          "max_absolute_error": 4.291534423828125e-06,
+          "relative_error": 5.46533900222585e-07
+        },
+        "v_proj.bias": {
+          "max_absolute_error": 9.5367431640625e-06,
+          "relative_error": 2.936875847802635e-07
+        },
+        "v_proj.weight": {
+          "max_absolute_error": 5.7220458984375e-06,
+          "relative_error": 3.3621424109385284e-07
+        }
+      },
+      "passed": true,
+      "position_ids": null,
+      "sdpa_fallback_reason": null,
+      "sdpa_path": "sdpa",
+      "sequence_length": 16
+    },
+    "time_padding": {
+      "effective_batch_size": 8,
+      "full_padding_row": false,
+      "gradient_relative_error": 6.136273925053113e-07,
+      "gradients_finite": true,
+      "input_grad_max_absolute_error": 4.76837158203125e-07,
+      "input_grad_relative_error": 4.510813547777409e-07,
+      "manual_path": "upstream_manual",
+      "output_max_absolute_error": 2.682209014892578e-07,
+      "output_relative_error": 3.5589955312461223e-07,
+      "outputs_finite": true,
+      "padding": true,
+      "parameter_grad_relative_error": 6.136273925053113e-07,
+      "parameter_gradient_errors": {
+        "bias_k": {
+          "max_absolute_error": 1.6391277313232422e-07,
+          "relative_error": 6.136273925053113e-07
+        },
+        "bias_v": {
+          "max_absolute_error": 5.960464477539062e-07,
+          "relative_error": 2.7154120051188776e-07
+        },
+        "k_proj.bias": {
+          "max_absolute_error": 1.6689300537109375e-06,
+          "relative_error": 4.7386114243859773e-07
+        },
+        "k_proj.weight": {
+          "max_absolute_error": 3.814697265625e-06,
+          "relative_error": 5.004735731185634e-07
+        },
+        "out_proj.bias": {
+          "max_absolute_error": 0.0,
+          "relative_error": 0.0
+        },
+        "out_proj.weight": {
+          "max_absolute_error": 3.337860107421875e-06,
+          "relative_error": 3.0551734648931765e-07
+        },
+        "q_proj.bias": {
+          "max_absolute_error": 1.9073486328125e-06,
+          "relative_error": 3.9095987393107907e-07
+        },
+        "q_proj.weight": {
+          "max_absolute_error": 3.5762786865234375e-06,
+          "relative_error": 4.925989956497597e-07
+        },
+        "v_proj.bias": {
+          "max_absolute_error": 5.7220458984375e-06,
+          "relative_error": 1.6117303020769403e-07
+        },
+        "v_proj.weight": {
+          "max_absolute_error": 4.76837158203125e-06,
+          "relative_error": 3.108825944420907e-07
+        }
+      },
+      "passed": true,
+      "position_ids": null,
+      "sdpa_fallback_reason": null,
+      "sdpa_path": "sdpa",
+      "sequence_length": 16
+    }
+  },
+  "cuda_version": "12.8",
+  "device": "cuda",
+  "dropout": 0.0,
+  "dtype": "float32",
+  "embed_dim": 384,
+  "gpu": "NVIDIA GeForce RTX 3080",
+  "gradient_relative_error_limit": 0.0001,
+  "no_rope_padding": {
+    "effective_batch_size": 4,
+    "gradient_relative_error": 8.991025030371468e-06,
+    "input_grad_max_absolute_error": 2.384185791015625e-07,
+    "input_grad_relative_error": 3.0614104392412204e-07,
+    "manual_padding_invariance_error": 0.0,
+    "manual_path": "torch_mha",
+    "output_max_absolute_error": 1.7881393432617188e-07,
+    "output_relative_error": 2.887878409537546e-07,
+    "padding": true,
+    "padding_invariance_error_limit": 1e-06,
+    "parameter_grad_relative_error": 8.991025030371468e-06,
+    "passed": true,
+    "sdpa_padding_invariance_error": 0.0,
+    "sdpa_path": "sdpa",
+    "sequence_length": 32,
+    "use_rotary_embeddings": false
+  },
+  "num_heads": 16,
+  "output_relative_error_limit": 1e-05,
+  "passed": true,
+  "position_ids": null,
+  "position_ids_non_none": {
+    "manual_raises": true,
+    "no_rope_manual_raises": true,
+    "no_rope_sdpa_raises": true,
+    "passed": true,
+    "sdpa_raises": true
+  },
+  "seed": 137,
+  "tf32_cuda_matmul": false,
+  "tf32_cudnn": false,
+  "torch_version": "2.11.0+cu128",
+  "use_rotary_embeddings": true
+}

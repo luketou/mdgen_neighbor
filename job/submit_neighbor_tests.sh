@@ -5,7 +5,7 @@
 #SBATCH --cpus-per-task=2
 #SBATCH --gres=gpu:1
 #SBATCH --mem=20G
-#SBATCH --time=00:20:00
+#SBATCH --time=00:40:00
 #SBATCH --output=logs/neighbor_tests_%j.out
 #SBATCH --error=logs/neighbor_tests_%j.err
 set -eo pipefail
