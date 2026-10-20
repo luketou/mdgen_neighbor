@@ -24,6 +24,13 @@ def fill_local_defaults(args):
     return args
 
 
+def positive_int(text):
+    value = int(text)
+    if value <= 0:
+        raise argparse.ArgumentTypeError(f'must be a positive integer, got {value}')
+    return value
+
+
 # Options an inference run may override on top of the checkpoint's args.
 LOCAL_OVERRIDE_TYPES = dict(
     local_spatial=argparse.BooleanOptionalAction,
@@ -33,6 +40,7 @@ LOCAL_OVERRIDE_TYPES = dict(
     core_capacity=int,
     ghost_capacity=int,
     group_batch_size=int,
+    ffn_chunk_size=positive_int,
 )
 
 

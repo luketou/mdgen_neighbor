@@ -37,3 +37,21 @@ def test_determinism_and_benchmark_are_mutually_exclusive():
     check_determinism_args(p, p.parse_args(['--deterministic']))
     with pytest.raises(SystemExit):
         check_determinism_args(p, p.parse_args(['--deterministic', '--benchmark']))
+
+
+def test_ffn_chunk_size_flag_overrides_checkpoint_value():
+    saved = SimpleNamespace(ffn_chunk_size=65536)
+    apply_local_overrides(saved, parser().parse_args(['--ffn_chunk_size', '4096']))
+    assert saved.ffn_chunk_size == 4096
+
+
+def test_ffn_chunk_size_unset_keeps_checkpoint_value():
+    saved = SimpleNamespace(ffn_chunk_size=12345)
+    apply_local_overrides(saved, parser().parse_args([]))
+    assert saved.ffn_chunk_size == 12345
+
+
+@pytest.mark.parametrize('value', ['0', '-8'])
+def test_ffn_chunk_size_rejects_non_positive(value):
+    with pytest.raises(SystemExit):
+        parser().parse_args(['--ffn_chunk_size', value])
