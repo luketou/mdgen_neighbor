@@ -1,0 +1,52 @@
+{
+  "repo": "/share/home/r15543056/MDgen/wt-t1",
+  "gpu": "NVIDIA L40S",
+  "gpu_uuid": "a78cba9e-11fb-acb6-6ff5-3e12bc8ff2eb",
+  "residues": 104,
+  "frames": 250,
+  "group_batch_size": 4,
+  "precision": "float32",
+  "tf32": false,
+  "repeats": 5,
+  "fixture": {
+    "kind": "repeated_5e3e_A_on_3D_lattice",
+    "source": "/share/home/r15543056/MDgen/mdgen/data/atlas_data/5e3e_A_R1_i40.npy",
+    "input_sha256": "ae957b68a50f8c15d12e2a5fcdf07106adb199481729d09a5396783b845e6327",
+    "spacing_angstrom": 72.90625,
+    "chains": 1
+  },
+  "results": [
+    {
+      "batch_size": 1,
+      "median_seconds": 0.2371252402663231,
+      "min_seconds": 0.23708510398864746,
+      "peak_allocated_bytes": 1487023104,
+      "loop_max_abs_difference": 0.0,
+      "output_all_finite": true
+    },
+    {
+      "batch_size": 2,
+      "median_seconds": 0.4914831146597862,
+      "min_seconds": 0.49147002026438713,
+      "peak_allocated_bytes": 1724556800,
+      "loop_max_abs_difference": 2.2351741790771484e-05,
+      "output_all_finite": true
+    },
+    {
+      "batch_size": 4,
+      "median_seconds": 0.9923574589192867,
+      "min_seconds": 0.990826066583395,
+      "peak_allocated_bytes": 2321655808,
+      "loop_max_abs_difference": 2.7060508728027344e-05,
+      "output_all_finite": true
+    },
+    {
+      "batch_size": 8,
+      "median_seconds": 1.9735450893640518,
+      "min_seconds": 1.9712380394339561,
+      "peak_allocated_bytes": 4122087424,
+      "loop_max_abs_difference": 2.0623207092285156e-05,
+      "output_all_finite": true
+    }
+  ]
+}
