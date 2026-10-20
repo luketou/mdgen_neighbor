@@ -13,7 +13,7 @@ from ..rigid_utils import Rigid
 from .attention import run_pretrained_local_attention
 from .local_ipa import run_local_ipa
 from ..parsing import fill_local_defaults
-from .partition import partitions_from_args
+from .partition import merge_partitions, partitions_from_args
 from .summaries import CoreCellSummaryExchange
 
 
@@ -29,29 +29,25 @@ class LocalIPALayer(GlobalIPALayer):
     def _spatial_ipa(self, x, frames, mask, partitions):
         if partitions is None:
             return super()._spatial_ipa(x, frames, mask, None)
-        return torch.cat([
-            run_local_ipa(
-                self.ipa,
-                self.ipa_norm(x[batch_index:batch_index + 1]),
-                frames[batch_index:batch_index + 1],
-                partition,
-                group_batch_size=self.group_batch_size,
-            )
-            for batch_index, partition in enumerate(partitions)
-        ], dim=0)
+        B, L, C = x.shape
+        merged_frames = Rigid.from_tensor_7(frames.to_tensor_7().reshape(1, B * L, 7))
+        out = run_local_ipa(
+            self.ipa, self.ipa_norm(x).reshape(1, B * L, C), merged_frames,
+            merge_partitions(partitions), group_batch_size=self.group_batch_size,
+        )
+        return out.reshape(B, L, C)
 
     def _spatial_attention(self, x, mask, partitions):
         if partitions is None:
             return super()._spatial_attention(x, mask, None)
-        return torch.cat([
-            run_pretrained_local_attention(
-                self.mha_l, x[batch_index:batch_index + 1], partition,
-                mask=None if mask is None else mask[batch_index:batch_index + 1],
-                backend=self.attention_backend,
-                group_batch_size=self.group_batch_size,
-            )
-            for batch_index, partition in enumerate(partitions)
-        ], dim=0)
+        B, L, C = x.shape
+        out = run_pretrained_local_attention(
+            self.mha_l, x.reshape(1, B * L, C), merge_partitions(partitions),
+            mask=None if mask is None else mask.reshape(1, B * L),
+            backend=self.attention_backend,
+            group_batch_size=self.group_batch_size, residue_length=L,
+        )
+        return out.reshape(B, L, C)
 
     def _exchange_spatial(self, x, partitions):
         if partitions is None or not self.cell_summaries_enabled:
@@ -77,36 +73,29 @@ class LocalLayer(GlobalLayer):
     def _spatial_ipa(self, x, frames, mask, partitions):
         if partitions is None:
             return super()._spatial_ipa(x, frames, mask, None)
-        _, T, L, _ = x.shape
-        ipa_updates = []
-        for batch_index, partition in enumerate(partitions):
-            local_frames = frames[batch_index:batch_index + 1].to_tensor_7()
-            local_frames = Rigid.from_tensor_7(
-                local_frames[:, None].expand(-1, T, -1, -1).reshape(T, L, 7)
-            )
-            ipa_updates.append(
-                run_local_ipa(
-                    self.ipa,
-                    self.ipa_norm(x[batch_index]),
-                    local_frames,
-                    partition,
-                    group_batch_size=self.group_batch_size,
-                )
-            )
-        return torch.stack(ipa_updates, dim=0)
+        B, T, L, C = x.shape
+        local_frames = Rigid.from_tensor_7(
+            frames.to_tensor_7()[None].expand(T, -1, -1, -1).reshape(T, B * L, 7)
+        )
+        out = run_local_ipa(
+            self.ipa, self.ipa_norm(x).permute(1, 0, 2, 3).reshape(T, B * L, C),
+            local_frames, merge_partitions(partitions),
+            group_batch_size=self.group_batch_size,
+        )
+        return out.reshape(T, B, L, C).permute(1, 0, 2, 3)
 
     def _spatial_attention(self, x, mask, partitions):
         if partitions is None:
             return super()._spatial_attention(x, mask, None)
-        return torch.stack([
-            run_pretrained_local_attention(
-                self.mha_l, x[batch_index], partition,
-                mask=None if mask is None else mask[batch_index],
-                backend=self.attention_backend,
-                group_batch_size=self.group_batch_size,
-            )
-            for batch_index, partition in enumerate(partitions)
-        ], dim=0)
+        B, T, L, C = x.shape
+        out = run_pretrained_local_attention(
+            self.mha_l, x.permute(1, 0, 2, 3).reshape(T, B * L, C),
+            merge_partitions(partitions),
+            mask=None if mask is None else mask.permute(1, 0, 2).reshape(T, B * L),
+            backend=self.attention_backend,
+            group_batch_size=self.group_batch_size, residue_length=L,
+        )
+        return out.reshape(T, B, L, C).permute(1, 0, 2, 3)
 
     def _exchange_spatial(self, x, partitions):
         if partitions is None or not self.cell_summaries_enabled:

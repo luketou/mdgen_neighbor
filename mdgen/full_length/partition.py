@@ -166,6 +166,40 @@ class SpatialPartition:
         )
 
 
+def merge_partitions(partitions) -> SpatialPartition:
+    """Concatenate per-sample partitions into one over a virtual [B * L] axis.
+
+    Sample b's residue i becomes index b * L + i, so one gather/scatter pass
+    processes every sample's groups in a shared queue. Groups keep their
+    original per-sample order; no group mixes residues of different samples.
+    """
+    partitions = list(partitions)
+    if not partitions:
+        raise ValueError("merge_partitions requires at least one partition")
+    length = partitions[0].residue_mask.numel()
+    groups, owners = [], []
+    for batch_index, part in enumerate(partitions):
+        if part.residue_mask.numel() != length:
+            raise ValueError("All partitions must cover the same residue length")
+        offset = batch_index * length
+        for group in part.groups:
+            groups.append(LocalGroup(
+                group.cell, group.core_indices + offset,
+                group.ghost_indices + offset, group.diagnostics,
+            ))
+        owners.append(torch.where(
+            part.owner_group >= 0, part.owner_group + (len(groups) - len(part.groups)),
+            part.owner_group,
+        ))
+    return SpatialPartition(
+        tuple(groups), torch.cat(owners),
+        torch.cat([p.residue_mask for p in partitions]),
+        max(p.core_capacity for p in partitions),
+        max(p.ghost_capacity for p in partitions),
+        partitions[0].cell_width,
+    )
+
+
 def _validate_inputs(
     ca_coordinates: torch.Tensor,
     mask: torch.Tensor,

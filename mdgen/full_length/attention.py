@@ -59,7 +59,7 @@ def _pretrained_group_attention(attention, states, valid_mask, position_ids, ful
 def run_pretrained_local_attention(
     module, states: torch.Tensor, partition: SpatialPartition, *,
     mask: torch.Tensor | None = None, group_batch_size: int = 1,
-    backend: str = "sdpa",
+    backend: str = "sdpa", residue_length: int | None = None,
 ) -> torch.Tensor:
     """Localize an existing AttentionWithRoPE without registering new weights.
 
@@ -68,6 +68,10 @@ def run_pretrained_local_attention(
     batches, with padding determined by the current batch. This
     adapter supports the model's ordinary self-attention call, without caches,
     pairwise biases or cross-attention.
+
+    residue_length is the per-sample length when states hold several samples
+    concatenated along the residue axis (merged partition); RoPE positions
+    are then taken modulo it.
     """
     if backend != "sdpa":
         raise ValueError("Pretrained local attention currently supports only sdpa")
@@ -83,6 +87,7 @@ def run_pretrained_local_attention(
     if not partition.groups:
         return torch.zeros_like(states)
     assembled = torch.zeros_like(states)
+    full_length = states.shape[1] if residue_length is None else residue_length
     for start in range(0, len(partition.groups), group_batch_size):
         stop = min(len(partition.groups), start + group_batch_size)
         # Gather only this bounded group batch; its padding width is local to
@@ -91,14 +96,14 @@ def run_pretrained_local_attention(
         gathered = replace(partition, groups=selected).gather(states.transpose(0, 1))
         chunk = gathered.values.permute(2, 0, 1, 3)
         flat = chunk.reshape(-1, chunk.shape[-2], chunk.shape[-1])
-        positions = gathered.indices.clamp_min(0).repeat(states.shape[0], 1)
+        positions = (gathered.indices.clamp_min(0) % full_length).repeat(states.shape[0], 1)
         valid = gathered.mask.repeat(states.shape[0], 1)
         if mask is not None:
             runtime_mask = mask[:, gathered.indices.clamp_min(0)].bool()
             valid = valid & runtime_mask.reshape_as(valid)
         query_width = max(g.core_indices.numel() for g in partition.groups[start:stop])
         updates = _pretrained_group_attention(
-            attention, flat, valid, positions, states.shape[1], query_width=query_width
+            attention, flat, valid, positions, full_length, query_width=query_width
         ).reshape(states.shape[0], stop - start, query_width, states.shape[-1])
         core_indices = torch.cat([g.core_indices for g in partition.groups[start:stop]])
         core_updates = torch.cat([
