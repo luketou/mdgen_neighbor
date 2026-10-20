@@ -43,6 +43,9 @@ def prepare(B):
     # Repeat the raw batch so prep_batch builds every per-sample tensor/frame.
     repeated={k:(torch.cat([v]*B) if torch.is_tensor(v) else v) for k,v in batch.items()}
     prepared=wrapper.prep_batch(repeated)
+    for k,v in [('latents',prepared['latents']),*prepared['model_kwargs'].items()]:
+        if hasattr(v,'shape'):
+            assert v.shape[0]==B,f'{k}: batch dim {v.shape[0]} != {B}'
     return prepared['latents'],prepared['model_kwargs']
 
 
