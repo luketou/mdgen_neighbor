@@ -1,0 +1,43 @@
+{
+  "status": "passed",
+  "checkpoint_sha256": "bc90c66e7539f52c9d0514aeddd96c552061150a1eef3b10c120bc3aaff08015",
+  "gpu_uuid": "a78cba9e-11fb-acb6-6ff5-3e12bc8ff2eb",
+  "cases": [
+    {
+      "mode": "global",
+      "status": "passed",
+      "gradient_frames": 4,
+      "inference_frames": 250,
+      "residues": 104,
+      "forward_max_abs_difference": 0.0,
+      "gradient_forward_max_abs_difference": 0.0,
+      "input_gradient_max_abs_difference": 0.0,
+      "parameter_gradient_max_abs_difference": 0.0,
+      "fixture": {
+        "kind": "repeated_5e3e_A_on_3D_lattice",
+        "source": "/share/home/r15543056/MDgen/mdgen/data/atlas_data/5e3e_A_R1_i40.npy",
+        "input_sha256": "ae957b68a50f8c15d12e2a5fcdf07106adb199481729d09a5396783b845e6327",
+        "spacing_angstrom": 72.90625,
+        "chains": 1
+      }
+    },
+    {
+      "mode": "local",
+      "status": "passed",
+      "gradient_frames": 4,
+      "inference_frames": 250,
+      "residues": 104,
+      "forward_max_abs_difference": 0.0,
+      "gradient_forward_max_abs_difference": 0.0,
+      "input_gradient_max_abs_difference": 1.0913936421275139e-10,
+      "parameter_gradient_max_abs_difference": 1.0128132998943329e-08,
+      "fixture": {
+        "kind": "repeated_5e3e_A_on_3D_lattice",
+        "source": "/share/home/r15543056/MDgen/mdgen/data/atlas_data/5e3e_A_R1_i40.npy",
+        "input_sha256": "ae957b68a50f8c15d12e2a5fcdf07106adb199481729d09a5396783b845e6327",
+        "spacing_angstrom": 72.90625,
+        "chains": 1
+      }
+    }
+  ]
+}
