@@ -5,7 +5,7 @@ from types import SimpleNamespace
 import pytest
 
 from mdgen.parsing import (LOCAL_DEFAULTS, add_determinism_args, add_local_override_args,
-    apply_local_overrides, check_determinism_args)
+    apply_local_overrides, check_determinism_args, global_mode_override_error)
 
 
 def parser():
@@ -55,3 +55,17 @@ def test_ffn_chunk_size_unset_keeps_checkpoint_value():
 def test_ffn_chunk_size_rejects_non_positive(value):
     with pytest.raises(SystemExit):
         parser().parse_args(['--ffn_chunk_size', value])
+
+
+@pytest.mark.parametrize('local', [False, True])
+def test_ffn_chunk_size_rejected_in_global_mode(local):
+    cli = parser().parse_args(['--ffn_chunk_size', '4096'])
+    saved = apply_local_overrides(SimpleNamespace(local_spatial=local), cli)
+    error = global_mode_override_error(saved, cli)
+    assert (error is not None) == (not local)
+
+
+def test_global_mode_without_ffn_chunk_size_is_allowed():
+    cli = parser().parse_args([])
+    saved = apply_local_overrides(SimpleNamespace(local_spatial=False), cli)
+    assert global_mode_override_error(saved, cli) is None

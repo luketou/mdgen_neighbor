@@ -60,6 +60,13 @@ def apply_local_overrides(model_args, cli_args):
     return fill_local_defaults(model_args)
 
 
+def global_mode_override_error(model_args, cli_args):
+    """Message for local-only overrides that would be silently ignored."""
+    if not model_args.local_spatial and cli_args.ffn_chunk_size is not None:
+        return '--ffn_chunk_size requires local_spatial'
+    return None
+
+
 def add_determinism_args(parser):
     parser.add_argument(
         "--deterministic",
