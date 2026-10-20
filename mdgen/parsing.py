@@ -24,6 +24,13 @@ def fill_local_defaults(args):
     return args
 
 
+def positive_int(text):
+    value = int(text)
+    if value <= 0:
+        raise argparse.ArgumentTypeError(f'must be a positive integer, got {value}')
+    return value
+
+
 # Options an inference run may override on top of the checkpoint's args.
 LOCAL_OVERRIDE_TYPES = dict(
     local_spatial=argparse.BooleanOptionalAction,
@@ -33,6 +40,7 @@ LOCAL_OVERRIDE_TYPES = dict(
     core_capacity=int,
     ghost_capacity=int,
     group_batch_size=int,
+    ffn_chunk_size=positive_int,
 )
 
 
@@ -50,6 +58,13 @@ def apply_local_overrides(model_args, cli_args):
         if getattr(cli_args, key) is not None:
             setattr(model_args, key, getattr(cli_args, key))
     return fill_local_defaults(model_args)
+
+
+def global_mode_override_error(model_args, cli_args):
+    """Message for local-only overrides that would be silently ignored."""
+    if not model_args.local_spatial and cli_args.ffn_chunk_size is not None:
+        return '--ffn_chunk_size requires local_spatial'
+    return None
 
 
 def add_determinism_args(parser):

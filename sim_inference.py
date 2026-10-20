@@ -1,7 +1,8 @@
 import argparse
 import copy
 from mdgen.parsing import (add_determinism_args, add_local_override_args,
-    apply_local_overrides, check_determinism_args)
+    apply_local_overrides, check_determinism_args,
+    global_mode_override_error)
 parser = argparse.ArgumentParser()
 parser.add_argument('--sim_ckpt', type=str, default=None, required=True)
 parser.add_argument('--data_dir', type=str, default=None, required=True)
@@ -156,6 +157,8 @@ def main():
     checkpoint = torch.load(args.sim_ckpt, map_location='cpu', weights_only=False)
     model_args = copy.deepcopy(checkpoint['hyper_parameters']['args'])
     apply_local_overrides(model_args, args)
+    if (message := global_mode_override_error(model_args, args)):
+        parser.error(message)
     if args.no_frames != bool(getattr(model_args, 'no_frames', False)):
         parser.error('--no_frames must match the checkpoint architecture')
     if model_args.local_spatial and (args.manual_attention or args.no_frames):
