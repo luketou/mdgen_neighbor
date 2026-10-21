@@ -19,6 +19,8 @@ pip install torch==2.11.0 --index-url https://download.pytorch.org/whl/cu128  # 
 pip install -r requirements.txt
 ```
 
+訓練入口 `train.py` 與 `train-runtime.py` 支援 `--precision fp32-reference`（預設：FP32、`highest` matmul、TF32 關閉）及 `--precision bf16-train`（BF16 autocast、FP32 master weights、`high` matmul、TF32 開啟）。亦接受 Lightning 別名 `32-true` 與 `bf16-mixed`。每次訓練／驗證啟動時，`MODEL_DIR/log.out` 記錄實際的 autocast dtype、參數 dtype、matmul 精度及 CUDA matmul／cuDNN 的 TF32 狀態。此設定尚不代表通過 Precision parity 驗證。
+
 Run the CPU test suite with `pip install pytest==8.4.2 && python -m pytest tests -q`; the same checks run in GitHub Actions (`.github/workflows/tests.yml`). The analysis scripts additionally need PyEMMA; see the conda environments in `envs/environment-mdgen2026-*-pyemma.yml`.
 
 Original paper environment (historical, PyTorch 1.12):

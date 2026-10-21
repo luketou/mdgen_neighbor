@@ -19,7 +19,8 @@ if args.train_seed is not None:
     pl.seed_everything(args.train_seed, workers=True)
 # seed-initialization:end
 
-torch.set_float32_matmul_precision('medium')  # fp32-matmul-precision
+from mdgen.precision import configure_precision, PrecisionReport
+configure_precision(args.precision_config)
 
 if args.wandb:
     wandb.init(
@@ -65,6 +66,7 @@ trainer = pl.Trainer(
     gradient_clip_val=args.grad_clip,
     default_root_dir=os.environ["MODEL_DIR"],
     callbacks=[
+        PrecisionReport(args.precision_config, logger),
         ModelCheckpoint(
             dirpath=os.environ["MODEL_DIR"],
             save_top_k=-1,

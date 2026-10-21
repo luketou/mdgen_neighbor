@@ -69,3 +69,29 @@ def test_global_mode_without_ffn_chunk_size_is_allowed():
     cli = parser().parse_args([])
     saved = apply_local_overrides(SimpleNamespace(local_spatial=False), cli)
     assert global_mode_override_error(saved, cli) is None
+
+
+@pytest.mark.parametrize('option, name, precision', [
+    ([], 'fp32-reference', '32-true'),
+    (['--precision', 'fp32-reference'], 'fp32-reference', '32-true'),
+    (['--precision', 'bf16-train'], 'bf16-train', 'bf16-mixed'),
+    (['--precision', '32-true'], 'fp32-reference', '32-true'),
+    (['--precision', 'bf16-mixed'], 'bf16-train', 'bf16-mixed'),
+])
+def test_training_precision_cli(monkeypatch, option, name, precision):
+    from mdgen.parsing import parse_train_args
+    monkeypatch.setenv('MODEL_DIR', 'unused')
+    monkeypatch.setattr('sys.argv', ['train.py', '--train_split', 'train',
+        '--val_split', 'val', '--data_dir', 'data', *option])
+    args = parse_train_args()
+    assert args.precision_config == name
+    assert args.precision == precision
+
+
+@pytest.mark.parametrize('value', ['16-mixed', 'bf16-true', 'unknown'])
+def test_training_precision_rejects_unsupported_modes(monkeypatch, value):
+    from mdgen.parsing import parse_train_args
+    monkeypatch.setattr('sys.argv', ['train.py', '--train_split', 'train',
+        '--val_split', 'val', '--data_dir', 'data', '--precision', value])
+    with pytest.raises(SystemExit):
+        parse_train_args()
