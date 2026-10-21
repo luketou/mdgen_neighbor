@@ -29,7 +29,8 @@ manifest 的蛋白名稱與 seed 是配對及重現資訊，不會觸發生成�
 幾何計算排除 padding、跨鏈及編號不連續配對。
 
 幾何定義對齊 `luketou/mdgen` 的 `mdgen/full_length/reconstruction.py::_geometry_metrics`
-及 `scripts/compare_local_spatial.py`：C–N 在閉區間 [1.1, 1.6] Å 外不合理，
+及 `scripts/compare_local_spatial.py`（核對版本
+`219bbac347482818a539900cd11a8ea3b3256fad`）：C–N 在閉區間 [1.1, 1.6] Å 外不合理，
 Cα–Cα 在 [3.4, 4.2] Å 外不合理；分布包含 count/min/p05/median/p95/max/mean，
 另增加 population std（ddof=0）。本 repo 未有該模組，因此以 NumPy 實作相同公式，
 不引入 sibling repo 的私有函式及訓練相依。
