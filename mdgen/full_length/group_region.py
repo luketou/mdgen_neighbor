@@ -1,7 +1,8 @@
 """Training regions chosen from a stored full-protein partition (#12).
 
-Replaces the interim `region.py` sampler (#15), which cut a fresh core/ghost
-neighbourhood instead of reusing stored groups. A region is a set of loss groups (nearest to a random seed group), the halo
+Meant to replace the interim `region.py` sampler (#15), which cuts a fresh
+core/ghost neighbourhood instead of reusing stored groups; the dataset still
+uses `region.py` until #12 Ticket 4 wires this module in. A region is a set of loss groups (nearest to a random seed group), the halo
 groups owning their ghosts (`halo_rings` deep), and every ghost of those
 groups. Halo groups run normally but are not in the loss; ghosts of halo
 groups that no selected group owns are context residues: keys only, with
@@ -101,15 +102,21 @@ def region_subpartition(partition, selection):
         group = partition.groups[group_id]
         core = full_to_region[group.core_indices.cpu()]
         ghost = full_to_region[group.ghost_indices.cpu()]
+        if (core < 0).any() or (ghost < 0).any():
+            raise ValueError(f'group {group_id} has residues not in the region selection')
         owner_group[core] = new_index
         groups.append(LocalGroup(group.cell, core, ghost, group.diagnostics))
     loss_cores = torch.cat([partition.groups[g].core_indices.cpu() for g in selection.loss_groups])
+    position_index, full_length = residues, partition.residue_mask.numel()
+    if partition.position_index is not None:  # a region of a region: keep full-protein positions
+        position_index = partition.position_index.cpu()[residues]
+        full_length = partition.full_length
     return RegionPartition(
         partition=SpatialPartition(
             groups=tuple(groups), owner_group=owner_group,
             residue_mask=owner_group >= 0,  # context residues are keys only
             core_capacity=partition.core_capacity, ghost_capacity=partition.ghost_capacity,
-            cell_width=partition.cell_width, position_index=residues,
-            full_length=partition.residue_mask.numel()),
-        loss_core_mask=torch.isin(residues, loss_cores),
+            cell_width=partition.cell_width, position_index=position_index,
+            full_length=full_length),
+        loss_core_mask=torch.isin(residues, loss_cores),  # in the source partition's indexing
     )

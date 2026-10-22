@@ -195,3 +195,30 @@ def test_region_positions_need_the_full_length():
     with pytest.raises(ValueError, match='full_length'):
         SpatialPartition(partition.groups, partition.owner_group, partition.residue_mask,
                          8, 64, 8.0, position_index=torch.arange(L))
+
+
+def test_selection_missing_a_ghost_raises_instead_of_wrapping():
+    from dataclasses import replace
+    ca, partition = protein()
+    selection = sample(partition, ca, budget=60)
+    with pytest.raises(ValueError, match='not in the region'):
+        region_subpartition(partition, replace(selection, residues=selection.residues[:-1]))
+
+
+def test_position_index_must_fit_the_partition_and_protein():
+    from mdgen.full_length.partition import SpatialPartition
+    ca, partition = protein()
+    args = (partition.groups, partition.owner_group, partition.residue_mask, 8, 64, 8.0)
+    with pytest.raises(ValueError, match='position_index'):
+        SpatialPartition(*args, position_index=torch.arange(L - 1), full_length=L)
+    with pytest.raises(ValueError, match='position_index'):
+        SpatialPartition(*args, position_index=torch.arange(L) + 1, full_length=L)
+
+
+def test_region_of_a_region_keeps_full_protein_positions():
+    ca, partition = protein()
+    outer = region_subpartition(partition, sample(partition, ca, budget=90))
+    inner_selection = sample(outer.partition, ca[outer.residues], budget=40)
+    inner = region_subpartition(outer.partition, inner_selection)
+    assert inner.partition.full_length == L
+    assert torch.equal(inner.residues, outer.residues[inner_selection.residues])
