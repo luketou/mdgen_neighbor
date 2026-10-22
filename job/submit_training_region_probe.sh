@@ -1,0 +1,50 @@
+#!/bin/bash
+#SBATCH --job-name=training-region-probe
+#SBATCH --partition=l40s
+#SBATCH --account=l40s
+#SBATCH --nodes=1
+#SBATCH --cpus-per-task=2
+#SBATCH --gres=gpu:1
+#SBATCH --mem=16G
+#SBATCH --time=01:00:00
+#SBATCH --output=logs/training_region_probe_%j.out
+#SBATCH --error=logs/training_region_probe_%j.err
+# #9 Ticket 3 (training half): peak memory and time of one fp32-reference
+# training step of the 5-layer --local_spatial ATLAS configuration on one
+# Training region (K = G = 256 by default) x 250 frames, cut from a synthetic
+# 7,500-residue chain. Extra train.py arguments pass through, e.g.
+#   MDGEN_VENV=... sbatch job/submit_training_region_probe.sh --grad_checkpointing
+# An OOM ends the job non-zero; the traceback in logs/ is the result.
+
+set -eo pipefail
+source job/env.sh
+export OMP_NUM_THREADS="${SLURM_CPUS_PER_TASK}"
+export PYTHONUNBUFFERED=1
+export MODEL_DIR="results/training_region_probe_${SLURM_JOB_ID}"
+mkdir -p "$MODEL_DIR"
+
+nvidia-smi --query-gpu=name,uuid,memory.total --format=csv
+python -c "import torch; print('PyTorch:', torch.__version__); print('GPU:', torch.cuda.get_device_name(0)); assert torch.cuda.is_available()"
+
+python -m mdgen.train_step_probe \
+  --output "$MODEL_DIR/probe.json" \
+  --configs fp32-reference \
+  --seed 0 \
+  --synthetic_residues 7500 \
+  -- \
+  --train_split unused --val_split unused --data_dir unused \
+  --sim_condition --prepend_ipa --num_frames 250 --batch_size 1 \
+  --local_spatial --training_region \
+  "$@"
+
+python - "$MODEL_DIR/probe.json" <<'PY'
+import json, sys
+report = json.load(open(sys.argv[1]))
+run = report['runs'][0]
+print('region:', report['batch']['regions'][0])
+print('batch_shapes.trans:', run['batch_shapes']['trans'])
+print(f"peak allocated {run['peak_memory_allocated_bytes'] / 1024**3:.2f} GB, "
+      f"reserved {run['peak_memory_reserved_bytes'] / 1024**3:.2f} GB, "
+      f"step {run['step_time_s']:.1f} s, loss_finite={run['loss_finite']}, "
+      f"gradient_nonfinite={run['gradient_nonfinite']}")
+PY
