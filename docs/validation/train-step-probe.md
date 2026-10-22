@@ -1,0 +1,46 @@
+# 訓練步探針（#9 Ticket 2，Seam 1）
+
+對實際的 `NewMDGenWrapper` Lightning 訓練模組跑一次完整 training step
+（loss、backward、gradient clipping、optimizer step），輸出 JSON 報告：
+
+```bash
+python -m mdgen.train_step_probe --output results/probe.json \
+    --configs fp32-reference bf16-train --seed 0 --dataset_index 0 \
+    -- <與 train.py 相同的參數>
+```
+
+`--` 之後的參數交給 `parse_train_args`，模型組態（層數、`--local_spatial`、
+`--grad_checkpointing`、`--batch_size`、`--crop` 等）與正式訓練相同；其中的
+`--precision` 會被 `--configs` 取代。資料來源二擇一：
+
+- `--dataset_index I`（預設 0）：取 `--train_split` 第 I 起連續 `--batch_size` 筆。
+- `--synthetic_residues L`：隨機漫步骨架（Cα 間距 3.8 Å、合法旋轉、單位 torsion 向量），
+  免資料、只用於記憶體與流程檢查；`--train_split`／`--val_split`／`--data_dir` 仍須給值但不會讀取。
+
+`--configs` 可列多個組態（可重複）。每個組態都使用同一份 batch、同一組初始權重
+（第一個組態建立後載入其餘組態）及同一 seed（t、雜訊、dropout 相同）。
+
+## 報告欄位
+
+- `runs[]`：每個組態一筆
+  - `precision_state`：step 內實際生效的 autocast dtype、參數 dtype、matmul 精度與 TF32 狀態。
+  - `loss`、`loss_finite`、`step_time_s`（`on_train_batch_start` 到 `on_train_batch_end`，CUDA 會同步）。
+  - `peak_memory_allocated_bytes`／`peak_memory_reserved_bytes`：CUDA 峰值，CPU 為 `null`。
+  - `gradients`：每個參數群的 `numel`、`norm`、`max_abs`、`nonfinite`；群組為 `layers.<i>.<子模組>`、
+    `ipa_layers.<i>.<子模組>` 或頂層模組（如 `t_embedder`）。梯度取自 backward 後、clipping 前。
+  - `gradient_nonfinite`、`parameters_nonfinite_after_step`、`missing_gradients`
+    （`--local_spatial` 下未啟用的 `cell_summaries` 參數會列在此處，屬預期）、`grad_checkpointing`。
+- `comparisons[]`：後續每個組態對第一個組態
+  - `gradient_cosine`、`max_abs_difference`（每個參數群）、`min_gradient_cosine` 及其群組。
+  - `all_groups_pass`：所有群組 ≥ `--cosine_threshold`（預設 0.99）；任一側含 NaN／Inf 的群組 cosine 為 `null` 並判定不通過。
+  - `step_time_speedup`：參考組態 step 時間 ÷ 候選組態 step 時間。單次 step 含暖機，正式加速倍數應以多次量測為準（Ticket 4）。
+- `batch`（來源、名稱、各欄位形狀）、`model_args`、`seed`、`environment`
+  （主機、Python／torch／Lightning／NumPy 版本、CUDA／cuDNN、GPU 名稱、git commit、`SLURM_JOB_ID`）。
+
+## 限制
+
+- 本 repo 尚無 Training region 訓練流程（外部前置 X），探針目前只吃現有 `--crop` 序列切塊或合成 batch，
+  loss mask 不區分 core／ghost。X 完成後應改由該流程提供 batch。
+- CPU 上 `bf16-train` 只驗證 autocast 與流程；TF32 及實際記憶體／速度須在 L40S 上量測（Ticket 3、4）。
+- 兩次 `fp32-reference` 的 cosine 為 1、差異為 0 已在 CPU pytest 驗證；GPU 上需搭配 `--deterministic` 才保證決定性。
+- 報告為訓練行為的 Precision parity 證據，不代表模型品質或 Scale validation 通過。
