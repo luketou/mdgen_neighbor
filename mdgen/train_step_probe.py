@@ -127,9 +127,24 @@ def environment():
     }
 
 
+def batch_shapes(batch, batch_size, prefix=''):
+    """Shapes of every tensor in a collated batch; each must lead with batch_size."""
+    shapes = {}
+    for key, value in batch.items():
+        if isinstance(value, dict):
+            shapes.update(batch_shapes(value, batch_size, f'{prefix}{key}.'))
+        elif torch.is_tensor(value):
+            if value.dim() == 0 or value.shape[0] != batch_size:
+                raise ValueError(f'{prefix}{key} has shape {list(value.shape)}; '
+                                 f'expected batch dimension {batch_size}')
+            shapes[prefix + key] = list(value.shape)
+    return shapes
+
+
 class StepProbe(pl.Callback):
-    def __init__(self, name):
+    def __init__(self, name, batch_size):
         self.name = name
+        self.batch_size = batch_size
         self.result = {}
 
     def _sync(self, pl_module):
@@ -138,6 +153,7 @@ class StepProbe(pl.Callback):
 
     def on_train_batch_start(self, trainer, pl_module, batch, batch_idx):
         self.result['precision_state'] = precision_state(self.name, trainer, pl_module)
+        self.result['batch_shapes'] = batch_shapes(batch, self.batch_size)
         self._sync(pl_module)
         if pl_module.device.type == 'cuda':
             torch.cuda.reset_peak_memory_stats(pl_module.device)
@@ -177,7 +193,7 @@ def run_step(args, items, name, seed, initial_state=None, use_sdpa=True):
         initial_state = {k: v.detach().clone() for k, v in model.state_dict().items()}
     else:
         model.load_state_dict(initial_state)
-    probe = StepProbe(name)
+    probe = StepProbe(name, len(items))
     trainer = pl.Trainer(
         accelerator='gpu' if torch.cuda.is_available() else 'cpu', devices=1,
         precision=args.precision, max_steps=1, num_sanity_val_steps=0,

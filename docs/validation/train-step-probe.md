@@ -29,6 +29,8 @@ ghost 進入模型但不計入 loss（`core_mask`）。#9 Ticket 3 量測一個 
 
 - `runs[]`：每個組態一筆
   - `precision_state`：step 內實際生效的 autocast dtype、參數 dtype、matmul 精度與 TF32 狀態。
+  - `batch_shapes`：DataLoader 實際送進模型的每個張量形狀（巢狀欄位如 `region.center`）；
+    任一張量的 batch 維度不等於 `--batch_size` 時直接報錯（`CODING_STANDARDS.md`）。
   - `loss`、`loss_finite`、`step_time_s`（`on_train_batch_start` 到 `on_train_batch_end`，CUDA 會同步）。
   - `peak_memory_allocated_bytes`／`peak_memory_reserved_bytes`：CUDA 峰值，CPU 為 `null`。
   - `gradients`：每個參數群的 `numel`、`norm`、`max_abs`、`nonfinite`；群組為 `layers.<i>.<子模組>`、

@@ -4,7 +4,8 @@ import json
 import pytest
 import torch
 
-from mdgen.train_step_probe import gradient_cosine, main, parameter_group, run_probe, synthetic_items
+from mdgen.train_step_probe import (batch_shapes, gradient_cosine, main, parameter_group,
+                                    run_probe, synthetic_items)
 
 TINY = ['--train_split', 'x', '--val_split', 'x', '--data_dir', 'x', '--num_layers', '2',
         '--embed_dim', '32', '--mha_heads', '4', '--ipa_heads', '2', '--ipa_head_dim', '4',
@@ -141,7 +142,20 @@ def test_training_region_report_has_region_diagnostics(tmp_path):
     assert all(run['loss_finite'] and run['gradient_nonfinite'] == 0 for run in report['runs'])
     repeat = report['comparisons'][0]
     assert all(v == 0 for v in repeat['max_abs_difference'].values())
+    for run in report['runs']:  # the collated loader batch, checked on every run
+        shapes = run['batch_shapes']
+        assert shapes['trans'] == [2, 4, 24, 3] and shapes['core_mask'] == [2, 24]
+        assert shapes['region.center'] == [2]
+        assert all(shape[0] == 2 for shape in shapes.values())
 
     again = tmp_path / 'again.json'
     main(['--output', str(again), '--synthetic_residues', '60', '--', *TINY, *LOCAL, *region])
     assert json.loads(again.read_text())['batch']['regions'] == regions  # seeded by --seed
+
+
+def test_batch_shapes_rejects_a_tensor_without_the_batch_dimension():
+    batch = {'trans': torch.zeros(2, 4, 3), 'name': ['a', 'b'],
+             'region': {'center': torch.zeros(2, dtype=torch.long)}}
+    assert batch_shapes(batch, 2) == {'trans': [2, 4, 3], 'region.center': [2]}
+    with pytest.raises(ValueError, match='region.center'):
+        batch_shapes({**batch, 'region': {'center': torch.zeros(3)}}, 2)
