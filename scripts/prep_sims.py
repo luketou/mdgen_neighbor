@@ -8,6 +8,8 @@ parser.add_argument('--num_workers', type=int, default=1)
 parser.add_argument('--suffix', type=str, default='')
 parser.add_argument('--atlas', action='store_true')
 parser.add_argument('--stride', type=int, default=1)
+parser.add_argument('--replicates', type=int, nargs='+', default=[1, 2, 3],
+                    help='replicate numbers R<i> to convert in --atlas mode')
 # npy-dtype-option:start
 parser.add_argument(
     '--dtype',
@@ -22,6 +24,7 @@ import pandas as pd
 from multiprocessing import Pool
 import numpy as np
 from mdgen import residue_constants as rc
+from mdgen.topology import save_chain_numbering
 
 os.makedirs(args.outdir, exist_ok=True)
 
@@ -70,18 +73,20 @@ def traj_to_atom14(traj):
 
 if args.atlas:
     def do_job(name):
-        for i in [1,2,3]:
+        for i in args.replicates:
             traj = mdtraj.load(f'{args.atlas_dir}/{name}/{name}_prod_R{i}_fit.xtc', top=f'{args.atlas_dir}/{name}/{name}.pdb') 
             traj.atom_slice([a.index for a in traj.top.atoms if a.element.symbol != 'H'], True)
             traj.superpose(traj)
             arr = traj_to_atom14(traj)
             np.save(f'{args.outdir}/{name}_R{i}{args.suffix}.npy', arr[::args.stride])
+            save_chain_numbering(f'{args.outdir}/{name}_R{i}_chain.npz', traj.top)
 else:
     def do_job(name):
         traj = mdtraj.load(f'{args.atlas_dir}/{name}/{name}.xtc', top=f'{args.atlas_dir}/{name}/{name}.pdb')
         traj.superpose(traj)
         arr = traj_to_atom14(traj)
         np.save(f'{args.outdir}/{name}{args.suffix}.npy', arr[::args.stride])
+        save_chain_numbering(f'{args.outdir}/{name}_chain.npz', traj.top)
 
 if __name__ == "__main__":
     main()

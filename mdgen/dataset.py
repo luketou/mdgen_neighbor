@@ -1,4 +1,5 @@
 import json
+import os
 import torch
 from .full_length.region import sample_training_region
 from .rigid_utils import Rigid
@@ -36,7 +37,8 @@ class MDGenDataset(torch.utils.data.Dataset):
             rng = np.random.RandomState(self.region_seed + idx)  # fix replica and window too
 
         if self.args.atlas:
-            i = rng.randint(1, 4)
+            replicates = getattr(self.args, 'replicates', [1, 2, 3])  # older saved args lack it
+            i = replicates[rng.randint(0, len(replicates))]
             full_name = f"{name}_R{i}"
         else:
             full_name = name
@@ -73,6 +75,13 @@ class MDGenDataset(torch.utils.data.Dataset):
         
         L = frames.shape[1]
         mask = np.ones(L, dtype=np.float32)
+        chain = None  # optional {full_name}_chain.npz written by scripts/prep_sims.py
+        chain_path = f'{self.args.data_dir}/{full_name}_chain.npz'
+        if os.path.exists(chain_path):
+            with np.load(chain_path) as saved:
+                chain = {key: saved[key].astype(np.int64) for key in ('chain_id', 'residue_index')}
+            if any(len(value) != L for value in chain.values()):
+                raise ValueError(f'{chain_path}: expected {L} residues')
         
         if self.args.no_frames:
             return {
@@ -87,7 +96,7 @@ class MDGenDataset(torch.utils.data.Dataset):
         torsion_mask = torsion_mask[0]
 
         if self.args.training_region:
-            return self.training_region_item(idx, name, {
+            return self.training_region_item(idx, name, chain, {
                 'name': full_name,
                 'frame_start': frame_start,
                 'torsions': torsions,
@@ -106,6 +115,8 @@ class MDGenDataset(torch.utils.data.Dataset):
                 seqres = seqres[start:start+self.args.crop]
                 mask = mask[start:start+self.args.crop]
                 torsion_mask = torsion_mask[start:start+self.args.crop]
+                if chain is not None:
+                    chain = {key: value[start:start+self.args.crop] for key, value in chain.items()}
                 
             
             elif L < self.args.crop:
@@ -118,6 +129,9 @@ class MDGenDataset(torch.utils.data.Dataset):
                 seqres = np.concatenate([seqres, np.zeros(pad, dtype=int)])
                 torsions = torch.cat([torsions, torch.zeros((torsions.shape[0], pad, 7, 2), dtype=torch.float32)], 1)
                 torsion_mask = torch.cat([torsion_mask, torch.zeros((pad, 7), dtype=torch.float32)])
+                if chain is not None:
+                    chain = {key: np.concatenate([value, np.zeros(pad, dtype=np.int64)])
+                             for key, value in chain.items()}
 
         return {
             'name': full_name,
@@ -128,14 +142,15 @@ class MDGenDataset(torch.utils.data.Dataset):
             'rots': frames._rots._rot_mats,
             'seqres': seqres,
             'mask': mask, # (L,)
+            **(chain or {}),
         }
 
-    def training_region_item(self, idx, name, item):
-        """Read optional chain numbering from the split CSV, then gather a region."""
+    def training_region_item(self, idx, name, chain, item):
+        """Chain numbering from the chain file, else the split CSV, then gather a region."""
         L = len(item['seqres'])
-        numbering = {'chain_id': np.zeros(L, dtype=np.int64), 'residue_index': np.arange(L)}
+        numbering = chain or {'chain_id': np.zeros(L, dtype=np.int64), 'residue_index': np.arange(L)}
         for key in numbering:  # optional per-residue JSON lists in the split CSV
-            if key in self.df and name in self.df.index:
+            if chain is None and key in self.df and name in self.df.index:
                 numbering[key] = np.array(json.loads(self.df[key][name]), dtype=np.int64)
                 if len(numbering[key]) != L:
                     raise ValueError(f'{name}: {key} has {len(numbering[key])} entries, expected {L}')
