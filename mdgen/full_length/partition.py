@@ -20,9 +20,9 @@ class PartitionParams:
     covalent_span: int = 2
 
     @classmethod
-    def from_args(cls, args):
-        return cls(float(args.spatial_cell_width), float(args.spatial_contact_radius),
-                   int(args.core_capacity), int(args.ghost_capacity))
+    def from_args(cls, args):  # build_spatial_partition validates the values
+        return cls(cell_width=args.spatial_cell_width, contact_radius=args.spatial_contact_radius,
+                   core_capacity=args.core_capacity, ghost_capacity=args.ghost_capacity)
 
     def partition_kwargs(self):
         return asdict(self)

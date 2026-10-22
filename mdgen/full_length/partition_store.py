@@ -38,8 +38,8 @@ def _concat(tensors):
     return values.astype(np.int64), np.concatenate([[0], np.cumsum(lengths)]).astype(np.int64)
 
 
-def save_partition(path, partition, params, chain_id, residue_index):
-    """Store groups with the params and chain numbering they were built from."""
+def save_partition(path, partition, params, *, chain_id, residue_index, ca):
+    """Store groups with the params, chain numbering and frame-0 Cα they were built from."""
     groups = partition.groups
     core, core_offsets = _concat([g.core_indices for g in groups])
     ghost, ghost_offsets = _concat([g.ghost_indices for g in groups])
@@ -52,11 +52,12 @@ def save_partition(path, partition, params, chain_id, residue_index):
         residue_mask=partition.residue_mask.cpu().numpy(),
         chain_id=np.asarray(chain_id, dtype=np.int64),
         residue_index=np.asarray(residue_index, dtype=np.int64),
+        ca=np.asarray(ca, dtype=np.float32),
         params=json.dumps(asdict(params), sort_keys=True))
 
 
-def load_partition(path, params, chain_id, residue_index):
-    """Load a saved partition; raise if params or chain numbering no longer match."""
+def load_partition(path, params, *, chain_id, residue_index, ca):
+    """Load a saved partition; raise if params, numbering or frame-0 Cα no longer match."""
     with np.load(path) as saved:
         stored = json.loads(str(saved['params']))
         mismatched = [k for k, v in asdict(params).items() if stored.get(k) != v]
@@ -71,6 +72,9 @@ def load_partition(path, params, chain_id, residue_index):
                 and np.array_equal(residue_index, saved['residue_index'])):
             raise ValueError(f'{path}: chain numbering changed since the partition was built; '
                              'rebuild the partition')
+        if not np.allclose(np.asarray(ca, dtype=np.float32), saved['ca'], atol=1e-3):
+            raise ValueError(f'{path}: frame-0 coordinates changed since the partition was '
+                             'built; rebuild the partition')
         core, ghost = torch.from_numpy(saved['core']), torch.from_numpy(saved['ghost'])
         co, go = saved['core_offsets'], saved['ghost_offsets']
         groups = tuple(
@@ -152,7 +156,8 @@ def main(argv=None):
                 residue_index=torch.from_numpy(numbering['residue_index']),
                 **params.partition_kwargs())
             save_partition(f'{args.out_dir}/{stem}_partition.npz', partition, params,
-                           numbering['chain_id'], numbering['residue_index'])
+                           chain_id=numbering['chain_id'],
+                           residue_index=numbering['residue_index'], ca=ca[0])
             drift = ghost_drift(partition, ca, params.contact_radius, frames)
             with open(f'{args.out_dir}/{stem}_drift.json', 'w') as f:
                 json.dump({'stem': stem, 'params': asdict(params),

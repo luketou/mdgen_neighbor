@@ -46,18 +46,25 @@ def assert_same_partition(loaded, built):
 def test_saved_partition_loads_back_identically(tmp_path):
     ca, chain_id, residue_index = chain_ca()
     built = build(ca, chain_id, residue_index)
-    save_partition(tmp_path / 'p.npz', built, PARAMS, chain_id, residue_index)
-    assert_same_partition(load_partition(tmp_path / 'p.npz', PARAMS, chain_id, residue_index), built)
+    save_partition(tmp_path / 'p.npz', built, PARAMS, chain_id=chain_id,
+                   residue_index=residue_index, ca=ca)
+    assert_same_partition(load_partition(tmp_path / 'p.npz', PARAMS, chain_id=chain_id,
+                                         residue_index=residue_index, ca=ca), built)
 
 
 def test_loading_with_different_numbering_raises(tmp_path):
     ca, chain_id, residue_index = chain_ca()
     save_partition(tmp_path / 'p.npz', build(ca, chain_id, residue_index), PARAMS,
-                   chain_id, residue_index)
+                   chain_id=chain_id, residue_index=residue_index, ca=ca)
     with pytest.raises(ValueError, match='chain numbering'):  # e.g. prep_sims rerun found new chains
-        load_partition(tmp_path / 'p.npz', PARAMS, torch.zeros_like(chain_id), residue_index)
+        load_partition(tmp_path / 'p.npz', PARAMS, chain_id=torch.zeros_like(chain_id),
+                       residue_index=residue_index, ca=ca)
     with pytest.raises(ValueError, match='residues'):
-        load_partition(tmp_path / 'p.npz', PARAMS, chain_id[:-1], residue_index[:-1])
+        load_partition(tmp_path / 'p.npz', PARAMS, chain_id=chain_id[:-1],
+                       residue_index=residue_index[:-1], ca=ca[:-1])
+    with pytest.raises(ValueError, match='coordinates'):  # NPY regenerated with a new first frame
+        load_partition(tmp_path / 'p.npz', PARAMS, chain_id=chain_id,
+                       residue_index=residue_index, ca=ca + 0.5)
 
 
 def test_generation_partitions_use_the_same_params():
@@ -76,10 +83,11 @@ def test_generation_partitions_use_the_same_params():
 def test_loading_with_different_params_raises(tmp_path, field):
     ca, chain_id, residue_index = chain_ca()
     save_partition(tmp_path / 'p.npz', build(ca, chain_id, residue_index), PARAMS,
-                   chain_id, residue_index)
+                   chain_id=chain_id, residue_index=residue_index, ca=ca)
     changed = PartitionParams(**{**PARAMS.__dict__, field: getattr(PARAMS, field) + 1})
     with pytest.raises(ValueError, match=field):
-        load_partition(tmp_path / 'p.npz', changed, chain_id, residue_index)
+        load_partition(tmp_path / 'p.npz', changed, chain_id=chain_id,
+                       residue_index=residue_index, ca=ca)
 
 
 def test_drift_is_zero_on_frame_zero_and_positive_after_a_residue_moves():
@@ -137,7 +145,7 @@ def test_cli_builds_every_replicate_and_writes_drift_reports(tmp_path):
         'prot_R1_i40_drift.json', 'prot_R1_i40_partition.npz',
         'prot_R2_i40_drift.json', 'prot_R2_i40_partition.npz', 'summary.json']
     assert_same_partition(load_partition(out / 'prot_R1_i40_partition.npz', PARAMS,
-                                         chain_id, residue_index),
+                                         chain_id=chain_id, residue_index=residue_index, ca=ca),
                           build(ca, chain_id, residue_index))
     drift = json.loads((out / 'prot_R1_i40_drift.json').read_text())
     assert [frame['frame'] for frame in drift['frames']] == [0, 2, 4]
