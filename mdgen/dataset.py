@@ -3,7 +3,7 @@ import os
 import torch
 from .full_length.region import sample_training_region
 from .rigid_utils import Rigid
-from .residue_constants import restype_order
+from .residue_constants import restype_order, restype_atom37_mask
 import numpy as np
 import pandas as pd
 from .geometry import atom37_to_torsions, atom14_to_atom37, atom14_to_frames
@@ -89,7 +89,7 @@ class MDGenDataset(torch.utils.data.Dataset):
                 'frame_start': frame_start,
                 'atom37': atom37,
                 'seqres': seqres,
-                'mask': restype_atom37_mask[seqres], # (L,)
+                'mask': restype_atom37_mask[seqres], # (L, 37)
             }
         torsions, torsion_mask = atom37_to_torsions(atom37, aatype)
         
