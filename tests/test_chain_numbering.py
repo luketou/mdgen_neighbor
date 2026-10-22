@@ -67,15 +67,54 @@ def test_prep_sims_writes_chain_files_for_requested_replicates(tmp_path):
     split.write_text('name,seqres\nprot,GGGGGG\n')
     subprocess.run([sys.executable, 'scripts/prep_sims.py', '--split', str(split),
                     '--sim_dir', str(tmp_path / 'sims'), '--outdir', str(tmp_path / 'out'),
-                    '--atlas', '--replicates', '2', '5'], cwd=ROOT, check=True,
+                    '--atlas', '--replicates', '2', '5', '--suffix', '_i1'], cwd=ROOT, check=True,
                    env={**os.environ, 'PYTHONPATH': str(ROOT)}, capture_output=True)
 
     written = sorted(path.name for path in (tmp_path / 'out').iterdir())
-    assert written == ['prot_R2.npy', 'prot_R2_chain.npz', 'prot_R5.npy', 'prot_R5_chain.npz']
-    chain = np.load(tmp_path / 'out' / 'prot_R5_chain.npz')
+    assert written == ['prot_R2_i1.npy', 'prot_R2_i1_chain.npz',
+                       'prot_R5_i1.npy', 'prot_R5_i1_chain.npz']
+    chain = np.load(tmp_path / 'out' / 'prot_R5_i1_chain.npz')
     assert chain['chain_id'].tolist() == [0, 0, 0, 1, 1, 1]
     assert chain['residue_index'].tolist() == [1, 2, 3, 1, 2, 3]
-    assert np.load(tmp_path / 'out' / 'prot_R5.npy').shape == (T, 6, 14, 3)
+    assert np.load(tmp_path / 'out' / 'prot_R5_i1.npy').shape == (T, 6, 14, 3)
+
+
+def test_prep_sims_writes_nothing_for_a_topology_it_rejects(tmp_path):
+    (tmp_path / 'sims' / 'prot').mkdir(parents=True)
+    pdb = tmp_path / 'sims' / 'prot' / 'prot.pdb'
+    lines = []  # residue 2 has an insertion-code twin 2A, so resSeq repeats
+    for k, (number, icode) in enumerate([(1, ' '), (2, ' '), (2, 'A'), (3, ' ')]):
+        for j, (atom, element) in enumerate((('N', 'N'), ('CA', 'C'), ('C', 'C'), ('O', 'O'))):
+            lines.append(f'ATOM  {4 * k + j + 1:5d}  {atom:<3s} GLY A{number:4d}{icode}   '
+                         f'{3.8 * k + j:8.3f}{0:8.3f}{0:8.3f}  1.00  0.00           {element}')
+    pdb.write_text('\n'.join(lines) + '\nEND\n')
+    mdtraj.load(str(pdb)).save_xtc(str(tmp_path / 'sims' / 'prot' / 'prot_prod_R1_fit.xtc'))
+    split = tmp_path / 'split.csv'
+    split.write_text('name,seqres\nprot,GGGG\n')
+    result = subprocess.run([sys.executable, 'scripts/prep_sims.py', '--split', str(split),
+                             '--sim_dir', str(tmp_path / 'sims'), '--outdir', str(tmp_path / 'out'),
+                             '--atlas', '--replicates', '1'], cwd=ROOT,
+                            env={**os.environ, 'PYTHONPATH': str(ROOT)}, capture_output=True, text=True)
+    assert result.returncode != 0 and 'chain 0 residue 2' in result.stderr
+    assert list((tmp_path / 'out').iterdir()) == []  # nothing half-written is left behind
+
+
+def test_prep_sims_rerun_completes_an_output_missing_its_chain_file(tmp_path):
+    sims = tmp_path / 'sims'
+    (sims / 'prot').mkdir(parents=True)
+    rng = np.random.default_rng(0)
+    traj = mdtraj.Trajectory(rng.normal(size=(T, 15, 3)).astype(np.float32), topology([(1, 2, 3)]))
+    traj.save_pdb(str(sims / 'prot' / 'prot.pdb'))
+    traj.save_xtc(str(sims / 'prot' / 'prot.xtc'))
+    (tmp_path / 'out').mkdir()
+    np.save(tmp_path / 'out' / 'prot.npy', np.zeros(1))  # e.g. from a run killed mid-job
+    split = tmp_path / 'split.csv'
+    split.write_text('name,seqres\nprot,GGG\n')
+    subprocess.run([sys.executable, 'scripts/prep_sims.py', '--split', str(split),
+                    '--sim_dir', str(sims), '--outdir', str(tmp_path / 'out')], cwd=ROOT,
+                   check=True, env={**os.environ, 'PYTHONPATH': str(ROOT)}, capture_output=True)
+    assert np.load(tmp_path / 'out' / 'prot_chain.npz')['residue_index'].tolist() == [1, 2, 3]
+    assert np.load(tmp_path / 'out' / 'prot.npy').shape == (T, 3, 14, 3)
 
 
 def dataset_args(tmp_path, **kwargs):
@@ -116,14 +155,80 @@ def test_dataset_reads_chain_file_and_crops_it_with_the_residues(tmp_path):
 
     padded = MDGenDataset(dataset_args(tmp_path, atlas=True, crop=12), tmp_path / 'split.csv')[0]
     assert padded['chain_id'].tolist() == chain_id.tolist() + [0, 0]
+    assert padded['residue_index'].tolist() == residue_index.tolist() + [0, 0]
     assert padded['mask'].tolist() == [1] * 10 + [0, 0]
+    for replicate in (1, 2, 3):
+        os.remove(tmp_path / f'prot_R{replicate}_chain.npz')
+    default = MDGenDataset(dataset_args(tmp_path, atlas=True, crop=12), tmp_path / 'split.csv')[0]
+    assert default['residue_index'].tolist() == list(range(10)) + [0, 0]  # pads match
 
 
-def test_dataset_without_chain_file_keeps_its_output(tmp_path):
+def test_dataset_without_chain_file_uses_the_default_numbering(tmp_path):
     (tmp_path / 'split.csv').write_text('name,seqres\nprot,' + 'G' * 10 + '\n')
     write_npy(tmp_path, 'prot', 10)
     item = MDGenDataset(dataset_args(tmp_path), tmp_path / 'split.csv')[0]
-    assert 'chain_id' not in item and 'residue_index' not in item
+    assert item['chain_id'].tolist() == [0] * 10  # same as the wrapper's own fallback
+    assert item['residue_index'].tolist() == list(range(10))
+
+
+def test_items_with_and_without_chain_files_collate_together(tmp_path):
+    (tmp_path / 'split.csv').write_text('name,seqres\nwith,' + 'G' * 10 + '\nwithout,' + 'G' * 10 + '\n')
+    write_npy(tmp_path, 'with', 10)
+    write_npy(tmp_path, 'without', 10)
+    np.savez(tmp_path / 'with_chain.npz', chain_id=np.repeat([0, 1], 5),
+             residue_index=np.tile(np.arange(1, 6), 2))
+    dataset = MDGenDataset(dataset_args(tmp_path), tmp_path / 'split.csv')
+    for order in ((0, 1), (1, 0)):
+        batch = torch.utils.data.default_collate([dataset[i] for i in order])
+        with_row = order.index(0)
+        assert batch['chain_id'][with_row].tolist() == [0] * 5 + [1] * 5
+        assert batch['chain_id'][1 - with_row].tolist() == [0] * 10
+
+
+def test_duplicate_residue_numbers_fail_at_preprocessing():
+    with pytest.raises(ValueError, match='chain 0 residue 52'):
+        chain_numbering(topology([(51, 52, 52, 53)]))  # e.g. 52 and 52A after dropping insertion codes
+
+
+def load_sim_inference(monkeypatch, tmp_path, *argv):
+    import importlib
+    monkeypatch.setattr('sys.argv', ['sim_inference.py', '--sim_ckpt', 'x', '--data_dir',
+                                     str(tmp_path), '--out_dir', str(tmp_path / 'out'), *argv])
+    monkeypatch.delitem(sys.modules, 'sim_inference', raising=False)
+    deterministic = torch.are_deterministic_algorithms_enabled()
+    monkeypatch.setattr(torch.backends.cudnn, 'benchmark', torch.backends.cudnn.benchmark)
+    try:
+        module = importlib.import_module('sim_inference')  # sets global torch flags at import
+    finally:
+        torch.use_deterministic_algorithms(deterministic)
+    monkeypatch.delitem(sys.modules, 'sim_inference')
+    return module
+
+
+@pytest.mark.parametrize('suffix', ['', '_R1', '_R1_i40'])
+def test_inference_batch_uses_the_same_chain_file(monkeypatch, tmp_path, suffix):
+    sim = load_sim_inference(monkeypatch, tmp_path, '--suffix', suffix)
+    write_npy(tmp_path, f'prot{suffix}', 10)
+    chain_id = np.repeat([0, 1], 5)  # the chain file sits next to the NPY: <stem>_chain.npz
+    np.savez(tmp_path / f'prot{suffix}_chain.npz', chain_id=chain_id,
+             residue_index=np.tile(np.arange(5), 2))
+    item = sim.get_batch('prot', 'G' * 10, num_frames=T)
+    assert item['chain_id'].tolist() == chain_id.tolist()
+
+    seen = {}
+    class Model:
+        def inference(self, batch):
+            seen.update(batch)
+            raise StopIteration
+    batch = tensor_tree(torch.utils.data.default_collate([item]))
+    with pytest.raises(StopIteration):
+        sim.rollout(Model(), batch)
+    assert seen['chain_id'][0].tolist() == chain_id.tolist()
+    assert 'residue_index' in seen
+
+
+def tensor_tree(batch):
+    return {key: torch.as_tensor(value) for key, value in batch.items()}
 
 
 def test_atlas_replicates_come_from_the_configured_list(tmp_path):

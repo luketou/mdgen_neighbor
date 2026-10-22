@@ -33,6 +33,7 @@ from pytorch_lightning import seed_everything  # seed-initialization
 from mdgen.geometry import atom14_to_frames, atom14_to_atom37, atom37_to_torsions
 from mdgen.residue_constants import restype_order, restype_atom37_mask
 from mdgen.tensor_utils import tensor_tree_map
+from mdgen.topology import default_numbering, load_chain_numbering
 from mdgen.wrapper import NewMDGenWrapper
 from mdgen.utils import atom14_to_pdb
 import pandas as pd
@@ -74,6 +75,8 @@ def get_batch(name, seqres, num_frames):
         }
         
     torsions, torsion_mask = atom37_to_torsions(atom37, seqres[None])
+    # Same chain numbering as training (scripts/prep_sims.py), so partitions match.
+    chain = load_chain_numbering(f'{args.data_dir}/{name}{args.suffix}_chain.npz', L)
     return {
         'torsions': torsions,
         'torsion_mask': torsion_mask[0],
@@ -81,6 +84,7 @@ def get_batch(name, seqres, num_frames):
         'rots': frames._rots._rot_mats,
         'seqres': seqres,
         'mask': mask, # (L,)
+        **(chain if chain is not None else default_numbering(L)),
     }
 
 def rollout(model, batch):
@@ -101,6 +105,8 @@ def rollout(model, batch):
             'rots': batch['rots'].expand(-1, args.num_frames, -1, -1, -1),
             'seqres': batch['seqres'],
             'mask': batch['mask'],
+            'chain_id': batch['chain_id'],
+            'residue_index': batch['residue_index'],
         }
     atom14, _ = model.inference(expanded_batch)
     new_batch = {**batch}
@@ -184,4 +190,5 @@ def main():
         do(model, name, seqres)
         
 
-main()
+if __name__ == '__main__':
+    main()

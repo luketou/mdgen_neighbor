@@ -1,7 +1,7 @@
 import json
-import os
 import torch
 from .full_length.region import sample_training_region
+from .topology import default_numbering, load_chain_numbering
 from .rigid_utils import Rigid
 from .residue_constants import restype_order
 import numpy as np
@@ -75,13 +75,6 @@ class MDGenDataset(torch.utils.data.Dataset):
         
         L = frames.shape[1]
         mask = np.ones(L, dtype=np.float32)
-        chain = None  # optional {full_name}_chain.npz written by scripts/prep_sims.py
-        chain_path = f'{self.args.data_dir}/{full_name}_chain.npz'
-        if os.path.exists(chain_path):
-            with np.load(chain_path) as saved:
-                chain = {key: saved[key].astype(np.int64) for key in ('chain_id', 'residue_index')}
-            if any(len(value) != L for value in chain.values()):
-                raise ValueError(f'{chain_path}: expected {L} residues')
         
         if self.args.no_frames:
             return {
@@ -94,9 +87,12 @@ class MDGenDataset(torch.utils.data.Dataset):
         torsions, torsion_mask = atom37_to_torsions(atom37, aatype)
         
         torsion_mask = torsion_mask[0]
+        # optional <npy stem>_chain.npz written next to the NPY by scripts/prep_sims.py
+        chain_file = load_chain_numbering(
+            f'{self.args.data_dir}/{full_name}{self.args.suffix}_chain.npz', L)
 
         if self.args.training_region:
-            return self.training_region_item(idx, name, chain, {
+            return self.training_region_item(idx, name, chain_file, {
                 'name': full_name,
                 'frame_start': frame_start,
                 'torsions': torsions,
@@ -107,6 +103,7 @@ class MDGenDataset(torch.utils.data.Dataset):
                 'mask': mask,
             })
 
+        chain = chain_file if chain_file is not None else default_numbering(L)
         if self.args.atlas:
             if L > self.args.crop:
                 start = np.random.randint(0, L - self.args.crop + 1)
@@ -115,8 +112,7 @@ class MDGenDataset(torch.utils.data.Dataset):
                 seqres = seqres[start:start+self.args.crop]
                 mask = mask[start:start+self.args.crop]
                 torsion_mask = torsion_mask[start:start+self.args.crop]
-                if chain is not None:
-                    chain = {key: value[start:start+self.args.crop] for key, value in chain.items()}
+                chain = {key: value[start:start+self.args.crop] for key, value in chain.items()}
                 
             
             elif L < self.args.crop:
@@ -129,9 +125,8 @@ class MDGenDataset(torch.utils.data.Dataset):
                 seqres = np.concatenate([seqres, np.zeros(pad, dtype=int)])
                 torsions = torch.cat([torsions, torch.zeros((torsions.shape[0], pad, 7, 2), dtype=torch.float32)], 1)
                 torsion_mask = torch.cat([torsion_mask, torch.zeros((pad, 7), dtype=torch.float32)])
-                if chain is not None:
-                    chain = {key: np.concatenate([value, np.zeros(pad, dtype=np.int64)])
-                             for key, value in chain.items()}
+                chain = {key: np.concatenate([value, np.zeros(pad, dtype=np.int64)])
+                         for key, value in chain.items()}
 
         return {
             'name': full_name,
@@ -142,18 +137,20 @@ class MDGenDataset(torch.utils.data.Dataset):
             'rots': frames._rots._rot_mats,
             'seqres': seqres,
             'mask': mask, # (L,)
-            **(chain or {}),
+            **chain,  # every item carries numbering, so batches always collate
         }
 
     def training_region_item(self, idx, name, chain, item):
         """Chain numbering from the chain file, else the split CSV, then gather a region."""
         L = len(item['seqres'])
-        numbering = chain or {'chain_id': np.zeros(L, dtype=np.int64), 'residue_index': np.arange(L)}
-        for key in numbering:  # optional per-residue JSON lists in the split CSV
-            if chain is None and key in self.df and name in self.df.index:
-                numbering[key] = np.array(json.loads(self.df[key][name]), dtype=np.int64)
-                if len(numbering[key]) != L:
-                    raise ValueError(f'{name}: {key} has {len(numbering[key])} entries, expected {L}')
+        numbering = chain
+        if numbering is None:
+            numbering = default_numbering(L)
+            for key in numbering:  # optional per-residue JSON lists in the split CSV
+                if key in self.df and name in self.df.index:
+                    numbering[key] = np.array(json.loads(self.df[key][name]), dtype=np.int64)
+                    if len(numbering[key]) != L:
+                        raise ValueError(f'{name}: {key} has {len(numbering[key])} entries, expected {L}')
         generator = None
         if self.region_seed is not None:
             generator = torch.Generator().manual_seed(self.region_seed + idx)

@@ -40,8 +40,10 @@ def test_default_mode_output_is_unchanged(tmp_path):
     split = write_protein(tmp_path, 'prot', 40)
     item = MDGenDataset(args(tmp_path), split)[0]
     assert set(item) == {'name', 'frame_start', 'torsions', 'torsion_mask', 'trans',
-                         'rots', 'seqres', 'mask'}
+                         'rots', 'seqres', 'mask', 'chain_id', 'residue_index'}
     assert item['trans'].shape == (T, 40, 3)
+    # Without a chain file: the single-chain positional numbering the wrapper assumes anyway.
+    assert item['chain_id'].tolist() == [0] * 40 and item['residue_index'].tolist() == list(range(40))
 
     for replica in (1, 2, 3):  # --atlas reads <name>_R{1,2,3}
         np.save(tmp_path / f'prot_R{replica}.npy', np.load(tmp_path / 'prot.npy'))
