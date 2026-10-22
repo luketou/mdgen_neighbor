@@ -18,7 +18,7 @@
 |---|---|---|---|
 | B1 | SDPA 與 attention 語意 | 導入 PyTorch SDPA，同時保留上游 manual attention 作為比較路徑。 | 正式入口預設使用 SDPA；scaling、mask、bias K/V、dropout、layout 與 time-axis 行為均明確對齊。 |
 | B2 | Position ID 與 RoPE 介面 | 預留 position ID 介面，但避免尚未完成的 true-gap 語意被靜默使用。 | 正常流程固定傳 `None`；任何非 `None` 值在 MHA 入口明確拒絕；CSV 產生工具保留供未來使用。 |
-| B3 | FP32 與 NPY dtype | 分開模型運算精度、matmul policy 與資料儲存 dtype。 | 訓練維持 FP32 與上游 `medium` matmul；推論模型轉 FP32；NPY 預設恢復上游 float16，也可選 float32。 |
+| B3 | FP32 與 NPY dtype | 分開模型運算精度、matmul policy 與資料儲存 dtype。 | 訓練精度改為具名組態，預設 `fp32-reference`（FP32、`highest` matmul、TF32 關閉），可選 `bf16-train`（#9 Ticket 1 取代 r2 的上游 `medium` matmul）；推論模型轉 FP32；NPY 預設恢復上游 float16，也可選 float32。 |
 | B4 | Seed 與 deterministic | 一般執行不應被 benchmark 的可重現設定綁住。 | seed 與 deterministic 預設關閉，需要可重現測試時再由 CLI 明確啟用。 |
 | B5 | Runtime、checkpoint 與入口分工 | 支援新版 PyTorch／舊 checkpoint，並避免量測參數污染正式訓練入口與 checkpoint metadata。 | 正式入口、runtime 入口與 checkpoint runtime 參數分離，可信任舊 checkpoint 以 `weights_only=False` 載入。 |
 | B6 | 資料下載與前處理 | 提供 ATLAS 下載工具，並修正資料 window 邊界與路徑參數不一致。 | ATLAS 資料可由 repository 工具下載；最後合法 window 可被抽到，短軌跡處理正確，`--sim_dir` 與 `--atlas_dir` 相容。 |
@@ -73,8 +73,8 @@
 
 | block_name | file_path | 最終改動 | 原因 |
 |---|---|---|---|
-| `fp32-training-precision` | `mdgen/parsing.py` | 既有 `--precision` 只允許 `32-true`。 | 本輪模型 training 固定以 FP32 驗收。 |
-| `fp32-matmul-precision` | `train.py`、`train-runtime.py` | 使用上游的 `torch.set_float32_matmul_precision("medium")`；參數與輸入輸出仍為 FP32。 | 恢復正式 training 的上游效能設定，不以測試用 `highest` 覆寫。 |
+| `fp32-training-precision` | `mdgen/parsing.py` | r2.1 時 `--precision` 只允許 `32-true`；#9 Ticket 1 已移除此錨點，改為具名組態 `fp32-reference`（預設）／`bf16-train`，並接受 `32-true`／`bf16-mixed` 別名。 | 精度須明確選擇並記錄，`fp32-reference` 作為 Precision parity 的參考。 |
+| `fp32-matmul-precision` | `train.py`、`train-runtime.py` | r2.1 時使用上游的 `torch.set_float32_matmul_precision("medium")`；#9 Ticket 1 已移除此錨點，改由 `mdgen/precision.py` 的 `configure_precision()` 依組態設定 matmul 與 TF32，並在啟動時記錄實際生效狀態。 | 全域 `medium` 讓「FP32」訓練的 matmul 內部允許 BF16，不是乾淨的參考。 |
 | `fp32-inference-model` | `sim_inference.py` | checkpoint 載入後使用 `model.eval().float()`。 | 明確保證推論模型參數為 FP32。 |
 | `npy-dtype-option` | `scripts/prep_sims.py` | 新增 `--dtype {float16,float32}`，預設 `float16`，依選項決定 NPY 儲存 dtype。 | 預設對齊 ATLAS／`atlas.ckpt` 的上游量化方式，較大座標範圍仍可選 float32。 |
 
