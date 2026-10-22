@@ -339,6 +339,8 @@ class NewMDGenWrapper(Wrapper):
             torsion_loss_mask = torch.zeros_like(torsion_loss_mask)
 
         loss_mask = torch.cat([frame_loss_mask, torsion_loss_mask], -1)
+        if 'core_mask' in batch:  # Training region: ghosts are context only
+            loss_mask = loss_mask * batch['core_mask'].unsqueeze(-1)
         loss_mask = loss_mask.unsqueeze(1).expand(-1, T, -1, -1)
 
         ########

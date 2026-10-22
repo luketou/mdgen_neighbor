@@ -32,3 +32,7 @@ sbatch --nodelist=node-201 job/submit_neighbor_scaling.sh
 ```
 
 原本各腳本使用的 virtualenv：`submit_neighbor_*.sh` 為 `/share/home/r15543056/.venvs/mdgen`；`submit_flrh_*.sh` 與 `submit_mdgen_l7500_*.sh` 為 `/share/home/r15543056/.venvs/mdgen2026`，l7500 的 checkpoint 為 `/share/home/r15543056/.cache/mdgen/atlas.ckpt`。
+
+## 共用 GPU 健康檢查
+
+`job/env.sh` 在 module 與 venv 載入後，使用 venv 的絕對 Python 路徑執行 GPU preflight；CUDA 不可用或矩陣運算失敗即停止。最小獨立診斷、不可變快照與 Slurm 投遞工具見 [HPC 操作入口](../docs/validation/hpc/README.md)。

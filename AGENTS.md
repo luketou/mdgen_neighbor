@@ -9,3 +9,5 @@
 - 處理 issue／ticket 時，讀取 [issue tracker](docs/agents/issue-tracker.md) 與 [triage labels](docs/agents/triage-labels.md)。
 - 涉及領域術語或架構決策時，先讀[領域文件入口](docs/agents/domain.md)。
 - 發現或選擇外部工具、`gh` 不可用時，依[工具查找與備援](docs/agents/tools.md) 操作。
+
+- HPC 診斷、module 環境與最小資源設定見 [HPC 操作入口](docs/validation/hpc/README.md)。
