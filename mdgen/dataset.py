@@ -131,11 +131,7 @@ class MDGenDataset(torch.utils.data.Dataset):
         }
 
     def training_region_item(self, idx, name, item):
-        """Gather one Training region in residue order and pad it to K + G.
-
-        `core_mask` marks the residues that count toward the loss; `mask` still
-        marks every real residue (core and ghost).
-        """
+        """Read optional chain numbering from the split CSV, then gather a region."""
         L = len(item['seqres'])
         numbering = {'chain_id': np.zeros(L, dtype=np.int64), 'residue_index': np.arange(L)}
         for key in numbering:  # optional per-residue JSON lists in the split CSV
@@ -146,42 +142,51 @@ class MDGenDataset(torch.utils.data.Dataset):
         generator = None
         if self.region_seed is not None:
             generator = torch.Generator().manual_seed(self.region_seed + idx)
-        region = sample_training_region(
-            item['trans'][0],
-            mask=torch.from_numpy(item['mask']),
-            chain_id=torch.from_numpy(numbering['chain_id']),
-            residue_index=torch.from_numpy(numbering['residue_index']),
-            core_count=self.args.region_core,
-            ghost_capacity=self.args.region_ghost,
-            contact_radius=self.args.spatial_contact_radius,
-            generator=generator,
-        )
-        keep = torch.cat([region.core_indices, region.ghost_indices]).sort().values
-        width = self.args.region_core + self.args.region_ghost
-        pad = width - len(keep)
+        return gather_training_region(item, numbering['chain_id'], numbering['residue_index'],
+                                      self.args, generator)
 
-        def gather(value, axis):
-            value = value[:, keep] if axis else value[keep]
-            if isinstance(value, np.ndarray):
-                return np.concatenate([value, np.zeros((pad, *value.shape[1:]), dtype=value.dtype)])
-            shape = list(value.shape)
-            shape[axis] = pad
-            return torch.cat([value, value.new_zeros(shape)], axis)
 
-        rots = gather(item['rots'], 1)
-        rots[:, len(keep):] = torch.eye(3)
-        core_mask = np.zeros(width, dtype=np.float32)
-        core_mask[:len(keep)] = np.isin(keep.numpy(), region.core_indices.numpy())
-        return {
-            'name': item['name'],
-            'frame_start': item['frame_start'],
-            'torsions': gather(item['torsions'], 1),
-            'torsion_mask': gather(item['torsion_mask'], 0),
-            'trans': gather(item['trans'], 1),
-            'rots': rots,
-            'seqres': gather(item['seqres'], 0),
-            'mask': gather(item['mask'], 0),
-            'core_mask': core_mask,
-            'chain_id': gather(numbering['chain_id'], 0),
-            'residue_index': gather(numbering['residue_index'], 0),
-        }
+PER_RESIDUE_AXIS = {'torsions': 1, 'trans': 1, 'rots': 1,
+                    'torsion_mask': 0, 'seqres': 0, 'mask': 0}
+
+
+def gather_training_region(item, chain_id, residue_index, args, generator=None):
+    """Sample a Training region from item's first frame; gather it in residue order.
+
+    Per-residue fields are padded to region_core + region_ghost; `core_mask`
+    marks the residues that count toward the loss, `mask` every real residue,
+    and `region` holds the center and diagnostics. Other fields pass through.
+    """
+    region = sample_training_region(
+        item['trans'][0],
+        mask=torch.as_tensor(item['mask']),
+        chain_id=torch.as_tensor(chain_id),
+        residue_index=torch.as_tensor(residue_index),
+        core_count=args.region_core,
+        ghost_capacity=args.region_ghost,
+        contact_radius=args.spatial_contact_radius,
+        generator=generator,
+    )
+    keep = torch.cat([region.core_indices, region.ghost_indices]).sort().values
+    width = args.region_core + args.region_ghost
+    pad = width - len(keep)
+
+    def gather(value, axis):
+        value = value[:, keep] if axis else value[keep]
+        if isinstance(value, np.ndarray):
+            return np.concatenate([value, np.zeros((pad, *value.shape[1:]), dtype=value.dtype)])
+        shape = list(value.shape)
+        shape[axis] = pad
+        return torch.cat([value, value.new_zeros(shape)], axis)
+
+    out = {key: gather(value, PER_RESIDUE_AXIS[key]) if key in PER_RESIDUE_AXIS else value
+           for key, value in item.items()}
+    out['rots'][:, len(keep):] = torch.eye(3)
+    out['core_mask'] = np.zeros(width, dtype=np.float32)
+    out['core_mask'][:len(keep)] = np.isin(keep.numpy(), region.core_indices.numpy())
+    out['chain_id'] = gather(np.asarray(chain_id, dtype=np.int64), 0)
+    out['residue_index'] = gather(np.asarray(residue_index, dtype=np.int64), 0)
+    details = region.diagnostics
+    out['region'] = {'center': region.center, **vars(details),
+                     'spatial_truncated_count': details.spatial_truncated_count}
+    return out

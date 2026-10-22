@@ -100,6 +100,7 @@ def describe_batch(items):
         'batch_size': len(items),
         'shapes': {key: list(value.shape) for key, value in first.items()
                    if hasattr(value, 'shape')},
+        **({'regions': [item['region'] for item in items]} if 'region' in first else {}),
     }
 
 
@@ -276,6 +277,12 @@ def main(argv=None):
     if probe_args.synthetic_residues is not None:
         items = synthetic_items(args, probe_args.synthetic_residues, args.batch_size,
                                 probe_args.seed)
+        if args.training_region:
+            from .dataset import gather_training_region
+            L = probe_args.synthetic_residues
+            items = [gather_training_region(item, np.zeros(L, dtype=np.int64), np.arange(L), args,
+                                            torch.Generator().manual_seed(probe_args.seed + i))
+                     for i, item in enumerate(items)]
     else:
         items = dataset_items(args, probe_args.dataset_index)
     report = run_probe(args, items, probe_args.configs, probe_args.seed,

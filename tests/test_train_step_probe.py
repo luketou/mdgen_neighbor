@@ -120,3 +120,28 @@ def test_cuda_reports_peak_memory(tmp_path):
     run = json.loads(output.read_text())['runs'][0]
     assert run['peak_memory_allocated_bytes'] > 0
     assert run['peak_memory_reserved_bytes'] >= run['peak_memory_allocated_bytes']
+
+
+def test_training_region_report_has_region_diagnostics(tmp_path):
+    output = tmp_path / 'region.json'
+    region = ['--training_region', '--region_core', '8', '--region_ghost', '16']
+    main(['--output', str(output), '--configs', 'fp32-reference', 'fp32-reference',
+          '--synthetic_residues', '60', '--', *TINY, *LOCAL, *region])
+    report = json.loads(output.read_text())
+
+    assert report['batch']['shapes']['trans'] == [4, 24, 3]
+    assert report['batch']['shapes']['core_mask'] == [24]
+    regions = report['batch']['regions']
+    assert len(regions) == 2
+    for entry in regions:
+        assert 0 <= entry['center'] < 60
+        assert entry['core_count'] == 8 and 0 < entry['ghost_count'] <= 16
+        assert entry['spatial_truncated_count'] >= 0
+        assert entry['mandatory_retained_count'] == entry['mandatory_neighbor_count']
+    assert all(run['loss_finite'] and run['gradient_nonfinite'] == 0 for run in report['runs'])
+    repeat = report['comparisons'][0]
+    assert all(v == 0 for v in repeat['max_abs_difference'].values())
+
+    again = tmp_path / 'again.json'
+    main(['--output', str(again), '--synthetic_residues', '60', '--', *TINY, *LOCAL, *region])
+    assert json.loads(again.read_text())['batch']['regions'] == regions  # seeded by --seed
