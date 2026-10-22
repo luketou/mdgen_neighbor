@@ -2,11 +2,30 @@
 
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import asdict, dataclass
 from itertools import product
 import math
 
 import torch
+
+
+@dataclass(frozen=True)
+class PartitionParams:
+    """The build_spatial_partition settings shared by generation and stored partitions."""
+
+    cell_width: float
+    contact_radius: float
+    core_capacity: int
+    ghost_capacity: int
+    covalent_span: int = 2
+
+    @classmethod
+    def from_args(cls, args):  # build_spatial_partition validates the values
+        return cls(cell_width=args.spatial_cell_width, contact_radius=args.spatial_contact_radius,
+                   core_capacity=args.core_capacity, ghost_capacity=args.ghost_capacity)
+
+    def partition_kwargs(self):
+        return asdict(self)
 
 
 @dataclass(frozen=True)
@@ -359,16 +378,14 @@ def partitions_from_args(args, ca_coordinates, mask, chain_id=None, residue_inde
         chain_id = torch.zeros((B, L), dtype=torch.long, device=mask.device)
     if residue_index is None:
         residue_index = torch.arange(L, device=mask.device)[None].expand(B, -1)
+    kwargs = PartitionParams.from_args(args).partition_kwargs()
     return [
         build_spatial_partition(
             ca_coordinates[batch_index],
             mask=mask[batch_index].bool(),
             chain_id=chain_id[batch_index],
             residue_index=residue_index[batch_index],
-            cell_width=args.spatial_cell_width,
-            contact_radius=args.spatial_contact_radius,
-            core_capacity=args.core_capacity,
-            ghost_capacity=args.ghost_capacity,
+            **kwargs,
         )
         for batch_index in range(B)
     ]
