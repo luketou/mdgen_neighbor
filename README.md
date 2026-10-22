@@ -23,7 +23,7 @@ pip install -r requirements.txt
 
 `python -m mdgen.train_step_probe --output probe.json --configs fp32-reference bf16-train -- <train.py 參數>` 以同一 batch、權重與 seed 跑一次完整 training step，輸出峰值記憶體、時間、loss、每個參數群的梯度摘要與 cosine、NaN／Inf 計數；詳見 `docs/validation/train-step-probe.md`。
 
-Run the CPU test suite with `pip install pytest==8.4.2 && python -m pytest tests -q`; the same checks run in GitHub Actions (`.github/workflows/tests.yml`). The analysis scripts additionally need PyEMMA; see the conda environments in `envs/environment-mdgen2026-*-pyemma.yml`.
+CPU 開發環境使用 `bash scripts/bootstrap_cpu.sh`，完整驗證使用 `bash scripts/check.sh`；GitHub Actions 共用這兩個入口，涵蓋 repository 檢查、pytest 與獨立 SDPA 比對。Python 版本、環境路徑與 WSL 設定見[開發流程](docs/agents/development.md)。The analysis scripts additionally need PyEMMA; see the conda environments in `envs/environment-mdgen2026-*-pyemma.yml`.
 
 Original paper environment (historical, PyTorch 1.12):
 

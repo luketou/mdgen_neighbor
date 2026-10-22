@@ -19,5 +19,6 @@ ckpt
 results/
 logs/
 outputs/
+.venv-cpu
 *.xtc
 *.trr
