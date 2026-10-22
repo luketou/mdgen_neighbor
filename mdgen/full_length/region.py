@@ -1,4 +1,8 @@
-"""Training regions: one random spatial core plus its read-only ghost context."""
+"""Training regions: one random spatial core plus its read-only ghost context.
+
+Interim sampler from #15; #12 replaces it with `group_region.py`, which picks
+regions from a stored full-protein partition so they match generation.
+"""
 
 from __future__ import annotations
 
