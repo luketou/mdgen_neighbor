@@ -132,15 +132,13 @@ def parse_train_args(include_runtime_args=False):  # runtime-args-separation
     group.add_argument('--ema', action='store_true')
     group.add_argument('--ema_decay', type=float, default=0.999)
     group.add_argument("--lr", type=float, default=1e-4)
-    # fp32-training-precision:start
     group.add_argument(
         '--precision',
         type=str,
-        choices=('32-true',),
-        default='32-true',
-        help='Fixed to full FP32 precision.',
+        choices=('fp32-reference', 'bf16-train', '32-true', 'bf16-mixed'),
+        default='fp32-reference',
+        help='Named training precision configuration (Lightning aliases also accepted).',
     )
-    # fp32-training-precision:end
     
     ## Training data 
     group = parser.add_argument_group("Training data settings")
@@ -255,6 +253,12 @@ def parse_train_args(include_runtime_args=False):  # runtime-args-separation
     group.add_argument('--cond_interval', type=int, default=None) # for superresolution
     
     args = parser.parse_args()
+    args.precision_config = {
+        '32-true': 'fp32-reference', 'bf16-mixed': 'bf16-train',
+    }.get(args.precision, args.precision)
+    args.precision = {
+        'fp32-reference': '32-true', 'bf16-train': 'bf16-mixed',
+    }[args.precision_config]
     if args.local_spatial and (args.manual_attention or args.no_frames):
         parser.error('local_spatial requires SDPA and residue frames')
     check_determinism_args(parser, args)  # deterministic-benchmark-guard
