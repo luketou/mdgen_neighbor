@@ -26,11 +26,13 @@ Bootstrap 會檢查 Git 作者設定；若尚未設定，請用自己的身分�
 CI 使用相同的 `bash scripts/bootstrap_cpu.sh` 與 `bash scripts/check.sh`。檢查依序執行：
 
 1. Python 版本、tracked text 的 LF 行尾與 [agent 導航](../../AGENTS.md) 中的本地 Markdown 連結。
-2. 工作目錄、index 及最新 commit 的 `git diff --check`／`git show --check`。
+2. 透過 `scripts/check_git_whitespace.sh` 檢查工作目錄、index 及最新 commit 相對第一個 parent 的新增空白問題；PR merge checkout 以 base parent 為比較起點。
 3. `pytest tests -q`，包含 training probe 的 CPU 測試。
 4. 獨立 CPU SDPA equivalence check；報告寫入 `results/sdpa/`。
 
 任何一項失敗即停止，exit code 非零。開始前與修改後皆使用同一入口；臨時只跑個別測試時，收尾仍須完整執行。CPU 檢查不包含 L40S 容量、速度或正式長蛋白驗收。
+
+CI checkout 使用 `fetch-depth: 2`，確保比較所需的 parent 存在。淺層 checkout 若缺 parent，檢查會要求補抓歷史；只有真正的初始 commit 才檢查整份新增內容，避免把既有凍結基準的空白誤認為本次變更。
 
 ## 行尾與 dirty diff
 

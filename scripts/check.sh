@@ -10,9 +10,7 @@ if ! command -v "$python_bin" >/dev/null 2>&1; then
 fi
 "$python_bin" -c 'import pathlib, sys; expected = tuple(map(int, pathlib.Path(".python-version").read_text().strip().split("."))); sys.exit(0 if sys.version_info[:2] == expected else f"Use Python {expected[0]}.{expected[1]} to match CI")'
 "$python_bin" scripts/check_repository.py
-git diff --check
-git diff --cached --check
-git show --format= --check HEAD
+bash scripts/check_git_whitespace.sh
 export PYTEST_DISABLE_PLUGIN_AUTOLOAD=1
 export OMP_NUM_THREADS="${OMP_NUM_THREADS:-1}"
 export PYTHONPATH="$repo_root${PYTHONPATH:+:$PYTHONPATH}"
