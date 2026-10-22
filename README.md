@@ -23,6 +23,8 @@ pip install -r requirements.txt
 
 `python -m mdgen.train_step_probe --output probe.json --configs fp32-reference bf16-train -- <train.py 參數>` 以同一 batch、權重與 seed 跑一次完整 training step，輸出峰值記憶體、時間、loss、每個參數群的梯度摘要與 cosine、NaN／Inf 計數；詳見 `docs/validation/train-step-probe.md`。
 
+`--training_region` 改以 Training region 取代 `--crop` 序列切塊：以取樣視窗第 0 幀隨機選中心，最近的 `--region_core`（預設 256）個殘基為 core，`--spatial_contact_radius` 內與同鏈 ±2 的共價鄰居為 ghost（上限 `--region_ghost`，預設 256）。core 與 ghost 依殘基原順序排列並 padding 到 K + G；batch 的 `core_mask` 標示 core，ghost 進入模型但不計入 loss。驗證集以固定 seed 取樣。多鏈蛋白可在 split CSV 加入選填欄位 `chain_id`、`residue_index`，內容為每殘基一個整數的 JSON 陣列（長度與 `seqres` 相同，例如 `"[0,0,1,1]"`）；未提供時視為單鏈、連續編號。
+
 Run the CPU test suite with `pip install pytest==8.4.2 && python -m pytest tests -q`; the same checks run in GitHub Actions (`.github/workflows/tests.yml`). The analysis scripts additionally need PyEMMA; see the conda environments in `envs/environment-mdgen2026-*-pyemma.yml`.
 
 Original paper environment (historical, PyTorch 1.12):
