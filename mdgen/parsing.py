@@ -265,8 +265,13 @@ def parse_train_args(include_runtime_args=False):  # runtime-args-separation
     }[args.precision_config]
     if args.local_spatial and (args.manual_attention or args.no_frames):
         parser.error('local_spatial requires SDPA and residue frames')
-    if args.training_region and args.no_frames:
-        parser.error('training_region requires residue frames')
+    if args.training_region:
+        if args.no_frames or args.hyena or args.design:
+            parser.error('training_region requires residue frames and does not support '
+                         '--hyena or --design')
+        if args.abs_pos_emb and args.region_core + args.region_ghost != args.crop:
+            parser.error('training_region with --abs_pos_emb requires '
+                         '--region_core + --region_ghost == --crop')
     check_determinism_args(parser, args)  # deterministic-benchmark-guard
     if args.model_dir is not None:
         os.environ["MODEL_DIR"] = os.path.join(args.model_dir, args.run_name)

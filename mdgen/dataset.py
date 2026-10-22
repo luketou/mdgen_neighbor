@@ -31,8 +31,12 @@ class MDGenDataset(torch.utils.data.Dataset):
             name = self.args.overfit_peptide
             seqres = name
 
+        rng = np.random
+        if self.args.training_region and self.region_seed is not None:
+            rng = np.random.RandomState(self.region_seed + idx)  # fix replica and window too
+
         if self.args.atlas:
-            i = np.random.randint(1, 4)
+            i = rng.randint(1, 4)
             full_name = f"{name}_R{i}"
         else:
             full_name = name
@@ -53,7 +57,7 @@ class MDGenDataset(torch.utils.data.Dataset):
         if self.args.overfit_frame or max_start == 0:
             frame_start = 0
         else:
-            frame_start = np.random.randint(0, max_start + 1)
+            frame_start = rng.randint(0, max_start + 1)
         end = frame_start + self.args.num_frames
         # data-preprocess-fixes:end
         # arr = np.copy(arr[frame_start:end]) * 10 # convert to angstroms

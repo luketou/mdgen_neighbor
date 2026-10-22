@@ -104,6 +104,39 @@ def test_region_seed_fixes_validation_regions(tmp_path):
     assert len(centers) == 1
 
 
+def test_region_seed_also_fixes_frame_window(tmp_path):
+    split = write_protein(tmp_path, 'prot', 40)
+    atoms = np.load(tmp_path / 'prot.npy')
+    rng = np.random.default_rng(1)
+    long = np.concatenate([atoms + rng.normal(scale=2.0, size=atoms.shape) for _ in range(4)])
+    np.save(tmp_path / 'prot.npy', long.astype(np.float32))  # 12 frames, windows of 3
+    dataset = MDGenDataset(args(tmp_path, training_region=True), split, region_seed=0)
+    items = []
+    for seed in range(4):
+        np.random.seed(seed)
+        torch.manual_seed(seed)
+        items.append(dataset[0])
+    assert len({item['frame_start'] for item in items}) == 1
+    assert all(torch.equal(item['trans'], items[0]['trans']) for item in items)
+
+
+@pytest.mark.parametrize('extra', [('--hyena',), ('--design',), ('--abs_pos_emb',)])
+def test_training_region_rejects_incompatible_modes(monkeypatch, extra):
+    from mdgen.parsing import parse_train_args
+    monkeypatch.setattr('sys.argv', ['train.py', '--train_split', 'x', '--val_split', 'x',
+                                     '--data_dir', 'x', '--training_region', *extra])
+    with pytest.raises(SystemExit):
+        parse_train_args()
+
+
+def test_abs_pos_emb_is_allowed_when_region_width_matches_crop(monkeypatch):
+    from mdgen.parsing import parse_train_args
+    monkeypatch.setattr('sys.argv', ['train.py', '--train_split', 'x', '--val_split', 'x',
+                                     '--data_dir', 'x', '--training_region', '--abs_pos_emb',
+                                     '--region_core', '128', '--region_ghost', '128'])
+    assert parse_train_args().crop == 256
+
+
 @pytest.mark.parametrize('extra, ok', [((), True), (('--no_frames',), False)])
 def test_training_region_cli(monkeypatch, extra, ok):
     from mdgen.parsing import parse_train_args
