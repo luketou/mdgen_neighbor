@@ -7,6 +7,10 @@ parser.add_argument('--outdir', type=str, default='./data_atlas')
 parser.add_argument('--num_workers', type=int, default=1)
 parser.add_argument('--suffix', type=str, default='')
 parser.add_argument('--atlas', action='store_true')
+parser.add_argument('--atlas_layout', choices=('protein', 'analysis'), default='protein',
+                    help='protein: *_prod_Ri_fit.xtc; analysis: *_Ri.xtc (100 ps mirror).')
+parser.add_argument('--expected_interval_ps', type=float, default=None,
+                    help='Reject trajectories whose native time spacing differs, before striding.')
 parser.add_argument('--stride', type=int, default=1)
 parser.add_argument('--replicates', type=int, nargs='+', default=[1, 2, 3],
                     help='replicate numbers R<i> to convert in --atlas mode')
@@ -18,6 +22,10 @@ parser.add_argument(
 )
 # npy-dtype-option:end
 args = parser.parse_args()
+if args.stride < 1:
+    parser.error('--stride must be positive')
+if args.expected_interval_ps is not None and args.expected_interval_ps <= 0:
+    parser.error('--expected_interval_ps must be positive')
 
 import mdtraj, os, tqdm
 import pandas as pd 
@@ -75,7 +83,20 @@ def traj_to_atom14(traj):
 if args.atlas:
     def do_job(name):
         for i in args.replicates:
-            traj = mdtraj.load(f'{args.atlas_dir}/{name}/{name}_prod_R{i}_fit.xtc', top=f'{args.atlas_dir}/{name}/{name}.pdb') 
+            trajectory_name = (f'{name}_prod_R{i}_fit.xtc' if args.atlas_layout == 'protein'
+                               else f'{name}_R{i}.xtc')
+            traj = mdtraj.load(f'{args.atlas_dir}/{name}/{trajectory_name}',
+                              top=f'{args.atlas_dir}/{name}/{name}.pdb')
+            if args.expected_interval_ps is not None:
+                if traj.n_frames < 2 or not np.allclose(
+                        np.diff(traj.time), args.expected_interval_ps, rtol=0, atol=0.01):
+                    raise ValueError(f'{name} R{i}: native frame interval differs from '
+                                     f'{args.expected_interval_ps} ps')
+            if args.atlas_layout == 'analysis':
+                if ''.join(traj.top.to_fasta()) != df.seqres[name]:
+                    raise ValueError(f'{name}: topology sequence differs from split seqres')
+                if not np.isfinite(traj.xyz).all():
+                    raise ValueError(f'{name} R{i}: nonfinite coordinates')
             traj.atom_slice([a.index for a in traj.top.atoms if a.element.symbol != 'H'], True)
             traj.superpose(traj)
             chain_id, residue_index = chain_numbering(traj.top)  # reject before writing anything
