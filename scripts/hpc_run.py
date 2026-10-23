@@ -18,8 +18,9 @@ from pathlib import Path, PurePosixPath, PureWindowsPath
 
 ROOT = Path(__file__).resolve().parents[1]
 TARGET = "r15543056@zinfandel.ncree.org"
-# Windows OpenSSH times out against this server; ssh and scp run inside WSL.
-WSL = ["wsl", "-d", "Ubuntu", "-e"]
+# Windows OpenSSH times out against this server, so on Windows ssh and scp run inside WSL;
+# on Linux (WSL included) they run directly.
+WSL = ["wsl", "-d", "Ubuntu", "-e"] if sys.platform == "win32" else []
 SSH_OPTS = ["-o", "BatchMode=yes", "-o", "ConnectTimeout=20", "-o", "ConnectionAttempts=1",
             "-o", "ServerAliveInterval=15", "-o", "ServerAliveCountMax=2"]
 RUNS_ROOT = "/share/home/r15543056/MDgen/hpc_runs"
@@ -36,8 +37,12 @@ def git(*a):
     return subprocess.run(["git", *a], cwd=ROOT, check=True, capture_output=True, text=True).stdout
 
 
-def wsl_path(path):
-    p = PureWindowsPath(Path(path).resolve())
+def scp_path(path):
+    """A local path as scp sees it: /mnt/<drive>/... when scp runs inside WSL."""
+    p = Path(path).resolve()
+    if not WSL:
+        return str(p)
+    p = PureWindowsPath(p)
     return f"/mnt/{p.drive[0].lower()}/" + "/".join(p.parts[1:])
 
 
@@ -89,8 +94,8 @@ def upload(tag):
         r = remote(f"set -e; mkdir -p {RUNS_ROOT}; mkdir {run}; mkdir {run}/src {run}/logs {run}/results {run}/cache")
         if r.returncode:
             sys.exit(f"mkdir failed: {r.stderr}")
-        scp(wsl_path(tarball), f"{TARGET}:{run}/")
-        scp(wsl_path(man), f"{TARGET}:{run}/")
+        scp(scp_path(tarball), f"{TARGET}:{run}/")
+        scp(scp_path(man), f"{TARGET}:{run}/")
     meta = shlex.quote(json.dumps({"run_id": run_id, "commit": commit, "dirty": dirty}))
     r = remote(f"""set -e
 cd {run}
@@ -180,7 +185,7 @@ def fetch(a):
     for p in a.paths:  # keep the run-relative layout so same-named files do not collide
         local = Path(a.dest, p)
         local.parent.mkdir(parents=True, exist_ok=True)
-        scp(f"{TARGET}:{run}/{p}", wsl_path(local))
+        scp(f"{TARGET}:{run}/{p}", scp_path(local))
         print(local)
 
 
