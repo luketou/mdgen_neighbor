@@ -1,0 +1,15 @@
+{
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/git_pull_guard.ps1",
+            "timeout": 60
+          }
+        ]
+      }
+    ]
+  }
+}
