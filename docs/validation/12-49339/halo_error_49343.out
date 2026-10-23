@@ -1,0 +1,12 @@
+name, uuid, memory.total [MiB]
+NVIDIA L40S, GPU-a78cba9e-11fb-acb6-6ff5-3e12bc8ff2eb, 46068 MiB
+PyTorch: 2.11.0+cu128
+GPU: NVIDIA L40S
+Warning: The cache directory for DeepSpeed Triton autotune, /home/r15543056/.triton/autotune, appears to be on an NFS system. While this is generally acceptable, if you experience slowdowns or hanging when DeepSpeed exits, it is recommended to set the TRITON_CACHE_DIR environment variable to a non-NFS path.
+3ilw_A_R3 {"1": {"l2": {"count": 162, "nonfinite": 0, "median": 2.175291603090636, "max": 6.780207504888291}, "relative": {"count": 162, "nonfinite": 0, "median": 0.02211244222787919, "max": 0.09882341234332251}, "by_ring": {"0": {"l2": {"count": 135, "nonfinite": 0, "median": 2.318990639061386, "max": 6.780207504888291}, "relative": {"count": 135, "nonfinite": 0, "median": 0.023458725919030976, "max": 0.09882341234332251}}, "1": {"l2": {"count": 27, "nonfinite": 0, "median": 0.8522523684163672, "max": 2.0084890588717403}, "relative": {"count": 27, "nonfinite": 0, "median": 0.007614862362733917, "max": 0.020429930906772618}}}}, "2": {"l2": {"count": 162, "nonfinite": 0, "median": 0.37674614594495137, "max": 1.5227977776518224}, "relative": {"count": 162, "nonfinite": 0, "median": 0.003808394555898509, "max": 0.02219520163474121}, "by_ring": {"0": {"l2": {"count": 135, "nonfinite": 0, "median": 0.4106187210270237, "max": 1.5227977776518224}, "relative": {"count": 135, "nonfinite": 0, "median": 0.004131155594433892, "max": 0.02219520163474121}}, "1": {"l2": {"count": 27, "nonfinite": 0, "median": 0.13399256959705108, "max": 0.5705392032263956}, "relative": {"count": 27, "nonfinite": 0, "median": 0.001129140940808173, "max": 0.005803405525180262}}}}}
+halo_rings=1: relative median 0.0221, max 0.0988 over 162 loss residues
+  ring 0: relative median 0.0235, max 0.0988 (135)
+  ring 1: relative median 0.00761, max 0.0204 (27)
+halo_rings=2: relative median 0.00381, max 0.0222 over 162 loss residues
+  ring 0: relative median 0.00413, max 0.0222 (135)
+  ring 1: relative median 0.00113, max 0.0058 (27)

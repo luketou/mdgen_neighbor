@@ -1,0 +1,30 @@
+.....F..................                                                 [100%]
+=================================== FAILURES ===================================
+_____________________ test_with_halo_keeps_the_loss_groups _____________________
+
+    def test_with_halo_keeps_the_loss_groups():
+>       from tests.test_group_region import protein
+E       ModuleNotFoundError: No module named 'tests.test_group_region'
+
+tests/test_halo_error.py:127: ModuleNotFoundError
+----------------------------- Captured stdout call -----------------------------
+Creating new Ultralytics Settings v0.0.7 file ✅ 
+View Ultralytics Settings with 'yolo settings' or at '/home/r15543056/.config/Ultralytics/settings.json'
+Update Settings with 'yolo settings key=value', i.e. 'yolo settings runs_dir=path/to/dir'. For help see https://docs.ultralytics.com/quickstart#ultralytics-settings.
+=============================== warnings summary ===============================
+tests/test_halo_error.py::test_report_compares_halo_settings_on_the_same_loss_groups
+tests/test_halo_error.py::test_report_compares_halo_settings_on_the_same_loss_groups
+tests/test_halo_error.py::test_report_compares_halo_settings_on_the_same_loss_groups
+tests/test_halo_error.py::test_report_compares_halo_settings_on_the_same_loss_groups
+tests/test_halo_error.py::test_report_compares_halo_settings_on_the_same_loss_groups
+  /opt/python-3.11.12-gpu/lib/python3.11/site-packages/torch/jit/_script.py:1488: DeprecationWarning: `torch.jit.script` is deprecated. Please switch to `torch.compile` or `torch.export`.
+    warnings.warn(
+
+tests/test_halo_error.py::test_report_compares_halo_settings_on_the_same_loss_groups
+  /share/home/r15543056/MDgen/hpc_runs/l40s-20261023T073430Z-a9e4fe5/src/mdgen/dataset.py:186: UserWarning: The given NumPy array is not writable, and PyTorch does not support non-writable tensors. This means writing to this tensor will result in undefined behavior. You may want to copy the array to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /pytorch/torch/csrc/utils/tensor_numpy.cpp:213.)
+    torch.from_numpy(ca), mask=torch.ones(len(ca), dtype=torch.bool),
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED tests/test_halo_error.py::test_with_halo_keeps_the_loss_groups - Modul...
+1 failed, 23 passed, 6 warnings in 26.66s

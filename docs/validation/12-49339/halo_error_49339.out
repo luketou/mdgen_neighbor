@@ -1,0 +1,12 @@
+name, uuid, memory.total [MiB]
+NVIDIA L40S, GPU-a78cba9e-11fb-acb6-6ff5-3e12bc8ff2eb, 46068 MiB
+PyTorch: 2.11.0+cu128
+GPU: NVIDIA L40S
+Warning: The cache directory for DeepSpeed Triton autotune, /home/r15543056/.triton/autotune, appears to be on an NFS system. While this is generally acceptable, if you experience slowdowns or hanging when DeepSpeed exits, it is recommended to set the TRITON_CACHE_DIR environment variable to a non-NFS path.
+3ilw_A_R1 {"1": {"l2": {"count": 162, "nonfinite": 0, "median": 2.064563591436811, "max": 7.5226204392158715}, "relative": {"count": 162, "nonfinite": 0, "median": 0.021744195231967498, "max": 0.10809425469904656}, "by_ring": {"0": {"l2": {"count": 135, "nonfinite": 0, "median": 2.2630483046412784, "max": 7.5226204392158715}, "relative": {"count": 135, "nonfinite": 0, "median": 0.02333892030799252, "max": 0.10809425469904656}}, "1": {"l2": {"count": 27, "nonfinite": 0, "median": 0.8584718840616752, "max": 2.0304405203705835}, "relative": {"count": 27, "nonfinite": 0, "median": 0.0073030277081968225, "max": 0.021365112151468798}}}}, "2": {"l2": {"count": 162, "nonfinite": 0, "median": 0.36955872080754104, "max": 1.4408832843915909}, "relative": {"count": 162, "nonfinite": 0, "median": 0.0037473370359949283, "max": 0.020704381670339632}, "by_ring": {"0": {"l2": {"count": 135, "nonfinite": 0, "median": 0.39235616277451424, "max": 1.4408832843915909}, "relative": {"count": 135, "nonfinite": 0, "median": 0.004014550525054835, "max": 0.020704381670339632}}, "1": {"l2": {"count": 27, "nonfinite": 0, "median": 0.13068404121272917, "max": 0.5988946560366781}, "relative": {"count": 27, "nonfinite": 0, "median": 0.001060510460303998, "max": 0.006301810550354664}}}}}
+halo_rings=1: relative median 0.0217, max 0.108 over 162 loss residues
+  ring 0: relative median 0.0233, max 0.108 (135)
+  ring 1: relative median 0.0073, max 0.0214 (27)
+halo_rings=2: relative median 0.00375, max 0.0207 over 162 loss residues
+  ring 0: relative median 0.00401, max 0.0207 (135)
+  ring 1: relative median 0.00106, max 0.0063 (27)
