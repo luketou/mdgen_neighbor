@@ -157,8 +157,8 @@ def tail(a):
 
 def fetch(a):
     for p in a.paths:  # stay inside the run directory remotely and inside DEST locally
-        parts = PurePosixPath(p).parts
-        if not parts or parts[0] == "/" or ".." in parts or ":" in p or "\\" in p:
+        pp = PurePosixPath(p)
+        if not pp.parts or pp.is_absolute() or ".." in pp.parts or ":" in p or "\\" in p:
             sys.exit(f"fetch: {p!r} must be a relative path inside the run directory")
     run = f"{RUNS_ROOT}/{a.run_id}"
     paths = " ".join(shlex.quote(p) for p in a.paths)
