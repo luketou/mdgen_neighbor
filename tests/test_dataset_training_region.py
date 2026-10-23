@@ -177,7 +177,7 @@ def cli(monkeypatch, *extra):
 
 def test_training_region_cli_defaults(monkeypatch):
     parsed = cli(monkeypatch, *LOCAL)
-    assert (parsed.region_residues, parsed.halo_rings, parsed.partition_dir) == (1024, 1, None)
+    assert (parsed.region_residues, parsed.halo_rings, parsed.partition_dir) == (896, 1, None)
     assert parsed.val_replicates is None
 
 
