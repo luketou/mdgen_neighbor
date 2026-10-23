@@ -4,6 +4,7 @@ from pathlib import Path
 import shlex
 import shutil
 import subprocess
+import sys
 
 import pytest
 
@@ -22,6 +23,12 @@ def test_fetch_rejects_paths_outside_the_run_directory(path):
 
 def test_fetch_accepts_run_relative_paths():
     hpc_run.check_fetch_paths(['results/halo_error_49339/halo_error.json', 'logs/49339.out'])
+
+
+@pytest.mark.skipif(sys.platform == 'win32', reason='Windows routes ssh and scp through WSL')
+def test_linux_runs_ssh_and_scp_directly(tmp_path):
+    assert hpc_run.WSL == []
+    assert hpc_run.scp_path(tmp_path / 'x') == str((tmp_path / 'x').resolve())
 
 
 @pytest.mark.skipif(shutil.which('bash') is None, reason='needs bash')

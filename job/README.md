@@ -18,7 +18,7 @@ MDGEN_VENV=/path/to/venv sbatch job/submit_neighbor_tests.sh
 | `MDGEN_RESOURCE_ROOT` | 否 | 含 `ckpt/`、`data/`、`splits/` 的資源目錄，預設 `../mdgen`（與 `scripts/diagnostics` 相同） |
 | `MDGEN_EXPECTED_GPU_UUID` | 否 | `submit_neighbor_scaling.sh` 會檢查 GPU UUID 是否相符；未設定時只印出 UUID |
 
-本機提交一律用 `scripts/hpc_run.py`（經 WSL 的 ssh／scp）：建立唯讀快照、核對 SHA-256、把 `src/results`、`src/logs` 連到 run 目錄後提交，並把每個 job 記到 `<run>/job_history`。用法見 `python scripts/hpc_run.py -h`，例如：
+本機提交一律用 `scripts/hpc_run.py`（Linux／WSL 內直接呼叫 ssh／scp；Windows 上改經 WSL，因 Windows OpenSSH 對 headnode 會逾時）：建立唯讀快照、核對 SHA-256、把 `src/results`、`src/logs` 連到 run 目錄後提交，並把每個 job 記到 `<run>/job_history`。用法見 `python scripts/hpc_run.py -h`，例如：
 
 ```bash
 python scripts/hpc_run.py submit --tag pytest job/submit_pytest.sh tests/test_halo_error.py
