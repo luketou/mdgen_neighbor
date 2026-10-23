@@ -2,11 +2,12 @@
   "command": "MDGEN_CPU_VENV=/home/luketou/.local/share/mdgen/venvs/cpu-py311 bash scripts/check.sh",
   "environment": "local WSL CPU, Python 3.11, torch 2.11.0+cpu",
   "pytest": {
-    "passed": 210,
+    "passed": 213,
     "skipped": 2,
     "deselected": 14
   },
   "sdpa": "all six cases passed",
   "log": "tool-checks.log",
-  "scope": "tool checks only; not GPU capacity or forward numerical acceptance"
+  "scope": "tool checks only; not GPU capacity or forward numerical acceptance",
+  "checked_source_commit": "a449542 (plus evidence-only commit)"
 }

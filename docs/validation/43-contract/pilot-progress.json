@@ -1,0 +1,37 @@
+{
+  "status": "waiting_for_capacity_scope_decision",
+  "ticket2_complete": false,
+  "jobs": [
+    {
+      "job_id": 49466,
+      "type": "cpu",
+      "run_id": "issue43-t2-inventory-20261023T142533Z-c754b85",
+      "status": "inventory_completed",
+      "source_commit": "c754b85"
+    },
+    {
+      "job_id": 49469,
+      "type": "gpu",
+      "run_id": "issue43-t2-forward4-20261023T143328Z-58f60a5",
+      "status": "short_forward_capacity_completed",
+      "source_commit": "58f60a5"
+    }
+  ],
+  "used_cpu_jobs": 1,
+  "remaining_cpu_jobs": 1,
+  "used_gpu_jobs": 1,
+  "remaining_gpu_jobs": 3,
+  "gpu_jobs_running": 0,
+  "max_gpu_jobs": 4,
+  "not_executed": [
+    "training step capacity",
+    "250 frame forward capacity",
+    "250 frame backward capacity",
+    "formal numerical evaluation"
+  ],
+  "decisions_pending": [
+    "extend pilot fixed prefix from 4 to 8 or retain long halo2 gap",
+    "training numerical policy",
+    "freeze final feasible matrix"
+  ]
+}

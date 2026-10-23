@@ -1,0 +1,25 @@
+{"status": "passed", "passed": true, "python": "/share/home/r15543056/.venvs/mdgen/bin/python", "env": {"CUDA_VISIBLE_DEVICES": "0", "GPU_DEVICE_ORDINAL": "0", "SLURM_JOB_GPUS": "1"}, "torch": "2.11.0+cu128", "gpu": "NVIDIA L40S"}
+6sms_A-R1-paired completed
+6sms_A-R1-halo1 completed
+6lrd_A-R1-paired completed
+6lrd_A-R1-halo1 completed
+6l3r_E-R1-paired completed
+6l3r_E-R1-halo1 completed
+6sup_A-R1-paired completed
+6sup_A-R1-halo1 completed
+6sms_A-R2-paired completed
+6sms_A-R2-halo1 completed
+6lrd_A-R2-paired completed
+6lrd_A-R2-halo1 completed
+6l3r_E-R2-paired completed
+6l3r_E-R2-halo1 completed
+6sup_A-R2-paired completed
+6sup_A-R2-halo1 completed
+6sms_A-R3-paired completed
+6sms_A-R3-halo1 completed
+6lrd_A-R3-paired completed
+6lrd_A-R3-halo1 completed
+6l3r_E-R3-paired completed
+6l3r_E-R3-halo1 completed
+6sup_A-R3-paired completed
+6sup_A-R3-halo1 completed
