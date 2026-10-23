@@ -58,7 +58,7 @@
       2
     ],
     "selection_seed": 43002,
-    "pilot_candidates": 4,
+    "pilot_candidates": 8,
     "formal_candidates": 8,
     "selection": "torch CPU randperm, take prefix, no replacement for infeasible or duplicate",
     "budget": 896,
@@ -89,9 +89,71 @@
     }
   },
   "pending": [
+    "final interview consensus",
     "capacity measurements",
-    "final feasible matrix",
-    "loss/gradient/optimizer numerical policy confirmation"
+    "control tolerance and near-zero cutoff calibration and confirmation",
+    "final feasible matrix"
   ],
-  "review_base": "f62c1e6"
+  "review_base": "f62c1e6",
+  "comparison_scope": {
+    "budget": 896,
+    "population": "feasible seed subset for architecture approximation",
+    "coverage_policy": "report all seed groups, infeasible groups, and paired common subset separately",
+    "general_training_startup_validated": false,
+    "approval": {
+      "source": "current chat, grill-with-docs round 1",
+      "user_reply": "Q1 是 Q2 是"
+    }
+  },
+  "training_threshold_policy": {
+    "status": "descriptive_truncation_and_control_calibration_approved",
+    "approval_reply": "Q5 是 Q6 是",
+    "truncated_loss_gradient_delta": "descriptive_only_no_approximation_pass",
+    "deprecated_draft_thresholds_approved": false,
+    "forward_thresholds_changed": false,
+    "controls": [
+      "same_path_fp32_repeat",
+      "full_coverage_same_supervision"
+    ],
+    "control_tolerances_and_near_zero_cutoffs": "calibrate_from_zero_truncation_controls_then_confirm_before_formal_evaluation",
+    "truncated_errors_used_for_calibration": false,
+    "research": "training-threshold-research.md",
+    "policy": "training-policy-proposal.md"
+  },
+  "matrix_revisions": [
+    {
+      "revision": 1,
+      "pilot_candidates": 4,
+      "applied_gpu_job": 49469
+    },
+    {
+      "revision": 2,
+      "pilot_candidates": 8,
+      "status": "scope_approved_execution_after_interview_consensus",
+      "approval_reply": "Q3 是 Q4 是",
+      "retains_prior_candidates": true,
+      "long_protein_halo2_common_candidates": 1
+    }
+  ],
+  "execution_priority": {
+    "job_order": [
+      "train_4_frames",
+      "forward_250_frames",
+      "train_250_frames"
+    ],
+    "within_job": "6sup_A R1, then three baseline proteins R1, then R2/R3",
+    "unrun_cases": "retain individually and keep required validation incomplete",
+    "approval_reply": "Q3 是 Q4 是"
+  },
+  "interview_consensus": {
+    "individual_questions_approved": [
+      "Q1",
+      "Q2",
+      "Q3",
+      "Q4",
+      "Q5",
+      "Q6"
+    ],
+    "integrated_summary_confirmed": false
+  }
 }

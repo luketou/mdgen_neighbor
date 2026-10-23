@@ -1,5 +1,5 @@
 {
-  "status": "waiting_for_capacity_scope_decision",
+  "status": "waiting_for_integrated_interview_consensus",
   "ticket2_complete": false,
   "jobs": [
     {
@@ -30,8 +30,8 @@
     "formal numerical evaluation"
   ],
   "decisions_pending": [
-    "extend pilot fixed prefix from 4 to 8 or retain long halo2 gap",
-    "training numerical policy",
-    "freeze final feasible matrix"
+    "final interview consensus",
+    "control tolerance and near-zero cutoff confirmation after calibration",
+    "freeze final feasible matrix after capacity results"
   ]
 }
