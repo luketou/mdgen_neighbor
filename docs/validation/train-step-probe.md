@@ -31,6 +31,13 @@ python -m mdgen.train_step_probe --output results/probe.json \
 
 既有 launcher 的 `MDGEN_ISSUE43_FRAMES` 模式會呼叫有時間上限的真實資料先導；需要明確設定 `MDGEN_ISSUE43_DATA` 與 `MDGEN_ATLAS_CKPT`。每個 case 重建相同初始權重與 optimizer，第一個 FP32 組態作暖機，其餘為量測。量測數及核准資源見 [提案](43-contract/proposal.md)，未跑到的 case 亦保留在 manifest。
 
+`MDGEN_ISSUE43_MODE` 模式把 launcher 參數直接交給 driver，供 [幀數掃描申請](43-contract/gpu-request-frames.md) 使用：
+
+- `--frames` 接受任意正整數。`--memory gbs=N,ffn=N,expandable` 覆寫 `group_batch_size`、`ffn_chunk_size`，並對子程序設定 `PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True`；未指定時沿用核准的 4／65536。實際設定逐 case 寫入 manifest 的 `memory`。
+- `--cases ID…` 只執行指定的計畫 case；未知 ID 直接報錯。
+- `--mode sweep --protein P --replica R --step FRAMES[:MEMORY] …` 依序對完整蛋白跑訓練步。同一記憶體設定在某幀數 OOM 後，跳過更多幀數；某幀數已放得下後，跳過同幀數的其他記憶體設定。被跳過的 case 標為 `skipped_by_rule` 並記錄原因。
+- `--budget_minutes` 與 `--case_timeout` 明確設定 Job 內時間預算與每個 case 的逾時。
+
 `--` 之後加上 `--training_region`（及 `--region_residues`／`--halo_rings`）時，兩種來源都改為 Training region
 batch：資料集由 `MDGenDataset` 取樣，合成鏈則對第 0 幀完整分區、以 `--seed` 決定種子 group，再由同一個
 `mdgen/full_length/region_batch.py` 統一欄位選取與 padding、組成 batch；只有 loss group 的 core 計入 loss（`loss_core_mask`），halo 與上下文殘基只提供上下文。#9 Ticket 3 量測一個 Training region × 250 幀即用此模式，例如

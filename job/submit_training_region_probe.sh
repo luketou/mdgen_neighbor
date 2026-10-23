@@ -24,10 +24,16 @@ export PYTHONUNBUFFERED=1
 export MODEL_DIR="results/training_region_probe_${SLURM_JOB_ID}"
 mkdir -p "$MODEL_DIR"
 
-if [ -n "${MDGEN_ISSUE43_FRAMES:-}" ]; then
-    exec python scripts/issue43_pilot.py --mode train --frames "$MDGEN_ISSUE43_FRAMES" \
-        --data_root "${MDGEN_ISSUE43_DATA:?set the Ticket 1 data root}" \
-        --checkpoint "${MDGEN_ATLAS_CKPT:?set the checkpoint path}" --output_dir "$MODEL_DIR"
+# Issue #43 pilot with explicit driver arguments, e.g.
+#   MDGEN_ISSUE43_MODE=sweep ... job/submit_training_region_probe.sh --protein 6sup_A --replica 1 --step 64
+if [ -n "${MDGEN_ISSUE43_MODE:-}${MDGEN_ISSUE43_FRAMES:-}" ]; then
+    pilot=(python scripts/issue43_pilot.py
+        --data_root "${MDGEN_ISSUE43_DATA:?set the Ticket 1 data root}"
+        --checkpoint "${MDGEN_ATLAS_CKPT:?set the checkpoint path}" --output_dir "$MODEL_DIR")
+    if [ -n "${MDGEN_ISSUE43_MODE:-}" ]; then
+        exec "${pilot[@]}" --mode "$MDGEN_ISSUE43_MODE" "$@"
+    fi
+    exec "${pilot[@]}" --mode train --frames "$MDGEN_ISSUE43_FRAMES"
 fi
 
 nvidia-smi --query-gpu=name,uuid,memory.total --format=csv

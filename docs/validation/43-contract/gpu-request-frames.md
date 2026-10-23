@@ -31,7 +31,7 @@
 固定不變：checkpoint、FP32、matmul `highest`、TF32 關閉、gradient checkpointing 開啟、batch 1、seed 0、t 0.5、region 預算 896。
 
 - **幀數掃描（預設記憶體設定）：** `6sup_A` R1 完整蛋白訓練步，依序 F = 64、96、128；第一次 OOM 後不再試更大的 F。
-- **250 幀記憶體設定：** 同一 case 在 250 幀，依序試 `group_batch_size` 4→1、`ffn_chunk_size` 65536→8192、再加 `PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True`。這些只改分批與配置，不改運算定義，但可能造成 FP32 捨入層級的差異；採用時 full 與 region 兩側必須用相同設定，並在 manifest 寫明。
+- **250 幀記憶體設定：** 同一 case 在 250 幀，依序試 `group_batch_size` 4→1、`ffn_chunk_size` 65536→8192、再加 `PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True`；某個設定放得下後，不再試更激進的設定。這些只改分批與配置，不改運算定義，但可能造成 FP32 捨入層級的差異；採用時 full 與 region 兩側必須用相同設定，並在 manifest 寫明。
 - **可行幀數的確認：** 對掃描得到的最大可行 F（記為 F\*），補 `6sup_A` R2／R3 完整蛋白、R1 的 group 95 halo1／halo2 region，以及三個基準蛋白 R1 的完整涵蓋控制。控制容差是依幀數校準的，F\* 的控制要另外量，不沿用 4 或 250 幀的數字。
 
 結果的解讀：F\* 幀的成對訓練比較是獨立的一層，不能代替 250 幀，也不宣稱 250 幀訓練近似。checkpoint 以 250 幀訓練，F\* < 250 也是相對訓練設定的外推。
