@@ -200,7 +200,11 @@
       "pos_embed_add": {
         "line": 235,
         "text": "            x = x + self.pos_embed"
-      }
+      },
+      "rotary_flag": [
+        82,
+        98
+      ]
     },
     "mdgen/sim_inference.py": {
       "full_length": {

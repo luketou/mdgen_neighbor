@@ -1,0 +1,48 @@
+{
+  "checkpoint": "/share/home/r15543056/MDgen/mdgen/ckpt/atlas.ckpt",
+  "epoch": null,
+  "global_step": null,
+  "hyper_parameters": {
+    "args": {
+      "abs_pos_emb": false,
+      "abs_time_emb": false,
+      "allow_nan_cfactor": false,
+      "alpha_max": 8,
+      "crop": 256,
+      "design": false,
+      "dirichlet_flow_temp": 1.0,
+      "discrete_loss_weight": 0.5,
+      "dropout": 0.0,
+      "ema": false,
+      "embed_dim": 384,
+      "frame_interval": null,
+      "grad_checkpointing": false,
+      "interleave_ipa": false,
+      "ipa_head_dim": 32,
+      "ipa_heads": 4,
+      "ipa_qk": 8,
+      "ipa_v": 8,
+      "mha_heads": 16,
+      "no_rope": false,
+      "num_frames": 250,
+      "num_layers": 5,
+      "oracle": false,
+      "path_type": "GVP",
+      "prediction": "velocity",
+      "prepend_ipa": true,
+      "sampling_method": "dopri5",
+      "scale_factor": 1.0,
+      "sim_condition": true,
+      "time_multiplier": 100.0,
+      "tps_condition": false
+    }
+  },
+  "pytorch_lightning_version": "2.0.4",
+  "sha256": "bc90c66e7539f52c9d0514aeddd96c552061150a1eef3b10c120bc3aaff08015",
+  "top_level_keys": [
+    "hparams_name",
+    "hyper_parameters",
+    "pytorch-lightning_version",
+    "state_dict"
+  ]
+}

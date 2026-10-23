@@ -1,6 +1,6 @@
 # #43 來源查核：ATLAS checkpoint 的幀間隔、`6sup_A` 的 split 與 `crop=256`
 
-結論：上游作者的論文與 README 明文寫出 ATLAS 模型以 400 ps（每 40 幀取 1 幀、250 幀）訓練，Hugging Face 權重即論文所用；`6sup_A` 不在 split 中，符合 AlphaFlow 的規則：測試期內序列長度超過 1024 的蛋白排除；上游推論不裁切，直接以全長生成，但公開評估中最長的測試蛋白只有 724 殘基。本查核只讀文獻與原始碼，未讀 checkpoint 內容、未送 HPC Job。
+結論：上游作者的論文與 README 明文寫出 ATLAS 模型以 400 ps（每 40 幀取 1 幀、250 幀）訓練，Hugging Face 權重即論文所用；`6sup_A` 不在 split 中，符合 AlphaFlow 的規則：測試期內序列長度超過 1024 的蛋白排除；上游推論不裁切，直接以全長生成，但公開評估中最長的測試蛋白只有 724 殘基。本地 checkpoint 的設定也確認關閉絕對位置編碼（`abs_pos_emb: false`）。除讀取 checkpoint 設定的一個 CPU Job 外，本查核只讀文獻與原始碼。
 
 分級：**已證實**＝有原文或原始碼可直接引用；**推定**＝由已證實的事實推論，但沒有原文直接寫明；**查無**＝已查範圍內找不到。
 
@@ -19,7 +19,8 @@ python -I make_audit.py <bjing2016/mdgen clone> <bjing2016/alphaflow clone> audi
 - MDGen 論文 Jing, Stärk, Jaakkola, Berger，[arXiv:2409.17808](https://arxiv.org/abs/2409.17808)（HTML 版，2026-10-23 讀取）。
 - AlphaFlow 論文 Jing, Berger, Jaakkola，[arXiv:2402.04845](https://arxiv.org/abs/2402.04845)（HTML 版，2026-10-23 讀取；只讀到 Appendix B.2，之後的附錄未讀）。
 - RCSB Data API `https://data.rcsb.org/rest/v1/core/entry/{id}` 的 `deposit_date` 與 `initial_release_date`。
-- 未查：Hugging Face `bjing-mit/mdgen` 的 model card、checkpoint 內的 `hyper_parameters`、上游 GitHub issues。
+- Checkpoint 內的 `hyper_parameters`：Job `49502`（run `issue43-ckpt-hparams-20261023T163215Z-0b955a3`，`node-19`，CPU，snapshot commit `0b955a3`，dirty=false）以 [`dump_ckpt_hparams.py`](dump_ckpt_hparams.py) 讀取 `/share/home/r15543056/MDgen/mdgen/ckpt/atlas.ckpt`，輸出 [`atlas_hparams_49502.json`](atlas_hparams_49502.json) 與 log [`49502.out`](49502.out)；檔案 SHA-256 與 Ticket 1 記錄的相同。
+- 未查：Hugging Face `bjing-mit/mdgen` 的 model card、上游 GitHub issues。
 
 ## 1. Checkpoint 的訓練幀間隔
 
@@ -55,7 +56,8 @@ python -I make_audit.py <bjing2016/mdgen clone> <bjing2016/alphaflow clone> audi
 |---|---|---|
 | 訓練時長於 256 的蛋白隨機取連續 256 殘基；短於 256 的補零並以 mask 遮蔽 | 已證實 | [`mdgen/dataset.py`](https://github.com/bjing2016/mdgen/blob/81482a403b91c5a8437046da1d8d321ba97089cc/mdgen/dataset.py) 第 71 行（`if L > self.args.crop`）與第 80 行（`elif L < self.args.crop`）；MDGen B.3：「We train with random crops of up to 256 residues」 |
 | 推論不裁切，以全長序列生成 | 已證實 | MDGen B.3：「but draw samples for the full protein at inference time」；[`sim_inference.py`](https://github.com/bjing2016/mdgen/blob/81482a403b91c5a8437046da1d8d321ba97089cc/sim_inference.py) 第 41 行 `get_batch` 以 `L = len(seqres)` 建 batch，沒有任何 crop 或分塊 |
-| ATLAS 模型沒有綁定 `crop` 長度的絕對位置編碼 | 推定 | `--abs_pos_emb` 預設關閉（`mdgen/parsing.py` 第 96 行 `store_true`），只有開啟時才建 `(1, crop, embed_dim)` 的 `pos_embed` 並加到輸入（`mdgen/model/latent_model.py` 第 115、235 行）；README 的 ATLAS 訓練指令沒有 `--abs_pos_emb`（四肽指令都有）。本地 checkpoint 的 `hyper_parameters.abs_pos_emb` 未讀取 |
+| ATLAS 模型沒有綁定 `crop` 長度的絕對位置編碼 | 已證實 | 本地 checkpoint 的 `hyper_parameters.args.abs_pos_emb` 為 `false`（`atlas_hparams_49502.json`）；只有開啟時才建 `(1, crop, embed_dim)` 的 `pos_embed` 並加到輸入（`mdgen/model/latent_model.py` 第 115、235 行）。與 README 的 ATLAS 訓練指令（沒有 `--abs_pos_emb`）一致 |
+| 殘基間的位置資訊來自 rotary embedding | 已證實（設定） | 同一 JSON 的 `no_rope` 為 `false`，各層以 `use_rotary_embeddings=not args.no_rope` 建 attention（`mdgen/model/latent_model.py` 第 82、98 行）。Rotary 只編碼相對位置，但訓練時的 crop 只涵蓋 256 殘基內的相對距離；更遠距離的行為未經評估 |
 | 上游公開評估的最長蛋白為 724 殘基 | 已證實 | `splits/atlas_test.csv` 的 `seqlen` 最大 724（即 `6sms_A`）；MDGen Table 4 為 n=82 的 test |
 | 上游對 1024 殘基以上蛋白的推論行為 | 查無 | 論文與原始碼都沒有說明或評估 |
 
