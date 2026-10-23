@@ -1,0 +1,16 @@
+Loading cuda/12.8
+  Loading requirement: auto_gpu cufft/24.01 TensorRT/10.13.3.9/cuda-12.0-12.9
+2026-10-23 15:24:53.712601: I tensorflow/core/util/port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+2026-10-23 15:24:53.755180: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 AVX512F AVX512_VNNI AVX512_BF16 AVX512_FP16 AVX_VNNI AMX_TILE AMX_INT8 AMX_BF16 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-10-23 15:24:56.648186: I tensorflow/core/util/port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+/share/home/r15543056/.venvs/mdgen/lib/python3.11/site-packages/lightning_fabric/plugins/environments/slurm.py:204: The `srun` command is available on your system but is not used. HINT: If your intention is to run Lightning on SLURM, prepend your python command with `srun` like so: srun python /share/home/r15543056/MDgen/hpc_runs/l40s-20261023T0 ...
+GPU available: True (cuda), used: True
+TPU available: False, using: 0 TPU cores
+💡 Tip: For seamless cloud logging and experiment tracking, try installing [litlogger](https://pypi.org/project/litlogger/) to enable LitLogger, which logs metrics and artifacts automatically to the Lightning Experiments platform.
+/share/home/r15543056/.venvs/mdgen/lib/python3.11/site-packages/pytorch_lightning/trainer/configuration_validator.py:70: You defined a `validation_step` but have no `val_dataloader`. Skipping val loop.
+You are using a CUDA device ('NVIDIA L40S') that has Tensor Cores. To properly utilize them, you should set `torch.set_float32_matmul_precision('medium' | 'high')` which will trade-off precision for performance. For more details, read https://pytorch.org/docs/stable/generated/torch.set_float32_matmul_precision.html#torch.set_float32_matmul_precision
+LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0]
+/share/home/r15543056/.venvs/mdgen/lib/python3.11/site-packages/pytorch_lightning/utilities/_pytree.py:21: `isinstance(treespec, LeafSpec)` is deprecated, use `isinstance(treespec, TreeSpec) and treespec.is_leaf()` instead.
+2026-10-23 15:25:04,691 [node-201:14297] [INFO] {'train_model_dur': np.float64(1.3642656803131104), 'train_loss': np.float64(2932.329833984375), 'train_time': np.float64(0.08847743272781372), 'train_dur': np.float64(2.454845905303955), 'train_general_step_dur': np.float64(1.4729223251342773), 'epoch': 0, 'trainer_step': 1, 'iter_step': 1, 'train_count': 1, 'lr': 0.0001}
+`Trainer.fit` stopped: `max_steps=1` reached.

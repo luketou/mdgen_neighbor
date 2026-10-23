@@ -1,0 +1,8 @@
+name, uuid, memory.total [MiB]
+NVIDIA L40S, GPU-83a6811b-8c82-590e-4fdb-e85d9e786e61, 46068 MiB
+PyTorch: 2.11.0+cu128
+GPU: NVIDIA L40S
+Warning: The cache directory for DeepSpeed Triton autotune, /home/r15543056/.triton/autotune, appears to be on an NFS system. While this is generally acceptable, if you experience slowdowns or hanging when DeepSpeed exits, it is recommended to set the TRITON_CACHE_DIR environment variable to a non-NFS path.
+region: {'loss_groups': 25, 'halo_groups': 10, 'residues': 488, 'loss_residues': 215, 'next_region_size': 542}
+batch_shapes.trans: [1, 250, 512, 3]
+peak allocated 17.26 GB, reserved 19.46 GB, step 3.6 s, loss_finite=True, gradient_nonfinite=0
