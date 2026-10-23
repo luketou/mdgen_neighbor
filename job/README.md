@@ -13,7 +13,8 @@ MDGEN_VENV=/path/to/venv sbatch job/submit_neighbor_tests.sh
 | --- | --- | --- |
 | `MDGEN_VENV` | 是 | 要啟用的 virtualenv |
 | `MDGEN_MODULES` | 否 | 要 `module load` 的 modules，預設 `python/3.11.12-gpu cuda/12.8`；設為空字串則略過 |
-| `MDGEN_ATLAS_CKPT` | `submit_mdgen_l7500_*.sh` | ATLAS checkpoint 路徑 |
+| `MDGEN_ATLAS_CKPT` | `submit_mdgen_l7500_*.sh`、`submit_halo_error.sh` | ATLAS checkpoint 路徑 |
+| `MDGEN_HALO_DATA`、`MDGEN_HALO_SPLIT` | `submit_halo_error.sh` | NPY 目錄與 split CSV |
 | `MDGEN_RESOURCE_ROOT` | 否 | 含 `ckpt/`、`data/`、`splits/` 的資源目錄，預設 `../mdgen`（與 `scripts/diagnostics` 相同） |
 | `MDGEN_EXPECTED_GPU_UUID` | 否 | `submit_neighbor_scaling.sh` 會檢查 GPU UUID 是否相符；未設定時只印出 UUID |
 
@@ -45,3 +46,16 @@ MDGEN_VENV=/path/to/venv sbatch job/submit_training_region_probe.sh --grad_check
 ```
 
 合成鏈每幀為獨立隨機漫步，loss 數值無意義，只用於記憶體與時間量測。
+
+## Halo 近似誤差（#12 Ticket 5）
+
+`submit_halo_error.sh` 以 `mdgen.full_length.halo_error` 比較 `--halo_rings 1 2` 與完整蛋白在 loss core 上的模型輸出差（同一雜訊、t、loss group）。報告寫到 `results/halo_error_<job>/halo_error.json`，log 末尾印出每種設定與每個邊界圈數的相對誤差。方法與欄位見 `docs/validation/halo-error.md`。
+
+```bash
+mkdir -p logs
+MDGEN_VENV=/path/to/venv MDGEN_ATLAS_CKPT=/path/to/atlas.ckpt \
+MDGEN_HALO_DATA=/path/to/npy MDGEN_HALO_SPLIT=/path/to/split.csv \
+sbatch job/submit_halo_error.sh --pdb_id NAME --replicate 1 --region_residues 1024 --regions 8
+```
+
+蛋白須讓完整蛋白 forward 裝得下 GPU；`--partition_dir` 可沿用 `mdgen.full_length.partition_store` 的存檔。
