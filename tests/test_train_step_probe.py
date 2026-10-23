@@ -125,27 +125,26 @@ def test_cuda_reports_peak_memory(tmp_path):
 
 def test_training_region_report_has_region_diagnostics(tmp_path):
     output = tmp_path / 'region.json'
-    region = ['--training_region', '--region_core', '8', '--region_ghost', '16']
+    region = ['--training_region', '--region_residues', '48']
     main(['--output', str(output), '--configs', 'fp32-reference', 'fp32-reference',
           '--synthetic_residues', '60', '--', *TINY, *LOCAL, *region])
     report = json.loads(output.read_text())
 
-    assert report['batch']['shapes']['trans'] == [4, 24, 3]
-    assert report['batch']['shapes']['core_mask'] == [24]
+    assert report['batch']['shapes']['trans'] == [4, 48, 3]
+    assert report['batch']['shapes']['loss_core_mask'] == [48]
     regions = report['batch']['regions']
     assert len(regions) == 2
     for entry in regions:
-        assert 0 <= entry['center'] < 60
-        assert entry['core_count'] == 8 and 0 < entry['ghost_count'] <= 16
-        assert entry['spatial_truncated_count'] >= 0
-        assert entry['mandatory_retained_count'] == entry['mandatory_neighbor_count']
+        assert 0 < entry['loss_residues'] < entry['residues'] <= 48
+        assert entry['loss_groups'] >= 1 and entry['halo_groups'] >= 1
+        assert entry['next_region_size'] is None or entry['next_region_size'] > 48
     assert all(run['loss_finite'] and run['gradient_nonfinite'] == 0 for run in report['runs'])
     repeat = report['comparisons'][0]
     assert all(v == 0 for v in repeat['max_abs_difference'].values())
     for run in report['runs']:  # the collated loader batch, checked on every run
         shapes = run['batch_shapes']
-        assert shapes['trans'] == [2, 4, 24, 3] and shapes['core_mask'] == [2, 24]
-        assert shapes['region.center'] == [2]
+        assert shapes['trans'] == [2, 4, 48, 3] and shapes['loss_core_mask'] == [2, 48]
+        assert shapes['partition.residue_mask'] == [2, 48]
         assert all(shape[0] == 2 for shape in shapes.values())
 
     again = tmp_path / 'again.json'
@@ -159,3 +158,5 @@ def test_batch_shapes_rejects_a_tensor_without_the_batch_dimension():
     assert batch_shapes(batch, 2) == {'trans': [2, 4, 3], 'region.center': [2]}
     with pytest.raises(ValueError, match='region.center'):
         batch_shapes({**batch, 'region': {'center': torch.zeros(3)}}, 2)
+    with pytest.raises(ValueError, match='name'):
+        batch_shapes({**batch, 'name': ['a']}, 2)
