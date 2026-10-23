@@ -376,7 +376,7 @@ def main(argv=None):
         args.probe_time = 0.5 if probe_args.time is None else probe_args.time
     args.region_seed_group = probe_args.seed_group
     if args.region_seed_group is not None and not (args.training_region or probe_args.coverage_control):
-        raise ValueError('--seed_group requires --training_region')
+        raise ValueError('--seed_group requires --training_region or --coverage_control')
     if args.sim_ckpt:
         saved = torch.load(args.sim_ckpt, map_location='cpu', weights_only=False)
         trained_args = saved['hyper_parameters']['args']

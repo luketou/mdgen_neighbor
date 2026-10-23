@@ -249,6 +249,13 @@ def test_control_without_time_still_uses_the_same_actual_time(tmp_path):
     assert [r['training_time'] for r in report['runs']] == [0.5, 0.5, 0.5]
 
 
+def test_seed_group_without_a_region_mode_names_both_region_options(tmp_path):
+    with pytest.raises(ValueError, match='--training_region or --coverage_control'):
+        main(['--output', str(tmp_path / 'invalid.json'), '--seed_group', '0',
+              '--synthetic_residues', '60', '--', *TINY, *LOCAL, '--batch_size', '1'])
+    assert not (tmp_path / 'invalid.json').exists()
+
+
 def test_control_rejects_a_truncated_region_before_running_steps(tmp_path):
     with pytest.raises(ValueError, match='every full-protein residue'):
         main(['--output', str(tmp_path / 'invalid.json'), '--coverage_control',

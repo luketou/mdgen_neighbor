@@ -233,6 +233,7 @@ def halo_errors(wrapper, batch, partition, ca, *, region_residues, halo_rings, r
             l2 = diff.double().pow(2).sum((0, 2)).sqrt().cpu()
             refnorm = reference.double().pow(2).sum((0, 2)).sqrt().cpu()
             components = supervised.expand_as(reference).double().sum((0, 2)).cpu()
+            first = len(observations)  # this region's rows; -len(rings) would slice all rows if empty
             for i, (a, ref, n, ring) in enumerate(zip(l2.tolist(), refnorm.tolist(),
                                                    components.tolist(), rings)):
                 finite = np.isfinite(a) and np.isfinite(ref)
@@ -249,7 +250,7 @@ def halo_errors(wrapper, batch, partition, ca, *, region_residues, halo_rings, r
                     'absolute_rms': a / np.sqrt(n) if finite and n else None,
                     'relative': a / ref if category == 'regular' else None})
             relative_values = [row['relative'] if row['reference_class'] != 'nonfinite'
-                               else float('nan') for row in observations[-len(rings):]]
+                               else float('nan') for row in observations[first:]]
             residues[k].extend(zip(rings, l2.tolist(), relative_values))
             entry['times'].append({'t': float(t), 'l2': stats(l2), 'relative': stats(relative_values)})
     loss_union = {int(i) for s in selections.values() for g in s.loss_groups

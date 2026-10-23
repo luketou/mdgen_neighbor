@@ -31,7 +31,7 @@ L40S 上用 `job/submit_halo_error.sh`（見 `job/README.md`）。實測結果�
 
 ## 容量先導與完整報告
 
-`--num_frames` 明確覆寫 checkpoint 的視窗長度；`--warmup`／`--repeats` 控制同輸入 forward 的同步時間與 GPU peak allocated／reserved 量測。在一般成對誤差模式中，region 的記憶體包含仍存活的完整蛋白 reference，不能當成獨立 region forward 的記憶體或直接宣稱省量。
+載入 checkpoint 時一律關閉 gradient checkpointing、dropout 設為 0；非 `--inventory_only` 的模型量測以 `fp32-reference` 精度（matmul `highest`、TF32 關閉）執行。`--num_frames` 明確覆寫 checkpoint 的視窗長度；`--warmup`／`--repeats` 控制同輸入 forward 的同步時間與 GPU peak allocated／reserved 量測。在一般成對誤差模式中，region 的記憶體包含仍存活的完整蛋白 reference，不能當成獨立 region forward 的記憶體或直接宣稱省量。
 
 `--inventory_only` 不實例化模型，只在 CPU Compute Job 讀 checkpoint 組態、分區與第零幀座標，列出每個 halo 設定全部種子 group 的最小 region 大小、分位數及不可行原因。
 

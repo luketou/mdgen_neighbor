@@ -8,7 +8,7 @@ ATLAS checkpoint SHA-256 `bc90c66e7539f52c9d0514aeddd96c552061150a1eef3b10c120bc
 
 ## 種子 group
 
-CPU `torch.randperm`（generator seed 43002）的前 8 個候選，halo 1 與 2；不可行或重複的候選不補抽。成對 halo 比較以 2 圈預算選 loss groups 再分別加 1／2 圈；`6sup_A` 的 2 圈只有 group 95 可行。全部種子的可行率（`6sup_A` halo1 189/190、halo2 51/190）照實揭露，不宣稱一般 training startup 有效。
+CPU `torch.randperm`（generator seed 43002）的前 8 個候選，halo 1 與 2；不可行或重複的候選不補抽。成對 halo 比較以 2 圈預算選 loss groups 再分別加 1／2 圈；`6sup_A` 的 2 圈只有 group 95 可行。全部種子的可行率（`6sup_A` halo1 189/190、halo2 51/190；基準蛋白兩種 halo 皆全部可行）照實揭露，不宣稱一般 training startup 有效。每個蛋白／replica／halo 的不可行 group ID 與原因見 [infeasible-groups.json](infeasible-groups.json)。
 
 ## Forward（Ticket 3、4）
 
@@ -31,12 +31,12 @@ CPU `torch.randperm`（generator seed 43002）的前 8 個候選，halo 1 與 2�
 | region | halo1 的 8 個候選；halo2 只有 group 95 | 只有完整涵蓋 |
 | t／noise seed | 0.25、0.5、0.75／0、1、2 | 同左 |
 
-截斷 case 的 loss、clipping 前梯度與實際更新只作描述，不發出「訓練近似通過」。控制（同路徑重跑與完整涵蓋）採選項 B：loss 絕對差 ≤ `2e-6`；每個參數群梯度差 RMS ≤ `1e-7`、更新差 RMS ≤ `2e-6`；高於近零 cutoff 的群組另要求梯度相對差 ≤ `5e-4`、更新相對差 ≤ `2e-2`。近零 cutoff：梯度 reference RMS ≤ `1e-7`、更新 ≤ `2e-6`。依據見 [控制校準](control-calibration.md)。
+Loss 正規化依已確認的 [訓練數值政策](training-policy-proposal.md)：兩側使用相同的 masked squared error 分子定義與有效 mask 分母，逐 case 保存並檢查兩側分母相等。截斷 case 的 loss、clipping 前梯度與實際更新只作描述，不發出「訓練近似通過」。控制（同路徑重跑與完整涵蓋）採選項 B：loss 絕對差 ≤ `2e-6`；每個參數群梯度差 RMS ≤ `1e-7`、更新差 RMS ≤ `2e-6`；高於近零 cutoff 的群組另要求梯度相對差 ≤ `5e-4`、更新相對差 ≤ `2e-2`。近零 cutoff：梯度 reference RMS ≤ `1e-7`、更新 ≤ `2e-6`。依據見 [控制校準](control-calibration.md)。
 
 ## 容量狀態
 
 - **已量測可行**：見 [最終矩陣草案](final-matrix-proposal.md) 的容量表。
-- **同形狀未實測**：先導時間預算內沒跑到的 case（Job 49479 有 11 個、49501 有 28 個）。batch 形狀與已量測的 R1 相同，但容量沒有實測；正式執行若失敗，依失敗政策記錄。
+- **同形狀未實測**：先導時間預算內沒跑到的 case（Job 49479 有 11 個、49501 有 28 個）；64 幀層中只量了 [49515](../43-49515/README.md) 的 7 個 case 與 49513 的 R1 完整蛋白，其餘 64 幀 case（`6sup_A` halo1 的其他 7 個候選、group 95 的 R2／R3 region、基準蛋白 R2／R3）也屬此類；forward 與訓練的容量只在 t 0.5、noise seed 0 量測，t 0.25／0.75 與 seed 1／2 同形狀未實測。正式執行若失敗，依失敗政策記錄。
 - **第一期不可行**：`6sup_A` 完整蛋白訓練步超過 64 幀（96 幀在預設設定下 OOM，250 幀在三種記憶體設定下也都 OOM；[49501](../43-49501/README.md)、[49513](../43-49513/README.md)）。64 與 96 幀之間沒有量測。
 
 ## 報告與失敗政策
@@ -45,4 +45,4 @@ CPU `torch.randperm`（generator seed 43002）的前 8 個候選，halo 1 與 2�
 
 ## 已知限制
 
-400 ps 間隔有上游論文記載，但 checkpoint 未保存；checkpoint 以 `crop=256`、250 幀訓練，完整蛋白、64 幀與 4 幀都屬外推；四蛋白與訓練資料的獨立性只做過序列篩檢；結果只描述固定可行子集與單步訓練。
+400 ps 間隔有上游論文記載，但 checkpoint 未保存；checkpoint 以 `crop=256`、250 幀訓練，完整蛋白、64 幀與 4 幀都屬外推；四蛋白與訓練資料的獨立性只做過序列篩檢；結果只描述固定可行子集與單步訓練。控制容差只用基準蛋白 R1、noise seed 0、t 0.5 的控制校準，套用到其他 replica、t 與 seed 屬未驗證的延伸。Ticket 5 需要的「截斷 region 與完整蛋白在同一 supervision 下的成對訓練比較」目前工具尚未實作（現有控制只支援完整涵蓋），屬 Ticket 5 的實作範圍。
