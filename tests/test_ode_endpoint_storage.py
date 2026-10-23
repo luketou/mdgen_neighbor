@@ -33,6 +33,8 @@ def small_wrapper():
     return wrapper
 
 
+@pytest.mark.gpu
+@pytest.mark.checkpoint
 @pytest.mark.skipif(not torch.cuda.is_available(), reason='Inference memory budget requires CUDA')
 def test_inference_preserves_final_structure_and_work_with_less_saved_ode_workspace():
     wrapper = small_wrapper()
@@ -109,6 +111,8 @@ def test_dopri5_saved_points_preserve_final_solution_and_model_evaluations(dtype
     assert evaluations[0] == evaluations[1] and evaluations[0] > 2
 
 
+@pytest.mark.gpu
+@pytest.mark.checkpoint
 @pytest.mark.skipif(not torch.cuda.is_available(), reason='Wrapper comparison requires CUDA')
 @pytest.mark.parametrize('training,grad_enabled,method', [
     (True,False,'dopri5'), (False,True,'dopri5'), (False,False,'rk4')],
@@ -150,6 +154,8 @@ def test_other_inference_modes_retain_fifty_point_solver_behavior(training, grad
     torch.testing.assert_close(outputs[1][1], outputs[0][1], atol=0, rtol=0)
 
 
+@pytest.mark.gpu
+@pytest.mark.checkpoint
 @pytest.mark.skipif(not torch.cuda.is_available(), reason='Large CUDA conditioning requires GPU')
 def test_large_conditioning_batch_generates_finite_frames():
     wrapper = small_wrapper()

@@ -23,7 +23,7 @@ pip install -r requirements.txt
 
 `python -m mdgen.train_step_probe --output probe.json --configs fp32-reference bf16-train -- <train.py 參數>` 以同一 batch、權重與 seed 跑一次完整 training step，輸出峰值記憶體、時間、loss、每個參數群的梯度摘要與 cosine、NaN／Inf 計數；詳見 `docs/validation/train-step-probe.md`。
 
-`--training_region`（需 `--local_spatial`）改以 Training region 取代 `--crop` 序列切塊：對完整蛋白第 0 幀分區一次（`--partition_dir` 讀 `python -m mdgen.full_length.partition_store` 的存檔並檢查參數與座標；未給時每筆現場分區），隨機挑一個種子 group，依 core Cα 中心距離加入 loss group，直到再加一個就會超過 `--region_residues`（預設 1024，計入 loss、halo 與上下文殘基）；外圍 `--halo_rings`（預設 1）圈 halo group 正常計算但不計 loss。Dataset 先從 memmap 選出 region 殘基（及其前一殘基，使 phi／pre-omega 與完整蛋白相同）再轉換 frame 與 torsion；batch 帶有子分區 `partition`（其 `position_index` 為完整蛋白索引，即 RoPE 位置）與 `loss_core_mask`，wrapper 不再重新分區。`--val_replicates`（例如 `--replicates 1 2 3 4 --val_replicates 5`）指定驗證用 replicate；驗證集以固定 seed 決定 replica、幀視窗與 region。啟動時檢查每個 replicate 的所有種子 group 都放得進 `--region_residues`。不支援 `--hyena`、`--design`、`--abs_pos_emb`。鏈資訊來自 `scripts/prep_sims.py` 寫出的 `<npy stem>_chain.npz`，沒有時視為單鏈、連續編號。
+`--training_region`（需 `--local_spatial`）改以 Training region 取代 `--crop` 序列切塊：對完整蛋白第 0 幀分區一次（`--partition_dir` 讀 `python -m mdgen.full_length.partition_store` 的存檔並檢查參數與座標；未給時每筆現場分區），隨機挑一個種子 group，依 core Cα 中心距離加入 loss group，直到再加一個就會超過 `--region_residues`（預設 896，計入 loss、halo 與上下文殘基）；外圍 `--halo_rings`（預設 1）圈 halo group 正常計算但不計 loss。Dataset 先從 memmap 選出 region 殘基（及其前一殘基，使 phi／pre-omega 與完整蛋白相同）再轉換 frame 與 torsion；batch 帶有子分區 `partition`（其 `position_index` 為完整蛋白索引，即 RoPE 位置）與 `loss_core_mask`，wrapper 不再重新分區。`--val_replicates`（例如 `--replicates 1 2 3 4 --val_replicates 5`）指定驗證用 replicate；驗證集以固定 seed 決定 replica、幀視窗與 region。啟動時檢查每個 replicate 的所有種子 group 都放得進 `--region_residues`。不支援 `--hyena`、`--design`、`--abs_pos_emb`。鏈資訊來自 `scripts/prep_sims.py` 寫出的 `<npy stem>_chain.npz`，沒有時視為單鏈、連續編號。
 
 CPU 開發環境使用 `bash scripts/bootstrap_cpu.sh`，完整驗證使用 `bash scripts/check.sh`；GitHub Actions 共用這兩個入口，涵蓋 repository 檢查、pytest 與獨立 SDPA 比對。Python 版本、環境路徑與 WSL 設定見[開發流程](docs/agents/development.md)。The analysis scripts additionally need PyEMMA; see the conda environments in `envs/environment-mdgen2026-*-pyemma.yml`.
 
@@ -36,6 +36,23 @@ pip install pytorch_lightning==2.0.4 mdtraj==1.9.9 biopython==1.79
 pip install wandb dm-tree einops torchdiffeq fair-esm pyEMMA
 pip install matplotlib==3.7.2 numpy==1.21.2
 ```
+
+## Testing
+
+本地與 [GitHub Actions](.github/workflows/tests.yml) 共用完整 CPU 檢查入口：
+
+```bash
+bash scripts/check.sh
+```
+
+先依 [開發流程](docs/agents/development.md) 安裝 CPU 環境。檢查入口關閉 CUDA 裝置可見性，依資源標記選出 CPU 測試，並執行 repository 檢查與獨立 SDPA 比對；無須手動排除個別測試。
+
+- 一般 CPU 測試：不帶下列資源標記，使用小型或合成輸入。
+- `@pytest.mark.gpu`：需要 CUDA；保留無 GPU 時的 skip 條件。
+- `@pytest.mark.checkpoint`：會載入 checkpoint 檔案，包含測試產生的小型 checkpoint。
+- 同時需要 GPU 與 checkpoint 的測試加上兩個標記。新增測試依執行需求標記；`--strict-markers` 會拒絕未登記的標記名稱。
+
+GPU 與 checkpoint 測試在 Compute Node 執行。完整測試與分組提交方式見 [job/README.md](job/README.md#pytest-測試分類)；完整測試未設定預設排除條件。
 
 ## Datasets
 

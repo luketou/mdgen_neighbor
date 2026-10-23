@@ -27,7 +27,7 @@ CI 使用相同的 `bash scripts/bootstrap_cpu.sh` 與 `bash scripts/check.sh`�
 
 1. Python 版本、tracked text 的 LF 行尾與 [agent 導航](../../AGENTS.md) 中的本地 Markdown 連結。
 2. 透過 `scripts/check_git_whitespace.sh` 檢查工作目錄、index 及最新 commit 相對第一個 parent 的新增空白問題；PR merge checkout 以 base parent 為比較起點。
-3. GPU preflight（CPU runner 無 CUDA 時標記 skipped），然後 `pytest tests -q`，包含 training probe 的 CPU 測試。
+3. 關閉 CUDA 裝置可見性；GPU preflight 標記 skipped，再以 `pytest tests -m "not gpu and not checkpoint" -q` 執行 CPU 測試，包含 training probe。資源標記定義見 [README 的 Testing](../../README.md#testing)；GPU／checkpoint 測試改由 [Compute Node 測試入口](../../job/README.md#pytest-測試分類) 執行。
 4. 獨立 CPU SDPA equivalence check；每次報告寫入 `results/sdpa/check-*/` 的獨立目錄，保留先前結果，支援重複執行。
 
 任何一項失敗即停止，exit code 非零。開始前與修改後皆使用同一入口；臨時只跑個別測試時，收尾仍須完整執行。CPU 檢查不包含 L40S 容量、速度或正式長蛋白驗收。

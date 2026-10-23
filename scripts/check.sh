@@ -12,10 +12,11 @@ fi
 "$python_bin" scripts/check_repository.py
 bash scripts/check_git_whitespace.sh
 export PYTEST_DISABLE_PLUGIN_AUTOLOAD=1
+export CUDA_VISIBLE_DEVICES=""
 export OMP_NUM_THREADS="${OMP_NUM_THREADS:-1}"
 export PYTHONPATH="$repo_root${PYTHONPATH:+:$PYTHONPATH}"
 "$python_bin" scripts/diagnostics/gpu_preflight.py --output results/cpu-preflight.json
-"$python_bin" -m pytest tests -q
+"$python_bin" -m pytest tests -m "not gpu and not checkpoint" -q
 mkdir -p results/sdpa
 sdpa_output="$(mktemp -d results/sdpa/check-XXXXXXXX)"
 "$python_bin" scripts/diagnostics/test_sdpa.py --device cpu --output_dir "$sdpa_output"

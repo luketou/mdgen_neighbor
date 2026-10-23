@@ -88,6 +88,7 @@ def run(tmp_path, checkpoint, *extra):
     return json.loads(output.read_text())
 
 
+@pytest.mark.checkpoint
 def test_report_compares_halo_settings_on_the_same_loss_groups(tmp_path, checkpoint):
     report = run(tmp_path, checkpoint, '--halo_rings', '0', '1', '2')
     protein, = report['proteins']
@@ -109,6 +110,7 @@ def test_report_compares_halo_settings_on_the_same_loss_groups(tmp_path, checkpo
     assert summary['0']['by_ring']['0']['relative']['max'] > 1e-3
 
 
+@pytest.mark.checkpoint
 def test_a_halo_covering_the_protein_reproduces_the_full_forward(monkeypatch, tmp_path, checkpoint):
     def one_loss_group(partition, ca, generator, **kwargs):  # keep a small loss set
         return with_halo(partition, (int(torch.randint(len(partition.groups), (),
@@ -122,6 +124,7 @@ def test_a_halo_covering_the_protein_reproduces_the_full_forward(monkeypatch, tm
     assert report['summary']['0']['l2']['max'] > 1e-3
 
 
+@pytest.mark.checkpoint
 def test_region_budget_counts_the_deepest_halo(tmp_path, checkpoint):
     with pytest.raises(ValueError, match='region_residues'):
         run(tmp_path, checkpoint, '--halo_rings', '1', '200')

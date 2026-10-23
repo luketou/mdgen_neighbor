@@ -28,7 +28,7 @@ VENV = "/share/home/r15543056/.venvs/mdgen"
 MAX_BYTES = 10 * 2**20
 MAX_FETCH_BYTES = 20 * 2**20
 EXCLUDE = ["data/*", "splits/*", "results/*", "logs/*", "*.ckpt", "*.pt", "*.pth", "*.safetensors",
-           ".env*", "*.pem", "id_rsa*", "id_ed25519*", ".claude/*", ".scratch/*", "tests/reference/*"]
+           ".env*", "*.pem", "id_rsa*", "id_ed25519*", ".claude/*", ".scratch/*"]
 UNTRACKED_DIRS = ("job/", "scripts/", "mdgen/", "hpc/")  # untracked files here are uploaded too
 
 
