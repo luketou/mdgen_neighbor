@@ -6,6 +6,6 @@ Forward 門檻、候選矩陣、測試介面與先導額度先前已獲確認，
 
 已完成 [CPU group 盤點](../43-49466/README.md) 與 [短幀 forward 容量先導](../43-49469/README.md)。剩餘資源與尚未執行項目見 [進度紀錄](pilot-progress.json)；[短幀訓練先導](../43-49479/README.md) 已結束並保留未執行項目；[250 幀 forward](../43-49489/README.md) 已完成；[250 幀訓練先導](../43-49501/README.md) 已結束，長蛋白完整蛋白的訓練步在 backward OOM。四個 GPU Job 額度已用盡，先導結束。
 
-依核准的 [追加申請](gpu-request-frames.md)，[幀數掃描](../43-49513/README.md) 找到長蛋白完整蛋白訓練步的最大可行幀數為 64（96 幀與 250 幀的三種記憶體設定均 OOM），[64 幀確認](../43-49515/README.md) 的 7 個 case 全部完成。追加額度用了 2 個 GPU Job，CPU 檢查在本機 WSL 執行。
+依核准的 [追加申請](gpu-request-frames.md)，[幀數掃描](../43-49513/README.md) 找到長蛋白完整蛋白訓練步的最大可行幀數為 64（96 幀在預設設定下 OOM，250 幀在三種記憶體設定下也都 OOM），[64 幀確認](../43-49515/README.md) 的 7 個 case 全部完成。追加額度用了 2 個 GPU Job，CPU 檢查在本機 WSL 執行。
 
 凍結內容依據 [最終矩陣草案](final-matrix-proposal.md) 與 [控制校準](control-calibration.md)（選項 B）。[候選範圍](capacity-decision.md) 與 [訓練數值政策](training-policy-proposal.md) 的決策過程見 [Ticket 2 訪談](discussion.md)，方法依據見 [原始來源查核](training-threshold-research.md)。既有本機紀錄 commit 已另拆為 PR #46。

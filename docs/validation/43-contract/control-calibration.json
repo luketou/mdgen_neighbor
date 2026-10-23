@@ -75,7 +75,12 @@
           "layers.4.cell_summaries"
         ],
         "nonfinite": 0
-      }
+      },
+      "min_nonzero_gradient_reference_group": "ipa_layers.1.mha_l",
+      "noise_seed": 0,
+      "training_time": [
+        0.5
+      ]
     },
     {
       "source": "docs/validation/43-49479/results/training_region_probe_49479/summary.json",
@@ -143,7 +148,12 @@
           "layers.4.cell_summaries"
         ],
         "nonfinite": 0
-      }
+      },
+      "min_nonzero_gradient_reference_group": "ipa_layers.1.mha_l",
+      "noise_seed": 0,
+      "training_time": [
+        0.5
+      ]
     },
     {
       "source": "docs/validation/43-49479/results/training_region_probe_49479/summary.json",
@@ -211,7 +221,12 @@
           "layers.4.cell_summaries"
         ],
         "nonfinite": 0
-      }
+      },
+      "min_nonzero_gradient_reference_group": "ipa_layers.1.mha_l",
+      "noise_seed": 0,
+      "training_time": [
+        0.5
+      ]
     },
     {
       "source": "docs/validation/43-49479/results/training_region_probe_49479/summary.json",
@@ -279,7 +294,12 @@
           "layers.4.cell_summaries"
         ],
         "nonfinite": 0
-      }
+      },
+      "min_nonzero_gradient_reference_group": "ipa_layers.1.mha_l",
+      "noise_seed": 0,
+      "training_time": [
+        0.5
+      ]
     },
     {
       "source": "docs/validation/43-49479/results/training_region_probe_49479/summary.json",
@@ -347,7 +367,12 @@
           "layers.4.cell_summaries"
         ],
         "nonfinite": 0
-      }
+      },
+      "min_nonzero_gradient_reference_group": "ipa_layers.1.mha_l",
+      "noise_seed": 0,
+      "training_time": [
+        0.5
+      ]
     },
     {
       "source": "docs/validation/43-49479/results/training_region_probe_49479/summary.json",
@@ -415,7 +440,12 @@
           "layers.4.cell_summaries"
         ],
         "nonfinite": 0
-      }
+      },
+      "min_nonzero_gradient_reference_group": "ipa_layers.1.mha_l",
+      "noise_seed": 0,
+      "training_time": [
+        0.5
+      ]
     },
     {
       "source": "docs/validation/43-49501/results/training_region_probe_49501/summary.json",
@@ -483,7 +513,12 @@
           "layers.4.cell_summaries"
         ],
         "nonfinite": 0
-      }
+      },
+      "min_nonzero_gradient_reference_group": "ipa_layers.1.mha_l",
+      "noise_seed": 0,
+      "training_time": [
+        0.5
+      ]
     },
     {
       "source": "docs/validation/43-49501/results/training_region_probe_49501/summary.json",
@@ -551,7 +586,12 @@
           "layers.4.cell_summaries"
         ],
         "nonfinite": 0
-      }
+      },
+      "min_nonzero_gradient_reference_group": "ipa_layers.1.mha_l",
+      "noise_seed": 0,
+      "training_time": [
+        0.5
+      ]
     },
     {
       "source": "docs/validation/43-49501/results/training_region_probe_49501/summary.json",
@@ -619,7 +659,12 @@
           "layers.4.cell_summaries"
         ],
         "nonfinite": 0
-      }
+      },
+      "min_nonzero_gradient_reference_group": "ipa_layers.1.mha_l",
+      "noise_seed": 0,
+      "training_time": [
+        0.5
+      ]
     },
     {
       "source": "docs/validation/43-49501/results/training_region_probe_49501/summary.json",
@@ -687,7 +732,12 @@
           "layers.4.cell_summaries"
         ],
         "nonfinite": 0
-      }
+      },
+      "min_nonzero_gradient_reference_group": "ipa_layers.1.mha_l",
+      "noise_seed": 0,
+      "training_time": [
+        0.5
+      ]
     },
     {
       "source": "docs/validation/43-49501/results/training_region_probe_49501/summary.json",
@@ -755,7 +805,12 @@
           "layers.4.cell_summaries"
         ],
         "nonfinite": 0
-      }
+      },
+      "min_nonzero_gradient_reference_group": "ipa_layers.1.mha_l",
+      "noise_seed": 0,
+      "training_time": [
+        0.5
+      ]
     },
     {
       "source": "docs/validation/43-49501/results/training_region_probe_49501/summary.json",
@@ -823,7 +878,12 @@
           "layers.4.cell_summaries"
         ],
         "nonfinite": 0
-      }
+      },
+      "min_nonzero_gradient_reference_group": "ipa_layers.1.mha_l",
+      "noise_seed": 0,
+      "training_time": [
+        0.5
+      ]
     },
     {
       "source": "docs/validation/43-49515/results/training_region_probe_49515/summary.json",
@@ -891,7 +951,12 @@
           "layers.4.cell_summaries"
         ],
         "nonfinite": 0
-      }
+      },
+      "min_nonzero_gradient_reference_group": "ipa_layers.1.mha_l",
+      "noise_seed": 0,
+      "training_time": [
+        0.5
+      ]
     },
     {
       "source": "docs/validation/43-49515/results/training_region_probe_49515/summary.json",
@@ -959,7 +1024,12 @@
           "layers.4.cell_summaries"
         ],
         "nonfinite": 0
-      }
+      },
+      "min_nonzero_gradient_reference_group": "ipa_layers.1.mha_l",
+      "noise_seed": 0,
+      "training_time": [
+        0.5
+      ]
     },
     {
       "source": "docs/validation/43-49515/results/training_region_probe_49515/summary.json",
@@ -1027,7 +1097,12 @@
           "layers.4.cell_summaries"
         ],
         "nonfinite": 0
-      }
+      },
+      "min_nonzero_gradient_reference_group": "ipa_layers.1.mha_l",
+      "noise_seed": 0,
+      "training_time": [
+        0.5
+      ]
     },
     {
       "source": "docs/validation/43-49515/results/training_region_probe_49515/summary.json",
@@ -1095,7 +1170,12 @@
           "layers.4.cell_summaries"
         ],
         "nonfinite": 0
-      }
+      },
+      "min_nonzero_gradient_reference_group": "ipa_layers.1.mha_l",
+      "noise_seed": 0,
+      "training_time": [
+        0.5
+      ]
     },
     {
       "source": "docs/validation/43-49515/results/training_region_probe_49515/summary.json",
@@ -1163,7 +1243,12 @@
           "layers.4.cell_summaries"
         ],
         "nonfinite": 0
-      }
+      },
+      "min_nonzero_gradient_reference_group": "ipa_layers.1.mha_l",
+      "noise_seed": 0,
+      "training_time": [
+        0.5
+      ]
     },
     {
       "source": "docs/validation/43-49515/results/training_region_probe_49515/summary.json",
@@ -1231,7 +1316,12 @@
           "layers.4.cell_summaries"
         ],
         "nonfinite": 0
-      }
+      },
+      "min_nonzero_gradient_reference_group": "ipa_layers.1.mha_l",
+      "noise_seed": 0,
+      "training_time": [
+        0.5
+      ]
     }
   ],
   "by_frames": {
@@ -1304,5 +1394,13 @@
     }
   },
   "absolute_proposal_unchanged_after_64_and_250_frames": true,
-  "frozen_in": "frozen-contract-v1.json"
+  "frozen_in": "frozen-contract-v1.json",
+  "absolute_only_relative_slack_at_smallest_250_frame_gradient_group": {
+    "gradient_difference_rms_tolerance": 1e-07,
+    "min_nonzero_gradient_reference_rms": 3.7137538397064334e-07,
+    "ratio": 0.2692693277912702,
+    "groups": [
+      "ipa_layers.1.mha_l"
+    ]
+  }
 }

@@ -15,4 +15,4 @@
 
 逐案例結果與 OOM 數值見 [彙整](outcome.json)；[原始 manifest](results/training_region_probe_49513/manifest.json) 保存命令、快照、輸入 hash、每個 case 的實際記憶體設定與跳過原因，[原始摘要](results/training_region_probe_49513/summary.json) 保存 64 幀的完整報告。失敗 log：[96 幀](results/training_region_probe_49513/6sup_A-R1-full-f96.log)、[250 幀 gbs1](results/training_region_probe_49513/6sup_A-R1-full-f250-gbs1-ffn65536.log)、[250 幀 gbs1 ffn8192](results/training_region_probe_49513/6sup_A-R1-full-f250-gbs1-ffn8192.log)、[250 幀加 expandable](results/training_region_probe_49513/6sup_A-R1-full-f250-gbs1-ffn8192-expandable.log)。
 
-這是容量結果，不是近似誤差。本 Job 的快照為 `02edb1f`（run `issue43-t2-sweepA-20261023T170924Z-02edb1f`），[preflight](results/preflight_49513.json) 通過；佇列已無本 Job，stdout 以 [manifest 完成標記](logs/49513.out) 結束，另保存 [stderr](logs/49513.err)。叢集沒有可用的 `sacct` 終態證據。
+這是容量結果，不是近似誤差。本 Job 的快照為 `02edb1f`（run `issue43-t2-sweepA-20261023T170924Z-02edb1f`），[preflight](results/preflight_49513.json) 通過；stdout 以 [manifest 完成標記](logs/49513.out) 結束，另保存 [stderr](logs/49513.err)。終態依據是這個完成標記與 manifest 的 `driver_finished`；未保存佇列查詢或 `sacct` 輸出。

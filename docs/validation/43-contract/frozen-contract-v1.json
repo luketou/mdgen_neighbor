@@ -107,7 +107,7 @@
       {
         "case": "6sup_A full-protein training step above 64 frames",
         "evidence": ["../43-49501/README.md", "../43-49513/README.md"],
-        "reason": "CUDA OOM in backward at 96 frames and at 250 frames, including group_batch_size 1, ffn_chunk_size 8192 and expandable_segments"
+        "reason": "CUDA OOM in backward at 96 frames with the default memory settings, and at 250 frames with the default settings (job 49501) and with each of group_batch_size 1, plus ffn_chunk_size 8192, plus expandable_segments (job 49513)"
       }
     ],
     "unmeasured_frame_counts": "between 64 and 96 for the 6sup_A full-protein training step"

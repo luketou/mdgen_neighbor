@@ -153,5 +153,28 @@
     "sweep rules: larger frames skipped after an OOM with the same memory settings; further memory settings skipped once a frame count fits",
     "first config is warmup; three remaining configs measured",
     "memory variants at 250 frames change batching/allocation only; all three still OOM in backward"
-  ]
+  ],
+  "recorded_settings": {
+    "source": "results/training_region_probe_49513/summary.json reports.6sup_A-R1-full-f64",
+    "noise_seed": 0,
+    "training_time": [
+      0.5
+    ],
+    "batch_size": 1,
+    "grad_checkpointing": true,
+    "precision_state": {
+      "precision_config": "fp32-reference",
+      "lightning_precision": "32-true",
+      "device_type": "cuda",
+      "autocast_enabled": false,
+      "autocast_dtype": null,
+      "parameter_dtypes": [
+        "torch.float32"
+      ],
+      "float32_matmul_precision": "highest",
+      "cuda_matmul_allow_tf32": false,
+      "cudnn_allow_tf32": false
+    },
+    "checkpoint_sha256": "bc90c66e7539f52c9d0514aeddd96c552061150a1eef3b10c120bc3aaff08015"
+  }
 }

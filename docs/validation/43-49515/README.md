@@ -10,4 +10,4 @@
 
 一般 full／region case 使用各自的 supervision，不能以其 loss 判斷近似誤差或宣稱效能收益；未套用控制驗收容差。64 幀是獨立的一層，不能代替 250 幀，checkpoint 以 250 幀訓練，64 幀也屬外推。
 
-本 Job 沿用 GPU A 的快照 `02edb1f`（run `issue43-t2-sweepA-20261023T170924Z-02edb1f`）。[preflight](results/preflight_49515.json) 通過；佇列已無本 Job，stdout 以 [manifest 完成標記](logs/49515.out) 結束，另保存 [stderr](logs/49515.err)。叢集沒有可用的 `sacct` 終態證據。
+本 Job 沿用 GPU A 的快照 `02edb1f`（run `issue43-t2-sweepA-20261023T170924Z-02edb1f`）。[preflight](results/preflight_49515.json) 通過；stdout 以 [manifest 完成標記](logs/49515.out) 結束，另保存 [stderr](logs/49515.err)。終態依據是這個完成標記與 manifest 的 `driver_finished`；未保存佇列查詢或 `sacct` 輸出。

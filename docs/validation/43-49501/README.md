@@ -8,4 +8,4 @@
 
 本次是 FP32、gradient checkpointing 開啟的單步容量測試。一般 full／region case 使用各自的 supervision，不能以其 loss 判斷近似誤差或宣稱效能收益。長蛋白沒有完整蛋白的 250 幀訓練 reference，因此無法在 250 幀做長蛋白的成對 loss／梯度比較；這是容量結果，不是近似誤差結果。
 
-本 Job 沿用 `9c64271` 的唯讀快照，run ID 保留首次短幀訓練命名，但命令、設定與實際 batch 均為本次的 250 幀。GPU preflight 見 [JSON](results/preflight_49501.json)；佇列已無本 Job，stdout 以 [manifest 完成標記](logs/49501.out) 結束，另保存 [stderr](logs/49501.err)。叢集沒有可用的 `sacct` 終態證據。Ticket 2 是否完成以 [契約狀態](../43-contract/README.md) 為準。
+本 Job 沿用 `9c64271` 的唯讀快照，run ID 保留首次短幀訓練命名，但命令、設定與實際 batch 均為本次的 250 幀。GPU preflight 見 [JSON](results/preflight_49501.json)；stdout 以 [manifest 完成標記](logs/49501.out) 結束，另保存 [stderr](logs/49501.err)。終態依據是這個完成標記與 manifest 的 `driver_finished`；未保存佇列查詢或 `sacct` 輸出。Ticket 2 是否完成以 [契約狀態](../43-contract/README.md) 為準。

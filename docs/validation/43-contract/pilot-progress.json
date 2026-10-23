@@ -68,7 +68,7 @@
   "not_executed": [
     "11 short training cases not run within job budget (49479)",
     "28 250-frame training cases not run within job budget (49501)",
-    "6sup_A full-protein training step above 64 frames: CUDA OOM in backward at 96 frames and at 250 frames with all three memory settings",
+    "6sup_A full-protein training step above 64 frames: CUDA OOM in backward at 96 frames (default memory settings) and at 250 frames (default settings and all three memory settings)",
     "frame counts between 64 and 96 not measured",
     "formal numerical evaluation"
   ],
