@@ -5,6 +5,7 @@
   python scripts/hpc_run.py status RUN_ID
   python scripts/hpc_run.py tail RUN_ID [--job ID] [--err] [--lines N]
   python scripts/hpc_run.py fetch RUN_ID DEST REMOTE_PATH ...
+  python scripts/hpc_run.py history [--lines N]
 
 submit uploads a new read-only snapshot (tracked files plus untracked job/ scripts/ mdgen/ hpc/),
 checks its SHA-256 manifest remotely, links src/results and src/logs to the run directory, and
@@ -12,6 +13,10 @@ submits LAUNCHER from src/ with MDGEN_VENV, MDGEN_RESOURCE_ROOT and MDGEN_RUN_DI
 another job to an existing snapshot after re-checking its manifest. Every submission is appended
 to <run>/job_history as "<job id> <comment> <launcher> <args>". REMOTE_PATH is relative to the run
 directory, e.g. results/halo_error_49339/halo_error.json or logs/49339.out.
+
+Every submit, including a submission_unknown one, is also appended locally to hpc_job_history in
+the git common directory, shared by all worktrees of this clone; history prints its tail, so a
+session resuming interrupted work can find earlier runs without querying the headnode.
 """
 import argparse, datetime, fnmatch, hashlib, json, shlex, subprocess, sys, tempfile
 from pathlib import Path, PurePosixPath, PureWindowsPath
@@ -34,6 +39,17 @@ UNTRACKED_DIRS = ("job/", "scripts/", "mdgen/", "hpc/")  # untracked files here 
 
 def git(*a):
     return subprocess.run(["git", *a], cwd=ROOT, check=True, capture_output=True, text=True).stdout
+
+
+def ledger_path():
+    return (ROOT / git("rev-parse", "--git-common-dir").strip()).resolve() / "hpc_job_history"
+
+
+def record(path, job, run_id, comment, argv):
+    """Append one submission, "<utc time> <job id> <run id> <comment> <command>", to path."""
+    when = f"{datetime.datetime.now(datetime.timezone.utc):%Y-%m-%dT%H:%M:%SZ}"
+    with open(path, "a", encoding="utf-8") as stream:
+        stream.write(f"{when} {job} {run_id} {comment} {shlex.join(argv)}\n")
 
 
 def wsl_path(path):
@@ -139,6 +155,8 @@ def submit(a):
     except subprocess.TimeoutExpired:  # sbatch may still have accepted the job
         r = subprocess.CompletedProcess([], 1, "", "timed out waiting for the headnode\n")
     job = next((line[4:] for line in r.stdout.splitlines() if line.startswith("JOB=")), None)
+    record(ledger_path(), job if job and not r.returncode else "submission_unknown", run_id, comment,
+           [a.launcher, *a.args])
     if r.returncode or not job:
         print(f"submission_unknown: check `squeue -u $USER -o '%i %k'` for comment={comment} "
               f"before any resubmit\n{r.stdout}{r.stderr}")
@@ -152,6 +170,12 @@ def status(a):
 echo '--- queue'
 squeue -h -u $USER -o '%i %T %M %R' | grep -wFf <(cut -d' ' -f1 {run}/job_history) || echo none
 echo '--- logs'; ls -l {run}/logs; ls {run}/results""").stdout)
+
+
+def history(a):
+    path = ledger_path()
+    lines = path.read_text(encoding="utf-8").splitlines() if path.exists() else []
+    print("\n".join(lines[-a.lines:]) if lines else f"no local submissions recorded in {path}")
 
 
 def tail(a):
@@ -201,6 +225,7 @@ def main(argv=None):
     x.set_defaults(f=tail)
     x = s.add_parser("fetch"); x.add_argument("run_id"); x.add_argument("dest"); x.add_argument("paths", nargs="+")
     x.set_defaults(f=fetch)
+    x = s.add_parser("history"); x.add_argument("--lines", type=int, default=20); x.set_defaults(f=history)
     a = p.parse_args(argv)
     a.f(a)
 

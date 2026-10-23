@@ -25,7 +25,10 @@ python scripts/hpc_run.py submit --tag pytest job/submit_pytest.sh tests/test_ha
 python scripts/hpc_run.py submit --run <run_id> --env MDGEN_ATLAS_CKPT=... job/submit_halo_error.sh --pdb_id 3ilw_A
 python scripts/hpc_run.py status <run_id>
 python scripts/hpc_run.py fetch <run_id> <本機目錄> results/halo_error_<job>/halo_error.json logs/<job>.out
+python scripts/hpc_run.py history
 ```
+
+每次 `submit`（含 `submission_unknown`）也會附加到本機 git common dir 的 `hpc_job_history`，同一 clone 的所有 worktree 共用。接手中斷的工作時，先用 `history` 找出先前的 run ID 與 Job ID，再以 `status`／`tail` 查詢結果。
 
 `job/env.sh` 會清掉從 SSH 繼承的 `SSH_CLIENT`（否則 `module load` 會載入 `~/.bashrc` 而在 compute node 失敗），並在工作目錄唯讀且未設 `MODEL_DIR` 時，把 `MODEL_DIR` 指到 `$MDGEN_RUN_DIR/workdir/<job>`。
 
