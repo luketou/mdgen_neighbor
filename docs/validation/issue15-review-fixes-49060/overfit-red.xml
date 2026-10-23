@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="2" skipped="0" tests="4" time="22.684" timestamp="2026-10-23T00:16:42.315198+08:00" hostname="node-201"><testcase classname="tests.test_dataset_training_region" name="test_overfit_validation_sampling_at_training_entrypoint[True-train.py]" time="20.911"><failure message="AssertionError: assert ['prot_R1'] == ['prot_R2']&#10;  &#10;  At index 0 diff: 'prot_R1' != 'prot_R2'&#10;  Use -v to get more diff">tmp_path = PosixPath('/tmp/pytest-of-r15543056/pytest-24/test_overfit_validation_sampli0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7f77712ec290&gt;
+entrypoint = 'train.py', region_mode = True
+
+    @pytest.mark.parametrize('entrypoint', ['train.py', 'train-runtime.py'])
+    @pytest.mark.parametrize('region_mode', [True, False])
+    def test_overfit_validation_sampling_at_training_entrypoint(tmp_path, monkeypatch, entrypoint, region_mode):
+        import pytorch_lightning as pl
+
+        split = write_protein(tmp_path, 'prot', 40)
+        atoms = np.load(tmp_path / 'prot.npy')
+        trajectory = np.concatenate([atoms + shift for shift in [0., 1., 2., 3.]])
+        for replica in (1, 2, 3):
+            np.save(tmp_path / f'prot_R{replica}.npy', trajectory)
+        batches = []
+
+        class InspectLoaders:
+            """Observe the public training handoff without running Lightning epochs."""
+            def __init__(self, **kwargs):
+                pass
+
+            def fit(self, model, train_loader, val_loader, **kwargs):
+                for seed in [0, 1]:
+                    np.random.seed(seed)
+                    torch.manual_seed(seed)
+                    batches.append(next(iter(val_loader)))
+
+        monkeypatch.setattr(pl, 'Trainer', InspectLoaders)
+        monkeypatch.setenv('MODEL_DIR', str(tmp_path / 'models'))
+        argv = [entrypoint, '--train_split', str(split), '--val_split', str(split),
+                '--data_dir', str(tmp_path), '--model_dir', str(tmp_path / 'models'),
+                '--atlas', '--overfit', '--num_frames', str(T), '--num_workers', '0',
+                '--batch_size', '1', '--num_layers', '1', '--embed_dim', '32',
+                '--mha_heads', '4', '--ipa_heads', '2', '--ipa_head_dim', '4',
+                '--ipa_qk', '2', '--ipa_v', '2', '--region_core', '8', '--region_ghost', '8']
+        if region_mode:
+            argv.append('--training_region')
+        monkeypatch.setattr('sys.argv', argv)
+        runpy.run_path(str(Path(__file__).resolve().parents[1] / entrypoint), run_name='__main__')
+        assert len(batches) == 2
+        if region_mode:
+&gt;           assert batches[0]['name'] == batches[1]['name']
+E           AssertionError: assert ['prot_R1'] == ['prot_R2']
+E
+E             At index 0 diff: 'prot_R1' != 'prot_R2'
+E             Use -v to get more diff
+
+tests/test_dataset_training_region.py:227: AssertionError</failure></testcase><testcase classname="tests.test_dataset_training_region" name="test_overfit_validation_sampling_at_training_entrypoint[True-train-runtime.py]" time="0.019"><failure message="AssertionError: assert ['prot_R1'] == ['prot_R2']&#10;  &#10;  At index 0 diff: 'prot_R1' != 'prot_R2'&#10;  Use -v to get more diff">tmp_path = PosixPath('/tmp/pytest-of-r15543056/pytest-24/test_overfit_validation_sampli1')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7f76f8a26c50&gt;
+entrypoint = 'train-runtime.py', region_mode = True
+
+    @pytest.mark.parametrize('entrypoint', ['train.py', 'train-runtime.py'])
+    @pytest.mark.parametrize('region_mode', [True, False])
+    def test_overfit_validation_sampling_at_training_entrypoint(tmp_path, monkeypatch, entrypoint, region_mode):
+        import pytorch_lightning as pl
+
+        split = write_protein(tmp_path, 'prot', 40)
+        atoms = np.load(tmp_path / 'prot.npy')
+        trajectory = np.concatenate([atoms + shift for shift in [0., 1., 2., 3.]])
+        for replica in (1, 2, 3):
+            np.save(tmp_path / f'prot_R{replica}.npy', trajectory)
+        batches = []
+
+        class InspectLoaders:
+            """Observe the public training handoff without running Lightning epochs."""
+            def __init__(self, **kwargs):
+                pass
+
+            def fit(self, model, train_loader, val_loader, **kwargs):
+                for seed in [0, 1]:
+                    np.random.seed(seed)
+                    torch.manual_seed(seed)
+                    batches.append(next(iter(val_loader)))
+
+        monkeypatch.setattr(pl, 'Trainer', InspectLoaders)
+        monkeypatch.setenv('MODEL_DIR', str(tmp_path / 'models'))
+        argv = [entrypoint, '--train_split', str(split), '--val_split', str(split),
+                '--data_dir', str(tmp_path), '--model_dir', str(tmp_path / 'models'),
+                '--atlas', '--overfit', '--num_frames', str(T), '--num_workers', '0',
+                '--batch_size', '1', '--num_layers', '1', '--embed_dim', '32',
+                '--mha_heads', '4', '--ipa_heads', '2', '--ipa_head_dim', '4',
+                '--ipa_qk', '2', '--ipa_v', '2', '--region_core', '8', '--region_ghost', '8']
+        if region_mode:
+            argv.append('--training_region')
+        monkeypatch.setattr('sys.argv', argv)
+        runpy.run_path(str(Path(__file__).resolve().parents[1] / entrypoint), run_name='__main__')
+        assert len(batches) == 2
+        if region_mode:
+&gt;           assert batches[0]['name'] == batches[1]['name']
+E           AssertionError: assert ['prot_R1'] == ['prot_R2']
+E
+E             At index 0 diff: 'prot_R1' != 'prot_R2'
+E             Use -v to get more diff
+
+tests/test_dataset_training_region.py:227: AssertionError</failure></testcase><testcase classname="tests.test_dataset_training_region" name="test_overfit_validation_sampling_at_training_entrypoint[False-train.py]" time="0.014" /><testcase classname="tests.test_dataset_training_region" name="test_overfit_validation_sampling_at_training_entrypoint[False-train-runtime.py]" time="0.014" /></testsuite></testsuites>

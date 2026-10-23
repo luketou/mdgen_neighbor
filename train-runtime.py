@@ -296,10 +296,11 @@ if args.wandb:
 
 trainset = MDGenDataset(args, split=args.train_split)
 
-if args.overfit:
+if args.overfit and not args.training_region:
     valset = trainset    
 else:
-    valset = MDGenDataset(args, split=args.val_split, repeat=args.val_repeat, region_seed=0)
+    valset = MDGenDataset(args, split=args.train_split if args.overfit else args.val_split,
+                        repeat=1 if args.overfit else args.val_repeat, region_seed=0)
 
 train_loader = torch.utils.data.DataLoader(
     trainset,

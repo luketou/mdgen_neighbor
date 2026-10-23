@@ -1,0 +1,58 @@
+{
+  "job_id": "49060",
+  "run_id": "pr19-fix-final-green-20261023",
+  "device": "cpu",
+  "status": "COMPLETED",
+  "exit_code": "0:0",
+  "suites": {
+    "chain-red": {
+      "tests": 2,
+      "failures": 2,
+      "errors": 0,
+      "skipped": 0,
+      "time_seconds": 2.866
+    },
+    "chain-green": {
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time_seconds": 1.639
+    },
+    "blank-red": {
+      "tests": 3,
+      "failures": 3,
+      "errors": 0,
+      "skipped": 0,
+      "time_seconds": 1.956
+    },
+    "blank-green": {
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time_seconds": 1.862
+    },
+    "overfit-red": {
+      "tests": 4,
+      "failures": 2,
+      "errors": 0,
+      "skipped": 0,
+      "time_seconds": 22.684
+    },
+    "dataset": {
+      "tests": 21,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time_seconds": 16.149
+    },
+    "full-suite": {
+      "tests": 125,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 8,
+      "time_seconds": 32.816
+    }
+  }
+}

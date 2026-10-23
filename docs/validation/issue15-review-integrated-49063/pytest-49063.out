@@ -1,0 +1,82 @@
+3.11.12 (main, Sep 25 2025, 11:23:13) [GCC 11.5.0 20240719 (Red Hat 11.5.0-5.0.1)]
+2.11.0+cu128
+.....................                                                    [100%]
+=============================== warnings summary ===============================
+tests/test_dataset_training_region.py::test_overfit_validation_sampling_at_training_entrypoint[True-train.py]
+tests/test_dataset_training_region.py::test_overfit_validation_sampling_at_training_entrypoint[True-train.py]
+tests/test_dataset_training_region.py::test_overfit_validation_sampling_at_training_entrypoint[True-train.py]
+tests/test_dataset_training_region.py::test_overfit_validation_sampling_at_training_entrypoint[True-train.py]
+tests/test_dataset_training_region.py::test_overfit_validation_sampling_at_training_entrypoint[True-train.py]
+  /opt/python-3.11.12-gpu/lib/python3.11/site-packages/torch/jit/_script.py:1488: DeprecationWarning: `torch.jit.script` is deprecated. Please switch to `torch.compile` or `torch.export`.
+    warnings.warn(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+- generated xml file: /share/home/r15543056/MDgen/pr19-fix-integrated-green-20261023/results/dataset.xml -
+21 passed, 5 warnings in 17.92s
+.....................................................s..ssss............ [ 56%]
+............................ss...........s.............                  [100%]
+=============================== warnings summary ===============================
+../../../../../../opt/python-3.11.12-gpu/lib/python3.11/site-packages/torch/jit/_script.py:1488
+../../../../../../opt/python-3.11.12-gpu/lib/python3.11/site-packages/torch/jit/_script.py:1488
+../../../../../../opt/python-3.11.12-gpu/lib/python3.11/site-packages/torch/jit/_script.py:1488
+../../../../../../opt/python-3.11.12-gpu/lib/python3.11/site-packages/torch/jit/_script.py:1488
+../../../../../../opt/python-3.11.12-gpu/lib/python3.11/site-packages/torch/jit/_script.py:1488
+../../../../../../opt/python-3.11.12-gpu/lib/python3.11/site-packages/torch/jit/_script.py:1488
+../../../../../../opt/python-3.11.12-gpu/lib/python3.11/site-packages/torch/jit/_script.py:1488
+  /opt/python-3.11.12-gpu/lib/python3.11/site-packages/torch/jit/_script.py:1488: DeprecationWarning: `torch.jit.script` is deprecated. Please switch to `torch.compile` or `torch.export`.
+    warnings.warn(
+
+tests/reference/localbaseline/model/standalone_hyena.py:1
+  /share/home/r15543056/MDgen/pr19-fix-integrated-green-20261023/source/tests/reference/localbaseline/model/standalone_hyena.py:1: DeprecationWarning: invalid escape sequence '\l'
+    """
+
+tests/reference/localbaseline/transport/path.py:1
+  /share/home/r15543056/MDgen/pr19-fix-integrated-green-20261023/source/tests/reference/localbaseline/transport/path.py:1: DeprecationWarning: invalid escape sequence '\s'
+    """
+
+tests/reference/localbaseline/transport/path.py:36
+  /share/home/r15543056/MDgen/pr19-fix-integrated-green-20261023/source/tests/reference/localbaseline/transport/path.py:36: DeprecationWarning: invalid escape sequence '\c'
+    """
+
+tests/reference/localbaseline/transport/path.py:56
+  /share/home/r15543056/MDgen/pr19-fix-integrated-green-20261023/source/tests/reference/localbaseline/transport/path.py:56: DeprecationWarning: invalid escape sequence '\s'
+    """
+
+tests/test_neighbor_integration.py::test_global_preserves_frozen_2026_output_and_all_gradients[False-False]
+  /opt/python-3.11.12-gpu/lib/python3.11/site-packages/torch/autograd/graph.py:869: UserWarning: CUDA initialization: CUDA unknown error - this may be due to an incorrectly set up environment, e.g. changing env variable CUDA_VISIBLE_DEVICES after program start. Setting the available devices to be zero. (Triggered internally at /pytorch/c10/cuda/CUDAFunctions.cpp:119.)
+    return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+
+tests/test_precision.py::test_precision_training[fp32-reference-32-true-dtype0-highest-False]
+tests/test_precision.py::test_precision_training[bf16-train-bf16-mixed-dtype1-high-True]
+tests/test_train_step_probe.py::test_cli_report_and_repeated_fp32_reference_is_deterministic[False]
+tests/test_train_step_probe.py::test_cli_report_and_repeated_fp32_reference_is_deterministic[True]
+tests/test_train_step_probe.py::test_training_region_report_has_region_diagnostics
+tests/test_train_step_probe.py::test_training_region_report_has_region_diagnostics
+  /share/home/r15543056/.venvs/mdgen/lib/python3.11/site-packages/lightning_fabric/plugins/environments/slurm.py:204: The `srun` command is available on your system but is not used. HINT: If your intention is to run Lightning on SLURM, prepend your python command with `srun` like so: srun python /opt/python-3.11.12-gpu/lib/python3.11/site-packages ...
+
+tests/test_precision.py::test_precision_training[fp32-reference-32-true-dtype0-highest-False]
+tests/test_precision.py::test_precision_training[bf16-train-bf16-mixed-dtype1-high-True]
+tests/test_train_step_probe.py::test_cli_report_and_repeated_fp32_reference_is_deterministic[False]
+tests/test_train_step_probe.py::test_cli_report_and_repeated_fp32_reference_is_deterministic[True]
+tests/test_train_step_probe.py::test_nonfinite_batch_is_counted
+tests/test_train_step_probe.py::test_training_region_report_has_region_diagnostics
+tests/test_train_step_probe.py::test_training_region_report_has_region_diagnostics
+  /share/home/r15543056/.venvs/mdgen/lib/python3.11/site-packages/pytorch_lightning/utilities/_pytree.py:21: `isinstance(treespec, LeafSpec)` is deprecated, use `isinstance(treespec, TreeSpec) and treespec.is_leaf()` instead.
+
+tests/test_train_step_probe.py::test_cli_report_and_repeated_fp32_reference_is_deterministic[False]
+tests/test_train_step_probe.py::test_cli_report_and_repeated_fp32_reference_is_deterministic[True]
+tests/test_train_step_probe.py::test_nonfinite_batch_is_counted
+tests/test_train_step_probe.py::test_training_region_report_has_region_diagnostics
+tests/test_train_step_probe.py::test_training_region_report_has_region_diagnostics
+  /share/home/r15543056/.venvs/mdgen/lib/python3.11/site-packages/pytorch_lightning/trainer/configuration_validator.py:70: You defined a `validation_step` but have no `val_dataloader`. Skipping val loop.
+
+tests/test_train_step_probe.py::test_nonfinite_batch_is_counted
+  /share/home/r15543056/.venvs/mdgen/lib/python3.11/site-packages/lightning_fabric/plugins/environments/slurm.py:204: The `srun` command is available on your system but is not used. HINT: If your intention is to run Lightning on SLURM, prepend your python command with `srun` like so: srun python train.py --train_split x --val_split x --data_dir x  ...
+
+tests/test_train_step_probe.py::test_nonfinite_batch_is_counted
+  /share/home/r15543056/MDgen/pr19-fix-integrated-green-20261023/source/mdgen/wrapper.py:36: RuntimeWarning: Mean of empty slice
+    out[key] = np.nanmean(log[key])
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+- generated xml file: /share/home/r15543056/MDgen/pr19-fix-integrated-green-20261023/results/full-suite.xml -
+119 passed, 8 skipped, 32 warnings in 34.58s

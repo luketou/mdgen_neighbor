@@ -1,0 +1,38 @@
+{
+  "job_id": 49232,
+  "baseline_job_id": 49231,
+  "base_commit": "8469b2a30eb0c8e0dd3baea41d21c21cabeafdfb",
+  "tested_code_commit": "b0c9972",
+  "device": "cpu",
+  "status": "COMPLETED",
+  "exit_code": "0:0",
+  "manifest_files": 156,
+  "manifest_matches_local": true,
+  "review": {
+    "standards_findings": 0,
+    "spec_findings": 0
+  },
+  "suites": {
+    "dataset": {
+      "tests": 23,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 23
+    },
+    "full-suite": {
+      "tests": 160,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 8,
+      "passed": 152
+    },
+    "chain-red": {
+      "tests": 4,
+      "failures": 4,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 0
+    }
+  }
+}

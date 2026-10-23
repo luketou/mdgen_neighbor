@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="3" skipped="0" tests="3" time="1.956" timestamp="2026-10-23T00:15:14.770671+08:00" hostname="node-201"><testcase classname="tests.test_dataset_training_region" name="test_region_defaults_blank_metadata_per_row[missing0]" time="0.016"><failure message="TypeError: the JSON object must be str, bytes or bytearray, not float">tmp_path = PosixPath('/tmp/pytest-of-r15543056/pytest-22/test_region_defaults_blank_met0')
+missing = ('chain_id',)
+
+    @pytest.mark.parametrize('missing', [('chain_id',), ('residue_index',), ('chain_id', 'residue_index')])
+    def test_region_defaults_blank_metadata_per_row(tmp_path, missing):
+        split = write_protein(tmp_path, 'prot', 4, {
+            'chain_id': '[1,1,1,1]', 'residue_index': '[10,11,12,13]'})
+        write_protein(tmp_path, 'other', 4)
+        rows = pd.read_csv(split)
+        other = rows.iloc[0].to_dict()
+        other['name'] = 'other'
+        for key in missing:
+            other[key] = None
+        pd.concat([rows, pd.DataFrame([other])]).to_csv(split, index=False)
+&gt;       item = MDGenDataset(args(tmp_path, training_region=True, region_core=4), split)[1]
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_dataset_training_region.py:182:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+mdgen/dataset.py:90: in __getitem__
+    return self.training_region_item(idx, name, {
+mdgen/dataset.py:143: in training_region_item
+    numbering[key] = np.array(json.loads(self.df[key][name]), dtype=np.int64)
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+s = nan, cls = None, object_hook = None, parse_float = None, parse_int = None
+parse_constant = None, object_pairs_hook = None, kw = {}
+
+    def loads(s, *, cls=None, object_hook=None, parse_float=None,
+            parse_int=None, parse_constant=None, object_pairs_hook=None, **kw):
+        """Deserialize ``s`` (a ``str``, ``bytes`` or ``bytearray`` instance
+        containing a JSON document) to a Python object.
+
+        ``object_hook`` is an optional function that will be called with the
+        result of any object literal decode (a ``dict``). The return value of
+        ``object_hook`` will be used instead of the ``dict``. This feature
+        can be used to implement custom decoders (e.g. JSON-RPC class hinting).
+
+        ``object_pairs_hook`` is an optional function that will be called with the
+        result of any object literal decoded with an ordered list of pairs.  The
+        return value of ``object_pairs_hook`` will be used instead of the ``dict``.
+        This feature can be used to implement custom decoders.  If ``object_hook``
+        is also defined, the ``object_pairs_hook`` takes priority.
+
+        ``parse_float``, if specified, will be called with the string
+        of every JSON float to be decoded. By default this is equivalent to
+        float(num_str). This can be used to use another datatype or parser
+        for JSON floats (e.g. decimal.Decimal).
+
+        ``parse_int``, if specified, will be called with the string
+        of every JSON int to be decoded. By default this is equivalent to
+        int(num_str). This can be used to use another datatype or parser
+        for JSON integers (e.g. float).
+
+        ``parse_constant``, if specified, will be called with one of the
+        following strings: -Infinity, Infinity, NaN.
+        This can be used to raise an exception if invalid JSON numbers
+        are encountered.
+
+        To use a custom ``JSONDecoder`` subclass, specify it with the ``cls``
+        kwarg; otherwise ``JSONDecoder`` is used.
+        """
+        if isinstance(s, str):
+            if s.startswith('\ufeff'):
+                raise JSONDecodeError("Unexpected UTF-8 BOM (decode using utf-8-sig)",
+                                      s, 0)
+        else:
+            if not isinstance(s, (bytes, bytearray)):
+&gt;               raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                                f'not {s.__class__.__name__}')
+E               TypeError: the JSON object must be str, bytes or bytearray, not float
+
+/opt/python-3.11.12-gpu/lib/python3.11/json/__init__.py:339: TypeError</failure></testcase><testcase classname="tests.test_dataset_training_region" name="test_region_defaults_blank_metadata_per_row[missing1]" time="0.006"><failure message="TypeError: the JSON object must be str, bytes or bytearray, not float">tmp_path = PosixPath('/tmp/pytest-of-r15543056/pytest-22/test_region_defaults_blank_met1')
+missing = ('residue_index',)
+
+    @pytest.mark.parametrize('missing', [('chain_id',), ('residue_index',), ('chain_id', 'residue_index')])
+    def test_region_defaults_blank_metadata_per_row(tmp_path, missing):
+        split = write_protein(tmp_path, 'prot', 4, {
+            'chain_id': '[1,1,1,1]', 'residue_index': '[10,11,12,13]'})
+        write_protein(tmp_path, 'other', 4)
+        rows = pd.read_csv(split)
+        other = rows.iloc[0].to_dict()
+        other['name'] = 'other'
+        for key in missing:
+            other[key] = None
+        pd.concat([rows, pd.DataFrame([other])]).to_csv(split, index=False)
+&gt;       item = MDGenDataset(args(tmp_path, training_region=True, region_core=4), split)[1]
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_dataset_training_region.py:182:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+mdgen/dataset.py:90: in __getitem__
+    return self.training_region_item(idx, name, {
+mdgen/dataset.py:143: in training_region_item
+    numbering[key] = np.array(json.loads(self.df[key][name]), dtype=np.int64)
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+s = nan, cls = None, object_hook = None, parse_float = None, parse_int = None
+parse_constant = None, object_pairs_hook = None, kw = {}
+
+    def loads(s, *, cls=None, object_hook=None, parse_float=None,
+            parse_int=None, parse_constant=None, object_pairs_hook=None, **kw):
+        """Deserialize ``s`` (a ``str``, ``bytes`` or ``bytearray`` instance
+        containing a JSON document) to a Python object.
+
+        ``object_hook`` is an optional function that will be called with the
+        result of any object literal decode (a ``dict``). The return value of
+        ``object_hook`` will be used instead of the ``dict``. This feature
+        can be used to implement custom decoders (e.g. JSON-RPC class hinting).
+
+        ``object_pairs_hook`` is an optional function that will be called with the
+        result of any object literal decoded with an ordered list of pairs.  The
+        return value of ``object_pairs_hook`` will be used instead of the ``dict``.
+        This feature can be used to implement custom decoders.  If ``object_hook``
+        is also defined, the ``object_pairs_hook`` takes priority.
+
+        ``parse_float``, if specified, will be called with the string
+        of every JSON float to be decoded. By default this is equivalent to
+        float(num_str). This can be used to use another datatype or parser
+        for JSON floats (e.g. decimal.Decimal).
+
+        ``parse_int``, if specified, will be called with the string
+        of every JSON int to be decoded. By default this is equivalent to
+        int(num_str). This can be used to use another datatype or parser
+        for JSON integers (e.g. float).
+
+        ``parse_constant``, if specified, will be called with one of the
+        following strings: -Infinity, Infinity, NaN.
+        This can be used to raise an exception if invalid JSON numbers
+        are encountered.
+
+        To use a custom ``JSONDecoder`` subclass, specify it with the ``cls``
+        kwarg; otherwise ``JSONDecoder`` is used.
+        """
+        if isinstance(s, str):
+            if s.startswith('\ufeff'):
+                raise JSONDecodeError("Unexpected UTF-8 BOM (decode using utf-8-sig)",
+                                      s, 0)
+        else:
+            if not isinstance(s, (bytes, bytearray)):
+&gt;               raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                                f'not {s.__class__.__name__}')
+E               TypeError: the JSON object must be str, bytes or bytearray, not float
+
+/opt/python-3.11.12-gpu/lib/python3.11/json/__init__.py:339: TypeError</failure></testcase><testcase classname="tests.test_dataset_training_region" name="test_region_defaults_blank_metadata_per_row[missing2]" time="0.005"><failure message="TypeError: the JSON object must be str, bytes or bytearray, not float">tmp_path = PosixPath('/tmp/pytest-of-r15543056/pytest-22/test_region_defaults_blank_met2')
+missing = ('chain_id', 'residue_index')
+
+    @pytest.mark.parametrize('missing', [('chain_id',), ('residue_index',), ('chain_id', 'residue_index')])
+    def test_region_defaults_blank_metadata_per_row(tmp_path, missing):
+        split = write_protein(tmp_path, 'prot', 4, {
+            'chain_id': '[1,1,1,1]', 'residue_index': '[10,11,12,13]'})
+        write_protein(tmp_path, 'other', 4)
+        rows = pd.read_csv(split)
+        other = rows.iloc[0].to_dict()
+        other['name'] = 'other'
+        for key in missing:
+            other[key] = None
+        pd.concat([rows, pd.DataFrame([other])]).to_csv(split, index=False)
+&gt;       item = MDGenDataset(args(tmp_path, training_region=True, region_core=4), split)[1]
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_dataset_training_region.py:182:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+mdgen/dataset.py:90: in __getitem__
+    return self.training_region_item(idx, name, {
+mdgen/dataset.py:143: in training_region_item
+    numbering[key] = np.array(json.loads(self.df[key][name]), dtype=np.int64)
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+s = nan, cls = None, object_hook = None, parse_float = None, parse_int = None
+parse_constant = None, object_pairs_hook = None, kw = {}
+
+    def loads(s, *, cls=None, object_hook=None, parse_float=None,
+            parse_int=None, parse_constant=None, object_pairs_hook=None, **kw):
+        """Deserialize ``s`` (a ``str``, ``bytes`` or ``bytearray`` instance
+        containing a JSON document) to a Python object.
+
+        ``object_hook`` is an optional function that will be called with the
+        result of any object literal decode (a ``dict``). The return value of
+        ``object_hook`` will be used instead of the ``dict``. This feature
+        can be used to implement custom decoders (e.g. JSON-RPC class hinting).
+
+        ``object_pairs_hook`` is an optional function that will be called with the
+        result of any object literal decoded with an ordered list of pairs.  The
+        return value of ``object_pairs_hook`` will be used instead of the ``dict``.
+        This feature can be used to implement custom decoders.  If ``object_hook``
+        is also defined, the ``object_pairs_hook`` takes priority.
+
+        ``parse_float``, if specified, will be called with the string
+        of every JSON float to be decoded. By default this is equivalent to
+        float(num_str). This can be used to use another datatype or parser
+        for JSON floats (e.g. decimal.Decimal).
+
+        ``parse_int``, if specified, will be called with the string
+        of every JSON int to be decoded. By default this is equivalent to
+        int(num_str). This can be used to use another datatype or parser
+        for JSON integers (e.g. float).
+
+        ``parse_constant``, if specified, will be called with one of the
+        following strings: -Infinity, Infinity, NaN.
+        This can be used to raise an exception if invalid JSON numbers
+        are encountered.
+
+        To use a custom ``JSONDecoder`` subclass, specify it with the ``cls``
+        kwarg; otherwise ``JSONDecoder`` is used.
+        """
+        if isinstance(s, str):
+            if s.startswith('\ufeff'):
+                raise JSONDecodeError("Unexpected UTF-8 BOM (decode using utf-8-sig)",
+                                      s, 0)
+        else:
+            if not isinstance(s, (bytes, bytearray)):
+&gt;               raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                                f'not {s.__class__.__name__}')
+E               TypeError: the JSON object must be str, bytes or bytearray, not float
+
+/opt/python-3.11.12-gpu/lib/python3.11/json/__init__.py:339: TypeError</failure></testcase></testsuite></testsuites>
