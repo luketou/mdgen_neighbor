@@ -1,6 +1,6 @@
 # Issue #43 Ticket 2：比較契約提案
 
-狀態：使用者已於本次對話回覆「同意」，確認 forward 門檻、候選矩陣、測試 seam 與先導資源上限。容量先導尚未完成，最終矩陣與訓練比較規則尚未凍結。
+本文件保留首次提案。後續已確認先導改取八候選、訓練截斷比較採描述性報告，詳見 [核准設定](approved-forward.json)、[容量決策](capacity-decision.md) 與 [訓練數值政策](training-policy-proposal.md)；以下四候選與待補工具清單反映首次提案時點。最終矩陣與控制容差尚未凍結，執行進度以 [進度紀錄](pilot-progress.json) 為準。
 
 來源：[Issue #43](https://github.com/luketou/mdgen_neighbor/issues/43)、其兩則留言、本地 `codex-handoff-issue43.md`，以及主 repo 的 `docs/validation/43-49427/README.md`、Halo／training-step probe 文件與程式。
 

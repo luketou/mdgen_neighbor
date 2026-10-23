@@ -1,0 +1,873 @@
+{
+  "status": "proposal_pending_user_confirmation",
+  "controls_only": true,
+  "truncated_errors_used": false,
+  "scope": "only observed frames/checkpoint/FP32/runtime; not a training approximation gate or statistical confidence bound",
+  "frames_covered": [
+    4,
+    250
+  ],
+  "records": [
+    {
+      "source": "docs/validation/43-49479/results/training_region_probe_49479/summary.json",
+      "case": "6sms_A-R1-coverage_control-group55",
+      "frames": 4,
+      "kind": "same_path_repeat",
+      "loss_absolute_difference": 0.0,
+      "loss_reference": 0.4810735285282135,
+      "alignment": {
+        "full_noise_sha256": "8408432319bce3e5e9c3361f18cc61873bf9a93f72d93060096cc1cc571f9493",
+        "region_noise_sha256": "8408432319bce3e5e9c3361f18cc61873bf9a93f72d93060096cc1cc571f9493",
+        "full_mask_sha256": "36057c9077e6e571cb4401a0c536b8741a256a7def9605f3b683979844201eaa",
+        "region_mask_sha256": "36057c9077e6e571cb4401a0c536b8741a256a7def9605f3b683979844201eaa",
+        "full_denominator": 36480.0,
+        "region_denominator": 36480.0,
+        "residues": 724,
+        "region_width": 896,
+        "frame_start": 0,
+        "name": "6sms_A_R1"
+      },
+      "nonfinite_counts": [
+        {
+          "latents": 0,
+          "noise": 0,
+          "interpolated_input": 0,
+          "model_output": 0,
+          "loss_mask": 0
+        },
+        {
+          "latents": 0,
+          "noise": 0,
+          "interpolated_input": 0,
+          "model_output": 0,
+          "loss_mask": 0
+        },
+        {
+          "latents": 0,
+          "noise": 0,
+          "interpolated_input": 0,
+          "model_output": 0,
+          "loss_mask": 0
+        }
+      ],
+      "gradients": {
+        "max_difference_rms": 0.0,
+        "max_relative_difference": 0.0,
+        "min_nonzero_reference_rms": 7.659146568144554e-06,
+        "exact_zero_reference_groups": [],
+        "nonfinite": 0
+      },
+      "updates": {
+        "max_difference_rms": 0.0,
+        "max_relative_difference": 0.0,
+        "min_nonzero_reference_rms": 7.50818369531071e-05,
+        "exact_zero_reference_groups": [
+          "ipa_layers.0.cell_summaries",
+          "ipa_layers.1.cell_summaries",
+          "ipa_layers.2.cell_summaries",
+          "ipa_layers.3.cell_summaries",
+          "ipa_layers.4.cell_summaries",
+          "layers.0.cell_summaries",
+          "layers.1.cell_summaries",
+          "layers.2.cell_summaries",
+          "layers.3.cell_summaries",
+          "layers.4.cell_summaries"
+        ],
+        "nonfinite": 0
+      }
+    },
+    {
+      "source": "docs/validation/43-49479/results/training_region_probe_49479/summary.json",
+      "case": "6sms_A-R1-coverage_control-group55",
+      "frames": 4,
+      "kind": "full_coverage",
+      "loss_absolute_difference": 0.0,
+      "loss_reference": 0.4810735285282135,
+      "alignment": {
+        "full_noise_sha256": "8408432319bce3e5e9c3361f18cc61873bf9a93f72d93060096cc1cc571f9493",
+        "region_noise_sha256": "8408432319bce3e5e9c3361f18cc61873bf9a93f72d93060096cc1cc571f9493",
+        "full_mask_sha256": "36057c9077e6e571cb4401a0c536b8741a256a7def9605f3b683979844201eaa",
+        "region_mask_sha256": "36057c9077e6e571cb4401a0c536b8741a256a7def9605f3b683979844201eaa",
+        "full_denominator": 36480.0,
+        "region_denominator": 36480.0,
+        "residues": 724,
+        "region_width": 896,
+        "frame_start": 0,
+        "name": "6sms_A_R1"
+      },
+      "nonfinite_counts": [
+        {
+          "latents": 0,
+          "noise": 0,
+          "interpolated_input": 0,
+          "model_output": 0,
+          "loss_mask": 0
+        },
+        {
+          "latents": 0,
+          "noise": 0,
+          "interpolated_input": 0,
+          "model_output": 0,
+          "loss_mask": 0
+        },
+        {
+          "latents": 0,
+          "noise": 0,
+          "interpolated_input": 0,
+          "model_output": 0,
+          "loss_mask": 0
+        }
+      ],
+      "gradients": {
+        "max_difference_rms": 7.649436344824331e-09,
+        "max_relative_difference": 1.1637810681551774e-05,
+        "min_nonzero_reference_rms": 7.659146568144554e-06,
+        "exact_zero_reference_groups": [],
+        "nonfinite": 0
+      },
+      "updates": {
+        "max_difference_rms": 1.0242339239443582e-07,
+        "max_relative_difference": 0.0010459202956233172,
+        "min_nonzero_reference_rms": 7.50818369531071e-05,
+        "exact_zero_reference_groups": [
+          "ipa_layers.0.cell_summaries",
+          "ipa_layers.1.cell_summaries",
+          "ipa_layers.2.cell_summaries",
+          "ipa_layers.3.cell_summaries",
+          "ipa_layers.4.cell_summaries",
+          "layers.0.cell_summaries",
+          "layers.1.cell_summaries",
+          "layers.2.cell_summaries",
+          "layers.3.cell_summaries",
+          "layers.4.cell_summaries"
+        ],
+        "nonfinite": 0
+      }
+    },
+    {
+      "source": "docs/validation/43-49479/results/training_region_probe_49479/summary.json",
+      "case": "6lrd_A-R1-coverage_control-group59",
+      "frames": 4,
+      "kind": "same_path_repeat",
+      "loss_absolute_difference": 0.0,
+      "loss_reference": 0.443570613861084,
+      "alignment": {
+        "full_noise_sha256": "09cfda9764c1f21d1e15214b9002bf96c97646fede1b91f83b48d0e3406de8ab",
+        "region_noise_sha256": "09cfda9764c1f21d1e15214b9002bf96c97646fede1b91f83b48d0e3406de8ab",
+        "full_mask_sha256": "87b197e4cc9359a823316a18c3a32ccb5620e29623eadfc560c063b5078044a5",
+        "region_mask_sha256": "87b197e4cc9359a823316a18c3a32ccb5620e29623eadfc560c063b5078044a5",
+        "full_denominator": 34617.0,
+        "region_denominator": 34617.0,
+        "residues": 705,
+        "region_width": 896,
+        "frame_start": 0,
+        "name": "6lrd_A_R1"
+      },
+      "nonfinite_counts": [
+        {
+          "latents": 0,
+          "noise": 0,
+          "interpolated_input": 0,
+          "model_output": 0,
+          "loss_mask": 0
+        },
+        {
+          "latents": 0,
+          "noise": 0,
+          "interpolated_input": 0,
+          "model_output": 0,
+          "loss_mask": 0
+        },
+        {
+          "latents": 0,
+          "noise": 0,
+          "interpolated_input": 0,
+          "model_output": 0,
+          "loss_mask": 0
+        }
+      ],
+      "gradients": {
+        "max_difference_rms": 0.0,
+        "max_relative_difference": 0.0,
+        "min_nonzero_reference_rms": 6.763393880954637e-06,
+        "exact_zero_reference_groups": [],
+        "nonfinite": 0
+      },
+      "updates": {
+        "max_difference_rms": 0.0,
+        "max_relative_difference": 0.0,
+        "min_nonzero_reference_rms": 7.529666609878411e-05,
+        "exact_zero_reference_groups": [
+          "ipa_layers.0.cell_summaries",
+          "ipa_layers.1.cell_summaries",
+          "ipa_layers.2.cell_summaries",
+          "ipa_layers.3.cell_summaries",
+          "ipa_layers.4.cell_summaries",
+          "layers.0.cell_summaries",
+          "layers.1.cell_summaries",
+          "layers.2.cell_summaries",
+          "layers.3.cell_summaries",
+          "layers.4.cell_summaries"
+        ],
+        "nonfinite": 0
+      }
+    },
+    {
+      "source": "docs/validation/43-49479/results/training_region_probe_49479/summary.json",
+      "case": "6lrd_A-R1-coverage_control-group59",
+      "frames": 4,
+      "kind": "full_coverage",
+      "loss_absolute_difference": 0.0,
+      "loss_reference": 0.443570613861084,
+      "alignment": {
+        "full_noise_sha256": "09cfda9764c1f21d1e15214b9002bf96c97646fede1b91f83b48d0e3406de8ab",
+        "region_noise_sha256": "09cfda9764c1f21d1e15214b9002bf96c97646fede1b91f83b48d0e3406de8ab",
+        "full_mask_sha256": "87b197e4cc9359a823316a18c3a32ccb5620e29623eadfc560c063b5078044a5",
+        "region_mask_sha256": "87b197e4cc9359a823316a18c3a32ccb5620e29623eadfc560c063b5078044a5",
+        "full_denominator": 34617.0,
+        "region_denominator": 34617.0,
+        "residues": 705,
+        "region_width": 896,
+        "frame_start": 0,
+        "name": "6lrd_A_R1"
+      },
+      "nonfinite_counts": [
+        {
+          "latents": 0,
+          "noise": 0,
+          "interpolated_input": 0,
+          "model_output": 0,
+          "loss_mask": 0
+        },
+        {
+          "latents": 0,
+          "noise": 0,
+          "interpolated_input": 0,
+          "model_output": 0,
+          "loss_mask": 0
+        },
+        {
+          "latents": 0,
+          "noise": 0,
+          "interpolated_input": 0,
+          "model_output": 0,
+          "loss_mask": 0
+        }
+      ],
+      "gradients": {
+        "max_difference_rms": 3.783337069692962e-09,
+        "max_relative_difference": 9.840007751260448e-06,
+        "min_nonzero_reference_rms": 6.763393880954637e-06,
+        "exact_zero_reference_groups": [],
+        "nonfinite": 0
+      },
+      "updates": {
+        "max_difference_rms": 6.870446355356471e-08,
+        "max_relative_difference": 0.0007163248116650699,
+        "min_nonzero_reference_rms": 7.529666609878411e-05,
+        "exact_zero_reference_groups": [
+          "ipa_layers.0.cell_summaries",
+          "ipa_layers.1.cell_summaries",
+          "ipa_layers.2.cell_summaries",
+          "ipa_layers.3.cell_summaries",
+          "ipa_layers.4.cell_summaries",
+          "layers.0.cell_summaries",
+          "layers.1.cell_summaries",
+          "layers.2.cell_summaries",
+          "layers.3.cell_summaries",
+          "layers.4.cell_summaries"
+        ],
+        "nonfinite": 0
+      }
+    },
+    {
+      "source": "docs/validation/43-49479/results/training_region_probe_49479/summary.json",
+      "case": "6l3r_E-R1-coverage_control-group19",
+      "frames": 4,
+      "kind": "same_path_repeat",
+      "loss_absolute_difference": 0.0,
+      "loss_reference": 0.4209156930446625,
+      "alignment": {
+        "full_noise_sha256": "adf0d06882297bc59cf44e83cbdf25fec35727967098e1b4b5185c973ca2d23c",
+        "region_noise_sha256": "adf0d06882297bc59cf44e83cbdf25fec35727967098e1b4b5185c973ca2d23c",
+        "full_mask_sha256": "2b286210077e51632d26514316dced4d90928bc94c606db55f79f53febcc5a83",
+        "region_mask_sha256": "2b286210077e51632d26514316dced4d90928bc94c606db55f79f53febcc5a83",
+        "full_denominator": 33753.0,
+        "region_denominator": 33753.0,
+        "residues": 669,
+        "region_width": 896,
+        "frame_start": 0,
+        "name": "6l3r_E_R1"
+      },
+      "nonfinite_counts": [
+        {
+          "latents": 0,
+          "noise": 0,
+          "interpolated_input": 0,
+          "model_output": 0,
+          "loss_mask": 0
+        },
+        {
+          "latents": 0,
+          "noise": 0,
+          "interpolated_input": 0,
+          "model_output": 0,
+          "loss_mask": 0
+        },
+        {
+          "latents": 0,
+          "noise": 0,
+          "interpolated_input": 0,
+          "model_output": 0,
+          "loss_mask": 0
+        }
+      ],
+      "gradients": {
+        "max_difference_rms": 0.0,
+        "max_relative_difference": 0.0,
+        "min_nonzero_reference_rms": 6.889113949232761e-06,
+        "exact_zero_reference_groups": [],
+        "nonfinite": 0
+      },
+      "updates": {
+        "max_difference_rms": 0.0,
+        "max_relative_difference": 0.0,
+        "min_nonzero_reference_rms": 7.4562111859112e-05,
+        "exact_zero_reference_groups": [
+          "ipa_layers.0.cell_summaries",
+          "ipa_layers.1.cell_summaries",
+          "ipa_layers.2.cell_summaries",
+          "ipa_layers.3.cell_summaries",
+          "ipa_layers.4.cell_summaries",
+          "layers.0.cell_summaries",
+          "layers.1.cell_summaries",
+          "layers.2.cell_summaries",
+          "layers.3.cell_summaries",
+          "layers.4.cell_summaries"
+        ],
+        "nonfinite": 0
+      }
+    },
+    {
+      "source": "docs/validation/43-49479/results/training_region_probe_49479/summary.json",
+      "case": "6l3r_E-R1-coverage_control-group19",
+      "frames": 4,
+      "kind": "full_coverage",
+      "loss_absolute_difference": 0.0,
+      "loss_reference": 0.4209156930446625,
+      "alignment": {
+        "full_noise_sha256": "adf0d06882297bc59cf44e83cbdf25fec35727967098e1b4b5185c973ca2d23c",
+        "region_noise_sha256": "adf0d06882297bc59cf44e83cbdf25fec35727967098e1b4b5185c973ca2d23c",
+        "full_mask_sha256": "2b286210077e51632d26514316dced4d90928bc94c606db55f79f53febcc5a83",
+        "region_mask_sha256": "2b286210077e51632d26514316dced4d90928bc94c606db55f79f53febcc5a83",
+        "full_denominator": 33753.0,
+        "region_denominator": 33753.0,
+        "residues": 669,
+        "region_width": 896,
+        "frame_start": 0,
+        "name": "6l3r_E_R1"
+      },
+      "nonfinite_counts": [
+        {
+          "latents": 0,
+          "noise": 0,
+          "interpolated_input": 0,
+          "model_output": 0,
+          "loss_mask": 0
+        },
+        {
+          "latents": 0,
+          "noise": 0,
+          "interpolated_input": 0,
+          "model_output": 0,
+          "loss_mask": 0
+        },
+        {
+          "latents": 0,
+          "noise": 0,
+          "interpolated_input": 0,
+          "model_output": 0,
+          "loss_mask": 0
+        }
+      ],
+      "gradients": {
+        "max_difference_rms": 6.43479793290862e-09,
+        "max_relative_difference": 7.900891389348226e-06,
+        "min_nonzero_reference_rms": 6.889113949232761e-06,
+        "exact_zero_reference_groups": [],
+        "nonfinite": 0
+      },
+      "updates": {
+        "max_difference_rms": 7.990675290478875e-08,
+        "max_relative_difference": 0.0008376351475374559,
+        "min_nonzero_reference_rms": 7.4562111859112e-05,
+        "exact_zero_reference_groups": [
+          "ipa_layers.0.cell_summaries",
+          "ipa_layers.1.cell_summaries",
+          "ipa_layers.2.cell_summaries",
+          "ipa_layers.3.cell_summaries",
+          "ipa_layers.4.cell_summaries",
+          "layers.0.cell_summaries",
+          "layers.1.cell_summaries",
+          "layers.2.cell_summaries",
+          "layers.3.cell_summaries",
+          "layers.4.cell_summaries"
+        ],
+        "nonfinite": 0
+      }
+    },
+    {
+      "source": "docs/validation/43-49501/results/training_region_probe_49501/summary.json",
+      "case": "6sms_A-R1-coverage_control-group55",
+      "frames": 250,
+      "kind": "same_path_repeat",
+      "loss_absolute_difference": 0.0,
+      "loss_reference": 0.2089330404996872,
+      "alignment": {
+        "full_noise_sha256": "b3839113da2228cc4205e76e6f205b7a7ab6cb3b63e82f8d76e5785a436c4876",
+        "region_noise_sha256": "b3839113da2228cc4205e76e6f205b7a7ab6cb3b63e82f8d76e5785a436c4876",
+        "full_mask_sha256": "eae457012f4136b433e673b528d1f5872b5fa0af5e90d0be454bc4a602530ede",
+        "region_mask_sha256": "eae457012f4136b433e673b528d1f5872b5fa0af5e90d0be454bc4a602530ede",
+        "full_denominator": 3027840.0,
+        "region_denominator": 3027840.0,
+        "residues": 724,
+        "region_width": 896,
+        "frame_start": 0,
+        "name": "6sms_A_R1"
+      },
+      "nonfinite_counts": [
+        {
+          "latents": 0,
+          "noise": 0,
+          "interpolated_input": 0,
+          "model_output": 0,
+          "loss_mask": 0
+        },
+        {
+          "latents": 0,
+          "noise": 0,
+          "interpolated_input": 0,
+          "model_output": 0,
+          "loss_mask": 0
+        },
+        {
+          "latents": 0,
+          "noise": 0,
+          "interpolated_input": 0,
+          "model_output": 0,
+          "loss_mask": 0
+        }
+      ],
+      "gradients": {
+        "max_difference_rms": 0.0,
+        "max_relative_difference": 0.0,
+        "min_nonzero_reference_rms": 3.7137538397064334e-07,
+        "exact_zero_reference_groups": [],
+        "nonfinite": 0
+      },
+      "updates": {
+        "max_difference_rms": 0.0,
+        "max_relative_difference": 0.0,
+        "min_nonzero_reference_rms": 5.616274367520773e-05,
+        "exact_zero_reference_groups": [
+          "ipa_layers.0.cell_summaries",
+          "ipa_layers.1.cell_summaries",
+          "ipa_layers.2.cell_summaries",
+          "ipa_layers.3.cell_summaries",
+          "ipa_layers.4.cell_summaries",
+          "layers.0.cell_summaries",
+          "layers.1.cell_summaries",
+          "layers.2.cell_summaries",
+          "layers.3.cell_summaries",
+          "layers.4.cell_summaries"
+        ],
+        "nonfinite": 0
+      }
+    },
+    {
+      "source": "docs/validation/43-49501/results/training_region_probe_49501/summary.json",
+      "case": "6sms_A-R1-coverage_control-group55",
+      "frames": 250,
+      "kind": "full_coverage",
+      "loss_absolute_difference": 1.4901161193847656e-08,
+      "loss_reference": 0.2089330404996872,
+      "alignment": {
+        "full_noise_sha256": "b3839113da2228cc4205e76e6f205b7a7ab6cb3b63e82f8d76e5785a436c4876",
+        "region_noise_sha256": "b3839113da2228cc4205e76e6f205b7a7ab6cb3b63e82f8d76e5785a436c4876",
+        "full_mask_sha256": "eae457012f4136b433e673b528d1f5872b5fa0af5e90d0be454bc4a602530ede",
+        "region_mask_sha256": "eae457012f4136b433e673b528d1f5872b5fa0af5e90d0be454bc4a602530ede",
+        "full_denominator": 3027840.0,
+        "region_denominator": 3027840.0,
+        "residues": 724,
+        "region_width": 896,
+        "frame_start": 0,
+        "name": "6sms_A_R1"
+      },
+      "nonfinite_counts": [
+        {
+          "latents": 0,
+          "noise": 0,
+          "interpolated_input": 0,
+          "model_output": 0,
+          "loss_mask": 0
+        },
+        {
+          "latents": 0,
+          "noise": 0,
+          "interpolated_input": 0,
+          "model_output": 0,
+          "loss_mask": 0
+        },
+        {
+          "latents": 0,
+          "noise": 0,
+          "interpolated_input": 0,
+          "model_output": 0,
+          "loss_mask": 0
+        }
+      ],
+      "gradients": {
+        "max_difference_rms": 1.1423929117679734e-09,
+        "max_relative_difference": 1.830876423125773e-05,
+        "min_nonzero_reference_rms": 3.7137538397064334e-07,
+        "exact_zero_reference_groups": [],
+        "nonfinite": 0
+      },
+      "updates": {
+        "max_difference_rms": 4.103846912180573e-08,
+        "max_relative_difference": 0.00045524211631578363,
+        "min_nonzero_reference_rms": 5.616274367520773e-05,
+        "exact_zero_reference_groups": [
+          "ipa_layers.0.cell_summaries",
+          "ipa_layers.1.cell_summaries",
+          "ipa_layers.2.cell_summaries",
+          "ipa_layers.3.cell_summaries",
+          "ipa_layers.4.cell_summaries",
+          "layers.0.cell_summaries",
+          "layers.1.cell_summaries",
+          "layers.2.cell_summaries",
+          "layers.3.cell_summaries",
+          "layers.4.cell_summaries"
+        ],
+        "nonfinite": 0
+      }
+    },
+    {
+      "source": "docs/validation/43-49501/results/training_region_probe_49501/summary.json",
+      "case": "6lrd_A-R1-coverage_control-group59",
+      "frames": 250,
+      "kind": "same_path_repeat",
+      "loss_absolute_difference": 0.0,
+      "loss_reference": 0.20842009782791138,
+      "alignment": {
+        "full_noise_sha256": "a4e25064282129dcf7ba3be99cf7d083c23b004a38f34f6619f8e27e7c6cdcf2",
+        "region_noise_sha256": "a4e25064282129dcf7ba3be99cf7d083c23b004a38f34f6619f8e27e7c6cdcf2",
+        "full_mask_sha256": "d50c4357b44726a7380503c967cf68b96eec81bb9c4060d7b786dc611eaa9b68",
+        "region_mask_sha256": "d50c4357b44726a7380503c967cf68b96eec81bb9c4060d7b786dc611eaa9b68",
+        "full_denominator": 2873211.0,
+        "region_denominator": 2873211.0,
+        "residues": 705,
+        "region_width": 896,
+        "frame_start": 0,
+        "name": "6lrd_A_R1"
+      },
+      "nonfinite_counts": [
+        {
+          "latents": 0,
+          "noise": 0,
+          "interpolated_input": 0,
+          "model_output": 0,
+          "loss_mask": 0
+        },
+        {
+          "latents": 0,
+          "noise": 0,
+          "interpolated_input": 0,
+          "model_output": 0,
+          "loss_mask": 0
+        },
+        {
+          "latents": 0,
+          "noise": 0,
+          "interpolated_input": 0,
+          "model_output": 0,
+          "loss_mask": 0
+        }
+      ],
+      "gradients": {
+        "max_difference_rms": 0.0,
+        "max_relative_difference": 0.0,
+        "min_nonzero_reference_rms": 5.855445006247277e-07,
+        "exact_zero_reference_groups": [],
+        "nonfinite": 0
+      },
+      "updates": {
+        "max_difference_rms": 0.0,
+        "max_relative_difference": 0.0,
+        "min_nonzero_reference_rms": 5.854850004586273e-05,
+        "exact_zero_reference_groups": [
+          "ipa_layers.0.cell_summaries",
+          "ipa_layers.1.cell_summaries",
+          "ipa_layers.2.cell_summaries",
+          "ipa_layers.3.cell_summaries",
+          "ipa_layers.4.cell_summaries",
+          "layers.0.cell_summaries",
+          "layers.1.cell_summaries",
+          "layers.2.cell_summaries",
+          "layers.3.cell_summaries",
+          "layers.4.cell_summaries"
+        ],
+        "nonfinite": 0
+      }
+    },
+    {
+      "source": "docs/validation/43-49501/results/training_region_probe_49501/summary.json",
+      "case": "6lrd_A-R1-coverage_control-group59",
+      "frames": 250,
+      "kind": "full_coverage",
+      "loss_absolute_difference": 0.0,
+      "loss_reference": 0.20842009782791138,
+      "alignment": {
+        "full_noise_sha256": "a4e25064282129dcf7ba3be99cf7d083c23b004a38f34f6619f8e27e7c6cdcf2",
+        "region_noise_sha256": "a4e25064282129dcf7ba3be99cf7d083c23b004a38f34f6619f8e27e7c6cdcf2",
+        "full_mask_sha256": "d50c4357b44726a7380503c967cf68b96eec81bb9c4060d7b786dc611eaa9b68",
+        "region_mask_sha256": "d50c4357b44726a7380503c967cf68b96eec81bb9c4060d7b786dc611eaa9b68",
+        "full_denominator": 2873211.0,
+        "region_denominator": 2873211.0,
+        "residues": 705,
+        "region_width": 896,
+        "frame_start": 0,
+        "name": "6lrd_A_R1"
+      },
+      "nonfinite_counts": [
+        {
+          "latents": 0,
+          "noise": 0,
+          "interpolated_input": 0,
+          "model_output": 0,
+          "loss_mask": 0
+        },
+        {
+          "latents": 0,
+          "noise": 0,
+          "interpolated_input": 0,
+          "model_output": 0,
+          "loss_mask": 0
+        },
+        {
+          "latents": 0,
+          "noise": 0,
+          "interpolated_input": 0,
+          "model_output": 0,
+          "loss_mask": 0
+        }
+      ],
+      "gradients": {
+        "max_difference_rms": 1.706180355425291e-09,
+        "max_relative_difference": 1.7588081284218595e-05,
+        "min_nonzero_reference_rms": 5.855445006247277e-07,
+        "exact_zero_reference_groups": [],
+        "nonfinite": 0
+      },
+      "updates": {
+        "max_difference_rms": 1.5058707749436767e-07,
+        "max_relative_difference": 0.0015233179807189509,
+        "min_nonzero_reference_rms": 5.854850004586273e-05,
+        "exact_zero_reference_groups": [
+          "ipa_layers.0.cell_summaries",
+          "ipa_layers.1.cell_summaries",
+          "ipa_layers.2.cell_summaries",
+          "ipa_layers.3.cell_summaries",
+          "ipa_layers.4.cell_summaries",
+          "layers.0.cell_summaries",
+          "layers.1.cell_summaries",
+          "layers.2.cell_summaries",
+          "layers.3.cell_summaries",
+          "layers.4.cell_summaries"
+        ],
+        "nonfinite": 0
+      }
+    },
+    {
+      "source": "docs/validation/43-49501/results/training_region_probe_49501/summary.json",
+      "case": "6l3r_E-R1-coverage_control-group19",
+      "frames": 250,
+      "kind": "same_path_repeat",
+      "loss_absolute_difference": 0.0,
+      "loss_reference": 0.177825465798378,
+      "alignment": {
+        "full_noise_sha256": "6e17da1180c3d38deb16a7471950f1963c12ea28508233318580ccf74da1fb88",
+        "region_noise_sha256": "6e17da1180c3d38deb16a7471950f1963c12ea28508233318580ccf74da1fb88",
+        "full_mask_sha256": "235c03a76819a97b8b3bae979586dfb344946a6991d8d7f96b13de2d934914ba",
+        "region_mask_sha256": "235c03a76819a97b8b3bae979586dfb344946a6991d8d7f96b13de2d934914ba",
+        "full_denominator": 2801499.0,
+        "region_denominator": 2801499.0,
+        "residues": 669,
+        "region_width": 896,
+        "frame_start": 0,
+        "name": "6l3r_E_R1"
+      },
+      "nonfinite_counts": [
+        {
+          "latents": 0,
+          "noise": 0,
+          "interpolated_input": 0,
+          "model_output": 0,
+          "loss_mask": 0
+        },
+        {
+          "latents": 0,
+          "noise": 0,
+          "interpolated_input": 0,
+          "model_output": 0,
+          "loss_mask": 0
+        },
+        {
+          "latents": 0,
+          "noise": 0,
+          "interpolated_input": 0,
+          "model_output": 0,
+          "loss_mask": 0
+        }
+      ],
+      "gradients": {
+        "max_difference_rms": 0.0,
+        "max_relative_difference": 0.0,
+        "min_nonzero_reference_rms": 4.0210389916521255e-07,
+        "exact_zero_reference_groups": [],
+        "nonfinite": 0
+      },
+      "updates": {
+        "max_difference_rms": 0.0,
+        "max_relative_difference": 0.0,
+        "min_nonzero_reference_rms": 5.539607939043536e-05,
+        "exact_zero_reference_groups": [
+          "ipa_layers.0.cell_summaries",
+          "ipa_layers.1.cell_summaries",
+          "ipa_layers.2.cell_summaries",
+          "ipa_layers.3.cell_summaries",
+          "ipa_layers.4.cell_summaries",
+          "layers.0.cell_summaries",
+          "layers.1.cell_summaries",
+          "layers.2.cell_summaries",
+          "layers.3.cell_summaries",
+          "layers.4.cell_summaries"
+        ],
+        "nonfinite": 0
+      }
+    },
+    {
+      "source": "docs/validation/43-49501/results/training_region_probe_49501/summary.json",
+      "case": "6l3r_E-R1-coverage_control-group19",
+      "frames": 250,
+      "kind": "full_coverage",
+      "loss_absolute_difference": 0.0,
+      "loss_reference": 0.177825465798378,
+      "alignment": {
+        "full_noise_sha256": "6e17da1180c3d38deb16a7471950f1963c12ea28508233318580ccf74da1fb88",
+        "region_noise_sha256": "6e17da1180c3d38deb16a7471950f1963c12ea28508233318580ccf74da1fb88",
+        "full_mask_sha256": "235c03a76819a97b8b3bae979586dfb344946a6991d8d7f96b13de2d934914ba",
+        "region_mask_sha256": "235c03a76819a97b8b3bae979586dfb344946a6991d8d7f96b13de2d934914ba",
+        "full_denominator": 2801499.0,
+        "region_denominator": 2801499.0,
+        "residues": 669,
+        "region_width": 896,
+        "frame_start": 0,
+        "name": "6l3r_E_R1"
+      },
+      "nonfinite_counts": [
+        {
+          "latents": 0,
+          "noise": 0,
+          "interpolated_input": 0,
+          "model_output": 0,
+          "loss_mask": 0
+        },
+        {
+          "latents": 0,
+          "noise": 0,
+          "interpolated_input": 0,
+          "model_output": 0,
+          "loss_mask": 0
+        },
+        {
+          "latents": 0,
+          "noise": 0,
+          "interpolated_input": 0,
+          "model_output": 0,
+          "loss_mask": 0
+        }
+      ],
+      "gradients": {
+        "max_difference_rms": 5.646736713532662e-10,
+        "max_relative_difference": 1.4689356859836114e-05,
+        "min_nonzero_reference_rms": 4.0210389916521255e-07,
+        "exact_zero_reference_groups": [],
+        "nonfinite": 0
+      },
+      "updates": {
+        "max_difference_rms": 5.653006655208086e-08,
+        "max_relative_difference": 0.0006279339536278336,
+        "min_nonzero_reference_rms": 5.539607939043536e-05,
+        "exact_zero_reference_groups": [
+          "ipa_layers.0.cell_summaries",
+          "ipa_layers.1.cell_summaries",
+          "ipa_layers.2.cell_summaries",
+          "ipa_layers.3.cell_summaries",
+          "ipa_layers.4.cell_summaries",
+          "layers.0.cell_summaries",
+          "layers.1.cell_summaries",
+          "layers.2.cell_summaries",
+          "layers.3.cell_summaries",
+          "layers.4.cell_summaries"
+        ],
+        "nonfinite": 0
+      }
+    }
+  ],
+  "by_frames": {
+    "4": {
+      "max_gradient_difference_rms": 7.649436344824331e-09,
+      "max_update_difference_rms": 1.0242339239443582e-07,
+      "max_loss_absolute_difference": 0.0,
+      "min_nonzero_gradient_reference_rms": 6.763393880954637e-06,
+      "min_nonzero_update_reference_rms": 7.4562111859112e-05
+    },
+    "250": {
+      "max_gradient_difference_rms": 1.706180355425291e-09,
+      "max_update_difference_rms": 1.5058707749436767e-07,
+      "max_loss_absolute_difference": 1.4901161193847656e-08,
+      "min_nonzero_gradient_reference_rms": 3.7137538397064334e-07,
+      "min_nonzero_update_reference_rms": 5.539607939043536e-05
+    }
+  },
+  "max_difference_rms": {
+    "gradients": 7.649436344824331e-09,
+    "updates": 1.5058707749436767e-07
+  },
+  "max_loss_absolute_difference": 1.4901161193847656e-08,
+  "max_abs_loss_reference": 0.4810735285282135,
+  "fp32_epsilon": 1.1920928955078125e-07,
+  "max_full_coverage_relative_difference": {
+    "gradients": 1.830876423125773e-05,
+    "updates": 0.0015233179807189509
+  },
+  "proposal": {
+    "loss_absolute_tolerance": 2e-06,
+    "gradient_difference_rms_tolerance": 1e-07,
+    "update_difference_rms_tolerance": 2e-06,
+    "gradient_near_zero_reference_rms": 1e-07,
+    "update_near_zero_reference_rms": 2e-06,
+    "rule": "next 1/2/5 decade at or above 10x maximum control RMS difference; loss uses max(10x control difference,10x FP32 epsilon x max(1, observed absolute reference loss)); near-zero RMS equals the corresponding absolute difference tolerance",
+    "near_zero_policy": "reference RMS at or below cutoff: relative difference/norm ratio/cosine null, retain raw norms and absolute differences; exact-zero separately counted; one-sided zero and missing groups explicitly classified",
+    "control_acceptance": "all loss absolute differences and every parameter-group difference RMS within respective tolerance; all finite and exact noise/mask hashes, denominator, t and initial state agreement required; no tolerance applied until confirmation"
+  },
+  "proposal_unchanged_after_250_frames": true,
+  "option_relative_cap": {
+    "status": "option_pending_user_choice",
+    "gradient_relative_difference_tolerance": 0.0002,
+    "update_relative_difference_tolerance": 0.02,
+    "rule": "same next 1/2/5 decade at or above 10x maximum full-coverage control relative difference; applies only to groups above the near-zero cutoff, in addition to the absolute RMS tolerance",
+    "motivation": "at 250 frames the smallest non-zero gradient reference RMS is about 3.7x the absolute tolerance, so absolute-only acceptance would tolerate large relative differences in small-norm groups"
+  }
+}

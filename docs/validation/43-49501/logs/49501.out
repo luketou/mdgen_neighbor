@@ -1,0 +1,34 @@
+{"status": "passed", "passed": true, "python": "/share/home/r15543056/.venvs/mdgen/bin/python", "env": {"CUDA_VISIBLE_DEVICES": "0", "GPU_DEVICE_ORDINAL": "0", "SLURM_JOB_GPUS": "0"}, "torch": "2.11.0+cu128", "gpu": "NVIDIA L40S"}
+6sup_A-R1-full failed
+6sup_A-R1-halo1-group89 completed
+6sup_A-R1-halo1-group65 completed
+6sup_A-R1-halo1-group63 completed
+6sup_A-R1-halo1-group115 completed
+6sup_A-R1-halo1-group28 completed
+6sup_A-R1-halo1-group141 completed
+6sup_A-R1-halo1-group92 completed
+6sup_A-R1-halo1-group95 completed
+6sup_A-R1-halo2-group95 completed
+6sms_A-R1-full completed
+6sms_A-R1-coverage_control-group55 completed
+6sms_A-R1-halo1-group55 completed
+6sms_A-R1-halo2-group55 completed
+6lrd_A-R1-full completed
+6lrd_A-R1-coverage_control-group59 completed
+6lrd_A-R1-halo1-group59 completed
+6lrd_A-R1-halo2-group59 completed
+6l3r_E-R1-full completed
+6l3r_E-R1-coverage_control-group19 completed
+6l3r_E-R1-halo1-group19 completed
+6l3r_E-R1-halo2-group19 completed
+6sup_A-R2-full failed
+6sup_A-R2-halo1-group89 completed
+6sup_A-R2-halo1-group65 completed
+6sup_A-R2-halo1-group63 completed
+6sup_A-R2-halo1-group115 completed
+6sup_A-R2-halo1-group28 completed
+6sup_A-R2-halo1-group141 completed
+6sup_A-R2-halo1-group92 completed
+6sup_A-R2-halo1-group95 completed
+6sup_A-R2-halo2-group95 completed
+pilot manifest finalized

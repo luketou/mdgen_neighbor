@@ -1,5 +1,5 @@
 {
-  "status": "implementing_controls_and_revision2_pilot",
+  "status": "pilot_finished_awaiting_matrix_and_tolerance_confirmation",
   "ticket2_complete": false,
   "jobs": [
     {
@@ -22,22 +22,45 @@
       "run_id": "issue43-t2-plan-20261023T152821Z-6ba13d9",
       "status": "plan_only_completed",
       "source_commit": "6ba13d9"
+    },
+    {
+      "job_id": 49479,
+      "type": "gpu",
+      "run_id": "issue43-t2-train4-20261023T153411Z-9c64271",
+      "status": "short_training_manifest_finished_with_unrun_cases",
+      "source_commit": "9c64271"
+    },
+    {
+      "job_id": 49489,
+      "type": "gpu",
+      "run_id": "issue43-t2-train4-20261023T153411Z-9c64271",
+      "status": "forward_250_capacity_completed",
+      "source_commit": "9c64271"
+    },
+    {
+      "job_id": 49501,
+      "type": "gpu",
+      "run_id": "issue43-t2-train4-20261023T153411Z-9c64271",
+      "status": "training_250_manifest_finished_long_full_oom_with_unrun_cases",
+      "source_commit": "9c64271"
     }
   ],
   "used_cpu_jobs": 2,
   "remaining_cpu_jobs": 0,
-  "used_gpu_jobs": 1,
-  "remaining_gpu_jobs": 3,
+  "used_gpu_jobs": 4,
+  "remaining_gpu_jobs": 0,
   "gpu_jobs_running": 0,
   "max_gpu_jobs": 4,
   "not_executed": [
-    "training step capacity",
-    "250 frame forward capacity",
-    "250 frame backward capacity",
+    "11 short training cases not run within job budget (49479)",
+    "28 250-frame training cases not run within job budget (49501)",
+    "6sup_A full-protein 250-frame training step: CUDA OOM in backward (R1, R2); R3 not run",
     "formal numerical evaluation"
   ],
   "decisions_pending": [
-    "control tolerance and near-zero cutoff confirmation after calibration",
-    "freeze final feasible matrix after capacity results"
+    "long-protein 250-frame paired training scope (see final-matrix-proposal.md)",
+    "unmeasured replicas status in the frozen matrix",
+    "control tolerances and optional relative cap (see control-calibration.md)",
+    "freeze final feasible matrix"
   ]
 }
