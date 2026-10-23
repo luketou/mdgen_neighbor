@@ -36,5 +36,8 @@ if [ -n "${GPU_DEVICE_ORDINAL:-}" ]; then
     export CUDA_VISIBLE_DEVICES="$GPU_DEVICE_ORDINAL"
 fi
 # Use the activated project's interpreter for the shared readiness gate.
-"$MDGEN_VENV/bin/python" scripts/diagnostics/gpu_preflight.py --require-gpu \
-    --output "${MDGEN_PREFLIGHT_OUTPUT:-results/preflight_${SLURM_JOB_ID:-manual}.json}" || return $?
+# CPU-partition launchers set MDGEN_REQUIRE_GPU=0 to skip it.
+if [ "${MDGEN_REQUIRE_GPU:-1}" != 0 ]; then
+    "$MDGEN_VENV/bin/python" scripts/diagnostics/gpu_preflight.py --require-gpu \
+        --output "${MDGEN_PREFLIGHT_OUTPUT:-results/preflight_${SLURM_JOB_ID:-manual}.json}" || return $?
+fi

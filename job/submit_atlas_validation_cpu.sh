@@ -9,7 +9,7 @@
 set -euo pipefail
 export MDGEN_MODULES="python/3.11.12-gpu"
 export OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1
-export CUDA_VISIBLE_DEVICES=""
+export CUDA_VISIBLE_DEVICES="" MDGEN_REQUIRE_GPU=0
 source job/env.sh
 echo "host=$(hostname) job=${SLURM_JOB_ID} python=$(command -v python)"
 exec "$@"

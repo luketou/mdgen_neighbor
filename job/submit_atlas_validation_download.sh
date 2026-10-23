@@ -8,7 +8,7 @@
 #SBATCH --time=03:00:00
 set -euo pipefail
 echo "host=$(hostname) job=${SLURM_JOB_ID} started=$(date -u +%FT%TZ)"
-export MDGEN_MODULES="python/3.11.12-gpu"
+export MDGEN_MODULES="python/3.11.12-gpu" MDGEN_REQUIRE_GPU=0
 source job/env.sh
 exec python -u scripts/install_atlas_mirror.py \
   --manifest scripts/atlas_validation_mirror_manifest.json \

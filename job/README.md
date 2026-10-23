@@ -15,6 +15,7 @@ python scripts/hpc_run.py submit --tag neighbor-tests job/submit_neighbor_tests.
 | `MDGEN_ATLAS_CKPT` | `submit_mdgen_l7500_*.sh`、`submit_halo_error.sh`、`submit_generation_profile.sh` | ATLAS checkpoint 路徑 |
 | `MDGEN_HALO_DATA`、`MDGEN_HALO_SPLIT` | `submit_halo_error.sh` | NPY 目錄與 split CSV |
 | `MDGEN_RESOURCE_ROOT` | 否 | 含 `ckpt/`、`data/`、`splits/` 的資源目錄，預設 `../mdgen`（與 `scripts/diagnostics` 相同） |
+| `MDGEN_REQUIRE_GPU` | 否 | 設為 `0` 略過 `job/env.sh` 的 GPU preflight；只用於 CPU partition 的 launcher（`submit_atlas_validation_*.sh`） |
 | `MDGEN_EXPECTED_GPU_UUID` | 否 | `submit_neighbor_scaling.sh` 會檢查 GPU UUID 是否相符；未設定時只印出 UUID |
 
 本機提交一律用 `scripts/hpc_run.py`（經 WSL 的 ssh／scp）：建立唯讀快照、核對 SHA-256、把 `src/results`、`src/logs` 連到 run 目錄後提交，並把每個 job 記到 `<run>/job_history`。用法見 `python scripts/hpc_run.py -h`，例如：
