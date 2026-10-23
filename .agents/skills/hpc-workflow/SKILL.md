@@ -7,7 +7,7 @@ description: 部署本地程式至 HPC、執行遠端 smoke test、提交訓練�
 
 ## 確認目標
 
-從目標 repo 根目錄讀取 `AGENTS.md`、`hpc/project.yaml` 及本次 launcher；相對路徑以 repo 根目錄解析。`scripts/hpc.py` 讀取已支援的診斷設定；正式訓練與 checkpoint 欄位尚未自動執行。
+從目標 repo 根目錄讀取 `AGENTS.md`、`hpc/project.yaml` 及本次 launcher；相對路徑以 repo 根目錄解析。本機提交、查詢與取回結果一律用 `scripts/hpc_run.py`，用法見 [job/README.md](../../../job/README.md)；其快照、`job_history` 與 `fetch` 已實作下列快照與查詢步驟。`scripts/hpc.py` 是較早的 GPU preflight 診斷工具，不用於提交 launcher。
 
 確認實際 repo/worktree、分支與 dirty diff。讀取 `existing` 所列腳本與文件，選擇本次實驗的環境；同一專案可能有多個環境。`deployment_ready: false` 表示尚未完成遠端路徑與 launcher 相容性驗證，不能直接套用舊 launcher 送出新快照。
 
