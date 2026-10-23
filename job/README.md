@@ -13,7 +13,7 @@ MDGEN_VENV=/path/to/venv sbatch job/submit_neighbor_tests.sh
 | --- | --- | --- |
 | `MDGEN_VENV` | 是 | 要啟用的 virtualenv |
 | `MDGEN_MODULES` | 否 | 要 `module load` 的 modules，預設 `python/3.11.12-gpu cuda/12.8`；設為空字串則略過 |
-| `MDGEN_ATLAS_CKPT` | `submit_mdgen_l7500_*.sh`、`submit_halo_error.sh` | ATLAS checkpoint 路徑 |
+| `MDGEN_ATLAS_CKPT` | `submit_mdgen_l7500_*.sh`、`submit_halo_error.sh`、`submit_generation_profile.sh` | ATLAS checkpoint 路徑 |
 | `MDGEN_HALO_DATA`、`MDGEN_HALO_SPLIT` | `submit_halo_error.sh` | NPY 目錄與 split CSV |
 | `MDGEN_RESOURCE_ROOT` | 否 | 含 `ckpt/`、`data/`、`splits/` 的資源目錄，預設 `../mdgen`（與 `scripts/diagnostics` 相同） |
 | `MDGEN_EXPECTED_GPU_UUID` | 否 | `submit_neighbor_scaling.sh` 會檢查 GPU UUID 是否相符；未設定時只印出 UUID |
@@ -59,3 +59,14 @@ sbatch job/submit_halo_error.sh --pdb_id NAME --replicate 1 --region_residues 10
 ```
 
 蛋白須讓完整蛋白 forward 裝得下 GPU；`--partition_dir` 可沿用 `mdgen.full_length.partition_store` 的存檔。
+
+## 生成速度 profiling（#9 Ticket 8）
+
+`submit_generation_profile.sh` 以 `mdgen.full_length.generation_profile` 量測一段完整長度 FP32 rollout（`--local_spatial`，ODE 方法沿用 checkpoint 的 `sampling_method`）的 wall-clock 與 NFE，並以 torch.profiler 分析單次 forward 的 kernel 數、GPU 忙碌比例與 local group 發出的 launch。預設為合成 7,500 殘基鏈；報告寫到 `results/generation_profile_<job>/profile.json`。方法與欄位見 `docs/validation/generation-profile.md`。
+
+```bash
+mkdir -p logs
+MDGEN_VENV=/path/to/venv MDGEN_ATLAS_CKPT=/path/to/atlas.ckpt sbatch job/submit_generation_profile.sh
+# 比較不同 group 批次大小，或改用真實蛋白：
+MDGEN_VENV=/path/to/venv MDGEN_ATLAS_CKPT=/path/to/atlas.ckpt sbatch job/submit_generation_profile.sh --group_batch_size 16
+```
