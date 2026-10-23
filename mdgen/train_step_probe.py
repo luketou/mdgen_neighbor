@@ -151,11 +151,24 @@ def environment():
 
 
 def batch_shapes(batch, batch_size, prefix=''):
-    """Shapes of every tensor in a collated batch; each must lead with batch_size."""
+    """Shapes of every tensor in a collated batch; each must lead with batch_size.
+
+    Lists (names, per-item Training region partitions) must hold batch_size
+    entries; partitions report their stacked `residue_mask` shape.
+    """
     shapes = {}
     for key, value in batch.items():
         if isinstance(value, dict):
             shapes.update(batch_shapes(value, batch_size, f'{prefix}{key}.'))
+        elif isinstance(value, list):
+            if len(value) != batch_size:
+                raise ValueError(f'{prefix}{key} has {len(value)} entries; '
+                                 f'expected batch dimension {batch_size}')
+            masks = [item.residue_mask for item in value if hasattr(item, 'residue_mask')]
+            if masks:
+                if len({tuple(mask.shape) for mask in masks}) != 1:
+                    raise ValueError(f'{prefix}{key} partitions differ in residue count')
+                shapes[f'{prefix}{key}.residue_mask'] = [len(masks), *masks[0].shape]
         elif torch.is_tensor(value):
             if value.dim() == 0 or value.shape[0] != batch_size:
                 raise ValueError(f'{prefix}{key} has shape {list(value.shape)}; '

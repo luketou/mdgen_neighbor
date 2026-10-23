@@ -144,6 +144,7 @@ def test_training_region_report_has_region_diagnostics(tmp_path):
     for run in report['runs']:  # the collated loader batch, checked on every run
         shapes = run['batch_shapes']
         assert shapes['trans'] == [2, 4, 48, 3] and shapes['loss_core_mask'] == [2, 48]
+        assert shapes['partition.residue_mask'] == [2, 48]
         assert all(shape[0] == 2 for shape in shapes.values())
 
     again = tmp_path / 'again.json'
@@ -157,3 +158,5 @@ def test_batch_shapes_rejects_a_tensor_without_the_batch_dimension():
     assert batch_shapes(batch, 2) == {'trans': [2, 4, 3], 'region.center': [2]}
     with pytest.raises(ValueError, match='region.center'):
         batch_shapes({**batch, 'region': {'center': torch.zeros(3)}}, 2)
+    with pytest.raises(ValueError, match='name'):
+        batch_shapes({**batch, 'name': ['a']}, 2)
