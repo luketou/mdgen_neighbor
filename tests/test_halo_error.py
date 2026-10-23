@@ -1,12 +1,13 @@
 """Halo approximation error experiment (#12 Ticket 5), on a tiny random model."""
 import json
+from types import SimpleNamespace
 
 import numpy as np
 import pytest
 import torch
 
 from mdgen.full_length.group_region import sample_region_groups, with_halo
-from mdgen.full_length.halo_error import boundary_rings, main
+from mdgen.full_length.halo_error import boundary_rings, halo_errors, main, protein_dataset
 from mdgen.full_length.partition import LocalGroup, SpatialPartition
 
 T, L = 3, 200
@@ -31,7 +32,7 @@ def write_protein(tmp_path):
 
 
 @pytest.fixture
-def checkpoint(monkeypatch, tmp_path):
+def wrapper(monkeypatch, tmp_path):
     from mdgen.parsing import parse_train_args
     from mdgen.wrapper import NewMDGenWrapper
     monkeypatch.setenv('MODEL_DIR', str(tmp_path / 'model'))
@@ -43,9 +44,39 @@ def checkpoint(monkeypatch, tmp_path):
     with torch.no_grad():  # move zero-initialised heads so outputs depend on context
         for p in wrapper.model.parameters():
             p.add_(0.05 * torch.randn_like(p))
+    return wrapper.eval()
+
+
+@pytest.fixture
+def checkpoint(wrapper, tmp_path):
     path = tmp_path / 'tiny.ckpt'
-    torch.save({'hyper_parameters': {'args': args}, 'state_dict': wrapper.state_dict()}, path)
+    torch.save({'hyper_parameters': {'args': wrapper.args}, 'state_dict': wrapper.state_dict()}, path)
     return path
+
+
+def test_in_memory_halo_comparison_keeps_the_same_loss_residues(tmp_path, wrapper):
+    from mdgen.dataset import collate
+
+    split = write_protein(tmp_path)
+    dataset = protein_dataset(SimpleNamespace(data_dir=str(tmp_path), suffix='',
+                              partition_dir=None, split=split, replicate=1), wrapper.args)
+    item = dataset[0]
+    arr = np.load(tmp_path / 'prot_R1.npy', mmap_mode='r')
+    partition, ca, _ = dataset.full_partition('prot_R1', arr)
+    result = halo_errors(wrapper, collate([item]), partition, ca,
+                         region_residues=80, halo_rings=(0, 1), regions=2,
+                         times=(0.3, 0.7), seed=0)
+
+    loss_count = 0
+    for region in result['regions']:
+        shallow, deep = region['by_halo']['0'], region['by_halo']['1']
+        assert shallow['loss_residues'] == deep['loss_residues'] > 0
+        assert shallow['region_residues'] <= deep['region_residues'] <= 80
+        loss_count += shallow['loss_residues']
+    for rows in result['residues'].values():
+        assert len(rows) == 2 * loss_count
+        assert np.isfinite([value for _, l2, relative in rows for value in (l2, relative)]).all()
+    assert max(relative for _, _, relative in result['residues'][0]) > 1e-3
 
 
 def run(tmp_path, checkpoint, *extra):

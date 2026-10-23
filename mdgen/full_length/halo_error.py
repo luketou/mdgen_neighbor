@@ -26,10 +26,8 @@ from types import SimpleNamespace
 import numpy as np
 import torch
 
-from ..dataset import REGION_AXIS
 from .group_region import region_subpartition, sample_region_groups, with_halo
-
-PER_RESIDUE_AXIS = {key: axis + 1 for key, axis in REGION_AXIS.items()}  # collated: batch first
+from .region_batch import select_residues
 
 
 def boundary_rings(partition, loss_groups):
@@ -59,11 +57,6 @@ def stats(values):
     return {'count': int(len(finite)), 'nonfinite': int(len(values) - len(finite)),
             'median': float(np.median(finite)) if len(finite) else None,
             'max': float(finite.max()) if len(finite) else None}
-
-
-def slice_batch(batch, residues):
-    return {key: value.index_select(PER_RESIDUE_AXIS[key], residues.to(value.device))
-            if key in PER_RESIDUE_AXIS else value for key, value in batch.items()}
 
 
 @torch.no_grad()
@@ -117,7 +110,7 @@ def halo_errors(wrapper, batch, partition, ca, *, region_residues, halo_rings, r
         _, xt, _ = wrapper.transport.path_sampler.plan(tt, x0, x1)
         full = wrapper.model(xt, tt, **full_prep['model_kwargs'])
         for k, entry, index, loss, rings, sub in cases:
-            prep = wrapper.prep_batch({**slice_batch(batch, index), 'partition': [sub]})
+            prep = wrapper.prep_batch({**select_residues(batch, index, batched=True), 'partition': [sub]})
             out = wrapper.model(xt[:, :, index], tt, **prep['model_kwargs'])
             supervised = prep['loss_mask'][0][unconditioned][:, loss]  # unsupervised torsions drop out
             reference = full[0][unconditioned][:, index[loss]] * supervised

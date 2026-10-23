@@ -90,7 +90,7 @@ def synthetic_items(args, residues, count, seed):
 
 def synthetic_region_items(args, items, seed):
     """Cut a Training region from each synthetic item's frame-0 full-protein partition."""
-    from .dataset import pad_region, sample_region
+    from .full_length.region_batch import assemble_region, sample_region
     from .full_length.partition import PartitionParams, build_spatial_partition
     regions = []
     for i, item in enumerate(items):
@@ -101,12 +101,8 @@ def synthetic_region_items(args, items, seed):
                                             **PartitionParams.from_args(args).partition_kwargs())
         selection, region = sample_region(partition, ca, args,
                                           torch.Generator().manual_seed(seed + i))
-        residues = region.residues
         fields = {**item, **{key: value.numpy() for key, value in chain.items()}}
-        regions.append({'name': item['name'], **pad_region(
-            {key: value[:, residues] if key in ('trans', 'rots', 'torsions') else value[residues]
-             for key, value in fields.items() if key != 'name'},
-            selection, region, args.region_residues)})
+        regions.append(assemble_region(fields, selection, region, args.region_residues))
     return regions
 
 

@@ -68,6 +68,27 @@ def test_region_fields_match_the_full_protein_at_region_residues(tmp_path):
     assert torch.equal(item['rots'][:, n:], torch.eye(3).expand(T, WIDTH - n, 3, 3))
 
 
+def test_preconverted_region_matches_the_trajectory_region(tmp_path):
+    """Both sources keep the same fields, metadata and full-protein positions."""
+    from mdgen.train_step_probe import synthetic_region_items
+
+    split = write_protein(tmp_path)
+    full = MDGenDataset(args(tmp_path, training_region=False), split)[0]
+    expected = MDGenDataset(args(tmp_path), split, region_seed=0)[0]
+    actual, = synthetic_region_items(args(tmp_path), [full], seed=0)
+
+    assert actual.keys() == expected.keys()
+    assert actual['name'] == expected['name']
+    assert actual['frame_start'] == expected['frame_start']
+    assert actual['region'] == expected['region']
+    for key in ('torsions', 'torsion_mask', 'trans', 'rots', 'seqres', 'mask',
+                'chain_id', 'residue_index', 'loss_core_mask'):
+        np.testing.assert_allclose(np.asarray(actual[key]), np.asarray(expected[key]),
+                                   rtol=1e-5, atol=1e-6)
+    assert torch.equal(actual['partition'].position_index, expected['partition'].position_index)
+    assert torch.equal(actual['partition'].owner_group, expected['partition'].owner_group)
+
+
 def test_region_is_cut_from_the_frame0_partition_and_padded(tmp_path):
     split = write_protein(tmp_path)
     item = MDGenDataset(args(tmp_path), split, region_seed=0)[0]
