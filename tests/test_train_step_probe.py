@@ -123,6 +123,20 @@ def test_cuda_reports_peak_memory(tmp_path):
     assert run['peak_memory_reserved_bytes'] >= run['peak_memory_allocated_bytes']
 
 
+@pytest.mark.skipif(not torch.cuda.is_available(), reason='requires CUDA')
+@pytest.mark.parametrize('local', [False, True])
+def test_cuda_bf16_probe_keeps_fp32_weights_and_finite_gradients(tmp_path, local):
+    output = tmp_path / 'bf16.json'
+    main(['--output', str(output), '--configs', 'bf16-train', '--synthetic_residues', '12',
+          '--', *TINY, *(LOCAL if local else [])])
+    run = json.loads(output.read_text())['runs'][0]
+    assert run['loss_finite']
+    assert run['gradient_nonfinite'] == 0
+    assert run['parameters_nonfinite_after_step'] == 0
+    assert run['precision_state']['parameter_dtypes'] == ['torch.float32']
+    assert run['peak_memory_allocated_bytes'] > 0
+
+
 def test_training_region_report_has_region_diagnostics(tmp_path):
     output = tmp_path / 'region.json'
     region = ['--training_region', '--region_residues', '48']

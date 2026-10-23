@@ -1,0 +1,102 @@
+{
+  "job_id": "49246",
+  "run_id": "preflight-20261023T035755Z-95f050bf",
+  "remote": "/share/home/r15543056/MDgen/codex-runs/preflight-20261023T035755Z-95f050bf",
+  "scheduler": {
+    "state": "COMPLETED",
+    "exit_code": "0:0",
+    "run_time": "00:01:57",
+    "node": "node-201"
+  },
+  "passed": true,
+  "source_base_commit": "8f77bae8bcfe494502d6c03bdcafacc93a132c9a",
+  "dirty_at_snapshot": true,
+  "tested_source_sha256": {
+    "mdgen/model/mha.py": "46274ef7a50f368ae0534158b15a04840fd1f60aea24fcc678dabcdf42fbbe05",
+    "tests/test_train_step_probe.py": "406b0af112f0fd526416b60a34dbe48b87fe4ae3736c7f703a5f1cfe67b271bc"
+  },
+  "cross_process_reproducible": {
+    "global": true,
+    "local": true
+  },
+  "cases": {
+    "global": {
+      "fp32_repeat_min_cosine": 1.0,
+      "fp32_repeat_max_abs": 0.0,
+      "bf16_min_cosine": 0.999997046091613,
+      "bf16_worst_group": "emb_to_latent",
+      "bf16_all_groups_pass": true,
+      "runs": [
+        {
+          "precision": "fp32-reference",
+          "loss": 7.396536827087402,
+          "gradient_nonfinite": 0,
+          "parameters_nonfinite_after_step": 0,
+          "peak_allocated_bytes": 71804928,
+          "step_time_s": 0.27774320899970917
+        },
+        {
+          "precision": "fp32-reference",
+          "loss": 7.396536827087402,
+          "gradient_nonfinite": 0,
+          "parameters_nonfinite_after_step": 0,
+          "peak_allocated_bytes": 71811072,
+          "step_time_s": 0.044670580999991216
+        },
+        {
+          "precision": "bf16-train",
+          "loss": 7.396536827087402,
+          "gradient_nonfinite": 0,
+          "parameters_nonfinite_after_step": 0,
+          "peak_allocated_bytes": 73165824,
+          "step_time_s": 0.31115718899991407
+        }
+      ]
+    },
+    "local": {
+      "fp32_repeat_min_cosine": 0.9999999999999999,
+      "fp32_repeat_max_abs": 0.0,
+      "bf16_min_cosine": 0.9999975726265548,
+      "bf16_worst_group": "emb_to_latent",
+      "bf16_all_groups_pass": true,
+      "runs": [
+        {
+          "precision": "fp32-reference",
+          "loss": 7.396536827087402,
+          "gradient_nonfinite": 0,
+          "parameters_nonfinite_after_step": 0,
+          "peak_allocated_bytes": 75082752,
+          "step_time_s": 0.7926180580006985
+        },
+        {
+          "precision": "fp32-reference",
+          "loss": 7.396536827087402,
+          "gradient_nonfinite": 0,
+          "parameters_nonfinite_after_step": 0,
+          "peak_allocated_bytes": 75084800,
+          "step_time_s": 0.3053834430002098
+        },
+        {
+          "precision": "bf16-train",
+          "loss": 7.396536827087402,
+          "gradient_nonfinite": 0,
+          "parameters_nonfinite_after_step": 0,
+          "peak_allocated_bytes": 76974080,
+          "step_time_s": 0.5434147129999474
+        }
+      ]
+    }
+  },
+  "injected_nonfinite": {
+    "nan": {
+      "loss_finite": false,
+      "gradient_nonfinite": 116045,
+      "comparison_passed": false
+    },
+    "inf": {
+      "loss_finite": false,
+      "gradient_nonfinite": 116045,
+      "comparison_passed": false
+    }
+  }
+}

@@ -1,0 +1,115 @@
+schema_version: 1
+project: mdgen_neighbor
+deployment_ready: false
+ssh:
+  target: r15543056@zinfandel.ncree.org
+  options:
+  - BatchMode=yes
+  - ConnectTimeout=10
+  - ConnectionAttempts=1
+  - ServerAliveInterval=15
+  - ServerAliveCountMax=2
+  command_timeout_seconds: 60
+remote:
+  verified: false
+  runs_root: /share/home/r15543056/MDgen/codex-runs
+  datasets_root: null
+  models_root: null
+  checkpoints_root: null
+runtime:
+  setup_script: job/env.sh
+  python: /share/home/r15543056/.venvs/mdgen2026/bin/python
+  env:
+    MDGEN_MODULES: python/3.11.12-gpu
+    CUDA_HOME: /opt/cuda-12.8.0_570.86.10
+sync:
+  selection: git-tracked-code-plus-explicit-untracked
+  extra_files: []
+  max_file_mib: 10
+  follow_symlinks: false
+  delete: false
+  exclude:
+  - '**/.git/**'
+  - '**/.venv*/**'
+  - '**/.env*'
+  - '**/__pycache__/**'
+  - '**/.cache/**'
+  - '**/data/**'
+  - '**/splits/**'
+  - '**/datasets/**'
+  - '**/models/**'
+  - '**/checkpoints/**'
+  - '**/ckpt/**'
+  - '**/logs/**'
+  - '**/results/**'
+  - '**/outputs/**'
+  - '**/*.ckpt'
+  - '**/*.pt'
+  - '**/*.pth'
+  - '**/*.safetensors'
+  - '**/.aws/**'
+  - '**/.ssh/**'
+  - '**/*.pem'
+  - '**/id_rsa*'
+  - '**/id_ed25519*'
+scheduler:
+  type: slurm
+  poll_interval_seconds: 30
+smoke:
+  entrypoint: .scratch/l40s-validation/validate_ticket2.py
+  resources:
+    partition: l40s
+    account: l40s
+    cpus: 1
+    gpus: 1
+    memory: 2G
+    time: 00:05:00
+  required_checks:
+  - cuda-matmul
+training:
+  entrypoint: null
+  resources:
+    partition: null
+    account: null
+    cpus: null
+    gpus: null
+    memory: null
+    time: null
+checkpoint:
+  enabled: true
+  resume_entrypoint: null
+  source: null
+  cleanup_enabled: false
+results:
+  download_files:
+  - results/preflight.json
+  - results/exit-status
+  - logs/slurm.log
+  max_download_mib: 20
+  log_tail_lines: 100
+existing:
+  references:
+  - job/env.sh
+  - job/README.md
+  - job/submit_neighbor_tests.sh
+  path_hints:
+    neighbor_venv: /share/home/r15543056/.venvs/mdgen
+    flrh_venv: /share/home/r15543056/.venvs/mdgen2026
+    atlas_checkpoint: /share/home/r15543056/.cache/mdgen/atlas.ckpt
+  notes:
+  - "smoke \u7684 Python \u8207\u5171\u4EAB runs_root \u5DF2\u7531 job 49048/49051\
+    \ \u6838\u5C0D\uFF1B\u5176\u4ED6 venv \u8207 checkpoint \u4ECD\u662F\u5019\u9078\
+    \u503C\u3002"
+  - "MDGEN_VENV \u5FC5\u9808\u8A2D\u5B9A\u70BA\u5171\u4EAB\u74B0\u5883\u7684\u7D55\
+    \u5C0D\u8DEF\u5F91\uFF1B\u4E0D\u540C launcher \u4F7F\u7528\u4E0D\u540C venv\u3002"
+  - "MDGEN_RESOURCE_ROOT \u9810\u8A2D ../mdgen\uFF1B\u65B0\u5FEB\u7167\u9700\u6539\
+    \u70BA\u5916\u90E8\u8CC7\u6E90\u6839\u76EE\u9304\u7684\u7D55\u5C0D\u8DEF\u5F91\
+    \uFF0C\u5167\u542B ckpt\u3001data\u3001splits\u3002"
+  - "job/submit_neighbor_tests.sh \u70BA\u5B8C\u6574 GPU \u9A57\u8B49\uFF1Al40s partition/account\u3001\
+    2 CPU\u30011 GPU\u300120G\u300190 \u5206\u9418\uFF0C\u4E0D\u8996\u70BA\u6700\u5C0F\
+    \ smoke \u7684\u9810\u8A2D\u6388\u6B0A\u3002"
+  - "\u63D0\u4EA4\u524D\u5EFA\u7ACB logs\uFF0C\u5C07 results \u8207\u5176\u4ED6\u53EF\
+    \u5BEB\u7522\u7269\u5C0E\u5411\u8A72 run \u7684\u7368\u7ACB\u4F4D\u7F6E\u3002"
+  - "\u6B63\u5F0F\u8207 smoke \u5165\u53E3\u9700\u4F9D\u672C\u6B21\u529F\u80FD\u9078\
+    \u64C7\uFF1B\u5404 worktree \u4F7F\u7528\u4E0D\u540C\u5FEB\u7167\uFF0C\u4FDD\u7559\
+    \u81EA\u8EAB dirty \u7A0B\u5F0F\u3002"

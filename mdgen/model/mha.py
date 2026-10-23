@@ -450,6 +450,11 @@ class MultiheadAttention(nn.Module):
         if use_sdpa_for_call:
             assert k is not None and v is not None
             assert q.device == k.device == v.device
+            # Bias tokens and RoPE can promote activations before autocast SDPA.
+            # Match the operator's autocast dtype without changing FP32 parameters.
+            if torch.is_autocast_enabled(q.device.type):
+                attention_dtype = torch.get_autocast_dtype(q.device.type)
+                q, k, v = (tensor.to(attention_dtype) for tensor in (q, k, v))
             assert q.dtype == k.dtype == v.dtype
 
             # sdpa-layout-output:start

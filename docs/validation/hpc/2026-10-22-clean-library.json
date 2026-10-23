@@ -1,0 +1,35 @@
+{
+  "env": {
+    "CUDA_VISIBLE_DEVICES": "0",
+    "GPU_DEVICE_ORDINAL": "0",
+    "SLURM_JOB_GPUS": "0",
+    "SLURM_STEP_GPUS": null,
+    "LD_LIBRARY_PATH": "/opt/python-3.11.12-gpu/lib",
+    "XDG_RUNTIME_DIR": "/run/user/1471800220"
+  },
+  "devices": {
+    "/dev/nvidia-modeset": "open-ok",
+    "/dev/nvidia-uvm-tools": "open-ok",
+    "/dev/nvidia-uvm": "open-ok",
+    "/dev/nvidia-caps": "[Errno 21] Is a directory: '/dev/nvidia-caps'",
+    "/dev/nvidia1": "[Errno 1] Operation not permitted: '/dev/nvidia1'",
+    "/dev/nvidia0": "[Errno 5] Input/output error: '/dev/nvidia0'",
+    "/dev/nvidiactl": "open-ok"
+  },
+  "nvidia_smi": {
+    "rc": 0,
+    "out": "No devices found.\n",
+    "err": ""
+  },
+  "torch": "2.11.0+cu128",
+  "passed": false,
+  "error": "CUDA unknown error - this may be due to an incorrectly set up environment, e.g. changing env variable CUDA_VISIBLE_DEVICES after program start. Setting the available devices to be zero.",
+  "libcuda_maps": [
+    "7f5150600000-7f5150766000 r--p 00000000 fd:00 51673039                   /usr/lib64/libcuda.so.580.95.05",
+    "7f5150766000-7f51516e8000 r-xp 00166000 fd:00 51673039                   /usr/lib64/libcuda.so.580.95.05",
+    "7f51516e8000-7f5156093000 r--p 010e8000 fd:00 51673039                   /usr/lib64/libcuda.so.580.95.05",
+    "7f5156093000-7f5156094000 ---p 05a93000 fd:00 51673039                   /usr/lib64/libcuda.so.580.95.05",
+    "7f5156094000-7f51561c9000 r--p 05a93000 fd:00 51673039                   /usr/lib64/libcuda.so.580.95.05",
+    "7f51561c9000-7f51561d2000 rw-p 05bc8000 fd:00 51673039                   /usr/lib64/libcuda.so.580.95.05"
+  ]
+}

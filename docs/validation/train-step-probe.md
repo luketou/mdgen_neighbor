@@ -53,3 +53,7 @@ batch：資料集由 `MDGenDataset` 取樣，合成鏈則對第 0 幀完整分�
 - CPU 上 `bf16-train` 只驗證 autocast 與流程；TF32 及實際記憶體／速度須在 L40S 上量測（Ticket 3、4）。
 - 兩次 `fp32-reference` 的 cosine 為 1、差異為 0 已在 CPU pytest 驗證；GPU 上需搭配 `--deterministic` 才保證決定性。
 - 報告為訓練行為的 Precision parity 證據，不代表模型品質或 Scale validation 通過。
+
+## L40S 小尺寸實測
+
+2026-10-23 的 [Ticket 2 GPU 驗證](l40s-ticket2/2026-10-23/README.md) 包含 global/local 真實訓練步、FP32 重複、BF16 梯度比較、NaN/Inf 注入與跨程序重現性。僅限報告所列的小尺寸合成 batch；不代表 Training region × 250 幀或長蛋白容量驗收。

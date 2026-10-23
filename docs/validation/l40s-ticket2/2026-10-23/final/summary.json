@@ -1,0 +1,45 @@
+{
+  "job_id": "49247",
+  "run_id": "preflight-20261023T040605Z-4ebee2a5",
+  "source_commit": "61c6197cf45d275818edf551eb87ee06624a00cb",
+  "dirty_at_snapshot": false,
+  "passed": true,
+  "cross_process_reproducible": {
+    "global": true,
+    "local": true
+  },
+  "cases": {
+    "global": {
+      "fp32_min_cosine": 1.0,
+      "fp32_max_abs_difference": 0.0,
+      "bf16_min_cosine": 0.999997046091613,
+      "bf16_all_groups_pass": true,
+      "normal_nonfinite": 0
+    },
+    "local": {
+      "fp32_min_cosine": 0.9999999999999999,
+      "fp32_max_abs_difference": 0.0,
+      "bf16_min_cosine": 0.9999975726265548,
+      "bf16_all_groups_pass": true,
+      "normal_nonfinite": 0
+    }
+  },
+  "injected_nonfinite": {
+    "nan": {
+      "loss_finite": false,
+      "gradient_nonfinite": 116045,
+      "comparison_passed": false
+    },
+    "inf": {
+      "loss_finite": false,
+      "gradient_nonfinite": 116045,
+      "comparison_passed": false
+    }
+  },
+  "scheduler": {
+    "state": "COMPLETED",
+    "exit_code": "0:0",
+    "run_time": "00:02:02",
+    "node": "node-201"
+  }
+}

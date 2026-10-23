@@ -1,0 +1,105 @@
+# scripts/hpc.py 讀取 smoke、runtime、ssh、sync 與 results；training/checkpoint 保留作未驗證候選。
+schema_version: 1
+project: "mdgen_neighbor"
+deployment_ready: false
+
+ssh:
+  target: "r15543056@zinfandel.ncree.org"
+  options:
+    - BatchMode=yes
+    - ConnectTimeout=10
+    - ConnectionAttempts=1
+    - ServerAliveInterval=15
+    - ServerAliveCountMax=2
+  command_timeout_seconds: 60
+
+# null 代表尚未確認。runs_root 必須位於 Compute Node 可見的共享儲存。
+remote:
+  # Shared code/results path verified; GPU preflight passed in job 49228.
+  verified: false
+  runs_root: /share/home/r15543056/MDgen/codex-runs
+  datasets_root: null
+  models_root: null
+  checkpoints_root: null
+
+runtime:
+  # Smoke launcher loads this module before invoking the explicit interpreter.
+  setup_script: job/env.sh
+  python: /share/home/r15543056/.venvs/mdgen2026/bin/python
+  env:
+    MDGEN_MODULES: "python/3.11.12-gpu"
+    # CUDA 12.8 module path; DeepSpeed import verified in job 49235.
+    CUDA_HOME: /opt/cuda-12.8.0_570.86.10
+
+sync:
+  selection: git-tracked-code-plus-explicit-untracked
+  extra_files: []
+  max_file_mib: 10
+  follow_symlinks: false
+  delete: false
+  # 這是選檔排除規格；實作傳輸時需轉成相同語意的規則，不能直接整包 rsync repo。
+  exclude:
+    - '**/.git/**'
+    - '**/.venv*/**'
+    - '**/.env*'
+    - '**/__pycache__/**'
+    - '**/.cache/**'
+    - '**/data/**'
+    - '**/splits/**'
+    - '**/datasets/**'
+    - '**/models/**'
+    - '**/checkpoints/**'
+    - '**/ckpt/**'
+    - '**/logs/**'
+    - '**/results/**'
+    - '**/outputs/**'
+    - '**/*.ckpt'
+    - '**/*.pt'
+    - '**/*.pth'
+    - '**/*.safetensors'
+    - '**/.aws/**'
+    - '**/.ssh/**'
+    - '**/*.pem'
+    - '**/id_rsa*'
+    - '**/id_ed25519*'
+
+scheduler:
+  type: slurm
+  poll_interval_seconds: 30
+
+# smoke 與正式資源分開確認；null 不能直接套用正式 launcher 的昂貴預設。
+smoke:
+  entrypoint: scripts/diagnostics/gpu_preflight.py
+  resources: {partition: l40s, account: l40s, cpus: 1, gpus: 1, memory: 2G, time: "00:02:00"}
+  required_checks: [cuda-matmul]
+training:
+  entrypoint: null
+  resources: {partition: null, account: null, cpus: null, gpus: null, memory: null, time: null}
+checkpoint:
+  enabled: true
+  resume_entrypoint: null
+  source: null
+  cleanup_enabled: false
+results:
+  download_files: [results/preflight.json, results/exit-status, logs/slurm.log]
+  max_download_mib: 20
+  log_tail_lines: 100
+
+# 可供核對的既有入口與設定；不等於已完成遠端驗證。
+existing:
+  references:
+  - job/env.sh
+  - job/README.md
+  - job/submit_neighbor_tests.sh
+  path_hints:
+    neighbor_venv: /share/home/r15543056/.venvs/mdgen
+    flrh_venv: /share/home/r15543056/.venvs/mdgen2026
+    atlas_checkpoint: /share/home/r15543056/.cache/mdgen/atlas.ckpt
+  notes:
+  - smoke 的 Python 與共享 runs_root 已由 job 49048/49051 核對；其他 venv 與 checkpoint 仍是候選值。
+  - MDGEN_VENV 必須設定為共享環境的絕對路徑；不同 launcher 使用不同 venv。
+  - MDGEN_RESOURCE_ROOT 預設 ../mdgen；新快照需改為外部資源根目錄的絕對路徑，內含 ckpt、data、splits。
+  - job/submit_neighbor_tests.sh 為完整 GPU 驗證：l40s partition/account、2 CPU、1 GPU、20G、90
+    分鐘，不視為最小 smoke 的預設授權。
+  - 提交前建立 logs，將 results 與其他可寫產物導向該 run 的獨立位置。
+  - 正式與 smoke 入口需依本次功能選擇；各 worktree 使用不同快照，保留自身 dirty 程式。
