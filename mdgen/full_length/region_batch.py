@@ -15,7 +15,8 @@ from .group_region import region_subpartition, sample_region_groups
 def sample_region(partition, ca, args, generator=None):
     """(selection, region partition) for one Training region of a full-protein partition."""
     selection = sample_region_groups(partition, ca, region_residues=args.region_residues,
-                                     halo_rings=args.halo_rings, generator=generator)
+                                     halo_rings=args.halo_rings, generator=generator,
+                                     seed_group=getattr(args, 'region_seed_group', None))
     return selection, region_subpartition(partition, selection)
 
 
@@ -90,6 +91,8 @@ def _pad_region(item, selection, region, width):
     out['loss_core_mask'] = padded(region.loss_core_mask.numpy().astype(np.float32), 0)
     out['region'] = {
         'loss_groups': len(selection.loss_groups),
+        'loss_group_ids': list(selection.loss_groups),
+        'halo_group_ids': list(selection.halo_groups),
         'halo_groups': len(selection.halo_groups),
         'residues': n,
         'loss_residues': int(region.loss_core_mask.sum()),

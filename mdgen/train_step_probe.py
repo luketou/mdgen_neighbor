@@ -110,7 +110,11 @@ def synthetic_region_items(args, items, seed):
 def dataset_items(args, index):
     from .dataset import MDGenDataset
     dataset = MDGenDataset(args, split=args.train_split)
-    return [dataset[i] for i in range(index, index + args.batch_size)]
+    items = [dataset[i] for i in range(index, index + args.batch_size)]
+    if getattr(args, 'region_seed_group', None) is not None:
+        for item in items:
+            item['region']['seed_group'] = args.region_seed_group
+    return items
 
 
 def describe_batch(items):
@@ -318,6 +322,8 @@ def parse_probe_args(argv):
     parser.add_argument('--seed', type=int, default=0)
     parser.add_argument('--sim_ckpt', help='initialize model weights, not optimizer resume state')
     parser.add_argument('--time', type=float, default=None, help='fixed transport time for capacity probes')
+    parser.add_argument('--seed_group', type=int, default=None,
+                        help='explicit Training region candidate group')
     source = parser.add_mutually_exclusive_group()
     source.add_argument('--dataset_index', type=int, default=0,
                         help='first item of the --train_split dataset (default)')
@@ -343,6 +349,9 @@ def main(argv=None):
     delattr(args, 'manual_attention')
     args.sim_ckpt = probe_args.sim_ckpt
     args.probe_time = probe_args.time
+    args.region_seed_group = probe_args.seed_group
+    if args.region_seed_group is not None and not args.training_region:
+        raise ValueError('--seed_group requires --training_region')
     if args.sim_ckpt:
         saved = torch.load(args.sim_ckpt, map_location='cpu', weights_only=False)
         trained_args = saved['hyper_parameters']['args']
@@ -364,6 +373,9 @@ def main(argv=None):
                                 probe_args.seed)
         if args.training_region:
             items = synthetic_region_items(args, items, probe_args.seed)
+            if args.region_seed_group is not None:
+                for item in items:
+                    item['region']['seed_group'] = args.region_seed_group
     else:
         items = dataset_items(args, probe_args.dataset_index)
     report = run_probe(args, items, probe_args.configs, probe_args.seed,

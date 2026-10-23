@@ -95,4 +95,3 @@ Ticket 5 的 loss／gradient／optimizer 數值門檻另需在正式執行前提
 本次已確認：forward 工程門檻及零分母政策、候選矩陣與容量決策規則、兩個 TDD seam，以及 CPU／GPU 先導資源上限。後續只在這個額度內提交。
 
 確認後先補工具並審查／提交，再依核准上限量測容量。先導結束後，連同 Ticket 5 的待確認判定規則，將最終可行矩陣、全部不可行 case、完整 hash／設定與確認紀錄寫入 repo 的 `docs/validation/43-contract/`；Ticket 2 此前維持未完成。
-

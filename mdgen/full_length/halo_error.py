@@ -102,6 +102,22 @@ def seed_region_report(partition, halo_rings, budget):
     return report
 
 
+def capacity_forward(call, device, warmup, repeats):
+    """Release each output before the next path; a full-protein OOM does not hide regions."""
+    try:
+        output, runs = measured_forward(call, device, warmup, repeats)
+        result = {'status': 'completed', 'runs': runs,
+                  'nonfinite': int((~output.isfinite()).sum())}
+        del output
+        return result
+    except torch.cuda.OutOfMemoryError as error:
+        result = {'status': 'oom', 'runs': [], 'error': str(error),
+                  'peak_memory_allocated_bytes': torch.cuda.max_memory_allocated(device),
+                  'peak_memory_reserved_bytes': torch.cuda.max_memory_reserved(device)}
+    torch.cuda.empty_cache()
+    return result
+
+
 def observation_stats(rows):
     """Preserve undefined denominators separately from nonfinite model values."""
     classes = ('regular', 'zero_reference', 'near_zero_reference', 'no_supervision', 'nonfinite')
@@ -122,7 +138,7 @@ def stratify(observations):
 
 @torch.no_grad()
 def halo_errors(wrapper, batch, partition, ca, *, region_residues, halo_rings, regions=1,
-                times=(0.5,), seed=0, warmup=0, repeats=1, seed_groups=None):
+                times=(0.5,), seed=0, warmup=0, repeats=1, seed_groups=None, capacity_only=False):
     """Per-residue loss-core errors of each halo setting; batch is one collated protein.
 
     Returns {'regions': [...], 'skipped_seeds': [...], 'residues': {k: [(ring, l2, relative), ...]}}.
@@ -184,6 +200,20 @@ def halo_errors(wrapper, batch, partition, ca, *, region_residues, halo_rings, r
         x0 = torch.randn(x1.shape, generator=generator).to(device)
         tt = torch.full((1,), float(t), device=device)
         _, xt, _ = wrapper.transport.path_sampler.plan(tt, x0, x1)
+        if capacity_only:
+            full_measurement = capacity_forward(
+                lambda: wrapper.model(xt, tt, **full_prep['model_kwargs']), device, warmup, repeats)
+            measurements['full'].append({'t': float(t), **full_measurement})
+            for k, entry, index, loss, rings, sub in cases:
+                prep = wrapper.prep_batch({**select_residues(batch, index, batched=True),
+                                           'partition': [sub]})
+                region_measurement = capacity_forward(
+                    lambda: wrapper.model(xt[:, :, index], tt, **prep['model_kwargs']),
+                    device, warmup, repeats)
+                measurements['regions'].append({'t': float(t), 'halo_rings': k,
+                    'loss_groups': entry['loss_groups'], 'region_residues': len(index),
+                    **region_measurement})
+            continue
         full, measured = measured_forward(
             lambda: wrapper.model(xt, tt, **full_prep['model_kwargs']), device, warmup, repeats)
         measurements['full'].append({'t': float(t), 'runs': measured})
@@ -318,6 +348,8 @@ def main(argv=None):
     parser.add_argument('--repeats', type=positive_int, default=1)
     parser.add_argument('--inventory_only', action='store_true',
                         help='CPU partition statistics only; does not instantiate a model')
+    parser.add_argument('--capacity_only', action='store_true',
+                        help='measure full/region independently, without paired output errors')
     selection = parser.add_mutually_exclusive_group()
     selection.add_argument('--seed_groups', type=int, nargs='+')
     selection.add_argument('--selection_seed', type=int)
@@ -357,7 +389,8 @@ def main(argv=None):
                              'seed_regions': seed_region_report(partition, args.halo_rings,
                                                                 args.region_residues),
                              'candidate_seed_groups': torch.randperm(len(partition.groups),
-                                 generator=torch.Generator().manual_seed(args.selection_seed or 43002)
+                                 generator=torch.Generator().manual_seed(
+                                     43002 if args.selection_seed is None else args.selection_seed)
                                  )[:args.regions].tolist()})
             continue
         item = dataset[idx]
@@ -367,6 +400,7 @@ def main(argv=None):
                              region_residues=args.region_residues, halo_rings=args.halo_rings,
                              regions=args.regions, times=args.times, seed=args.seed,
                              warmup=args.warmup, repeats=args.repeats,
+                             capacity_only=args.capacity_only,
                              seed_groups=(torch.randperm(len(partition.groups), generator=
                                  torch.Generator().manual_seed(args.selection_seed))[:args.regions].tolist()
                                  if args.selection_seed is not None else args.seed_groups))

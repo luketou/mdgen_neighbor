@@ -204,3 +204,14 @@ def test_cli_real_replica_uses_checkpoint_weights_and_first_frame(monkeypatch, t
     assert report['batch']['frame_starts'] == [0]
     assert report['runs'][0]['loss_finite']
     assert report['runs'][0]['training_time'] == 0.5
+
+
+def test_cli_training_region_accepts_an_explicit_candidate_group(tmp_path):
+    output = tmp_path / 'fixed.json'
+    main(['--output', str(output), '--synthetic_residues', '60', '--seed_group', '0',
+          '--', *TINY, *LOCAL, '--training_region', '--region_residues', '60'])
+    report = json.loads(output.read_text())
+    for region in report['batch']['regions']:
+        assert region['seed_group'] == 0
+        assert 0 in region['loss_group_ids']
+        assert len(region['loss_group_ids']) == region['loss_groups']

@@ -224,12 +224,15 @@ def test_partition_inventory_never_runs_a_model_and_keeps_infeasible_groups(tmp_
 
 
 @pytest.mark.parametrize('value, category', [(0.0, 'zero_reference'),
+                                           (1e-7, 'near_zero_reference'),
                                            (float('nan'), 'nonfinite')])
 def test_cli_distinguishes_zero_reference_from_nonfinite(tmp_path, checkpoint, value, category):
     saved = torch.load(checkpoint, weights_only=False)
     for tensor in saved['state_dict'].values():
         if tensor.is_floating_point():
-            tensor.fill_(value)
+            tensor.fill_(0 if category == 'near_zero_reference' else value)
+    if category == 'near_zero_reference':
+        saved['state_dict']['model.emb_to_latent.linear.bias'].fill_(value)
     torch.save(saved, checkpoint)
     report = run(tmp_path, checkpoint, '--halo_rings', '1', '--region_residues', str(L))
     strata = report['proteins'][0]['strata']
@@ -249,3 +252,13 @@ def test_cli_all_fixed_groups_infeasible_still_writes_a_report(tmp_path, checkpo
     assert protein['coverage']['attempted'] == protein['coverage']['skipped'] == 2
     assert protein['coverage']['feasible'] == 0
     assert protein['regions'] == protein['observations'] == []
+
+
+def test_capacity_mode_measures_regions_without_retaining_a_reference(tmp_path, checkpoint):
+    report = run(tmp_path, checkpoint, '--halo_rings', '0', '1', '--capacity_only',
+                 '--seed_groups', '0')
+    protein, = report['proteins']
+    assert protein['observations'] == []
+    assert protein['measurements']['full'][0]['status'] == 'completed'
+    assert len(protein['measurements']['regions']) == 4  # two t, two halos
+    assert all(row['status'] == 'completed' for row in protein['measurements']['regions'])

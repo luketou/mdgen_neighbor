@@ -21,6 +21,8 @@ python -m mdgen.train_step_probe --output results/probe.json \
 
 真實 ATLAS 容量探針可用 `--atlas --replicates R --overfit_frame` 固定 replica 與起始幀；完整蛋白模式的 `--crop` 必須明確等於蛋白長度。`--ffn_chunk_size` 可顯式固定 FFN chunking。完整蛋白與 Training region 各自的容量結果不代表相同 supervision 的 loss／gradient 比較。
 
+`--seed_group G`（分隔符之前）明確指定 Training region 的候選 group；實際 `seed_group`、`loss_group_ids`、`halo_group_ids` 保存在 region 摘要。先導 driver 使用核准的候選順序，各 halo 設定內按 loss-group 集合去重，保留重複與不可行候選的對應，不補抽。
+
 既有 launcher 的 `MDGEN_ISSUE43_FRAMES` 模式會呼叫有時間上限的真實資料先導；需要明確設定 `MDGEN_ISSUE43_DATA` 與 `MDGEN_ATLAS_CKPT`。每個 case 重建相同初始權重與 optimizer，第一個 FP32 組態作暖機，其餘為量測。量測數及核准資源見 [提案](43-contract/proposal.md)，未跑到的 case 亦保留在 manifest。
 
 `--` 之後加上 `--training_region`（及 `--region_residues`／`--halo_rings`）時，兩種來源都改為 Training region

@@ -31,9 +31,11 @@ L40S 上用 `job/submit_halo_error.sh`（見 `job/README.md`）。實測結果�
 
 ## 容量先導與完整報告
 
-`--num_frames` 明確覆寫 checkpoint 的視窗長度；`--warmup`／`--repeats` 控制同輸入 forward 的同步時間與 GPU peak allocated／reserved 量測。Region 的記憶體包含仍存活的完整蛋白 reference，不能當成獨立 region forward 的記憶體或直接宣稱省量。
+`--num_frames` 明確覆寫 checkpoint 的視窗長度；`--warmup`／`--repeats` 控制同輸入 forward 的同步時間與 GPU peak allocated／reserved 量測。在一般成對誤差模式中，region 的記憶體包含仍存活的完整蛋白 reference，不能當成獨立 region forward 的記憶體或直接宣稱省量。
 
 `--inventory_only` 不實例化模型，只在 CPU Compute Job 讀 checkpoint 組態、分區與第零幀座標，列出每個 halo 設定全部種子 group 的最小 region 大小、分位數及不可行原因。
+
+`--capacity_only` 分別量測並釋放完整蛋白與 region 輸出；完整蛋白 OOM 時仍繼續 region 路徑。此模式只報容量、時間與有限性，不產生誤差分布，也不保留 reference；一般比較模式則需要完整蛋白 reference 成功。OOM 路徑的 peak 值及失敗原因留在該路徑紀錄。
 
 `--seed_groups` 指定候選 group ID；或使用 `--selection_seed` 產生 CPU `torch.randperm`，取前 `--regions` 個。不可行與重複候選都不補抽；固定候選全部不可行時仍寫報告。未使用這兩個選項則保留原本的隨機 seed 行為。
 

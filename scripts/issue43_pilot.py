@@ -22,6 +22,42 @@ LOCAL = ['--local_spatial', '--spatial_cell_width', '16', '--spatial_contact_rad
 CHECKPOINT_SHA256 = 'bc90c66e7539f52c9d0514aeddd96c552061150a1eef3b10c120bc3aaff08015'
 
 
+def training_candidates(root, protein, replica):
+    import numpy as np
+    import torch
+    from mdgen.full_length.group_region import sample_region_groups
+    from mdgen.full_length.partition import PartitionParams
+    from mdgen.full_length.partition_store import load_partition
+    from mdgen.topology import load_chain_numbering
+    stem = f'{protein}_R{replica}_i400ps'
+    arr = np.load(root / 'arrays' / f'{stem}.npy', mmap_mode='r')
+    chain = load_chain_numbering(root / 'arrays' / f'{stem}_chain.npz', arr.shape[1])
+    ca = np.asarray(arr[0, :, 1], dtype=np.float32)
+    partition = load_partition(root / 'partitions' / f'{stem}_partition.npz',
+                               PartitionParams(16., 16., 128, 128), ca=ca, **chain)
+    candidates = torch.randperm(len(partition.groups), generator=
+                                torch.Generator().manual_seed(43002))[:4].tolist()
+    result = []
+    for k in (1, 2):
+        seen = {}
+        for seed_group in candidates:
+            entry = {'setting': f'halo{k}', 'seed_group': seed_group}
+            try:
+                selection = sample_region_groups(partition, ca, region_residues=896,
+                                                 halo_rings=k, seed_group=seed_group)
+                entry.update({'loss_group_ids': list(selection.loss_groups),
+                              'region_residues': len(selection.residues),
+                              'truncated': len(selection.residues) < len(ca)})
+                if selection.loss_groups in seen:
+                    entry.update({'pre_status': 'duplicate',
+                                  'duplicate_of_seed_group': seen[selection.loss_groups]})
+                seen.setdefault(selection.loss_groups, seed_group)
+            except ValueError as error:
+                entry.update({'pre_status': 'infeasible_seed', 'reason': str(error)})
+            result.append(entry)
+    return result
+
+
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--mode', choices=('inventory', 'forward', 'train'), required=True)
@@ -64,12 +100,18 @@ def main(argv=None):
         # Visit all proteins in R1 before R2/R3. Order is fixed before seeing errors.
         for replica in (1, 2, 3):
             for protein, length in zip(PROTEINS, LENGTHS):
-                settings = ('paired', 'halo1') if args.mode == 'forward' else ('halo1', 'halo2', 'full')
-                for setting in settings:
+                settings = ([{'setting': 'paired'}, {'setting': 'halo1'}]
+                            if args.mode == 'forward' else
+                            [{'setting': 'full'}, *training_candidates(root, protein, replica)])
+                for candidate in settings:
+                    setting = candidate['setting']
                     identity = f'{protein}-R{replica}-{setting}'
+                    if 'seed_group' in candidate:
+                        identity += f"-group{candidate['seed_group']}"
                     if args.mode == 'forward':
                         command = [*halo, '--pdb_id', protein, '--replicate', str(replica),
                                    '--regions', '4', '--warmup', '1', '--repeats', '3',
+                                   '--capacity_only',
                                    '--halo_rings', *(['1', '2'] if setting == 'paired' else ['1'])]
                     else:
                         # A one-row split fixes protein selection without copying any trajectory.
@@ -84,6 +126,8 @@ def main(argv=None):
                             writer.writerow(selected)
                         command = [sys.executable, '-m', 'mdgen.train_step_probe',
                             '--sim_ckpt', str(args.checkpoint), '--seed', '0', '--time', '0.5',
+                            *(['--seed_group', str(candidate['seed_group'])]
+                              if setting != 'full' else []),
                             '--configs', *(['fp32-reference'] * 4), '--',
                             '--train_split', str(split), '--val_split', str(split),
                             '--data_dir', str(root / 'arrays'), '--suffix', '_i400ps',
@@ -96,13 +140,13 @@ def main(argv=None):
                             command.extend(['--training_region', '--region_residues', '896',
                                             '--halo_rings', setting[-1]])
                     cases.append({'id': identity, 'protein': protein, 'replica': replica,
-                                  'setting': setting, 'command': command})
+                                  **candidate, 'command': command})
     report = {'mode': args.mode, 'frames': args.frames, 'checkpoint_sha256': checkpoint_hash,
               'input_manifest': input_manifest,
               'slurm_job_id': os.environ.get('SLURM_JOB_ID'),
               'warmup': 1, 'measured_repeats': 3,
               'training_comparison': 'capacity only; full and region have different supervision',
-              'memory_policy': 'includes live reference outputs for halo comparisons',
+              'memory_policy': 'standalone full and region forward; reference output released',
               'cases': cases}
     if os.environ.get('MDGEN_RUN_DIR'):
         run = Path(os.environ['MDGEN_RUN_DIR'])
@@ -116,7 +160,7 @@ def main(argv=None):
         manifest.write_text(json.dumps(report, indent=2))
 
     for case in cases:
-        case['status'] = 'not_run_budget'
+        case['status'] = case.get('pre_status', 'not_run_budget')
         output = args.output_dir / f"{case['id']}.json"
         # Probe arguments must precede the separator for train.py arguments.
         command = case['command']
@@ -126,6 +170,8 @@ def main(argv=None):
     save()
     start = time.monotonic()
     for case in cases:
+        if case['status'] in ('duplicate', 'infeasible_seed'):
+            continue
         remaining = 27 * 60 - (time.monotonic() - start)
         if remaining < 30:
             break
