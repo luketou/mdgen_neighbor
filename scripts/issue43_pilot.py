@@ -89,6 +89,17 @@ def skip_reason(step, finished):
     return None
 
 
+def check_lengths(root):
+    """Full-protein steps crop to LENGTHS, so the split's sequences must have exactly those lengths."""
+    import csv
+    with (root / 'validation.csv').open() as stream:
+        lengths = {row['name']: len(row['seqres']) for row in csv.DictReader(stream)}
+    for protein, length in zip(PROTEINS, LENGTHS):
+        if lengths.get(protein) != length:
+            raise ValueError(f'{protein} has {lengths.get(protein)} residues in validation.csv; '
+                             f'the pilot crops it to {length}')
+
+
 def select_cases(cases, ids):
     if ids is None:
         return cases
@@ -212,6 +223,7 @@ def main(argv=None):
     if checkpoint_hash != CHECKPOINT_SHA256:
         raise ValueError('checkpoint hash differs from approved Ticket 1 checkpoint')
     root = args.data_root
+    check_lengths(root)
     inputs = [root / 'validation.csv']
     for replica in (1, 2, 3):
         for protein in PROTEINS:

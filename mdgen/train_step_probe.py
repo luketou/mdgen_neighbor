@@ -110,7 +110,14 @@ def synthetic_region_items(args, items, seed):
 def dataset_items(args, index):
     from .dataset import MDGenDataset
     dataset = MDGenDataset(args, split=args.train_split)
-    items = [dataset[i] for i in range(index, index + args.batch_size)]
+    if args.atlas and not args.training_region:
+        # A full-protein step must neither randomly crop nor pad the protein.
+        for i in range(index, index + args.batch_size):
+            name = dataset.df.index[i % len(dataset.df)]
+            if len(dataset.df.seqres[name]) != args.crop:
+                raise ValueError(f'--crop {args.crop} differs from {name} length '
+                                 f'{len(dataset.df.seqres[name])}; full-protein mode needs them equal')
+    items =[dataset[i] for i in range(index, index + args.batch_size)]
     if args.training_region and getattr(args, 'region_seed_group', None) is not None:
         for item in items:
             item['region']['seed_group'] = args.region_seed_group

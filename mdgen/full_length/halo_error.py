@@ -329,7 +329,7 @@ def protein_dataset(cli_args, model_args):
 
 def main(argv=None):
     from ..parsing import add_local_override_args, positive_int
-    from ..train_step_probe import environment
+    from ..train_step_probe import batch_shapes, environment
     parser = argparse.ArgumentParser(description=__doc__.split('\n\n')[0])
     parser.add_argument('--sim_ckpt', required=True)
     parser.add_argument('--data_dir', required=True)
@@ -410,7 +410,7 @@ def main(argv=None):
         proteins.append({'name': name, 'residues': len(item['seqres']),
                          'groups': len(partition.groups), 'regions': result['regions'],
                          'skipped_seeds': result['skipped_seeds'],
-                         'batch_shapes': {'trans': list(batch['trans'].shape)},
+                         'batch_shapes': batch_shapes(batch, 1),
                          'measurements': result['measurements'],
                          'observations': result['observations'], 'strata': result['strata'],
                          'nonfinite_counts': result['nonfinite_counts'],

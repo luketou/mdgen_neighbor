@@ -189,6 +189,9 @@ def test_cli_short_window_reports_precision_and_tail_statistics(tmp_path, checkp
     assert not report['precision_state']['cuda_matmul_allow_tf32']
     protein, = report['proteins']
     assert protein['batch_shapes']['trans'] == [1, 2, L, 3]
+    # Every input tensor is recorded with its batch dimension, not only `trans`.
+    assert {'rots', 'torsions', 'seqres', 'mask'} <= set(protein['batch_shapes'])
+    assert all(shape[0] == 1 for shape in protein['batch_shapes'].values())
     assert protein['summary']['0']['l2']['p95'] >= protein['summary']['0']['l2']['median']
     assert len(protein['measurements']['full']) == 2  # one per t
 

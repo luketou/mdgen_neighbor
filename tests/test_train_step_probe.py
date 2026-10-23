@@ -206,6 +206,20 @@ def test_cli_real_replica_uses_checkpoint_weights_and_first_frame(monkeypatch, t
     assert report['runs'][0]['training_time'] == 0.5
 
 
+@pytest.mark.parametrize('crop', ['8', '16'])
+def test_full_protein_mode_rejects_a_crop_that_differs_from_the_protein(tmp_path, crop):
+    np.save(tmp_path / 'prot_R1.npy',
+            np.random.default_rng(0).normal(size=(5, 12, 14, 3)).astype(np.float32))
+    split = tmp_path / 'split.csv'
+    split.write_text('name,seqres\nprot,ACDEFGHIKLMN\n')
+    with pytest.raises(ValueError, match=f'--crop {crop} differs from prot length 12'):
+        main(['--output', str(tmp_path / 'cropped.json'), '--time', '0.5', '--', *TINY,
+              '--data_dir', str(tmp_path), '--train_split', str(split), '--val_split', str(split),
+              '--batch_size', '1', '--atlas', '--replicates', '1', '--crop', crop,
+              '--overfit_frame'])
+    assert not (tmp_path / 'cropped.json').exists()
+
+
 def test_cli_training_region_accepts_an_explicit_candidate_group(tmp_path):
     output = tmp_path / 'fixed.json'
     main(['--output', str(output), '--synthetic_residues', '60', '--seed_group', '0',

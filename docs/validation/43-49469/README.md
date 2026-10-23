@@ -9,6 +9,6 @@ GPU Job `49469` 在 L40S 上完成短幀容量流程：batch 1、4 幀、FP32 re
 
 此模式沒有量測成對輸出誤差；沒有判定 forward 門檻、loss／gradient 或生成品質，也沒有驗證 250 幀與 backward。Region 的 reserved 記憶體可能保留前一路徑的 allocator cache，不能由此宣稱獨立 region 的 reserved 省量；allocated 與同步時間保留原始值，沒有宣稱加速比。
 
-排程器已無此 Job，所有 case 的原始 return code 均為成功；GPU [preflight](results/preflight_49469.json) 通過，執行完成訊息見 [stdout](logs/49469.out)，[stderr](logs/49469.err) 僅含 module 載入訊息。未使用不可用的 sacct 推定 Slurm 最終退出碼。
+終態依據是 manifest 的 `driver_finished` 與 stdout 完成訊息；未保存佇列查詢或 `sacct` 輸出。所有 case 的原始 return code 均為成功；GPU [preflight](results/preflight_49469.json) 通過，執行完成訊息見 [stdout](logs/49469.out)，[stderr](logs/49469.err) 僅含 module 載入訊息。未使用不可用的 sacct 推定 Slurm 最終退出碼。
 
 下一步依 [容量決策草稿](../43-contract/capacity-decision.md) 確認候選範圍，再使用剩餘核准額度繼續先導；最終矩陣尚未凍結。

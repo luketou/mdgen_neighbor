@@ -90,7 +90,8 @@ def _pilot_inputs(tmp_path, monkeypatch):
     root = tmp_path / 'data'
     (root / 'arrays').mkdir(parents=True)
     (root / 'partitions').mkdir()
-    (root / 'validation.csv').write_text('name,seqres\n6sup_A,GGG\n')
+    (root / 'validation.csv').write_text('name,seqres\n' + ''.join(
+        f'{protein},{"G" * length}\n' for protein, length in zip(pilot.PROTEINS, pilot.LENGTHS)))
     for replica in (1, 2, 3):
         for protein in pilot.PROTEINS:
             stem = f'{protein}_R{replica}_i400ps'
@@ -199,8 +200,6 @@ def test_default_train_commands_match_the_recorded_49501_commands(case_id, tmp_p
 
 def test_train_driver_rejects_unknown_selected_cases(tmp_path, monkeypatch):
     root, checkpoint = _pilot_inputs(tmp_path, monkeypatch)
-    (root / 'validation.csv').write_text(
-        'name,seqres\n6sms_A,A\n6lrd_A,A\n6l3r_E,A\n6sup_A,G\n')
     monkeypatch.setattr(pilot, 'training_candidates', _one_candidate)
     with pytest.raises(ValueError, match='unknown case'):
         pilot.main(['--mode', 'train', '--frames', '96', '--data_root', str(root),
@@ -210,8 +209,6 @@ def test_train_driver_rejects_unknown_selected_cases(tmp_path, monkeypatch):
 
 def test_train_driver_plans_selected_cases_at_any_frame_count(tmp_path, monkeypatch):
     root, checkpoint = _pilot_inputs(tmp_path, monkeypatch)
-    (root / 'validation.csv').write_text(
-        'name,seqres\n6sms_A,A\n6lrd_A,A\n6l3r_E,A\n6sup_A,G\n')
     monkeypatch.setattr(pilot, 'training_candidates', _one_candidate)
     report = pilot.main(['--mode', 'train', '--frames', '96', '--memory', 'gbs=1',
                          '--data_root', str(root), '--checkpoint', str(checkpoint),
@@ -222,6 +219,18 @@ def test_train_driver_plans_selected_cases_at_any_frame_count(tmp_path, monkeypa
     assert command[command.index('--num_frames') + 1] == '96'
     assert command[command.index('--group_batch_size') + 1] == '1'
     assert all(case['status'] == 'planned_only' for case in report['cases'])
+
+
+def test_driver_rejects_a_split_whose_sequence_length_differs_from_the_crop(tmp_path,
+                                                                           monkeypatch):
+    root, checkpoint = _pilot_inputs(tmp_path, monkeypatch)
+    (root / 'validation.csv').write_text('name,seqres\n' + ''.join(
+        f'{protein},{"G" * (length - (protein == "6sup_A"))}\n'
+        for protein, length in zip(pilot.PROTEINS, pilot.LENGTHS)))
+    with pytest.raises(ValueError, match='6sup_A has 2127 residues'):
+        pilot.main(['--mode', 'train', '--frames', '4', '--data_root', str(root),
+                    '--checkpoint', str(checkpoint), '--output_dir', str(tmp_path / 'out'),
+                    '--plan_only'])
 
 
 def test_train_mode_requires_positive_frames(tmp_path):
