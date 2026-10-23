@@ -24,6 +24,16 @@ def test_fetch_accepts_run_relative_paths():
     hpc_run.check_fetch_paths(['results/halo_error_49339/halo_error.json', 'logs/49339.out'])
 
 
+def test_record_appends_submissions_including_unknown_ones(tmp_path):
+    path = tmp_path / 'hpc_job_history'
+    hpc_run.record(path, '4242', 'run-1', 'run-1:smoke:120000', ['job/a.sh', '-k', 'a and b'])
+    hpc_run.record(path, 'submission_unknown', 'run-1', 'run-1:smoke:120100', ['job/a.sh'])
+
+    first, second = path.read_text(encoding='utf-8').splitlines()
+    assert first.split(' ', 1)[1] == "4242 run-1 run-1:smoke:120000 job/a.sh -k 'a and b'"
+    assert second.split(' ', 1)[1] == 'submission_unknown run-1 run-1:smoke:120100 job/a.sh'
+
+
 @pytest.mark.skipif(shutil.which('bash') is None, reason='needs bash')
 def test_submit_records_arguments_literally(tmp_path):
     run = tmp_path / 'run'

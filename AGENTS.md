@@ -1,6 +1,6 @@
 # Agent 導航
 
-- 開始工作時先確認實際 repo／worktree、分支與 dirty diff；讀取 [README](README.md) 的專案入口。
+- 開始工作時先確認實際 repo／worktree、分支、dirty diff 與 `git log origin/main..HEAD`；分支含其他 PR 的舊版 commit 時，從該 PR 的遠端分支或 `origin/main` 開新分支。讀取 [README](README.md) 的專案入口。
 - GitHub 目的 repo 為 `luketou/mdgen_neighbor`；先以 `git remote -v` 確認本機 remote 名稱。
 - 安裝 CPU 開發環境、建立 worktree 或驗證修改時，依 [開發流程](docs/agents/development.md) 使用本機／CI 共用指令。
 - 開發與審查，以及撰寫 commit、PR 或 issue 時，遵循[開發與寫作規範](docs/agents/conventions.md)。
