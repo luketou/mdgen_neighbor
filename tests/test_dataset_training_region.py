@@ -239,3 +239,32 @@ def test_split_csv_chain_columns_are_rejected(tmp_path):
     with pytest.raises(ValueError, match='_chain.npz'):
         MDGenDataset(args(tmp_path), split)
     MDGenDataset(args(tmp_path, training_region=False), split)  # ignored without regions
+
+
+def write_chains(tmp_path, name='prot'):
+    """Two chains of 100 with a numbering gap after residue 39 of chain A."""
+    chain_id = np.repeat([0, 1], L // 2)
+    residue_index = np.concatenate([np.arange(1, 41), np.arange(45, 105), np.arange(1, 101)])
+    np.savez(tmp_path / f'{name}_chain.npz', chain_id=chain_id, residue_index=residue_index)
+    return [0, 40, L // 2]  # residues without a same-chain, consecutive predecessor
+
+
+def test_pre_omega_and_phi_are_masked_across_chain_breaks(tmp_path):
+    split = write_protein(tmp_path)
+    plain = MDGenDataset(args(tmp_path, training_region=False), split)[0]
+    breaks = write_chains(tmp_path)
+    full = MDGenDataset(args(tmp_path, training_region=False), split)[0]
+    expected = plain['torsion_mask'].clone()
+    expected[breaks, :2] = 0
+    assert plain['torsion_mask'][breaks[1:], :2].all()  # residue 0 is masked anyway; the rest are new
+    torch.testing.assert_close(full['torsion_mask'], expected)
+    # every region residue keeps the full-protein mask, breaks included
+    torch.manual_seed(0)
+    dataset = MDGenDataset(args(tmp_path), split)
+    seen = set()
+    for _ in range(20):
+        item = dataset[0]
+        residues = positions(item)[:item['region']['residues']]
+        torch.testing.assert_close(item['torsion_mask'][:len(residues)], expected[residues])
+        seen |= set(residues.tolist()) & set(breaks)
+    assert seen  # some sampled region contains a chain break
