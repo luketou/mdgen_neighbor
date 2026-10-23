@@ -18,6 +18,17 @@ MDGEN_VENV=/path/to/venv sbatch job/submit_neighbor_tests.sh
 | `MDGEN_RESOURCE_ROOT` | 否 | 含 `ckpt/`、`data/`、`splits/` 的資源目錄，預設 `../mdgen`（與 `scripts/diagnostics` 相同） |
 | `MDGEN_EXPECTED_GPU_UUID` | 否 | `submit_neighbor_scaling.sh` 會檢查 GPU UUID 是否相符；未設定時只印出 UUID |
 
+本機提交一律用 `scripts/hpc_run.py`（經 WSL 的 ssh／scp）：建立唯讀快照、核對 SHA-256、把 `src/results`、`src/logs` 連到 run 目錄後提交，並把每個 job 記到 `<run>/job_history`。用法見 `python scripts/hpc_run.py -h`，例如：
+
+```bash
+python scripts/hpc_run.py submit --tag pytest job/submit_pytest.sh tests/test_halo_error.py
+python scripts/hpc_run.py submit --run <run_id> --env MDGEN_ATLAS_CKPT=... job/submit_halo_error.sh --pdb_id 3ilw_A
+python scripts/hpc_run.py status <run_id>
+python scripts/hpc_run.py fetch <run_id> <本機目錄> results/halo_error_<job>/halo_error.json logs/<job>.out
+```
+
+`job/env.sh` 會清掉從 SSH 繼承的 `SSH_CLIENT`（否則 `module load` 會載入 `~/.bashrc` 而在 compute node 失敗），並在工作目錄唯讀且未設 `MODEL_DIR` 時，把 `MODEL_DIR` 指到 `$MDGEN_RUN_DIR/workdir/<job>`。
+
 `job/env.sh` 會在 `GPU_DEVICE_ORDINAL` 有值時把 `CUDA_VISIBLE_DEVICES` 設為它：`node-201` 的單 GPU job 若分到第二張卡，Slurm 會把 `CUDA_VISIBLE_DEVICES` 設成主機編號 1，但 job 內只看得到 device 0，導致 `CUDA_ERROR_NO_DEVICE`。
 
 `--partition=l40s` 與 `--account=l40s` 仍寫在腳本中；其他叢集可在提交時覆寫，例如 `sbatch --partition=gpu --account=myacct job/...`。
