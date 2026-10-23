@@ -71,7 +71,9 @@ def halo_errors(wrapper, batch, partition, ca, *, region_residues, halo_rings, r
                 times=(0.5,), seed=0):
     """Per-residue loss-core errors of each halo setting; batch is one collated protein.
 
-    Returns {'regions': [...], 'residues': {k: [(ring, l2, relative), ...]}}.
+    Returns {'regions': [...], 'skipped_seeds': [...], 'residues': {k: [(ring, l2, relative), ...]}}.
+    Seeds whose seed group with the deepest halo exceeds region_residues are skipped;
+    raises ValueError when no seed fits.
     """
     if any(torch.is_tensor(v) and v.shape[0] != 1 for v in batch.values()) or len(batch['name']) != 1:
         raise ValueError('halo_errors compares one protein: every batch entry needs batch size 1')
@@ -80,11 +82,18 @@ def halo_errors(wrapper, batch, partition, ca, *, region_residues, halo_rings, r
     x1 = full_prep['latents']
     unconditioned = full_prep['model_kwargs']['x_cond_mask'][0, :, 0] == 0  # [T]
     selections = {}  # distinct loss-group sets; two seeds can grow the same region
+    skipped = []  # seeds whose seed group with the deepest halo alone exceeds the budget
     for r in range(regions):
-        selection = sample_region_groups(partition, ca, region_residues=region_residues,
-                                         halo_rings=max(halo_rings),
-                                         generator=torch.Generator().manual_seed(seed + r))
+        try:
+            selection = sample_region_groups(partition, ca, region_residues=region_residues,
+                                             halo_rings=max(halo_rings),
+                                             generator=torch.Generator().manual_seed(seed + r))
+        except ValueError as error:
+            skipped.append({'seed': seed + r, 'reason': str(error)})
+            continue
         selections.setdefault(selection.loss_groups, selection)
+    if not selections:
+        raise ValueError('no region fits: ' + '; '.join(s['reason'] for s in skipped))
     cases = []  # (k, report entry, region residues, loss mask, ring per loss residue, partition)
     region_reports = []
     for selection in selections.values():
@@ -117,7 +126,7 @@ def halo_errors(wrapper, batch, partition, ca, *, region_residues, halo_rings, r
             relative = l2 / reference.double().pow(2).sum((0, 2)).sqrt().cpu()
             residues[k].extend(zip(rings, l2.tolist(), relative.tolist()))
             entry['times'].append({'t': float(t), 'l2': stats(l2), 'relative': stats(relative)})
-    return {'regions': region_reports, 'residues': residues}
+    return {'regions': region_reports, 'skipped_seeds': skipped, 'residues': residues}
 
 
 def summarize(residues):
@@ -222,6 +231,7 @@ def main(argv=None):
             residues[k].extend(result['residues'][k])
         proteins.append({'name': name, 'residues': len(item['seqres']),
                          'groups': len(partition.groups), 'regions': result['regions'],
+                         'skipped_seeds': result['skipped_seeds'],
                          'summary': summarize(result['residues'])})
         print(name, json.dumps(proteins[-1]['summary']), flush=True)
     if not proteins:
