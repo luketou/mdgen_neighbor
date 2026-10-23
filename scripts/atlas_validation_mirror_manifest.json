@@ -1,0 +1,362 @@
+{
+  "repository": "sxsaxx/data",
+  "revision": "a91392e2d08aea15ef19fac00e42c18d97a54c74",
+  "source_type": "community mirror of ATLAS analysis (100 ps sampling)",
+  "official_origin": "https://www.dsimb.inserm.fr/ATLAS/",
+  "proteins": [
+    {
+      "name": "6sms_A",
+      "expected_sequence": "QKEMDRKGLLGYYFKDKDFSNLTMFSPTRYNTLIYDQQTANKLLDKKQQEYQSIRWIGLIQSNKTGDFTFELSDDECAIIEMDGKVISNKGKEKQVVHLEKGKLVPIKIEYQLDEPLNIDDEKFKGFKLLKVDNQKQLHQVQQDELRNPEFNKKESQEFLAKASKINLFTKKIKRDIDEGTDTDGDSIPDMWEENGYTIQNRIAVKWNDSLASKGYTKFVSNPLDSHTVGDPYTDYEKASRDLDLSNAKETFNPLVAAFPSVNVSMEKVILSPNKNLSNSVESHSSTNWSYTNTEGASVEAGIGPKGFSFGVSANYQHSETVAQEWGASIGDTTQLNTASAGYLNANVRYNNVGTGAIYDVKPTTSFVLEKNTIATITAKSNSTALSISPGESYPKKGQNGIAITSMDDFNSHPITLNKKQLDQVLTNNPIMLETDQTDGIYKIKDTHGNIVTGGTWNGVTQQIKAKTASIIVDDGKQVAEKRVAAKDYAYPEDKTPSLTLKDALKLSFPEEIKETDGLLYYNNKPIYESSVMTYLDGNTAKEVKKQINDKTGEFKDVQHLYAVKLTPKMNFTIKVPVAYDTAKQAVNLGGDNPWGAKGLLGTWVNAMVVDNSGDKAYKRVEPGYLLSPTLEFSEGSLDNLKKNYSFYVSMYVKSDKPFTLRINAGPYSTKRTIEASNDFKRVDIPAFYIEGFPIDTIRLEGSDYPSAIWWKDVSITEVSAVKK",
+      "files": [
+        {
+          "name": "6sms_A.pdb",
+          "url": "https://huggingface.co/datasets/sxsaxx/data/resolve/a91392e2d08aea15ef19fac00e42c18d97a54c74/atlas_1000_analysis/6sms_A/6sms_A.pdb",
+          "bytes": 897098,
+          "sha256": null,
+          "git_blob_sha1": "64dee566e7865921d7470899a56aa5539d2772c2"
+        },
+        {
+          "name": "6sms_A_Bfactor.tsv",
+          "url": "https://huggingface.co/datasets/sxsaxx/data/resolve/a91392e2d08aea15ef19fac00e42c18d97a54c74/atlas_1000_analysis/6sms_A/6sms_A_Bfactor.tsv",
+          "bytes": 4268,
+          "sha256": null,
+          "git_blob_sha1": "3e8377ae9c4fbac842b3379b027f765f8f052360"
+        },
+        {
+          "name": "6sms_A_Neq.tsv",
+          "url": "https://huggingface.co/datasets/sxsaxx/data/resolve/a91392e2d08aea15ef19fac00e42c18d97a54c74/atlas_1000_analysis/6sms_A/6sms_A_Neq.tsv",
+          "bytes": 12442,
+          "sha256": null,
+          "git_blob_sha1": "bf293ef9f14cafa93dfa1d559206dddac8fdcd66"
+        },
+        {
+          "name": "6sms_A_R1.tpr",
+          "url": "https://huggingface.co/datasets/sxsaxx/data/resolve/a91392e2d08aea15ef19fac00e42c18d97a54c74/atlas_1000_analysis/6sms_A/6sms_A_R1.tpr",
+          "bytes": 6126028,
+          "sha256": "bc7845a55010ce0661dbaef5b6f6410ec1ae29585ad7c1426e489b63fd2b39cd",
+          "git_blob_sha1": null
+        },
+        {
+          "name": "6sms_A_R1.xtc",
+          "url": "https://huggingface.co/datasets/sxsaxx/data/resolve/a91392e2d08aea15ef19fac00e42c18d97a54c74/atlas_1000_analysis/6sms_A/6sms_A_R1.xtc",
+          "bytes": 52906664,
+          "sha256": "ac94ea08e2196ad8f4763e2a8487e14427994e6ed7c37919c66f61ddfcccb747",
+          "git_blob_sha1": null
+        },
+        {
+          "name": "6sms_A_R2.tpr",
+          "url": "https://huggingface.co/datasets/sxsaxx/data/resolve/a91392e2d08aea15ef19fac00e42c18d97a54c74/atlas_1000_analysis/6sms_A/6sms_A_R2.tpr",
+          "bytes": 6126028,
+          "sha256": "a758b403bbeefbf861b8f03d8a8f07ab5eb5de633db93dc44de278eb4ba6545b",
+          "git_blob_sha1": null
+        },
+        {
+          "name": "6sms_A_R2.xtc",
+          "url": "https://huggingface.co/datasets/sxsaxx/data/resolve/a91392e2d08aea15ef19fac00e42c18d97a54c74/atlas_1000_analysis/6sms_A/6sms_A_R2.xtc",
+          "bytes": 52948288,
+          "sha256": "06f94b29d65998feb81d5ce5787f051241f26c5541007b8890cf6e0d6e86f55a",
+          "git_blob_sha1": null
+        },
+        {
+          "name": "6sms_A_R3.tpr",
+          "url": "https://huggingface.co/datasets/sxsaxx/data/resolve/a91392e2d08aea15ef19fac00e42c18d97a54c74/atlas_1000_analysis/6sms_A/6sms_A_R3.tpr",
+          "bytes": 6126028,
+          "sha256": "9ac5bf1252b18c1159234a4c1c36a68ab2ac0ac114700361ae29d5f32fc0c91e",
+          "git_blob_sha1": null
+        },
+        {
+          "name": "6sms_A_R3.xtc",
+          "url": "https://huggingface.co/datasets/sxsaxx/data/resolve/a91392e2d08aea15ef19fac00e42c18d97a54c74/atlas_1000_analysis/6sms_A/6sms_A_R3.xtc",
+          "bytes": 52987740,
+          "sha256": "e952344622938ff48209eb638b74ac4ebc5a8116058aaaa6d29d9fe938e6217f",
+          "git_blob_sha1": null
+        },
+        {
+          "name": "6sms_A_RMSD.tsv",
+          "url": "https://huggingface.co/datasets/sxsaxx/data/resolve/a91392e2d08aea15ef19fac00e42c18d97a54c74/atlas_1000_analysis/6sms_A/6sms_A_RMSD.tsv",
+          "bytes": 19635,
+          "sha256": null,
+          "git_blob_sha1": "b855723821800158ef2eb762857656be68ee08c7"
+        },
+        {
+          "name": "6sms_A_RMSF.tsv",
+          "url": "https://huggingface.co/datasets/sxsaxx/data/resolve/a91392e2d08aea15ef19fac00e42c18d97a54c74/atlas_1000_analysis/6sms_A/6sms_A_RMSF.tsv",
+          "bytes": 12090,
+          "sha256": null,
+          "git_blob_sha1": "c30722b3ba3af5607e7f38da83ffb1d63fb8ac28"
+        },
+        {
+          "name": "6sms_A_contacts.tsv",
+          "url": "https://huggingface.co/datasets/sxsaxx/data/resolve/a91392e2d08aea15ef19fac00e42c18d97a54c74/atlas_1000_analysis/6sms_A/6sms_A_contacts.tsv",
+          "bytes": 13531,
+          "sha256": null,
+          "git_blob_sha1": "1ef278837e20b7d2e1527ee5e53b84e7c2672fcb"
+        },
+        {
+          "name": "6sms_A_corresp.tsv",
+          "url": "https://huggingface.co/datasets/sxsaxx/data/resolve/a91392e2d08aea15ef19fac00e42c18d97a54c74/atlas_1000_analysis/6sms_A/6sms_A_corresp.tsv",
+          "bytes": 18601,
+          "sha256": null,
+          "git_blob_sha1": "d5fb462b13a1e1119cb606391b681e073cc7fed9"
+        },
+        {
+          "name": "6sms_A_gyrate.tsv",
+          "url": "https://huggingface.co/datasets/sxsaxx/data/resolve/a91392e2d08aea15ef19fac00e42c18d97a54c74/atlas_1000_analysis/6sms_A/6sms_A_gyrate.tsv",
+          "bytes": 22612,
+          "sha256": null,
+          "git_blob_sha1": "44440a7e94a2e210cff1b6bba73b4f831d172c25"
+        },
+        {
+          "name": "6sms_A_pLDDT.tsv",
+          "url": "https://huggingface.co/datasets/sxsaxx/data/resolve/a91392e2d08aea15ef19fac00e42c18d97a54c74/atlas_1000_analysis/6sms_A/6sms_A_pLDDT.tsv",
+          "bytes": 5728,
+          "sha256": null,
+          "git_blob_sha1": "a4fb00d64de0f798ecde4ef3841b52b0167192dd"
+        },
+        {
+          "name": "README.txt",
+          "url": "https://huggingface.co/datasets/sxsaxx/data/resolve/a91392e2d08aea15ef19fac00e42c18d97a54c74/atlas_1000_analysis/6sms_A/README.txt",
+          "bytes": 2963,
+          "sha256": null,
+          "git_blob_sha1": "5787c4c5b9ba34b6691b8ad376d2a85a8a202bce"
+        }
+      ]
+    },
+    {
+      "name": "6lrd_A",
+      "expected_sequence": "MSRPAHWLLAPPASRDALLATMREWQVSPPVAQVLCGRDLRTELLALPLELTPNPALREAARHIVAAVREGKRIRIHGDYDADGVSATATLVLGLRAIGANVHGFIPHRLNEGYGIHPDRVPEHAAAADLVVTVDCGVSNLDEVKSLLATGTEVVVTDHHAPGENFPECLVVHPHLTPDYDPDRHNLTGAGVAYHLLWAVYEELGRPEPRALLPLATLGTVADVAPLLGENRALVRAGLAEMARTELPGLRALMNEKRVRQPTARDVAFILAPRINAAGRMGEADRALELLTTPSDHEAKSLAAYLEIRNQERRKIQDDMFAQALQLADPNDPALVLTHDDWHAGVMGIVASKLVETFNRPVYIVAQGKGSVRSTPGISAVQGLRESRDLLGRFGGHPGAAGFSLDPQNFGALRERIHGYVRQFPTPVPAVRLDAPLPVAALTPELLSELSILEPFGEGNPRPLWHLRGPLTDTRLVGKQGDVLQFRFGGVKGMKYSERDDAAGERDVAAELALNEWKGRTSLELHAAALRPLAPLALAGTEEGLPTLPRLNPREAMTFLKTGAAAYAEQGVATYLRDNVPGLTLLDTNAPHPGGDLILYGLPPESALRRWLHEAQEQGGRVAFALGPKTLAELDAALTLAKLLPDSHTEAAQEAAADAYRSWQWAHHYRVLNDAGWSASVYAMLGLPVPAALPKAAEALALAAG",
+      "files": [
+        {
+          "name": "6lrd_A.pdb",
+          "url": "https://huggingface.co/datasets/sxsaxx/data/resolve/a91392e2d08aea15ef19fac00e42c18d97a54c74/atlas_1000_analysis/6lrd_A/6lrd_A.pdb",
+          "bytes": 847249,
+          "sha256": null,
+          "git_blob_sha1": "40fcf97cfd19e4a7091998f6cda0d7ead7d8dcbb"
+        },
+        {
+          "name": "6lrd_A_Bfactor.tsv",
+          "url": "https://huggingface.co/datasets/sxsaxx/data/resolve/a91392e2d08aea15ef19fac00e42c18d97a54c74/atlas_1000_analysis/6lrd_A/6lrd_A_Bfactor.tsv",
+          "bytes": 4156,
+          "sha256": null,
+          "git_blob_sha1": "bf0037e92ccaa7861e6098d25f12c2642c31bbc2"
+        },
+        {
+          "name": "6lrd_A_Neq.tsv",
+          "url": "https://huggingface.co/datasets/sxsaxx/data/resolve/a91392e2d08aea15ef19fac00e42c18d97a54c74/atlas_1000_analysis/6lrd_A/6lrd_A_Neq.tsv",
+          "bytes": 11798,
+          "sha256": null,
+          "git_blob_sha1": "4acf94f17db4a9e4d58da90a59a86ccc43eeea3f"
+        },
+        {
+          "name": "6lrd_A_R1.tpr",
+          "url": "https://huggingface.co/datasets/sxsaxx/data/resolve/a91392e2d08aea15ef19fac00e42c18d97a54c74/atlas_1000_analysis/6lrd_A/6lrd_A_R1.tpr",
+          "bytes": 5735532,
+          "sha256": "8b6bc6f4601bec68e909da930f648347b18dbf5a4bb4904adc4a64cc535b4b7d",
+          "git_blob_sha1": null
+        },
+        {
+          "name": "6lrd_A_R1.xtc",
+          "url": "https://huggingface.co/datasets/sxsaxx/data/resolve/a91392e2d08aea15ef19fac00e42c18d97a54c74/atlas_1000_analysis/6lrd_A/6lrd_A_R1.xtc",
+          "bytes": 49964380,
+          "sha256": "db76a1d0352c2c585e6058e548fff221bcbf5c98bd73a4849562bd2d6b05361c",
+          "git_blob_sha1": null
+        },
+        {
+          "name": "6lrd_A_R2.tpr",
+          "url": "https://huggingface.co/datasets/sxsaxx/data/resolve/a91392e2d08aea15ef19fac00e42c18d97a54c74/atlas_1000_analysis/6lrd_A/6lrd_A_R2.tpr",
+          "bytes": 5735532,
+          "sha256": "087ae3f0e45d08c4ceaf87a6ac0187906fefe4497ff8bcaaa94b9aef5328cf26",
+          "git_blob_sha1": null
+        },
+        {
+          "name": "6lrd_A_R2.xtc",
+          "url": "https://huggingface.co/datasets/sxsaxx/data/resolve/a91392e2d08aea15ef19fac00e42c18d97a54c74/atlas_1000_analysis/6lrd_A/6lrd_A_R2.xtc",
+          "bytes": 49969576,
+          "sha256": "adb1663bdfca8363332e2389f3aff269ccd9692dbdf8175552a0d3572cd7624c",
+          "git_blob_sha1": null
+        },
+        {
+          "name": "6lrd_A_R3.tpr",
+          "url": "https://huggingface.co/datasets/sxsaxx/data/resolve/a91392e2d08aea15ef19fac00e42c18d97a54c74/atlas_1000_analysis/6lrd_A/6lrd_A_R3.tpr",
+          "bytes": 5735532,
+          "sha256": "9ba5cb59ad8585f41921a265457b6196aa6d8756f490cf5eb1d0609a0587f65b",
+          "git_blob_sha1": null
+        },
+        {
+          "name": "6lrd_A_R3.xtc",
+          "url": "https://huggingface.co/datasets/sxsaxx/data/resolve/a91392e2d08aea15ef19fac00e42c18d97a54c74/atlas_1000_analysis/6lrd_A/6lrd_A_R3.xtc",
+          "bytes": 49981764,
+          "sha256": "cc2ad00721b62239acbce1920cddc46ae8724890744e0179a502b7906432d925",
+          "git_blob_sha1": null
+        },
+        {
+          "name": "6lrd_A_RMSD.tsv",
+          "url": "https://huggingface.co/datasets/sxsaxx/data/resolve/a91392e2d08aea15ef19fac00e42c18d97a54c74/atlas_1000_analysis/6lrd_A/6lrd_A_RMSD.tsv",
+          "bytes": 19676,
+          "sha256": null,
+          "git_blob_sha1": "c75fd15bba743ef2ae5080701d5d03f187f574d0"
+        },
+        {
+          "name": "6lrd_A_RMSF.tsv",
+          "url": "https://huggingface.co/datasets/sxsaxx/data/resolve/a91392e2d08aea15ef19fac00e42c18d97a54c74/atlas_1000_analysis/6lrd_A/6lrd_A_RMSF.tsv",
+          "bytes": 11812,
+          "sha256": null,
+          "git_blob_sha1": "035cc6df51e39adf2934baa529768d7992a969fa"
+        },
+        {
+          "name": "6lrd_A_contacts.tsv",
+          "url": "https://huggingface.co/datasets/sxsaxx/data/resolve/a91392e2d08aea15ef19fac00e42c18d97a54c74/atlas_1000_analysis/6lrd_A/6lrd_A_contacts.tsv",
+          "bytes": 13348,
+          "sha256": null,
+          "git_blob_sha1": "994ffc6f4a127305b87ce32076cbcdc4e08c02ea"
+        },
+        {
+          "name": "6lrd_A_corresp.tsv",
+          "url": "https://huggingface.co/datasets/sxsaxx/data/resolve/a91392e2d08aea15ef19fac00e42c18d97a54c74/atlas_1000_analysis/6lrd_A/6lrd_A_corresp.tsv",
+          "bytes": 18083,
+          "sha256": null,
+          "git_blob_sha1": "7a7ff64bf3c3fa7887d2c3fedf43d1f69cc10541"
+        },
+        {
+          "name": "6lrd_A_gyrate.tsv",
+          "url": "https://huggingface.co/datasets/sxsaxx/data/resolve/a91392e2d08aea15ef19fac00e42c18d97a54c74/atlas_1000_analysis/6lrd_A/6lrd_A_gyrate.tsv",
+          "bytes": 22633,
+          "sha256": null,
+          "git_blob_sha1": "8f536c8c63402e291cd10365b829150799e72441"
+        },
+        {
+          "name": "6lrd_A_pLDDT.tsv",
+          "url": "https://huggingface.co/datasets/sxsaxx/data/resolve/a91392e2d08aea15ef19fac00e42c18d97a54c74/atlas_1000_analysis/6lrd_A/6lrd_A_pLDDT.tsv",
+          "bytes": 5571,
+          "sha256": null,
+          "git_blob_sha1": "05f900b06edb5746383b873445c0d4d917ff4f82"
+        },
+        {
+          "name": "README.txt",
+          "url": "https://huggingface.co/datasets/sxsaxx/data/resolve/a91392e2d08aea15ef19fac00e42c18d97a54c74/atlas_1000_analysis/6lrd_A/README.txt",
+          "bytes": 2963,
+          "sha256": null,
+          "git_blob_sha1": "5787c4c5b9ba34b6691b8ad376d2a85a8a202bce"
+        }
+      ]
+    },
+    {
+      "name": "6l3r_E",
+      "expected_sequence": "GAILAARIAVSNLHKETKKVFSDVMEDLYNYINPHNGKHSPMVAKSTLDIVLANKDRLNSAIIYDRDFSYNYFGFKTLERSYLLKINGKVAERPQHMLMRVSVGIHKEDIDAAIETYNLLSERWFTHASPTLFNAGTNRPQLSSCFLLSMKDDSIEGIYDTLKQCALISKSAGGIGVAVSCIRATGSYIAGTNGNSNGLVPMLRVYNNTARYVDQGGNKRPGAFAIYLEPWHLDIFEFLDLKKNTGKEEQRARDLFFALWIPDLFMKRVETNQDWSLMCPNECPGLDEVWGEEFEKLYASYEKQGRVRKVVKAQQLWYAIIESQTETGTPYMLYKDSCNRKSNQQNLGTIKCSNLCTEIVEYTSKDEVAVCNLASLALNMYVTSEHTYDFKKLAEVTKVVVRNLNKIIDINYYPVPEACLSNKRHRPIGIGVQGLADAFILMRYPFESAEAQLLNKQIFETIYYGALEASCDLAKEQGPYETYEGSPVSKGILQYDMWNVTPTDLWDWKVLKEKIAKYGIRNSLLIAPMPTASTAQILGNNESIEPYTSNIYTRRVLSGEFQIVNPHLLKDLTERGLWHEEMKNQIIACNGSIQSIPEIPDDLKQLYKTVWEISQKTVLKMAAERGAFIDQSQSLNIHIAEPNYGKLTSMHFYGWKQGLKTGMYYLRTR",
+      "files": [
+        {
+          "name": "6l3r_E.pdb",
+          "url": "https://huggingface.co/datasets/sxsaxx/data/resolve/a91392e2d08aea15ef19fac00e42c18d97a54c74/atlas_1000_analysis/6l3r_E/6l3r_E.pdb",
+          "bytes": 844168,
+          "sha256": null,
+          "git_blob_sha1": "a118a339965852683604f8982729514f796793e5"
+        },
+        {
+          "name": "6l3r_E_Bfactor.tsv",
+          "url": "https://huggingface.co/datasets/sxsaxx/data/resolve/a91392e2d08aea15ef19fac00e42c18d97a54c74/atlas_1000_analysis/6l3r_E/6l3r_E_Bfactor.tsv",
+          "bytes": 3939,
+          "sha256": null,
+          "git_blob_sha1": "739492860c2e009b39f40508ced598eac581aad9"
+        },
+        {
+          "name": "6l3r_E_Neq.tsv",
+          "url": "https://huggingface.co/datasets/sxsaxx/data/resolve/a91392e2d08aea15ef19fac00e42c18d97a54c74/atlas_1000_analysis/6l3r_E/6l3r_E_Neq.tsv",
+          "bytes": 11073,
+          "sha256": null,
+          "git_blob_sha1": "058c0f29cbf4d9abdb267b42edd1f3e32349e7ae"
+        },
+        {
+          "name": "6l3r_E_R1.tpr",
+          "url": "https://huggingface.co/datasets/sxsaxx/data/resolve/a91392e2d08aea15ef19fac00e42c18d97a54c74/atlas_1000_analysis/6l3r_E/6l3r_E_R1.tpr",
+          "bytes": 5214800,
+          "sha256": "26e22865bb8d80b932ba45fccb28e77cb4084a7814fb9b5a65364b3e8fb91601",
+          "git_blob_sha1": null
+        },
+        {
+          "name": "6l3r_E_R1.xtc",
+          "url": "https://huggingface.co/datasets/sxsaxx/data/resolve/a91392e2d08aea15ef19fac00e42c18d97a54c74/atlas_1000_analysis/6l3r_E/6l3r_E_R1.xtc",
+          "bytes": 49772292,
+          "sha256": "fa62d28e24c50135bd3360cc02c9f77299dd93f5370430fc8696569329d54c0b",
+          "git_blob_sha1": null
+        },
+        {
+          "name": "6l3r_E_R2.tpr",
+          "url": "https://huggingface.co/datasets/sxsaxx/data/resolve/a91392e2d08aea15ef19fac00e42c18d97a54c74/atlas_1000_analysis/6l3r_E/6l3r_E_R2.tpr",
+          "bytes": 5214800,
+          "sha256": "aa920cb2be1845f7b0b79e83ffbc97ce7521339121eb3df9c6f1caab57a78e91",
+          "git_blob_sha1": null
+        },
+        {
+          "name": "6l3r_E_R2.xtc",
+          "url": "https://huggingface.co/datasets/sxsaxx/data/resolve/a91392e2d08aea15ef19fac00e42c18d97a54c74/atlas_1000_analysis/6l3r_E/6l3r_E_R2.xtc",
+          "bytes": 49752464,
+          "sha256": "e4968c76c9e8026856060dc5dc00d65040f526ae1e775cbf1d6a0ea98cb08e7c",
+          "git_blob_sha1": null
+        },
+        {
+          "name": "6l3r_E_R3.tpr",
+          "url": "https://huggingface.co/datasets/sxsaxx/data/resolve/a91392e2d08aea15ef19fac00e42c18d97a54c74/atlas_1000_analysis/6l3r_E/6l3r_E_R3.tpr",
+          "bytes": 5214800,
+          "sha256": "80e7beea61bf89650024682aab2530dd11e1b5c5498f6add84a2198ce566c8f5",
+          "git_blob_sha1": null
+        },
+        {
+          "name": "6l3r_E_R3.xtc",
+          "url": "https://huggingface.co/datasets/sxsaxx/data/resolve/a91392e2d08aea15ef19fac00e42c18d97a54c74/atlas_1000_analysis/6l3r_E/6l3r_E_R3.xtc",
+          "bytes": 49758396,
+          "sha256": "bf4b3bf1083c1e5fba3e796356ac52688815bfff8924f90459c3378f73e7807c",
+          "git_blob_sha1": null
+        },
+        {
+          "name": "6l3r_E_RMSD.tsv",
+          "url": "https://huggingface.co/datasets/sxsaxx/data/resolve/a91392e2d08aea15ef19fac00e42c18d97a54c74/atlas_1000_analysis/6l3r_E/6l3r_E_RMSD.tsv",
+          "bytes": 19638,
+          "sha256": null,
+          "git_blob_sha1": "526f51728e2806fb33b1865e2f0fe8d617f88350"
+        },
+        {
+          "name": "6l3r_E_RMSF.tsv",
+          "url": "https://huggingface.co/datasets/sxsaxx/data/resolve/a91392e2d08aea15ef19fac00e42c18d97a54c74/atlas_1000_analysis/6l3r_E/6l3r_E_RMSF.tsv",
+          "bytes": 11169,
+          "sha256": null,
+          "git_blob_sha1": "57466468d681b329c2f9abf0450f72257ccd9e05"
+        },
+        {
+          "name": "6l3r_E_contacts.tsv",
+          "url": "https://huggingface.co/datasets/sxsaxx/data/resolve/a91392e2d08aea15ef19fac00e42c18d97a54c74/atlas_1000_analysis/6l3r_E/6l3r_E_contacts.tsv",
+          "bytes": 12817,
+          "sha256": null,
+          "git_blob_sha1": "6b17b04fde856e085a2c8a1ce92f3200fa91a456"
+        },
+        {
+          "name": "6l3r_E_corresp.tsv",
+          "url": "https://huggingface.co/datasets/sxsaxx/data/resolve/a91392e2d08aea15ef19fac00e42c18d97a54c74/atlas_1000_analysis/6l3r_E/6l3r_E_corresp.tsv",
+          "bytes": 17229,
+          "sha256": null,
+          "git_blob_sha1": "19653395d8691a92b9a854698001afd34b29028e"
+        },
+        {
+          "name": "6l3r_E_gyrate.tsv",
+          "url": "https://huggingface.co/datasets/sxsaxx/data/resolve/a91392e2d08aea15ef19fac00e42c18d97a54c74/atlas_1000_analysis/6l3r_E/6l3r_E_gyrate.tsv",
+          "bytes": 22629,
+          "sha256": null,
+          "git_blob_sha1": "2e774e058aed57fd46d89c7d073a0fb0b105f8a3"
+        },
+        {
+          "name": "6l3r_E_pLDDT.tsv",
+          "url": "https://huggingface.co/datasets/sxsaxx/data/resolve/a91392e2d08aea15ef19fac00e42c18d97a54c74/atlas_1000_analysis/6l3r_E/6l3r_E_pLDDT.tsv",
+          "bytes": 5297,
+          "sha256": null,
+          "git_blob_sha1": "73255088c6a8d02b253409e58db58d1489f8ef34"
+        },
+        {
+          "name": "README.txt",
+          "url": "https://huggingface.co/datasets/sxsaxx/data/resolve/a91392e2d08aea15ef19fac00e42c18d97a54c74/atlas_1000_analysis/6l3r_E/README.txt",
+          "bytes": 2963,
+          "sha256": null,
+          "git_blob_sha1": "5787c4c5b9ba34b6691b8ad376d2a85a8a202bce"
+        }
+      ]
+    }
+  ]
+}

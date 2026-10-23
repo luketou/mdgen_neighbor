@@ -1,0 +1,51 @@
+{
+  "train_split": null,
+  "val_split": null,
+  "suffix": null,
+  "num_frames": 250,
+  "frame_interval": null,
+  "atlas": null,
+  "crop": 256,
+  "path": "/share/home/r15543056/MDgen/mdgen/ckpt/atlas.ckpt",
+  "sha256": "bc90c66e7539f52c9d0514aeddd96c552061150a1eef3b10c120bc3aaff08015",
+  "download_record": {
+    "source": "https://huggingface.co/api/models/bjing-mit/mdgen?blobs=true",
+    "revision": "a92efe5b2f36f8c51a501e5a4344af8845782a8c",
+    "file": {
+      "rfilename": "atlas.ckpt",
+      "blobId": "4e0e071ab89cab6c4e6f08162010627904b45f67",
+      "size": 136701226,
+      "lfs": {
+        "sha256": "bc90c66e7539f52c9d0514aeddd96c552061150a1eef3b10c120bc3aaff08015",
+        "size": 136701226,
+        "pointerSize": 134
+      }
+    }
+  },
+  "original_source_readme_sha256": "a4fe5124239f8eb679f902698daee25bebcd77f6cab4b52fe253383939dde168",
+  "original_source_readme": "/share/home/r15543056/MDgen/mdgen/data/atlas_sims/6irx_A/README.txt",
+  "selected_input_interval_ps": 400,
+  "checkpoint_training_interval_ps": null,
+  "derivation": "validation input follows pinned upstream ATLAS recipe: 10 ps x stride 40; actual checkpoint training interval is not embedded",
+  "upstream_recipe": {
+    "url": "https://raw.githubusercontent.com/bjing2016/mdgen/81482a403b91c5a8437046da1d8d321ba97089cc/README.md",
+    "sha256": "8e3c791f7ac3d3ac312781954f5e39f11af09078c9a2e615afb0d2a95d3b450a",
+    "atlas_preprocess_stride": 40,
+    "original_interval_ps": 10,
+    "selected_interval_ps": 400,
+    "checkpoint_training_interval_verified": false
+  },
+  "training_membership": "upstream split comparison is evidence; actual checkpoint training membership remains unverified",
+  "partition_settings": {
+    "spatial_cell_width": 16.0,
+    "spatial_contact_radius": 16.0,
+    "core_capacity": 128,
+    "ghost_capacity": 128
+  },
+  "partition_settings_origin": {
+    "spatial_cell_width": "current explicit local default",
+    "spatial_contact_radius": "current explicit local default",
+    "core_capacity": "current explicit local default",
+    "ghost_capacity": "current explicit local default"
+  }
+}

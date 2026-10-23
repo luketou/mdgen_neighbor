@@ -1,0 +1,934 @@
+{
+  "status": "complete",
+  "job_id": "49427",
+  "source_dir": "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_sims",
+  "out_dir": "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b",
+  "proteins": [
+    {
+      "name": "6sms_A",
+      "topology": {
+        "residues": 724,
+        "atoms": 11353,
+        "chains": 1,
+        "numbering_gaps": 0,
+        "geometric_breaks": [],
+        "standard_heavy_atoms_complete": true
+      },
+      "source_files": [
+        {
+          "path": "6sms_A.pdb",
+          "bytes": 897098,
+          "sha256": "f6a737f59a8241cdd582c4b5ad550121828b9ad1ee5fed2e9e295a59c106eee4"
+        },
+        {
+          "path": "6sms_A_Bfactor.tsv",
+          "bytes": 4268,
+          "sha256": "fdf621a0ebb97d57e8cf1245e031f9d4581c858b882ee4147076480ba4299387"
+        },
+        {
+          "path": "6sms_A_Neq.tsv",
+          "bytes": 12442,
+          "sha256": "6ff0f4f07df2e086b390a645f60db612cbce4d771d486c944333975787cf5d90"
+        },
+        {
+          "path": "6sms_A_R1.tpr",
+          "bytes": 6126028,
+          "sha256": "bc7845a55010ce0661dbaef5b6f6410ec1ae29585ad7c1426e489b63fd2b39cd"
+        },
+        {
+          "path": "6sms_A_R1.xtc",
+          "bytes": 52906664,
+          "sha256": "ac94ea08e2196ad8f4763e2a8487e14427994e6ed7c37919c66f61ddfcccb747"
+        },
+        {
+          "path": "6sms_A_R2.tpr",
+          "bytes": 6126028,
+          "sha256": "a758b403bbeefbf861b8f03d8a8f07ab5eb5de633db93dc44de278eb4ba6545b"
+        },
+        {
+          "path": "6sms_A_R2.xtc",
+          "bytes": 52948288,
+          "sha256": "06f94b29d65998feb81d5ce5787f051241f26c5541007b8890cf6e0d6e86f55a"
+        },
+        {
+          "path": "6sms_A_R3.tpr",
+          "bytes": 6126028,
+          "sha256": "9ac5bf1252b18c1159234a4c1c36a68ab2ac0ac114700361ae29d5f32fc0c91e"
+        },
+        {
+          "path": "6sms_A_R3.xtc",
+          "bytes": 52987740,
+          "sha256": "e952344622938ff48209eb638b74ac4ebc5a8116058aaaa6d29d9fe938e6217f"
+        },
+        {
+          "path": "6sms_A_RMSD.tsv",
+          "bytes": 19635,
+          "sha256": "ba1abad4315f18e32259b42482ec5ed834dc5ddba586aeff73f6258cab0a46ea"
+        },
+        {
+          "path": "6sms_A_RMSF.tsv",
+          "bytes": 12090,
+          "sha256": "4a39da0dca1c165285a9105fc166f5b928dd8fa9a22821e202692e89ed7557ac"
+        },
+        {
+          "path": "6sms_A_contacts.tsv",
+          "bytes": 13531,
+          "sha256": "1a2420bca630287b1259b90fc26c528bdb20ee1a9dfa451bd8832534380ff2c0"
+        },
+        {
+          "path": "6sms_A_corresp.tsv",
+          "bytes": 18601,
+          "sha256": "7e6de5f0e71e19eca0539a33d373ab4ff4c6b939a2414264162a52d1415b0352"
+        },
+        {
+          "path": "6sms_A_gyrate.tsv",
+          "bytes": 22612,
+          "sha256": "d976f1d546c13cbc4f441b7885b92c41e6957a27620363bb5eb55b2f306f4cea"
+        },
+        {
+          "path": "6sms_A_pLDDT.tsv",
+          "bytes": 5728,
+          "sha256": "5a7857bcd8360fdb6b2cac0be8b8a2b1476d3aacaa788c6f47c9bb499558f002"
+        },
+        {
+          "path": "README.txt",
+          "bytes": 2963,
+          "sha256": "7b3e140e2765f96225b47ad3efaa9a26c4c447f8bc810a813c58241435527590"
+        }
+      ],
+      "outputs": [
+        {
+          "stem": "6sms_A_R1_i400ps",
+          "shape": [
+            251,
+            724,
+            14,
+            3
+          ],
+          "dtype": "float32",
+          "effective_interval_ps": 400,
+          "groups": 66,
+          "dataset_frames_checked": 4,
+          "coordinate_error_A": 0.0,
+          "files": [
+            {
+              "path": "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/arrays/6sms_A_R1_i400ps.npy",
+              "sha256": "d9b29e68b417ec84430663c8ec2bafa39b1af8517afa8c556a540566385dd2d9",
+              "bytes": 30529760
+            },
+            {
+              "path": "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/arrays/6sms_A_R1_i400ps_chain.npz",
+              "sha256": "45fba7cdb4b663d23ea2566f0d4872ea89aa8c69c83c7074bcf278309b494c2c",
+              "bytes": 12112
+            },
+            {
+              "path": "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/partitions/6sms_A_R1_i400ps_partition.npz",
+              "sha256": "30a271b2a799dd11f78b1cf85af444e5b3a7590acd400d22a4b2e774c6df9bca",
+              "bytes": 86514
+            }
+          ]
+        },
+        {
+          "stem": "6sms_A_R2_i400ps",
+          "shape": [
+            251,
+            724,
+            14,
+            3
+          ],
+          "dtype": "float32",
+          "effective_interval_ps": 400,
+          "groups": 66,
+          "dataset_frames_checked": 4,
+          "coordinate_error_A": 0.0,
+          "files": [
+            {
+              "path": "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/arrays/6sms_A_R2_i400ps.npy",
+              "sha256": "b6944c32751c022a667b8edcde3658b8a32c6b9d77c811640c26fc5ee3dd5cbc",
+              "bytes": 30529760
+            },
+            {
+              "path": "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/arrays/6sms_A_R2_i400ps_chain.npz",
+              "sha256": "45fba7cdb4b663d23ea2566f0d4872ea89aa8c69c83c7074bcf278309b494c2c",
+              "bytes": 12112
+            },
+            {
+              "path": "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/partitions/6sms_A_R2_i400ps_partition.npz",
+              "sha256": "30a271b2a799dd11f78b1cf85af444e5b3a7590acd400d22a4b2e774c6df9bca",
+              "bytes": 86514
+            }
+          ]
+        },
+        {
+          "stem": "6sms_A_R3_i400ps",
+          "shape": [
+            251,
+            724,
+            14,
+            3
+          ],
+          "dtype": "float32",
+          "effective_interval_ps": 400,
+          "groups": 66,
+          "dataset_frames_checked": 4,
+          "coordinate_error_A": 0.0,
+          "files": [
+            {
+              "path": "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/arrays/6sms_A_R3_i400ps.npy",
+              "sha256": "b6741ba399f88128ec6349d9f84aef7feb990159dd6b6c3be6a4226314a00996",
+              "bytes": 30529760
+            },
+            {
+              "path": "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/arrays/6sms_A_R3_i400ps_chain.npz",
+              "sha256": "45fba7cdb4b663d23ea2566f0d4872ea89aa8c69c83c7074bcf278309b494c2c",
+              "bytes": 12112
+            },
+            {
+              "path": "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/partitions/6sms_A_R3_i400ps_partition.npz",
+              "sha256": "30a271b2a799dd11f78b1cf85af444e5b3a7590acd400d22a4b2e774c6df9bca",
+              "bytes": 86514
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "6lrd_A",
+      "topology": {
+        "residues": 705,
+        "atoms": 10722,
+        "chains": 1,
+        "numbering_gaps": 0,
+        "geometric_breaks": [],
+        "standard_heavy_atoms_complete": true
+      },
+      "source_files": [
+        {
+          "path": "6lrd_A.pdb",
+          "bytes": 847249,
+          "sha256": "04c7e2be182caf1bf3ca11081095ec69b2cebfa090c09f22c678d70fa48c09a0"
+        },
+        {
+          "path": "6lrd_A_Bfactor.tsv",
+          "bytes": 4156,
+          "sha256": "8414cbf03321261eba4d9d326771f56368ffee154ceb989361df0ec07ca17693"
+        },
+        {
+          "path": "6lrd_A_Neq.tsv",
+          "bytes": 11798,
+          "sha256": "5178904eed6e8c4bc2c8bf2d1acd7dd176da92d3d1b70a2abde877007a2acc3b"
+        },
+        {
+          "path": "6lrd_A_R1.tpr",
+          "bytes": 5735532,
+          "sha256": "8b6bc6f4601bec68e909da930f648347b18dbf5a4bb4904adc4a64cc535b4b7d"
+        },
+        {
+          "path": "6lrd_A_R1.xtc",
+          "bytes": 49964380,
+          "sha256": "db76a1d0352c2c585e6058e548fff221bcbf5c98bd73a4849562bd2d6b05361c"
+        },
+        {
+          "path": "6lrd_A_R2.tpr",
+          "bytes": 5735532,
+          "sha256": "087ae3f0e45d08c4ceaf87a6ac0187906fefe4497ff8bcaaa94b9aef5328cf26"
+        },
+        {
+          "path": "6lrd_A_R2.xtc",
+          "bytes": 49969576,
+          "sha256": "adb1663bdfca8363332e2389f3aff269ccd9692dbdf8175552a0d3572cd7624c"
+        },
+        {
+          "path": "6lrd_A_R3.tpr",
+          "bytes": 5735532,
+          "sha256": "9ba5cb59ad8585f41921a265457b6196aa6d8756f490cf5eb1d0609a0587f65b"
+        },
+        {
+          "path": "6lrd_A_R3.xtc",
+          "bytes": 49981764,
+          "sha256": "cc2ad00721b62239acbce1920cddc46ae8724890744e0179a502b7906432d925"
+        },
+        {
+          "path": "6lrd_A_RMSD.tsv",
+          "bytes": 19676,
+          "sha256": "2eac81e3a7b561bc55bd138a5837d643f3bc22b9bd85c14a1d4308b63f47677b"
+        },
+        {
+          "path": "6lrd_A_RMSF.tsv",
+          "bytes": 11812,
+          "sha256": "61d239ec31cdcc78b42d1f54c2b29327510ed958d6570d48db414df3743c5610"
+        },
+        {
+          "path": "6lrd_A_contacts.tsv",
+          "bytes": 13348,
+          "sha256": "1c24badaca50667d0cd47870239620d26091f4823870bdd5b2dcf6187ad3acc6"
+        },
+        {
+          "path": "6lrd_A_corresp.tsv",
+          "bytes": 18083,
+          "sha256": "fec718cc686711eb78b77d2a81738daf159108a613b7f5dde06c02af9cf7ba6b"
+        },
+        {
+          "path": "6lrd_A_gyrate.tsv",
+          "bytes": 22633,
+          "sha256": "e9fcdffb1c6db225901d9143d39f2480d8729dcf0f532d0fdd08ffe7e64e92d2"
+        },
+        {
+          "path": "6lrd_A_pLDDT.tsv",
+          "bytes": 5571,
+          "sha256": "2b8010a15374b3d7456e6121c8ce331279bdaf3edcdf6745f400a596e0c59f0b"
+        },
+        {
+          "path": "README.txt",
+          "bytes": 2963,
+          "sha256": "7b3e140e2765f96225b47ad3efaa9a26c4c447f8bc810a813c58241435527590"
+        }
+      ],
+      "outputs": [
+        {
+          "stem": "6lrd_A_R1_i400ps",
+          "shape": [
+            251,
+            705,
+            14,
+            3
+          ],
+          "dtype": "float32",
+          "effective_interval_ps": 400,
+          "groups": 70,
+          "dataset_frames_checked": 4,
+          "coordinate_error_A": 0.0,
+          "files": [
+            {
+              "path": "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/arrays/6lrd_A_R1_i400ps.npy",
+              "sha256": "da0f69041eac0683ddc6846f415673272b211c8184fbb738a985e9ac25ab93c2",
+              "bytes": 29728568
+            },
+            {
+              "path": "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/arrays/6lrd_A_R1_i400ps_chain.npz",
+              "sha256": "8f995cac5be92542db11a5f4624c4ac410a77f4f814bd0c4695fd2b2404474c1",
+              "bytes": 11808
+            },
+            {
+              "path": "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/partitions/6lrd_A_R1_i400ps_partition.npz",
+              "sha256": "f06dcece93b3a9dbb8cace36a1bb9ef09dea1c33a4fe4b4e0f0cecb02e46c851",
+              "bytes": 87851
+            }
+          ]
+        },
+        {
+          "stem": "6lrd_A_R2_i400ps",
+          "shape": [
+            251,
+            705,
+            14,
+            3
+          ],
+          "dtype": "float32",
+          "effective_interval_ps": 400,
+          "groups": 70,
+          "dataset_frames_checked": 4,
+          "coordinate_error_A": 0.0,
+          "files": [
+            {
+              "path": "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/arrays/6lrd_A_R2_i400ps.npy",
+              "sha256": "30ef542afa7a4bc625425c9510cb1e3645fe391a214319f4711400641442e133",
+              "bytes": 29728568
+            },
+            {
+              "path": "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/arrays/6lrd_A_R2_i400ps_chain.npz",
+              "sha256": "8f995cac5be92542db11a5f4624c4ac410a77f4f814bd0c4695fd2b2404474c1",
+              "bytes": 11808
+            },
+            {
+              "path": "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/partitions/6lrd_A_R2_i400ps_partition.npz",
+              "sha256": "f06dcece93b3a9dbb8cace36a1bb9ef09dea1c33a4fe4b4e0f0cecb02e46c851",
+              "bytes": 87851
+            }
+          ]
+        },
+        {
+          "stem": "6lrd_A_R3_i400ps",
+          "shape": [
+            251,
+            705,
+            14,
+            3
+          ],
+          "dtype": "float32",
+          "effective_interval_ps": 400,
+          "groups": 70,
+          "dataset_frames_checked": 4,
+          "coordinate_error_A": 0.0,
+          "files": [
+            {
+              "path": "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/arrays/6lrd_A_R3_i400ps.npy",
+              "sha256": "9c3f4834275a713026eb37789b71ca64bffbfad7214fc8960a3c8e2160e460ae",
+              "bytes": 29728568
+            },
+            {
+              "path": "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/arrays/6lrd_A_R3_i400ps_chain.npz",
+              "sha256": "8f995cac5be92542db11a5f4624c4ac410a77f4f814bd0c4695fd2b2404474c1",
+              "bytes": 11808
+            },
+            {
+              "path": "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/partitions/6lrd_A_R3_i400ps_partition.npz",
+              "sha256": "f06dcece93b3a9dbb8cace36a1bb9ef09dea1c33a4fe4b4e0f0cecb02e46c851",
+              "bytes": 87851
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "6l3r_E",
+      "topology": {
+        "residues": 669,
+        "atoms": 10683,
+        "chains": 1,
+        "numbering_gaps": 0,
+        "geometric_breaks": [],
+        "standard_heavy_atoms_complete": true
+      },
+      "source_files": [
+        {
+          "path": "6l3r_E.pdb",
+          "bytes": 844168,
+          "sha256": "af7609a462e9314964de296ecf897e44ca5d9ab50fa2f7f1caee18010d18398b"
+        },
+        {
+          "path": "6l3r_E_Bfactor.tsv",
+          "bytes": 3939,
+          "sha256": "0b825b623be5d55f05b2d5ed0463eebeefbc6396eb310cc565aa75bbb64b6b5e"
+        },
+        {
+          "path": "6l3r_E_Neq.tsv",
+          "bytes": 11073,
+          "sha256": "17a2ef95b90f78aca380e07c8cc9c87324ee9f97a5e2b4a6bc157da0ea02480b"
+        },
+        {
+          "path": "6l3r_E_R1.tpr",
+          "bytes": 5214800,
+          "sha256": "26e22865bb8d80b932ba45fccb28e77cb4084a7814fb9b5a65364b3e8fb91601"
+        },
+        {
+          "path": "6l3r_E_R1.xtc",
+          "bytes": 49772292,
+          "sha256": "fa62d28e24c50135bd3360cc02c9f77299dd93f5370430fc8696569329d54c0b"
+        },
+        {
+          "path": "6l3r_E_R2.tpr",
+          "bytes": 5214800,
+          "sha256": "aa920cb2be1845f7b0b79e83ffbc97ce7521339121eb3df9c6f1caab57a78e91"
+        },
+        {
+          "path": "6l3r_E_R2.xtc",
+          "bytes": 49752464,
+          "sha256": "e4968c76c9e8026856060dc5dc00d65040f526ae1e775cbf1d6a0ea98cb08e7c"
+        },
+        {
+          "path": "6l3r_E_R3.tpr",
+          "bytes": 5214800,
+          "sha256": "80e7beea61bf89650024682aab2530dd11e1b5c5498f6add84a2198ce566c8f5"
+        },
+        {
+          "path": "6l3r_E_R3.xtc",
+          "bytes": 49758396,
+          "sha256": "bf4b3bf1083c1e5fba3e796356ac52688815bfff8924f90459c3378f73e7807c"
+        },
+        {
+          "path": "6l3r_E_RMSD.tsv",
+          "bytes": 19638,
+          "sha256": "e75d935142b87a0104e16eae6d25a693266480cd52b21de9c2f544fd14969247"
+        },
+        {
+          "path": "6l3r_E_RMSF.tsv",
+          "bytes": 11169,
+          "sha256": "c7cc35285c5da838b3e8e8c6b183ef97620e3697cec17a90587b91d8610c301a"
+        },
+        {
+          "path": "6l3r_E_contacts.tsv",
+          "bytes": 12817,
+          "sha256": "41cc7e25b1a287fe2cec98784078663d3d1eb3e6842f05b1227cae45caa44a63"
+        },
+        {
+          "path": "6l3r_E_corresp.tsv",
+          "bytes": 17229,
+          "sha256": "6783e05106e4dafe55188b7ace5b296a1a84b77471f21b64b760ff5e3abc8e8c"
+        },
+        {
+          "path": "6l3r_E_gyrate.tsv",
+          "bytes": 22629,
+          "sha256": "76d6325aecd5c39e498c9665b3d829761962aebe7b21d37051037ed5c4837ae0"
+        },
+        {
+          "path": "6l3r_E_pLDDT.tsv",
+          "bytes": 5297,
+          "sha256": "e49ca7730f26b3c88888e3b0d928a6e7c493fa20748ea0c6c98f4bacb1f491ba"
+        },
+        {
+          "path": "README.txt",
+          "bytes": 2963,
+          "sha256": "7b3e140e2765f96225b47ad3efaa9a26c4c447f8bc810a813c58241435527590"
+        }
+      ],
+      "outputs": [
+        {
+          "stem": "6l3r_E_R1_i400ps",
+          "shape": [
+            251,
+            669,
+            14,
+            3
+          ],
+          "dtype": "float32",
+          "effective_interval_ps": 400,
+          "groups": 60,
+          "dataset_frames_checked": 4,
+          "coordinate_error_A": 0.0,
+          "files": [
+            {
+              "path": "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/arrays/6l3r_E_R1_i400ps.npy",
+              "sha256": "a6c39195cf8ecd671d165457d308dde0c5721e5baefc451b4776bd2facde32fd",
+              "bytes": 28210520
+            },
+            {
+              "path": "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/arrays/6l3r_E_R1_i400ps_chain.npz",
+              "sha256": "c430a0426b9aac94f219e4b2f29bd084238c3f1790561ef3830fca894f578c14",
+              "bytes": 11232
+            },
+            {
+              "path": "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/partitions/6l3r_E_R1_i400ps_partition.npz",
+              "sha256": "46d5f14a44c5ccbcbae4ae0f4accbfe114303cf1957cf78b9ae498f81957873e",
+              "bytes": 80655
+            }
+          ]
+        },
+        {
+          "stem": "6l3r_E_R2_i400ps",
+          "shape": [
+            251,
+            669,
+            14,
+            3
+          ],
+          "dtype": "float32",
+          "effective_interval_ps": 400,
+          "groups": 60,
+          "dataset_frames_checked": 4,
+          "coordinate_error_A": 0.0,
+          "files": [
+            {
+              "path": "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/arrays/6l3r_E_R2_i400ps.npy",
+              "sha256": "b3308b4275814e9f8e3f395f655822983c05658cf80dd98ddf4b2d4035f274d8",
+              "bytes": 28210520
+            },
+            {
+              "path": "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/arrays/6l3r_E_R2_i400ps_chain.npz",
+              "sha256": "c430a0426b9aac94f219e4b2f29bd084238c3f1790561ef3830fca894f578c14",
+              "bytes": 11232
+            },
+            {
+              "path": "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/partitions/6l3r_E_R2_i400ps_partition.npz",
+              "sha256": "46d5f14a44c5ccbcbae4ae0f4accbfe114303cf1957cf78b9ae498f81957873e",
+              "bytes": 80655
+            }
+          ]
+        },
+        {
+          "stem": "6l3r_E_R3_i400ps",
+          "shape": [
+            251,
+            669,
+            14,
+            3
+          ],
+          "dtype": "float32",
+          "effective_interval_ps": 400,
+          "groups": 60,
+          "dataset_frames_checked": 4,
+          "coordinate_error_A": 0.0,
+          "files": [
+            {
+              "path": "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/arrays/6l3r_E_R3_i400ps.npy",
+              "sha256": "54eca1aca548928438d3d3599e8e68c0013fc7473126609be05920cd147870dc",
+              "bytes": 28210520
+            },
+            {
+              "path": "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/arrays/6l3r_E_R3_i400ps_chain.npz",
+              "sha256": "c430a0426b9aac94f219e4b2f29bd084238c3f1790561ef3830fca894f578c14",
+              "bytes": 11232
+            },
+            {
+              "path": "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/partitions/6l3r_E_R3_i400ps_partition.npz",
+              "sha256": "46d5f14a44c5ccbcbae4ae0f4accbfe114303cf1957cf78b9ae498f81957873e",
+              "bytes": 80655
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "6sup_A",
+      "topology": {
+        "residues": 2128,
+        "atoms": 33377,
+        "chains": 1,
+        "numbering_gaps": 0,
+        "geometric_breaks": [],
+        "standard_heavy_atoms_complete": true
+      },
+      "source_files": [
+        {
+          "path": "6sup_A.pdb",
+          "bytes": 2636994,
+          "sha256": "f14b04c0a11b0e1f7e21ea9a1f99105b65f4ad146ba797b60912d7ac215e2b02"
+        },
+        {
+          "path": "6sup_A_Bfactor.tsv",
+          "bytes": 12611,
+          "sha256": "5ef816bb2eb9a54c60556371dea0c29e461be1e6d3a49dabcbdbb7f8c7e83af9"
+        },
+        {
+          "path": "6sup_A_Neq.tsv",
+          "bytes": 36827,
+          "sha256": "568b7f3543c2fd5eac6f66ee3ff59da7aec503422b9f3c323b5d43a39e864e4b"
+        },
+        {
+          "path": "6sup_A_R1.tpr",
+          "bytes": 15657292,
+          "sha256": "d6c28ec1e5e9ab60d0c3e114a4b63003ea8be067451aac688362363d7c7c4c62"
+        },
+        {
+          "path": "6sup_A_R1.xtc",
+          "bytes": 155625508,
+          "sha256": "d6fc02bc83fa01fa4aa8197d1fcc70144c90370bb0a9d4b9b49a0f596422c761"
+        },
+        {
+          "path": "6sup_A_R2.tpr",
+          "bytes": 15657292,
+          "sha256": "886d5aec3cbdfbcfc275e10ff37f5c56bf48ca8585f95c2dff6f4a3bbc5bd7f2"
+        },
+        {
+          "path": "6sup_A_R2.xtc",
+          "bytes": 155638292,
+          "sha256": "2e08f62cc4bbbba5d5bd7f063e6237fcc35327dcfcd78f0bbd3c3d0f2cf471ee"
+        },
+        {
+          "path": "6sup_A_R3.tpr",
+          "bytes": 15657292,
+          "sha256": "efe9ca28b3b1591482bf1c4321cd787a7fa9be5fe09820671232b78eaa59f154"
+        },
+        {
+          "path": "6sup_A_R3.xtc",
+          "bytes": 155645480,
+          "sha256": "28ba22fdbecdc256d0780af66a462be7a2248c42ccd751414fea174fc9a22f73"
+        },
+        {
+          "path": "6sup_A_RMSD.tsv",
+          "bytes": 19645,
+          "sha256": "56ac2641959e373734555afb44e0654f8ed5206cb697dd40f5a3e96281942bd1"
+        },
+        {
+          "path": "6sup_A_RMSF.tsv",
+          "bytes": 35519,
+          "sha256": "ed0243a75b50ed7f2058286c88aaa4d1cb7301ee510f73d70187c86728c0f7b2"
+        },
+        {
+          "path": "6sup_A_contacts.tsv",
+          "bytes": 38468,
+          "sha256": "a17a35bbcf2d819bc6479c45378287477f0b4aaf7c4c28590b7dc7cdeecfcde8"
+        },
+        {
+          "path": "6sup_A_corresp.tsv",
+          "bytes": 58539,
+          "sha256": "abe108efa58b38f3c3ffb06e4ae0760d9e80c3985d1028066a702cd366fabb01"
+        },
+        {
+          "path": "6sup_A_gyrate.tsv",
+          "bytes": 22621,
+          "sha256": "359a673a7c7ead3888f22efa211d4aca89e934f2647467c6b1ebd9a826584d9b"
+        },
+        {
+          "path": "6sup_A_pLDDT.tsv",
+          "bytes": 16807,
+          "sha256": "fc1da5a1e309208f35f9805746839aadb36c169e3406dde2a5341717cd93564d"
+        },
+        {
+          "path": "README.txt",
+          "bytes": 2963,
+          "sha256": "7b3e140e2765f96225b47ad3efaa9a26c4c447f8bc810a813c58241435527590"
+        }
+      ],
+      "outputs": [
+        {
+          "stem": "6sup_A_R1_i400ps",
+          "shape": [
+            251,
+            2128,
+            14,
+            3
+          ],
+          "dtype": "float32",
+          "effective_interval_ps": 400,
+          "groups": 190,
+          "dataset_frames_checked": 4,
+          "coordinate_error_A": 0.0,
+          "files": [
+            {
+              "path": "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/arrays/6sup_A_R1_i400ps.npy",
+              "sha256": "4e9a9fe631de6b06a6ef929f2c2a85ed8d9a068fe2f3ac8cb062eac4bc93a2f2",
+              "bytes": 89733632
+            },
+            {
+              "path": "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/arrays/6sup_A_R1_i400ps_chain.npz",
+              "sha256": "6baf00e0a37ff091bef3e304e19aea30a52bea5173741329c94ee30cb31d1c7d",
+              "bytes": 34576
+            },
+            {
+              "path": "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/partitions/6sup_A_R1_i400ps_partition.npz",
+              "sha256": "6df5d741edd949688b2c31fd04df5d75fca6fdc8868e9efe1cf4c8e05dda1997",
+              "bytes": 257366
+            }
+          ]
+        },
+        {
+          "stem": "6sup_A_R2_i400ps",
+          "shape": [
+            251,
+            2128,
+            14,
+            3
+          ],
+          "dtype": "float32",
+          "effective_interval_ps": 400,
+          "groups": 190,
+          "dataset_frames_checked": 4,
+          "coordinate_error_A": 0.0,
+          "files": [
+            {
+              "path": "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/arrays/6sup_A_R2_i400ps.npy",
+              "sha256": "9a00008e6f5621f3e473e5c8db521b4569a3449676e9a1d4ab959066576ad4e8",
+              "bytes": 89733632
+            },
+            {
+              "path": "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/arrays/6sup_A_R2_i400ps_chain.npz",
+              "sha256": "6baf00e0a37ff091bef3e304e19aea30a52bea5173741329c94ee30cb31d1c7d",
+              "bytes": 34576
+            },
+            {
+              "path": "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/partitions/6sup_A_R2_i400ps_partition.npz",
+              "sha256": "6df5d741edd949688b2c31fd04df5d75fca6fdc8868e9efe1cf4c8e05dda1997",
+              "bytes": 257366
+            }
+          ]
+        },
+        {
+          "stem": "6sup_A_R3_i400ps",
+          "shape": [
+            251,
+            2128,
+            14,
+            3
+          ],
+          "dtype": "float32",
+          "effective_interval_ps": 400,
+          "groups": 190,
+          "dataset_frames_checked": 4,
+          "coordinate_error_A": 0.0,
+          "files": [
+            {
+              "path": "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/arrays/6sup_A_R3_i400ps.npy",
+              "sha256": "ed11c2e72f416917908f7faad02d7a3aadda74cb59435afd5833d412a266ddb4",
+              "bytes": 89733632
+            },
+            {
+              "path": "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/arrays/6sup_A_R3_i400ps_chain.npz",
+              "sha256": "6baf00e0a37ff091bef3e304e19aea30a52bea5173741329c94ee30cb31d1c7d",
+              "bytes": 34576
+            },
+            {
+              "path": "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/partitions/6sup_A_R3_i400ps_partition.npz",
+              "sha256": "6df5d741edd949688b2c31fd04df5d75fca6fdc8868e9efe1cf4c8e05dda1997",
+              "bytes": 257366
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "manifest_sha256": "9bbb6e60c25d8d12ba115c4718d292f541f6fb7fb8508c9aa5b3db34e0d8aa0b",
+  "checkpoint": {
+    "train_split": null,
+    "val_split": null,
+    "suffix": null,
+    "num_frames": 250,
+    "frame_interval": null,
+    "atlas": null,
+    "crop": 256,
+    "path": "/share/home/r15543056/MDgen/mdgen/ckpt/atlas.ckpt",
+    "sha256": "bc90c66e7539f52c9d0514aeddd96c552061150a1eef3b10c120bc3aaff08015",
+    "download_record": {
+      "source": "https://huggingface.co/api/models/bjing-mit/mdgen?blobs=true",
+      "revision": "a92efe5b2f36f8c51a501e5a4344af8845782a8c",
+      "file": {
+        "rfilename": "atlas.ckpt",
+        "blobId": "4e0e071ab89cab6c4e6f08162010627904b45f67",
+        "size": 136701226,
+        "lfs": {
+          "sha256": "bc90c66e7539f52c9d0514aeddd96c552061150a1eef3b10c120bc3aaff08015",
+          "size": 136701226,
+          "pointerSize": 134
+        }
+      }
+    },
+    "original_source_readme_sha256": "a4fe5124239f8eb679f902698daee25bebcd77f6cab4b52fe253383939dde168",
+    "original_source_readme": "/share/home/r15543056/MDgen/mdgen/data/atlas_sims/6irx_A/README.txt",
+    "selected_input_interval_ps": 400,
+    "checkpoint_training_interval_ps": null,
+    "derivation": "validation input follows pinned upstream ATLAS recipe: 10 ps x stride 40; actual checkpoint training interval is not embedded",
+    "upstream_recipe": {
+      "url": "https://raw.githubusercontent.com/bjing2016/mdgen/81482a403b91c5a8437046da1d8d321ba97089cc/README.md",
+      "sha256": "8e3c791f7ac3d3ac312781954f5e39f11af09078c9a2e615afb0d2a95d3b450a",
+      "atlas_preprocess_stride": 40,
+      "original_interval_ps": 10,
+      "selected_interval_ps": 400,
+      "checkpoint_training_interval_verified": false
+    },
+    "training_membership": "upstream split comparison is evidence; actual checkpoint training membership remains unverified",
+    "partition_settings": {
+      "spatial_cell_width": 16.0,
+      "spatial_contact_radius": 16.0,
+      "core_capacity": 128,
+      "ghost_capacity": 128
+    },
+    "partition_settings_origin": {
+      "spatial_cell_width": "current explicit local default",
+      "spatial_contact_radius": "current explicit local default",
+      "core_capacity": "current explicit local default",
+      "ghost_capacity": "current explicit local default"
+    }
+  },
+  "overlap": {
+    "6sms_A": {
+      "exact_training_names": [],
+      "exact_training_sequences": [],
+      "highest_local_alignment_scores": [
+        {
+          "name": "4epi_A",
+          "local_alignment_score": 15.0,
+          "aligned_identity": 0.8888888888888888,
+          "aligned_query_fraction": 0.012430939226519336,
+          "aligned_reference_fraction": 0.02727272727272727
+        },
+        {
+          "name": "4hfq_B",
+          "local_alignment_score": 14.0,
+          "aligned_identity": 0.8,
+          "aligned_query_fraction": 0.013812154696132596,
+          "aligned_reference_fraction": 0.04926108374384237
+        },
+        {
+          "name": "3gnu_P",
+          "local_alignment_score": 13.0,
+          "aligned_identity": 0.875,
+          "aligned_query_fraction": 0.011049723756906077,
+          "aligned_reference_fraction": 0.03755868544600939
+        }
+      ],
+      "method": "all training sequences scored; top 3 inspected using local alignment 2/-1/-10/-0.5",
+      "independence": "not certified: local alignment is a screen, not an exhaustive domain/family audit",
+      "unassigned_reason": "local test split"
+    },
+    "6lrd_A": {
+      "exact_training_names": [],
+      "exact_training_sequences": [],
+      "highest_local_alignment_scores": [
+        {
+          "name": "1t7v_A",
+          "local_alignment_score": 16.0,
+          "aligned_identity": 0.8181818181818182,
+          "aligned_query_fraction": 0.015602836879432624,
+          "aligned_reference_fraction": 0.039568345323741004
+        },
+        {
+          "name": "4rp5_A",
+          "local_alignment_score": 15.0,
+          "aligned_identity": 0.8888888888888888,
+          "aligned_query_fraction": 0.01276595744680851,
+          "aligned_reference_fraction": 0.09183673469387756
+        },
+        {
+          "name": "1rgz_A",
+          "local_alignment_score": 15.0,
+          "aligned_identity": 0.75,
+          "aligned_query_fraction": 0.01702127659574468,
+          "aligned_reference_fraction": 0.03305785123966942
+        }
+      ],
+      "method": "all training sequences scored; top 3 inspected using local alignment 2/-1/-10/-0.5",
+      "independence": "not certified: local alignment is a screen, not an exhaustive domain/family audit",
+      "unassigned_reason": "local test split"
+    },
+    "6l3r_E": {
+      "exact_training_names": [],
+      "exact_training_sequences": [],
+      "highest_local_alignment_scores": [
+        {
+          "name": "2qdx_A",
+          "local_alignment_score": 14.0,
+          "aligned_identity": 0.8,
+          "aligned_query_fraction": 0.014947683109118086,
+          "aligned_reference_fraction": 0.038910505836575876
+        },
+        {
+          "name": "2qp2_A",
+          "local_alignment_score": 14.0,
+          "aligned_identity": 0.8,
+          "aligned_query_fraction": 0.014947683109118086,
+          "aligned_reference_fraction": 0.019569471624266144
+        },
+        {
+          "name": "2r31_A",
+          "local_alignment_score": 14.0,
+          "aligned_identity": 1.0,
+          "aligned_query_fraction": 0.01046337817638266,
+          "aligned_reference_fraction": 0.029288702928870293
+        }
+      ],
+      "method": "all training sequences scored; top 3 inspected using local alignment 2/-1/-10/-0.5",
+      "independence": "not certified: local alignment is a screen, not an exhaustive domain/family audit",
+      "unassigned_reason": "local test split"
+    },
+    "6sup_A": {
+      "exact_training_names": [],
+      "exact_training_sequences": [],
+      "highest_local_alignment_scores": [
+        {
+          "name": "4byz_A",
+          "local_alignment_score": 19.0,
+          "aligned_identity": 0.9090909090909091,
+          "aligned_query_fraction": 0.005169172932330827,
+          "aligned_reference_fraction": 0.05670103092783505
+        },
+        {
+          "name": "3wol_A",
+          "local_alignment_score": 18.0,
+          "aligned_identity": 1.0,
+          "aligned_query_fraction": 0.0042293233082706765,
+          "aligned_reference_fraction": 0.012893982808022923
+        },
+        {
+          "name": "4qtq_A",
+          "local_alignment_score": 14.0,
+          "aligned_identity": 0.6923076923076923,
+          "aligned_query_fraction": 0.006109022556390977,
+          "aligned_reference_fraction": 0.06074766355140187
+        }
+      ],
+      "method": "all training sequences scored; top 3 inspected using local alignment 2/-1/-10/-0.5",
+      "independence": "not certified: local alignment is a screen, not an exhaustive domain/family audit",
+      "unassigned_reason": "unknown; no verified exclusion reason"
+    }
+  }
+}
