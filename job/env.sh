@@ -11,8 +11,12 @@ fi
 # `module load auto_gpu` sources ~/.bashrc, whose mkdir of the login node's
 # /run/user/<uid> fails on compute nodes and aborts the module load (49304).
 unset SSH_CLIENT SSH_CONNECTION SSH_TTY
-export XDG_RUNTIME_DIR="/tmp/xdg-$USER"
-mkdir -p "$XDG_RUNTIME_DIR"
+# /tmp is shared: use the per-user dir only if we own it, else a private mktemp dir.
+XDG_RUNTIME_DIR="/tmp/xdg-$USER"
+if ! { mkdir -p "$XDG_RUNTIME_DIR" && [ -O "$XDG_RUNTIME_DIR" ] && chmod 700 "$XDG_RUNTIME_DIR"; } 2>/dev/null; then
+    XDG_RUNTIME_DIR="$(mktemp -d)"
+fi
+export XDG_RUNTIME_DIR
 # mdgen/logger.py creates $MODEL_DIR (default ./workdir/default) on import;
 # a read-only snapshot needs it outside the source tree (49313).
 if [ -z "${MODEL_DIR:-}" ] && [ ! -w . ]; then
