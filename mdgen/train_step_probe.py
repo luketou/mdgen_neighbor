@@ -219,6 +219,9 @@ class StepProbe(pl.Callback):
         loss = outputs['loss'].detach().float()
         self.result['loss'] = float(loss) if loss.isfinite() else None
         self.result['loss_finite'] = bool(loss.isfinite())
+        counts = getattr(pl_module, 'probe_nonfinite_counts', None)
+        if counts is not None:
+            self.result['nonfinite_counts'] = counts
         recorded_time = pl_module._log.get('train_time', [])
         self.result['training_time'] = float(np.mean(recorded_time)) if len(recorded_time) else None
         self.result['parameters_nonfinite_after_step'] = sum(
@@ -271,7 +274,7 @@ def run_step(args, items, name, seed, initial_state=None, use_sdpa=True, capture
                 for n, p in model.model.named_parameters()}) if capture_updates else None)
     report = {
         'precision_config': name,
-        'initial_parameter_norm': initial_norm,
+        'initial_parameter_norm': initial_norm if np.isfinite(initial_norm) else None,
         **probe.result,
         'grad_checkpointing': bool(args.grad_checkpointing),
         'gradient_nonfinite': sum(g['nonfinite'] for g in summary.values()),
@@ -390,6 +393,7 @@ def main(argv=None):
             if hasattr(trained_args, key):
                 setattr(args, key, getattr(trained_args, key))
     pl.seed_everything(probe_args.seed, verbose=False)
+    dataset_rng_state = np.random.get_state()
     if probe_args.coverage_control and args.training_region:
         raise ValueError('--coverage_control starts from a full-protein batch')
     if probe_args.synthetic_residues is not None:
@@ -406,7 +410,8 @@ def main(argv=None):
         from .train_step_control import run_coverage_control
         report = run_coverage_control(args, items, probe_args.seed,
             synthetic=probe_args.synthetic_residues is not None,
-            dataset_index=probe_args.dataset_index, use_sdpa=use_sdpa)
+            dataset_index=probe_args.dataset_index, dataset_rng_state=dataset_rng_state,
+            use_sdpa=use_sdpa)
     else:
         report = run_probe(args, items, probe_args.configs, probe_args.seed,
                            use_sdpa=use_sdpa, cosine_threshold=probe_args.cosine_threshold)

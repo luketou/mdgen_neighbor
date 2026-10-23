@@ -189,6 +189,11 @@ class Transport:
                 model_output = model_output[:, :, :, :-20]
 
         terms = {}
+        if noise is not None:
+            terms['probe_nonfinite_counts'] = {
+                key: int((~value.isfinite()).sum()) for key, value in (
+                    ('latents', x1), ('noise', x0), ('interpolated_input', xt),
+                    ('model_output', model_output), ('loss_mask', mask)) if value is not None}
         terms['t'] = t
         terms['pred'] = model_output
         if not (self.args.dynamic_mpnn or self.args.mpnn):

@@ -413,6 +413,7 @@ class NewMDGenWrapper(Wrapper):
             noise=batch.get('probe_noise'),
         )
         self.log('model_dur', time.time() - start)
+        self.probe_nonfinite_counts = out_dict.get('probe_nonfinite_counts')
         loss = out_dict['loss']
         self.log('loss', loss)
 

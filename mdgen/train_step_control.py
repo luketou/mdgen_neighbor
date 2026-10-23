@@ -5,7 +5,7 @@ import hashlib
 import numpy as np
 import torch
 
-from .dataset import collate
+from .dataset import MDGenDataset, collate
 from .train_step_probe import (dataset_items, describe_batch, environment, run_step,
                                synthetic_region_items)
 
@@ -40,14 +40,29 @@ def vector_comparison(reference, candidate):
     return report
 
 
-def run_coverage_control(args, full_items, seed, *, synthetic, dataset_index, use_sdpa):
+def run_coverage_control(args, full_items, seed, *, synthetic, dataset_index,
+                         dataset_rng_state, use_sdpa):
     from .wrapper import NewMDGenWrapper
     if len(full_items) != 1 or not args.local_spatial:
         raise ValueError('coverage control requires batch size 1 and local_spatial')
+    if any(getattr(args, flag, False) for flag in ('hyena', 'design', 'abs_pos_emb')):
+        raise ValueError('coverage control requires a supported Training region configuration')
     region_args = copy.deepcopy(args)
     region_args.training_region = True
-    region_items = (synthetic_region_items(region_args, full_items, seed) if synthetic else
-                    dataset_items(region_args, dataset_index))
+    if synthetic:
+        region_items = synthetic_region_items(region_args, full_items, seed)
+    else:
+        after_sample = np.random.get_state()
+        try:
+            np.random.set_state(dataset_rng_state)
+            region_items = dataset_items(region_args, dataset_index)
+        finally:
+            np.random.set_state(after_sample)
+        full = full_items[0]
+        arr = np.load(f"{args.data_dir}/{full['name']}{args.suffix}.npy", mmap_mode='r')
+        partition, _, _ = MDGenDataset(args, args.train_split).full_partition(full['name'], arr)
+        # Both views retain the stored frame-0 partition even for a later window.
+        full_items = [{**full, 'partition': partition}]
     full, region = full_items[0], region_items[0]
     length = len(full['seqres'])
     if region['region']['residues'] != length or region['region']['loss_residues'] != length:

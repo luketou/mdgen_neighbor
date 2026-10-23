@@ -255,3 +255,42 @@ def test_control_rejects_a_truncated_region_before_running_steps(tmp_path):
               '--synthetic_residues', '60', '--', *TINY, *LOCAL, '--batch_size', '1',
               '--region_residues', '40', '--halo_rings', '0'])
     assert not (tmp_path / 'invalid.json').exists()
+
+
+def test_real_control_keeps_the_original_random_replica_and_window(tmp_path):
+    atoms = np.random.default_rng(1).normal(size=(9, 12, 14, 3)).astype(np.float32)
+    for replica in (1, 2):
+        np.save(tmp_path / f'prot_R{replica}.npy', atoms * replica)
+    split = tmp_path / 'split.csv'
+    split.write_text('name,seqres\nprot,ACDEFGHIKLMN\n')
+    output = tmp_path / 'real-control.json'
+    main(['--output', str(output), '--coverage_control', '--', *TINY, *LOCAL,
+          '--data_dir', str(tmp_path), '--train_split', str(split), '--val_split', str(split),
+          '--batch_size', '1', '--atlas', '--replicates', '1', '2', '--crop', '12',
+          '--region_residues', '20'])
+    report = json.loads(output.read_text())
+    assert report['alignment']['name'] in ('prot_R1', 'prot_R2')
+    assert 0 <= report['alignment']['frame_start'] <= 5
+    assert report['alignment']['full_mask_sha256'] == report['alignment']['region_mask_sha256']
+    assert max(g['difference_rms'] for g in report['comparisons'][1]['gradients'].values()) < 1e-5
+
+
+def test_control_identifies_nonfinite_predictions_separately_from_inputs(monkeypatch, tmp_path):
+    from mdgen.wrapper import NewMDGenWrapper
+    args = tiny_args(monkeypatch, LOCAL)
+    model = NewMDGenWrapper(args)
+    with torch.no_grad():
+        for parameter in model.parameters():
+            parameter.fill_(float('nan'))
+    checkpoint = tmp_path / 'nonfinite.ckpt'
+    torch.save({'state_dict': model.state_dict(), 'hyper_parameters': {'args': args}}, checkpoint)
+    output = tmp_path / 'nonfinite-control.json'
+    main(['--output', str(output), '--coverage_control', '--sim_ckpt', str(checkpoint),
+          '--synthetic_residues', '12', '--', *TINY, *LOCAL,
+          '--batch_size', '1', '--region_residues', '20'])
+    report = json.loads(output.read_text())
+    for run in report['runs']:
+        assert run['nonfinite_counts']['latents'] == run['nonfinite_counts']['noise'] == 0
+        assert run['nonfinite_counts']['model_output'] > 0
+        assert run['gradient_nonfinite'] > 0
+    json.dumps(report, allow_nan=False)

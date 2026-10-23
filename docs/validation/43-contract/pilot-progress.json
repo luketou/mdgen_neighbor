@@ -15,10 +15,17 @@
       "run_id": "issue43-t2-forward4-20261023T143328Z-58f60a5",
       "status": "short_forward_capacity_completed",
       "source_commit": "58f60a5"
+    },
+    {
+      "job_id": 49478,
+      "type": "cpu",
+      "run_id": "issue43-t2-plan-20261023T152821Z-6ba13d9",
+      "status": "plan_only_completed",
+      "source_commit": "6ba13d9"
     }
   ],
-  "used_cpu_jobs": 1,
-  "remaining_cpu_jobs": 1,
+  "used_cpu_jobs": 2,
+  "remaining_cpu_jobs": 0,
   "used_gpu_jobs": 1,
   "remaining_gpu_jobs": 3,
   "gpu_jobs_running": 0,

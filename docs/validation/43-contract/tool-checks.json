@@ -2,7 +2,7 @@
   "command": "MDGEN_CPU_VENV=/home/luketou/.local/share/mdgen/venvs/cpu-py311 bash scripts/check.sh",
   "environment": "local WSL CPU, Python 3.11, torch 2.11.0+cpu",
   "pytest": {
-    "passed": 216,
+    "passed": 218,
     "skipped": 2,
     "deselected": 14
   },
@@ -10,5 +10,5 @@
   "log": "tool-checks.log",
   "scope": "tool checks only; not GPU capacity or forward numerical acceptance",
   "checked_source_base": "28613b1",
-  "checked_source_state": "working tree for coverage control and training behavior; plan-only driver additionally compile-checked"
+  "checked_source_state": "review fixes working tree, including real random-window and nonfinite control CLI regressions"
 }
