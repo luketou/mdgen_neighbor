@@ -22,8 +22,8 @@ Ticket 2 的 [L40S 實測報告](../l40s-ticket2/2026-10-23/README.md) 記錄 GP
 
 - Windows 端 `ssh` 會無輸出逾時（exit 255）；改走 WSL：`wsl -d Ubuntu -e bash <腳本>`（預設 distro 是 `docker-desktop`，沒有 `bash`）。`iam` 只是 `ssh r15543056@zinfandel.ncree.org` 的 alias，非互動 shell 不會展開。遠端指令含引號時寫成腳本檔再執行，不內嵌在 `wsl ... -c "..."` 裡。
 - `sacct` 的資料庫連不上；查 job 用 `squeue -j`（結束後會回 `Invalid job id`），再讀 `logs/*.out`／`.err`。
-- 結束的 job 先查 `.out` 開頭：`nvidia-smi` 印出 `No devices were found` 代表沒拿到 GPU（49072），不是 OOM，不可當作量測結果；同一快照重送時在 run 目錄的 `job_history` 記下失敗的 job。
-- `hpc_run.py` 只上傳 `job/`、`scripts/`、`mdgen/`、`hpc/` 底下的未追蹤檔；新的 `tests/` 檔案要先 commit，否則 pytest 找不到（49454）。
+- 結束的 job 先查 `.out` 開頭：`nvidia-smi` 印出 `No devices were found` 代表沒拿到 GPU，不是 OOM，不可當作量測結果；同一快照重送時在 run 目錄的 `job_history` 記下失敗的 job。
+- `hpc_run.py` 只上傳 `job/`、`scripts/`、`mdgen/`、`hpc/` 底下的未追蹤檔；新的 `tests/` 檔案要先 commit，否則 pytest 找不到。
 
 ### 較早的 preflight 診斷工具 `scripts/hpc.py`
 
