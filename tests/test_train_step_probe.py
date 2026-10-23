@@ -1,5 +1,8 @@
 """Seam 1: one real Lightning training step and its JSON report (#9 Ticket 2)."""
 import json
+import hashlib
+
+import numpy as np
 
 import pytest
 import torch
@@ -175,3 +178,29 @@ def test_batch_shapes_rejects_a_tensor_without_the_batch_dimension():
         batch_shapes({**batch, 'region': {'center': torch.zeros(3)}}, 2)
     with pytest.raises(ValueError, match='name'):
         batch_shapes({**batch, 'name': ['a']}, 2)
+
+
+def test_cli_real_replica_uses_checkpoint_weights_and_first_frame(monkeypatch, tmp_path):
+    from mdgen.wrapper import NewMDGenWrapper
+    args = tiny_args(monkeypatch)
+    model = NewMDGenWrapper(args)
+    with torch.no_grad():
+        for parameter in model.parameters():
+            parameter.zero_()
+    checkpoint = tmp_path / 'zero.ckpt'
+    torch.save({'state_dict': model.state_dict(), 'hyper_parameters': {'args': args}}, checkpoint)
+    atoms = np.random.default_rng(0).normal(size=(5, 12, 14, 3)).astype(np.float32)
+    np.save(tmp_path / 'prot_R1.npy', atoms)
+    split = tmp_path / 'split.csv'
+    split.write_text('name,seqres\nprot,ACDEFGHIKLMN\n')
+    output = tmp_path / 'real.json'
+    main(['--output', str(output), '--sim_ckpt', str(checkpoint), '--time', '0.5', '--', *TINY,
+          '--data_dir', str(tmp_path), '--train_split', str(split), '--val_split', str(split),
+          '--batch_size', '1', '--atlas', '--replicates', '1', '--crop', '12', '--overfit_frame'])
+    report = json.loads(output.read_text())
+    assert report['checkpoint']['sha256'] == hashlib.sha256(checkpoint.read_bytes()).hexdigest()
+    assert report['runs'][0]['initial_parameter_norm'] == 0
+    assert report['batch']['names'] == ['prot_R1']
+    assert report['batch']['frame_starts'] == [0]
+    assert report['runs'][0]['loss_finite']
+    assert report['runs'][0]['training_time'] == 0.5

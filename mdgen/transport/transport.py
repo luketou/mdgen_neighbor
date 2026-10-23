@@ -154,6 +154,8 @@ class Transport:
             model_kwargs = {}
 
         t, x0, x1 = self.sample(x1)
+        if getattr(self.args, 'probe_time', None) is not None:
+            t = th.full_like(t, self.args.probe_time)
         t, xt, ut = self.path_sampler.plan(t, x0, x1)
 
 

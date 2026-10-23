@@ -17,6 +17,12 @@ python -m mdgen.train_step_probe --output results/probe.json \
 - `--synthetic_residues L`：隨機漫步骨架（Cα 間距 3.8 Å、合法旋轉、單位 torsion 向量），
   免資料、只用於記憶體與流程檢查；`--train_split`／`--val_split`／`--data_dir` 仍須給值但不會讀取。
 
+`--sim_ckpt PATH`（放在分隔符之前）從指定 checkpoint 初始化權重及模型架構／條件設定，保留 CLI 的資料、空間容量與執行設定；不恢復 optimizer。載入不相容時直接失敗，報告保存完整檔案 SHA-256 與初始參數 norm。`--time T` 固定 transport 時間；未指定則維持原本隨機時間。`batch.frame_starts` 與 `runs[].training_time` 記錄實際視窗與時間。
+
+真實 ATLAS 容量探針可用 `--atlas --replicates R --overfit_frame` 固定 replica 與起始幀；完整蛋白模式的 `--crop` 必須明確等於蛋白長度。`--ffn_chunk_size` 可顯式固定 FFN chunking。完整蛋白與 Training region 各自的容量結果不代表相同 supervision 的 loss／gradient 比較。
+
+既有 launcher 的 `MDGEN_ISSUE43_FRAMES` 模式會呼叫有時間上限的真實資料先導；需要明確設定 `MDGEN_ISSUE43_DATA` 與 `MDGEN_ATLAS_CKPT`。每個 case 重建相同初始權重與 optimizer，第一個 FP32 組態作暖機，其餘為量測。量測數及核准資源見 [提案](43-contract/proposal.md)，未跑到的 case 亦保留在 manifest。
+
 `--` 之後加上 `--training_region`（及 `--region_residues`／`--halo_rings`）時，兩種來源都改為 Training region
 batch：資料集由 `MDGenDataset` 取樣，合成鏈則對第 0 幀完整分區、以 `--seed` 決定種子 group，再由同一個
 `mdgen/full_length/region_batch.py` 統一欄位選取與 padding、組成 batch；只有 loss group 的 core 計入 loss（`loss_core_mask`），halo 與上下文殘基只提供上下文。#9 Ticket 3 量測一個 Training region × 250 幀即用此模式，例如

@@ -193,6 +193,7 @@ def parse_train_args(include_runtime_args=False):  # runtime-args-separation
     group.add_argument('--core_capacity', type=int, default=LOCAL_DEFAULTS['core_capacity'])
     group.add_argument('--ghost_capacity', type=int, default=LOCAL_DEFAULTS['ghost_capacity'])
     group.add_argument('--group_batch_size', type=int, default=LOCAL_DEFAULTS['group_batch_size'])
+    group.add_argument('--ffn_chunk_size', type=positive_int, default=LOCAL_DEFAULTS['ffn_chunk_size'])
 
     # runtime-args-separation:start
     if include_runtime_args:
