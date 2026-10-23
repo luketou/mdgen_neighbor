@@ -1,0 +1,15 @@
+{
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "powershell -NoProfile -ExecutionPolicy Bypass -Command \"& (Join-Path (git rev-parse --show-toplevel) scripts/git_pull_guard.ps1)\"",
+            "timeout": 60
+          }
+        ]
+      }
+    ]
+  }
+}

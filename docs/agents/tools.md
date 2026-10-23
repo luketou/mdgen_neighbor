@@ -31,4 +31,6 @@ gh issue view 9 --comments --repo luketou/mdgen_neighbor
 
 Windows PowerShell 5.1 不會把 here-string 正確 pipe 給外部程式的 stdin；`git commit -F -` 會把整段訊息當成 pathspec。多行的 commit 訊息、PR 或 issue 內文先寫成 UTF-8 檔案，再用 `git commit -F <檔案>`、`gh pr create --body-file <檔案>`、`gh issue comment --body-file <檔案>`。
 
+Windows 的 `gh` 位於 `C:\Program Files\GitHub CLI\gh.exe`；在它安裝前就開的 shell 找不到它，需重新載入 PATH 或直接用完整路徑。
+
 `gh` 不存在、未登入或無法存取時，改用已連線 GitHub connector 的對應 read／search 工具，明確指定同一 repo。寫入操作沿用使用者授權範圍，並遵守[issue 規則](issue-tracker.md)。兩種管道都不可用時，說明缺少的存取能力，保留尚未核對的狀態。
