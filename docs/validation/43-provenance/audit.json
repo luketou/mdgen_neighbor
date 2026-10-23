@@ -1,0 +1,228 @@
+{
+  "generated_by": "python -I make_audit.py <mdgen clone> <alphaflow clone> audit.json (run 2026-10-24)",
+  "inputs": {
+    "mdgen": {
+      "repo": "https://github.com/bjing2016/mdgen",
+      "commit": "81482a403b91c5a8437046da1d8d321ba97089cc"
+    },
+    "alphaflow": {
+      "repo": "https://github.com/bjing2016/alphaflow",
+      "commit": "0408d7c89dac444a43a9089d7427ce470b0a5e67",
+      "splits_last_changed": "f62d8eae45abb91715eea563dd01be52db5bdf06 2024-02-12 dataset and training"
+    },
+    "rcsb_api": "https://data.rcsb.org/rest/v1/core/entry/{pdb_id}",
+    "papers": {
+      "mdgen": "https://arxiv.org/abs/2409.17808",
+      "alphaflow": "https://arxiv.org/abs/2402.04845",
+      "read_on": "2026-10-23"
+    }
+  },
+  "split_files_sha256": {
+    "atlas": {
+      "mdgen": "d7be450c2a79626da43e1f6f0a97e8a5f17820df0b3f4b62fb25cd41e6c3fa7c",
+      "alphaflow": "d7be450c2a79626da43e1f6f0a97e8a5f17820df0b3f4b62fb25cd41e6c3fa7c"
+    },
+    "atlas_train": {
+      "mdgen": "b156fca1139648ee8e9ba420a57ec82d990f8717272ad8773e33eb2bc47d5b1a",
+      "alphaflow": "b156fca1139648ee8e9ba420a57ec82d990f8717272ad8773e33eb2bc47d5b1a"
+    },
+    "atlas_val": {
+      "mdgen": "6df41816251d4c436c7bd45532c4071ffa96ec2de9fa20978cfcc7f30bb659b6",
+      "alphaflow": "6df41816251d4c436c7bd45532c4071ffa96ec2de9fa20978cfcc7f30bb659b6"
+    },
+    "atlas_test": {
+      "mdgen": "2be92a2ffc9885f95803747334022ad0fc3499d3b177199a9091ae11ba57e188",
+      "alphaflow": "2be92a2ffc9885f95803747334022ad0fc3499d3b177199a9091ae11ba57e188"
+    }
+  },
+  "split_stats": {
+    "atlas": {
+      "count": 1390,
+      "min_length": 38,
+      "max_length": 2128
+    },
+    "atlas_train": {
+      "count": 1266,
+      "min_length": 38,
+      "max_length": 1144,
+      "min_release_date": "1987-01-15",
+      "max_release_date": "2018-04-25"
+    },
+    "atlas_val": {
+      "count": 39,
+      "min_length": 61,
+      "max_length": 524,
+      "min_release_date": "2018-05-23",
+      "max_release_date": "2019-04-10"
+    },
+    "atlas_test": {
+      "count": 82,
+      "min_length": 39,
+      "max_length": 724,
+      "min_release_date": "2019-05-01",
+      "max_release_date": "2022-03-30"
+    }
+  },
+  "assigned_total": 1387,
+  "unassigned": {
+    "6j33_B": {
+      "length": 1053,
+      "deposit_date": "2019-01-09",
+      "initial_release_date": "2019-09-18"
+    },
+    "6qfk_A": {
+      "length": 1357,
+      "deposit_date": "2019-01-10",
+      "initial_release_date": "2019-11-06"
+    },
+    "6sup_A": {
+      "length": 2128,
+      "deposit_date": "2019-09-16",
+      "initial_release_date": "2019-12-04"
+    }
+  },
+  "test_period_total": 85,
+  "6sup_A_line_in_atlas_csv": 1303,
+  "train_lengths_over_1024": [
+    1025,
+    1039,
+    1104,
+    1144
+  ],
+  "test_seqlen_matches_seqres": true,
+  "longest_test": {
+    "name": "6sms_A",
+    "length": 724
+  },
+  "release_date_spot_check": {
+    "6sms_A": {
+      "csv_release_date": "2021-02-10",
+      "split": "atlas_test",
+      "deposit_date": "2019-08-22",
+      "initial_release_date": "2021-02-10"
+    },
+    "6lrd_A": {
+      "csv_release_date": "2020-08-26",
+      "split": "atlas_test",
+      "deposit_date": "2020-01-16",
+      "initial_release_date": "2020-08-26"
+    },
+    "6l3r_E": {
+      "csv_release_date": "2020-10-28",
+      "split": "atlas_test",
+      "deposit_date": "2019-10-15",
+      "initial_release_date": "2020-10-28"
+    },
+    "6o2v_A": {
+      "csv_release_date": "2019-05-29",
+      "split": "atlas_test",
+      "deposit_date": "2019-02-24",
+      "initial_release_date": "2019-05-29"
+    },
+    "1k5n_A": {
+      "csv_release_date": "2002-10-30",
+      "split": "atlas_train",
+      "deposit_date": "2001-10-11",
+      "initial_release_date": "2002-10-30"
+    }
+  },
+  "frame_arithmetic": {
+    "atlas_interval_ps": 10,
+    "replica_length_ps": 100000,
+    "frames_at_10ps": 10001,
+    "upstream_stride": 40,
+    "frames_after_stride": 251,
+    "training_interval_ps": 400,
+    "num_frames": 250,
+    "possible_frame_starts": 1,
+    "training_frames": [
+      0,
+      249
+    ],
+    "training_span_ns": [
+      0.0,
+      99.6
+    ],
+    "mirror_interval_ps": 100,
+    "mirror_frames": 1001,
+    "mirror_stride": 4,
+    "mirror_frames_after_stride": 251
+  },
+  "6sup_A_over_longest_test": 2.94,
+  "source_lines": {
+    "mdgen/README.md": {
+      "atlas_download": {
+        "line": 25,
+        "text": "2. Download the ATLAS simulations via https://github.com/bjing2016/alphaflow/blob/master/scripts/download_atlas.sh to `data/atlas_sims`."
+      },
+      "atlas_prep_comment": {
+        "line": 39,
+        "text": "# Prep with interval 40 * 10 ps = 400 ps"
+      },
+      "atlas_prep_command": {
+        "line": 40,
+        "text": "python -m scripts.prep_sims --splits splits/atlas.csv --sim_dir data/atlas_sims --outdir data/atlas_data --num_workers [N] --suffix _i40 --stride 40"
+      },
+      "atlas_train_command": {
+        "line": 60,
+        "text": "python train.py --sim_condition --train_split splits/atlas_train.csv --val_split splits/atlas_val.csv --data_dir share/data_atlas/ --num_frames 250 --batch_size 1 --prepend_ipa --crop 256 --val_repeat 25 --epochs 10000 --atlas --ckpt_freq 10 --suffix _i40 --wandb --run_name [NAME]"
+      },
+      "weights_statement": {
+        "line": 65,
+        "text": "The model weights used in the paper are available on HuggingFace: https://huggingface.co/bjing-mit/mdgen"
+      }
+    },
+    "mdgen/mdgen/dataset.py": {
+      "frame_start": {
+        "line": 40,
+        "text": "        frame_start = np.random.choice(np.arange(arr.shape[0] - self.args.num_frames))"
+      },
+      "crop_branch": {
+        "line": 71,
+        "text": "            if L > self.args.crop:"
+      },
+      "pad_branch": {
+        "line": 80,
+        "text": "            elif L < self.args.crop:"
+      }
+    },
+    "mdgen/mdgen/parsing.py": {
+      "abs_pos_emb_flag": {
+        "line": 96,
+        "text": "    group.add_argument('--abs_pos_emb', action='store_true')"
+      }
+    },
+    "mdgen/mdgen/model/latent_model.py": {
+      "pos_embed_guard": {
+        "line": 115,
+        "text": "        if args.abs_pos_emb:"
+      },
+      "pos_embed_add": {
+        "line": 235,
+        "text": "            x = x + self.pos_embed"
+      }
+    },
+    "mdgen/sim_inference.py": {
+      "full_length": {
+        "line": 41,
+        "text": "    L = len(seqres)"
+      }
+    },
+    "alphaflow/scripts/download_atlas.sh": {
+      "zip": {
+        "line": 2,
+        "text": "    wget https://www.dsimb.inserm.fr/ATLAS/database/ATLAS/${name}/${name}_protein.zip"
+      }
+    }
+  },
+  "paper_quotes": {
+    "mdgen_4.4": "we generate samples with 250 frames and 400 ps timestep, such that a single sample emulates the 100 ns ATLAS reference trajectory",
+    "mdgen_B.3_split": "We split the dataset into 1265 training, 39 validation, and 82 test proteins by PDB release date following Jing et al. [2024]",
+    "mdgen_B.3_stride": "subsample every 40 frames, obtaining a training target with 250 frames",
+    "mdgen_table4_caption": "Median results on test protein ensembles (n=82)",
+    "mdgen_B.3_crop": "We train with random crops of up to 256 residues, but draw samples for the full protein at inference time",
+    "alphaflow_4.1": "Using training and validation cutoffs of May 1, 2018 and May 1, 2019, we obtain train/val/test splits of 1265/39/82 ensembles (2 excluded due to length)",
+    "alphaflow_B.2_frames": "3 replicate simulations of length 100 ns are provided, each with 10k frames",
+    "alphaflow_B.2_test": "all 84 targets whose corresponding PDB entries were deposited after May 1, 2019, minus the two targets with sequence length greater than 1024"
+  }
+}

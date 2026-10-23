@@ -30,7 +30,7 @@
 - Checkpoint：`/share/home/r15543056/MDgen/mdgen/ckpt/atlas.ckpt`，SHA-256 `bc90c66e…aff08015`，與旁邊 `atlas.source.json` 記錄的 Hugging Face `bjing-mit/mdgen` revision `a92efe5b…` LFS 雜湊一致。
 - Checkpoint 只保存 `num_frames=250`、`crop=256`，沒有 `train_split`、`suffix`、`frame_interval` 或物理間隔。
 - 選定 400 ps 的依據是上游 `bjing2016/mdgen@81482a4` README 的前處理（stride 40）與原始 ATLAS README「every 10 ps」：10 ps × 40 = 400 ps。100 ps 鏡像因此 stride 4，只降採樣一次（1001 → 251 幀，`--expected_interval_ps 100` 在 stride 前檢查原始間隔）。
-- **未證實**：checkpoint 實際以 400 ps 訓練。這是依上游公開流程的推定，記為 `checkpoint_training_interval_ps: null`。
+- 400 ps 已由作者證實：MDGen 論文寫明訓練的取樣間隔，上游 README 聲明 Hugging Face 權重即論文模型（引文與數字見[來源查核](../43-provenance/README.md#1-checkpoint-的訓練幀間隔)）。剩下的缺口只是 checkpoint 檔本身未保存間隔，因此仍記為 `checkpoint_training_interval_ps: null`。
 
 ## 拓撲與輸出驗收
 
@@ -51,10 +51,10 @@
 - 上游 split（`bjing2016/mdgen@81482a4`）與本地 `atlas_train/val/test.csv` 雜湊一致（`scripts/atlas_validation_split_audit.json`）。
 - 四蛋白都不在 train split 的名稱或完全相同序列中。對全部 train 序列做 local alignment（2/-1/-10/-0.5），每個蛋白最高分的前 3 筆只對齊 0.4–1.7% 的 query 長度，篩檢未發現長片段同源。
 - 此篩檢不是完整的 domain／family 審核；checkpoint 的實際訓練成員也無法從檔案得知。四蛋白不認證為獨立測試蛋白。
-- `6sup_A` 不在 train/val/test 任何 split，排除原因**未知**，沒有查到可證實的原因。
+- `6sup_A` 不在 train/val/test 任何 split。上游 split 沿用 AlphaFlow：依 PDB 釋出日期切分，並排除 test 期內過長的蛋白。`6sup_A` 的釋出日期與長度都符合此排除規則；論文未列被排除的名稱，且論文的排除數與 CSV 缺少的數目不一致（日期、長度上限與數目見[來源查核](../43-provenance/README.md#2-6sup_a-不在-trainvaltest-split)）。
 
 ## 限制
 
 - 三個基準約 700 殘基，可能整個放進一般 Training region 預算；`6sup_A`（2128）是本期唯一的長蛋白系統。
 - 單一長蛋白、單鏈、無缺失區段，無法代表多鏈或有斷點的系統。
-- Checkpoint 以 `crop=256` 訓練；以完整蛋白長度推論屬外推，Ticket 2 的容量與誤差解讀需考慮這點。
+- Checkpoint 以 `crop=256` 訓練；上游推論不裁切、以全長生成，但公開評估的最長蛋白就是 `6sms_A`（長度見[來源查核](../43-provenance/README.md#3-crop256-與長蛋白推論)）。三個基準在已評估範圍內；`6sup_A` 遠超出此範圍，正是上游因長度排除的那類蛋白，屬外推。Ticket 2 若見到 `6sup_A` 較差，不能只歸因於 Training region 或 halo。
