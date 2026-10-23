@@ -1,8 +1,11 @@
 """MDGenDataset Training region mode (#15 Ticket 2)."""
 import json
+from pathlib import Path
+import runpy
 from types import SimpleNamespace
 
 import numpy as np
+import pandas as pd
 import pytest
 import torch
 
@@ -150,3 +153,85 @@ def test_training_region_cli(monkeypatch, extra, ok):
         return
     cli = parse_train_args()
     assert cli.training_region and (cli.region_core, cli.region_ghost) == (256, 256)
+
+
+@pytest.mark.parametrize('source', ['csv', 'chain_file'])
+@pytest.mark.parametrize('chain, numbering', [
+    ([0, 0, 1, 1], [0, 1, 0, 1]),
+    ([0, 0, 0, 0], [0, 1, 5, 6]),
+])
+def test_region_excludes_torsions_across_chain_breaks(tmp_path, chain, numbering, source):
+    metadata = {'chain_id': json.dumps(chain), 'residue_index': json.dumps(numbering)}
+    split = write_protein(tmp_path, 'prot', 4, metadata if source == 'csv' else None)
+    if source == 'chain_file':
+        np.savez(tmp_path / 'prot_chain.npz', chain_id=chain, residue_index=numbering)
+    item = MDGenDataset(args(tmp_path, training_region=True, region_core=4), split)[0]
+    torch.testing.assert_close(item['torsion_mask'][:4, :2], torch.tensor([
+        [0., 0.], [1., 1.], [0., 0.], [1., 1.],
+    ]))
+    torch.testing.assert_close(item['torsion_mask'][:4, 2], torch.ones(4))
+    assert not item['torsion_mask'][4:].any()
+    legacy = MDGenDataset(args(tmp_path), split)[0]
+    torch.testing.assert_close(legacy['torsion_mask'][2, :2], torch.ones(2))
+
+
+@pytest.mark.parametrize('missing', [('chain_id',), ('residue_index',), ('chain_id', 'residue_index')])
+def test_region_defaults_blank_metadata_per_row(tmp_path, missing):
+    split = write_protein(tmp_path, 'prot', 4, {
+        'chain_id': '[1,1,1,1]', 'residue_index': '[10,11,12,13]'})
+    write_protein(tmp_path, 'other', 4)
+    rows = pd.read_csv(split)
+    other = rows.iloc[0].to_dict()
+    other['name'] = 'other'
+    for key in missing:
+        other[key] = None
+    pd.concat([rows, pd.DataFrame([other])]).to_csv(split, index=False)
+    item = MDGenDataset(args(tmp_path, training_region=True, region_core=4), split)[1]
+    np.testing.assert_array_equal(item['chain_id'][:4], [0] * 4 if 'chain_id' in missing else [1] * 4)
+    np.testing.assert_array_equal(item['residue_index'][:4],
+                                  [0, 1, 2, 3] if 'residue_index' in missing else [10, 11, 12, 13])
+
+
+@pytest.mark.parametrize('entrypoint', ['train.py', 'train-runtime.py'])
+@pytest.mark.parametrize('region_mode', [True, False])
+def test_overfit_validation_sampling_at_training_entrypoint(tmp_path, monkeypatch, entrypoint, region_mode):
+    import pytorch_lightning as pl
+
+    split = write_protein(tmp_path, 'prot', 40)
+    atoms = np.load(tmp_path / 'prot.npy')
+    trajectory = np.concatenate([atoms + shift for shift in [0., 1., 2., 3.]])
+    for replica in (1, 2, 3):
+        np.save(tmp_path / f'prot_R{replica}.npy', trajectory)
+    batches = []
+
+    class InspectLoaders:
+        """Observe the public training handoff without running Lightning epochs."""
+        def __init__(self, **kwargs):
+            pass
+
+        def fit(self, model, train_loader, val_loader, **kwargs):
+            for seed in [0, 1]:
+                np.random.seed(seed)
+                torch.manual_seed(seed)
+                batches.append(next(iter(val_loader)))
+
+    monkeypatch.setattr(pl, 'Trainer', InspectLoaders)
+    monkeypatch.setenv('MODEL_DIR', str(tmp_path / 'models'))
+    argv = [entrypoint, '--train_split', str(split), '--val_split', str(split),
+            '--data_dir', str(tmp_path), '--model_dir', str(tmp_path / 'models'),
+            '--atlas', '--overfit', '--num_frames', str(T), '--num_workers', '0',
+            '--batch_size', '1', '--num_layers', '1', '--embed_dim', '32',
+            '--mha_heads', '4', '--ipa_heads', '2', '--ipa_head_dim', '4',
+            '--ipa_qk', '2', '--ipa_v', '2', '--region_core', '8', '--region_ghost', '8']
+    if region_mode:
+        argv.append('--training_region')
+    monkeypatch.setattr('sys.argv', argv)
+    runpy.run_path(str(Path(__file__).resolve().parents[1] / entrypoint), run_name='__main__')
+    assert len(batches) == 2
+    if region_mode:
+        assert batches[0]['name'] == batches[1]['name']
+        for key in ['frame_start', 'trans', 'residue_index', 'core_mask']:
+            torch.testing.assert_close(batches[0][key], batches[1][key])
+    else:
+        # Legacy overfit still samples a random replica for the same protein.
+        assert batches[0]['name'] != batches[1]['name']

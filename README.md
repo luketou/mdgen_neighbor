@@ -25,6 +25,8 @@ pip install -r requirements.txt
 
 `--training_region` 改以 Training region 取代 `--crop` 序列切塊：以取樣視窗第 0 幀隨機選中心，最近的 `--region_core`（預設 256）個殘基為 core，`--spatial_contact_radius` 內與同鏈 ±2 的共價鄰居為 ghost（上限 `--region_ghost`，預設 256）。core 與 ghost 依殘基原順序排列並 padding 到 K + G；batch 的 `core_mask` 標示 core，ghost 進入模型但不計入 loss。驗證集以固定 seed 決定 replica、幀視窗與 region 中心。不支援 `--hyena`、`--design`、`--no_frames`；搭配 `--abs_pos_emb` 時須 `--region_core + --region_ghost == --crop`。多鏈蛋白可在 split CSV 加入選填欄位 `chain_id`、`residue_index`，內容為每殘基一個整數的 JSON 陣列（長度與 `seqres` 相同，例如 `"[0,0,1,1]"`）；未提供時視為單鏈、連續編號。
 
+region 模式會排除跨鏈或編號不連續處的 pre-omega／phi loss；psi 與側鏈角度 mask 保留。CSV 某列的 metadata 欄位留白時，該欄使用單鏈或連續編號預設值。`--overfit --training_region` 也使用獨立、固定 seed 的驗證資料集；未啟用 region 時維持原本的 overfit 取樣。
+
 Run the CPU test suite with `pip install pytest==8.4.2 && python -m pytest tests -q`; the same checks run in GitHub Actions (`.github/workflows/tests.yml`). The analysis scripts additionally need PyEMMA; see the conda environments in `envs/environment-mdgen2026-*-pyemma.yml`.
 
 Original paper environment (historical, PyTorch 1.12):

@@ -148,9 +148,18 @@ class MDGenDataset(torch.utils.data.Dataset):
             numbering = default_numbering(L)
             for key in numbering:  # optional per-residue JSON lists in the split CSV
                 if key in self.df and name in self.df.index:
-                    numbering[key] = np.array(json.loads(self.df[key][name]), dtype=np.int64)
+                    value = self.df[key][name]
+                    if pd.isna(value):
+                        continue
+                    numbering[key] = np.array(json.loads(value), dtype=np.int64)
                     if len(numbering[key]) != L:
                         raise ValueError(f'{name}: {key} has {len(numbering[key])} entries, expected {L}')
+        # Pre-omega and phi require a same-chain, consecutive predecessor.
+        connected = ((numbering['chain_id'][1:] == numbering['chain_id'][:-1])
+                     & (numbering['residue_index'][1:] == numbering['residue_index'][:-1] + 1))
+        torsion_mask = item['torsion_mask'].clone()
+        torsion_mask[1:, :2] *= torch.from_numpy(connected[:, None])
+        item = {**item, 'torsion_mask': torsion_mask}
         generator = None
         if self.region_seed is not None:
             generator = torch.Generator().manual_seed(self.region_seed + idx)

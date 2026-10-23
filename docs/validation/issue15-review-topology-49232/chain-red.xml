@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="4" skipped="0" tests="4" time="1.720" timestamp="2026-10-23T11:37:06.094870+08:00" hostname="node-201"><testcase classname="tests.test_dataset_training_region" name="test_region_excludes_torsions_across_chain_breaks[chain0-numbering0-csv]" time="0.108"><failure message="AssertionError: Tensor-likes are not close!&#10;&#10;Mismatched elements: 2 / 8 (25.0%)&#10;Greatest absolute difference: 1.0 at index (2, 0) (up to 1e-05 allowed)&#10;Greatest relative difference: inf at index (2, 0) (up to 1.3e-06 allowed)">tmp_path = PosixPath('/tmp/pytest-of-r15543056/pytest-30/test_region_excludes_torsions_0')
+chain = [0, 0, 1, 1], numbering = [0, 1, 0, 1], source = 'csv'
+
+    @pytest.mark.parametrize('source', ['csv', 'chain_file'])
+    @pytest.mark.parametrize('chain, numbering', [
+        ([0, 0, 1, 1], [0, 1, 0, 1]),
+        ([0, 0, 0, 0], [0, 1, 5, 6]),
+    ])
+    def test_region_excludes_torsions_across_chain_breaks(tmp_path, chain, numbering, source):
+        metadata = {'chain_id': json.dumps(chain), 'residue_index': json.dumps(numbering)}
+        split = write_protein(tmp_path, 'prot', 4, metadata if source == 'csv' else None)
+        if source == 'chain_file':
+            np.savez(tmp_path / 'prot_chain.npz', chain_id=chain, residue_index=numbering)
+        item = MDGenDataset(args(tmp_path, training_region=True, region_core=4), split)[0]
+&gt;       torch.testing.assert_close(item['torsion_mask'][:4, :2], torch.tensor([
+            [0., 0.], [1., 1.], [0., 0.], [1., 1.],
+        ]))
+E       AssertionError: Tensor-likes are not close!
+E
+E       Mismatched elements: 2 / 8 (25.0%)
+E       Greatest absolute difference: 1.0 at index (2, 0) (up to 1e-05 allowed)
+E       Greatest relative difference: inf at index (2, 0) (up to 1.3e-06 allowed)
+
+tests/test_dataset_training_region.py:169: AssertionError</failure></testcase><testcase classname="tests.test_dataset_training_region" name="test_region_excludes_torsions_across_chain_breaks[chain0-numbering0-chain_file]" time="0.007"><failure message="AssertionError: Tensor-likes are not close!&#10;&#10;Mismatched elements: 2 / 8 (25.0%)&#10;Greatest absolute difference: 1.0 at index (2, 0) (up to 1e-05 allowed)&#10;Greatest relative difference: inf at index (2, 0) (up to 1.3e-06 allowed)">tmp_path = PosixPath('/tmp/pytest-of-r15543056/pytest-30/test_region_excludes_torsions_1')
+chain = [0, 0, 1, 1], numbering = [0, 1, 0, 1], source = 'chain_file'
+
+    @pytest.mark.parametrize('source', ['csv', 'chain_file'])
+    @pytest.mark.parametrize('chain, numbering', [
+        ([0, 0, 1, 1], [0, 1, 0, 1]),
+        ([0, 0, 0, 0], [0, 1, 5, 6]),
+    ])
+    def test_region_excludes_torsions_across_chain_breaks(tmp_path, chain, numbering, source):
+        metadata = {'chain_id': json.dumps(chain), 'residue_index': json.dumps(numbering)}
+        split = write_protein(tmp_path, 'prot', 4, metadata if source == 'csv' else None)
+        if source == 'chain_file':
+            np.savez(tmp_path / 'prot_chain.npz', chain_id=chain, residue_index=numbering)
+        item = MDGenDataset(args(tmp_path, training_region=True, region_core=4), split)[0]
+&gt;       torch.testing.assert_close(item['torsion_mask'][:4, :2], torch.tensor([
+            [0., 0.], [1., 1.], [0., 0.], [1., 1.],
+        ]))
+E       AssertionError: Tensor-likes are not close!
+E
+E       Mismatched elements: 2 / 8 (25.0%)
+E       Greatest absolute difference: 1.0 at index (2, 0) (up to 1e-05 allowed)
+E       Greatest relative difference: inf at index (2, 0) (up to 1.3e-06 allowed)
+
+tests/test_dataset_training_region.py:169: AssertionError</failure></testcase><testcase classname="tests.test_dataset_training_region" name="test_region_excludes_torsions_across_chain_breaks[chain1-numbering1-csv]" time="0.005"><failure message="AssertionError: Tensor-likes are not close!&#10;&#10;Mismatched elements: 2 / 8 (25.0%)&#10;Greatest absolute difference: 1.0 at index (2, 0) (up to 1e-05 allowed)&#10;Greatest relative difference: inf at index (2, 0) (up to 1.3e-06 allowed)">tmp_path = PosixPath('/tmp/pytest-of-r15543056/pytest-30/test_region_excludes_torsions_2')
+chain = [0, 0, 0, 0], numbering = [0, 1, 5, 6], source = 'csv'
+
+    @pytest.mark.parametrize('source', ['csv', 'chain_file'])
+    @pytest.mark.parametrize('chain, numbering', [
+        ([0, 0, 1, 1], [0, 1, 0, 1]),
+        ([0, 0, 0, 0], [0, 1, 5, 6]),
+    ])
+    def test_region_excludes_torsions_across_chain_breaks(tmp_path, chain, numbering, source):
+        metadata = {'chain_id': json.dumps(chain), 'residue_index': json.dumps(numbering)}
+        split = write_protein(tmp_path, 'prot', 4, metadata if source == 'csv' else None)
+        if source == 'chain_file':
+            np.savez(tmp_path / 'prot_chain.npz', chain_id=chain, residue_index=numbering)
+        item = MDGenDataset(args(tmp_path, training_region=True, region_core=4), split)[0]
+&gt;       torch.testing.assert_close(item['torsion_mask'][:4, :2], torch.tensor([
+            [0., 0.], [1., 1.], [0., 0.], [1., 1.],
+        ]))
+E       AssertionError: Tensor-likes are not close!
+E
+E       Mismatched elements: 2 / 8 (25.0%)
+E       Greatest absolute difference: 1.0 at index (2, 0) (up to 1e-05 allowed)
+E       Greatest relative difference: inf at index (2, 0) (up to 1.3e-06 allowed)
+
+tests/test_dataset_training_region.py:169: AssertionError</failure></testcase><testcase classname="tests.test_dataset_training_region" name="test_region_excludes_torsions_across_chain_breaks[chain1-numbering1-chain_file]" time="0.005"><failure message="AssertionError: Tensor-likes are not close!&#10;&#10;Mismatched elements: 2 / 8 (25.0%)&#10;Greatest absolute difference: 1.0 at index (2, 0) (up to 1e-05 allowed)&#10;Greatest relative difference: inf at index (2, 0) (up to 1.3e-06 allowed)">tmp_path = PosixPath('/tmp/pytest-of-r15543056/pytest-30/test_region_excludes_torsions_3')
+chain = [0, 0, 0, 0], numbering = [0, 1, 5, 6], source = 'chain_file'
+
+    @pytest.mark.parametrize('source', ['csv', 'chain_file'])
+    @pytest.mark.parametrize('chain, numbering', [
+        ([0, 0, 1, 1], [0, 1, 0, 1]),
+        ([0, 0, 0, 0], [0, 1, 5, 6]),
+    ])
+    def test_region_excludes_torsions_across_chain_breaks(tmp_path, chain, numbering, source):
+        metadata = {'chain_id': json.dumps(chain), 'residue_index': json.dumps(numbering)}
+        split = write_protein(tmp_path, 'prot', 4, metadata if source == 'csv' else None)
+        if source == 'chain_file':
+            np.savez(tmp_path / 'prot_chain.npz', chain_id=chain, residue_index=numbering)
+        item = MDGenDataset(args(tmp_path, training_region=True, region_core=4), split)[0]
+&gt;       torch.testing.assert_close(item['torsion_mask'][:4, :2], torch.tensor([
+            [0., 0.], [1., 1.], [0., 0.], [1., 1.],
+        ]))
+E       AssertionError: Tensor-likes are not close!
+E
+E       Mismatched elements: 2 / 8 (25.0%)
+E       Greatest absolute difference: 1.0 at index (2, 0) (up to 1e-05 allowed)
+E       Greatest relative difference: inf at index (2, 0) (up to 1.3e-06 allowed)
+
+tests/test_dataset_training_region.py:169: AssertionError</failure></testcase></testsuite></testsuites>

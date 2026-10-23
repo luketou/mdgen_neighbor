@@ -1,0 +1,55 @@
+3.11.12 (main, Sep 25 2025, 11:23:13) [GCC 11.5.0 20240719 (Red Hat 11.5.0-5.0.1)]
+2.11.0+cu128
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+_____ test_region_excludes_torsions_across_chain_breaks[chain0-numbering0] _____
+
+tmp_path = PosixPath('/tmp/pytest-of-r15543056/pytest-20/test_region_excludes_torsions_0')
+chain = [0, 0, 1, 1], numbering = [0, 1, 0, 1]
+
+    @pytest.mark.parametrize('chain, numbering', [
+        ([0, 0, 1, 1], [0, 1, 0, 1]),
+        ([0, 0, 0, 0], [0, 1, 5, 6]),
+    ])
+    def test_region_excludes_torsions_across_chain_breaks(tmp_path, chain, numbering):
+        split = write_protein(tmp_path, 'prot', 4, {
+            'chain_id': json.dumps(chain), 'residue_index': json.dumps(numbering)})
+        item = MDGenDataset(args(tmp_path, training_region=True, region_core=4), split)[0]
+>       torch.testing.assert_close(item['torsion_mask'][:4, :2], torch.tensor([
+            [0., 0.], [1., 1.], [0., 0.], [1., 1.],
+        ]))
+E       AssertionError: Tensor-likes are not close!
+E
+E       Mismatched elements: 2 / 8 (25.0%)
+E       Greatest absolute difference: 1.0 at index (2, 0) (up to 1e-05 allowed)
+E       Greatest relative difference: inf at index (2, 0) (up to 1.3e-06 allowed)
+
+tests/test_dataset_training_region.py:161: AssertionError
+_____ test_region_excludes_torsions_across_chain_breaks[chain1-numbering1] _____
+
+tmp_path = PosixPath('/tmp/pytest-of-r15543056/pytest-20/test_region_excludes_torsions_1')
+chain = [0, 0, 0, 0], numbering = [0, 1, 5, 6]
+
+    @pytest.mark.parametrize('chain, numbering', [
+        ([0, 0, 1, 1], [0, 1, 0, 1]),
+        ([0, 0, 0, 0], [0, 1, 5, 6]),
+    ])
+    def test_region_excludes_torsions_across_chain_breaks(tmp_path, chain, numbering):
+        split = write_protein(tmp_path, 'prot', 4, {
+            'chain_id': json.dumps(chain), 'residue_index': json.dumps(numbering)})
+        item = MDGenDataset(args(tmp_path, training_region=True, region_core=4), split)[0]
+>       torch.testing.assert_close(item['torsion_mask'][:4, :2], torch.tensor([
+            [0., 0.], [1., 1.], [0., 0.], [1., 1.],
+        ]))
+E       AssertionError: Tensor-likes are not close!
+E
+E       Mismatched elements: 2 / 8 (25.0%)
+E       Greatest absolute difference: 1.0 at index (2, 0) (up to 1e-05 allowed)
+E       Greatest relative difference: inf at index (2, 0) (up to 1.3e-06 allowed)
+
+tests/test_dataset_training_region.py:161: AssertionError
+- generated xml file: /share/home/r15543056/MDgen/pr19-fix-chain-red-20261023/results/dataset.xml -
+=========================== short test summary info ============================
+FAILED tests/test_dataset_training_region.py::test_region_excludes_torsions_across_chain_breaks[chain0-numbering0]
+FAILED tests/test_dataset_training_region.py::test_region_excludes_torsions_across_chain_breaks[chain1-numbering1]
+2 failed, 12 deselected in 2.87s

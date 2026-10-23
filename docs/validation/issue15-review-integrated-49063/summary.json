@@ -1,0 +1,33 @@
+{
+  "job_id": "49063",
+  "run_id": "pr19-fix-integrated-green-20261023",
+  "implementation_commit": "ae7c28a",
+  "base_commit": "e62d658",
+  "device": "cpu",
+  "status": "COMPLETED",
+  "exit_code": "0:0",
+  "manifest_files": 149,
+  "source_manifest_verified": true,
+  "review": {
+    "standards_findings": 0,
+    "spec_findings": 0
+  },
+  "suites": {
+    "dataset": {
+      "tests": 21,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 21,
+      "time_seconds": 17.922
+    },
+    "full-suite": {
+      "tests": 127,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 8,
+      "passed": 119,
+      "time_seconds": 34.579
+    }
+  }
+}
