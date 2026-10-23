@@ -34,6 +34,7 @@ def checkpoint(monkeypatch, tmp_path):
     return path
 
 
+@pytest.mark.checkpoint
 def test_report_counts_nfe_and_profiles_one_forward(tmp_path, checkpoint):
     output = tmp_path / 'profile.json'
     main(['--sim_ckpt', str(checkpoint), '--output', str(output), '--synthetic_residues', '40',
@@ -59,6 +60,7 @@ def test_report_counts_nfe_and_profiles_one_forward(tmp_path, checkpoint):
     assert report['forward_s'] > 0 and report['settings']['model']['num_frames'] == T
 
 
+@pytest.mark.checkpoint
 def test_tighter_tolerance_needs_more_evaluations(tmp_path, checkpoint):
     nfe = []
     for atol in ('1e-2', '1e-4'):
@@ -91,6 +93,7 @@ def test_kernel_stats_measure_gpu_idle_time_and_region_launches():
     assert stats['regions']['mdgen.local_ipa']['launch_count'] == 0
 
 
+@pytest.mark.checkpoint
 def test_protein_source_reads_frame_zero(tmp_path, checkpoint):
     rng = np.random.default_rng(0)
     L = 40
