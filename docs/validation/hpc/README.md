@@ -16,7 +16,11 @@ Ticket 2 的 [L40S 實測報告](../l40s-ticket2/2026-10-23/README.md) 記錄 GP
 
 ## 快照與 Slurm 工具
 
-在 repo 根目錄執行，設定檔僅含路徑與非機密選項；SSH 使用既有金鑰／agent。
+本機提交 launcher、查詢狀態與取回結果一律用 `scripts/hpc_run.py`（經 WSL 的 ssh／scp），用法見 [job/README.md](../../../job/README.md) 與 `python scripts/hpc_run.py -h`。
+
+### 較早的 preflight 診斷工具 `scripts/hpc.py`
+
+只用於下列固定的 GPU preflight 診斷，不用於提交 launcher。在 repo 根目錄執行，設定檔僅含路徑與非機密選項；SSH 使用既有金鑰／agent。
 
 ```bash
 .venv-cpu/bin/python scripts/hpc.py prepare --files scripts/diagnostics/gpu_preflight.py

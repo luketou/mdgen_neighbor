@@ -1,4 +1,4 @@
-"""Local -> HPC: snapshot, verify, submit, track, fetch.  Spec: hpc/project.yaml.
+"""Local -> HPC: snapshot, verify, submit, track, fetch.  Tests: tests/test_hpc_run.py.
 
   python scripts/hpc_run.py submit [--tag T] [--run RUN_ID] [--sbatch=ARG ...] [--env K=V ...] \
       LAUNCHER [LAUNCHER_ARGS ...]
@@ -106,6 +106,23 @@ echo VERIFIED""", timeout=120)
     return run_id
 
 
+def submit_script(run, comment, env, sbatch, argv):
+    """Remote bash that submits argv from <run>/src and appends it to <run>/job_history."""
+    env = " ".join(shlex.quote(kv) for kv in env)
+    sbatch = " ".join(shlex.quote(x) for x in sbatch)
+    command = " ".join(shlex.quote(x) for x in argv)
+    # printf, not echo "...": inside double quotes the shell would expand $(...) in the args
+    return f"""set -e
+cd {run}/src
+export MDGEN_VENV={VENV} MDGEN_RESOURCE_ROOT={RESOURCE_ROOT} MDGEN_RUN_DIR={run} {env}
+job=$(sbatch --parsable --comment={shlex.quote(comment)} --chdir={run}/src \\
+  --output={run}/logs/%j.out --error={run}/logs/%j.err {sbatch} {command})
+job=${{job%%;*}}
+printf '%s %s %s\\n' "$job" {shlex.quote(comment)} {shlex.quote(command)} >> {run}/job_history
+echo "JOB=$job"
+"""
+
+
 def submit(a):
     if a.run:
         run_id = a.run
@@ -117,20 +134,8 @@ def submit(a):
         run_id = upload(a.tag)
     run = f"{RUNS_ROOT}/{run_id}"
     comment = f"{run_id}:{a.tag}:{datetime.datetime.now(datetime.timezone.utc):%H%M%S}"
-    env = " ".join(shlex.quote(kv) for kv in a.env)
-    command = " ".join(shlex.quote(x) for x in [a.launcher, *a.args])
-    sbatch = " ".join(shlex.quote(x) for x in a.sbatch)
     try:
-        # printf, not echo "...": inside double quotes the shell would expand $(...) in the args
-        r = remote(f"""set -e
-cd {run}/src
-export MDGEN_VENV={VENV} MDGEN_RESOURCE_ROOT={RESOURCE_ROOT} MDGEN_RUN_DIR={run} {env}
-job=$(sbatch --parsable --comment={shlex.quote(comment)} --chdir={run}/src \\
-  --output={run}/logs/%j.out --error={run}/logs/%j.err {sbatch} {command})
-job=${{job%%;*}}
-printf '%s %s %s\\n' "$job" {shlex.quote(comment)} {shlex.quote(command)} >> {run}/job_history
-echo "JOB=$job"
-""")
+        r = remote(submit_script(run, comment, a.env, a.sbatch, [a.launcher, *a.args]))
     except subprocess.TimeoutExpired:  # sbatch may still have accepted the job
         r = subprocess.CompletedProcess([], 1, "", "timed out waiting for the headnode\n")
     job = next((line[4:] for line in r.stdout.splitlines() if line.startswith("JOB=")), None)
@@ -155,11 +160,15 @@ def tail(a):
     print(remote(f"tail -n {a.lines} {run}/logs/{job}.{'err' if a.err else 'out'}").stdout)
 
 
-def fetch(a):
-    for p in a.paths:  # stay inside the run directory remotely and inside DEST locally
+def check_fetch_paths(paths):
+    for p in paths:  # stay inside the run directory remotely and inside DEST locally
         pp = PurePosixPath(p)
         if not pp.parts or pp.is_absolute() or ".." in pp.parts or ":" in p or "\\" in p:
             sys.exit(f"fetch: {p!r} must be a relative path inside the run directory")
+
+
+def fetch(a):
+    check_fetch_paths(a.paths)
     run = f"{RUNS_ROOT}/{a.run_id}"
     paths = " ".join(shlex.quote(p) for p in a.paths)
     r = remote(f"set -o pipefail; cd {run} && du -cb -- {paths} | tail -n 1")
@@ -175,21 +184,26 @@ def fetch(a):
         print(local)
 
 
-p = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-s = p.add_subparsers(dest="c", required=True)
-x = s.add_parser("submit")
-x.add_argument("--tag", default="smoke")
-x.add_argument("--run", metavar="RUN_ID", help="add a job to this existing snapshot")
-x.add_argument("--sbatch", action="append", default=[], metavar="ARG",
-               help="extra sbatch argument, e.g. --sbatch=--time=00:30:00")
-x.add_argument("--env", action="append", default=[], metavar="K=V", help="exported for the job")
-x.add_argument("launcher"); x.add_argument("args", nargs=argparse.REMAINDER)
-x.set_defaults(f=submit)
-x = s.add_parser("status"); x.add_argument("run_id"); x.set_defaults(f=status)
-x = s.add_parser("tail"); x.add_argument("run_id"); x.add_argument("--job")
-x.add_argument("--err", action="store_true"); x.add_argument("--lines", type=int, default=100)
-x.set_defaults(f=tail)
-x = s.add_parser("fetch"); x.add_argument("run_id"); x.add_argument("dest"); x.add_argument("paths", nargs="+")
-x.set_defaults(f=fetch)
-a = p.parse_args()
-a.f(a)
+def main(argv=None):
+    p = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    s = p.add_subparsers(dest="c", required=True)
+    x = s.add_parser("submit")
+    x.add_argument("--tag", default="smoke")
+    x.add_argument("--run", metavar="RUN_ID", help="add a job to this existing snapshot")
+    x.add_argument("--sbatch", action="append", default=[], metavar="ARG",
+                   help="extra sbatch argument, e.g. --sbatch=--time=00:30:00")
+    x.add_argument("--env", action="append", default=[], metavar="K=V", help="exported for the job")
+    x.add_argument("launcher"); x.add_argument("args", nargs=argparse.REMAINDER)
+    x.set_defaults(f=submit)
+    x = s.add_parser("status"); x.add_argument("run_id"); x.set_defaults(f=status)
+    x = s.add_parser("tail"); x.add_argument("run_id"); x.add_argument("--job")
+    x.add_argument("--err", action="store_true"); x.add_argument("--lines", type=int, default=100)
+    x.set_defaults(f=tail)
+    x = s.add_parser("fetch"); x.add_argument("run_id"); x.add_argument("dest"); x.add_argument("paths", nargs="+")
+    x.set_defaults(f=fetch)
+    a = p.parse_args(argv)
+    a.f(a)
+
+
+if __name__ == "__main__":
+    main()
