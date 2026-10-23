@@ -1,8 +1,6 @@
 """Training regions chosen from a stored full-protein partition (#12).
 
-Meant to replace the interim `region.py` sampler (#15), which cuts a fresh
-core/ghost neighbourhood instead of reusing stored groups; the dataset still
-uses `region.py` until #12 Ticket 4 wires this module in. A region is a set of loss groups (nearest to a random seed group), the halo
+A region is a set of loss groups (nearest to a random seed group), the halo
 groups owning their ghosts (`halo_rings` deep), and every ghost of those
 groups. Halo groups run normally but are not in the loss; ghosts of halo
 groups that no selected group owns are context residues: keys only, with
@@ -88,6 +86,15 @@ def sample_region_groups(partition, ca_coordinates, *, region_residues, halo_rin
             break
         loss, halo, residues = trial, trial_halo, trial_residues
     return RegionSelection(tuple(sorted(loss)), halo, residues, next_size)
+
+
+def largest_seed_region(partition, halo_rings=1):
+    """Residues in the smallest region each group can seed; the largest over all groups.
+
+    A region_residues budget below this value fails for some seed group.
+    """
+    return max(len(_residues(partition, [g, *_halo(partition, [g], halo_rings)]))
+               for g in range(len(partition.groups)))
 
 
 def region_subpartition(partition, selection):

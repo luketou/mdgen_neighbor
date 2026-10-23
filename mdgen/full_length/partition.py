@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from dataclasses import asdict, dataclass
+from dataclasses import asdict, dataclass, replace
 from itertools import product
 import math
 
@@ -96,12 +96,26 @@ class SpatialPartition:
     def __post_init__(self):
         if (self.position_index is None) != (self.full_length is None):
             raise ValueError("position_index and full_length must be set together")
+        # Range is checked on CPU only: device copies come from `to`, and a check
+        # there would sync on every `replace` in the attention loop.
         if self.position_index is not None and (
             self.position_index.shape != self.residue_mask.shape
-            or int(self.position_index.min()) < 0
-            or int(self.position_index.max()) >= self.full_length
+            or self.position_index.device.type == "cpu" and (
+                int(self.position_index.min()) < 0
+                or int(self.position_index.max()) >= self.full_length)
         ):
             raise ValueError("position_index must give each residue a position in [0, full_length)")
+
+    def to(self, device) -> "SpatialPartition":
+        """A copy with every index tensor on device."""
+        return replace(
+            self,
+            groups=tuple(replace(g, core_indices=g.core_indices.to(device),
+                                 ghost_indices=g.ghost_indices.to(device)) for g in self.groups),
+            owner_group=self.owner_group.to(device),
+            residue_mask=self.residue_mask.to(device),
+            position_index=None if self.position_index is None else self.position_index.to(device),
+        )
 
     def diagnostics(self) -> dict:
         """JSON-ready ownership and neighborhood retention at construction time.

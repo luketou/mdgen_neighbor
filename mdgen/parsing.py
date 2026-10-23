@@ -151,13 +151,20 @@ def parse_train_args(include_runtime_args=False):  # runtime-args-separation
     group.add_argument('--atlas', action='store_true')
     group.add_argument('--replicates', type=int, nargs='+', default=[1, 2, 3],
                        help='--atlas replicate numbers to sample from')
+    group.add_argument('--val_replicates', type=int, nargs='+', default=None,
+                       help='--atlas replicates for validation (default: --replicates)')
     group.add_argument('--copy_frames', action='store_true')
     group.add_argument('--no_pad', action='store_true')
     group.add_argument('--short_md', action='store_true')
     group.add_argument('--training_region', action='store_true',
-                       help='Sample a spatial core + ghost region instead of --crop.')
-    group.add_argument('--region_core', type=positive_int, default=256)
-    group.add_argument('--region_ghost', type=int, default=256)
+                       help='Train on groups of the frame-0 full-protein partition instead of --crop.')
+    group.add_argument('--region_residues', type=positive_int, default=1024,
+                       help='Training region size, counting loss, halo and context residues.')
+    group.add_argument('--halo_rings', type=int, default=1,
+                       help='Rings of halo groups around the loss groups (no loss).')
+    group.add_argument('--partition_dir', type=str, default=None,
+                       help='<npy stem>_partition.npz from mdgen.full_length.partition_store; '
+                            'without it each item partitions frame 0 itself.')
 
     ### Masking settings
     group = parser.add_argument_group("Masking settings")
@@ -268,12 +275,11 @@ def parse_train_args(include_runtime_args=False):  # runtime-args-separation
     if args.local_spatial and (args.manual_attention or args.no_frames):
         parser.error('local_spatial requires SDPA and residue frames')
     if args.training_region:
-        if args.no_frames or args.hyena or args.design:
-            parser.error('training_region requires residue frames and does not support '
-                         '--hyena or --design')
-        if args.abs_pos_emb and args.region_core + args.region_ghost != args.crop:
-            parser.error('training_region with --abs_pos_emb requires '
-                         '--region_core + --region_ghost == --crop')
+        if not args.local_spatial or args.hyena or args.design or args.abs_pos_emb:
+            parser.error('training_region requires --local_spatial and does not support '
+                         '--hyena, --design or --abs_pos_emb')
+        if args.halo_rings < 0:
+            parser.error('--halo_rings must be non-negative')
     check_determinism_args(parser, args)  # deterministic-benchmark-guard
     if args.model_dir is not None:
         os.environ["MODEL_DIR"] = os.path.join(args.model_dir, args.run_name)

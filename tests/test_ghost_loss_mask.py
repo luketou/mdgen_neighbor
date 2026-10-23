@@ -1,4 +1,4 @@
-"""Ghost residues enter the model as context but not the loss (#15 Ticket 3)."""
+"""Residues outside `loss_core_mask` enter the model as context but not the loss (#15 Ticket 3)."""
 import pytest
 import torch
 
@@ -32,7 +32,7 @@ def batch(core=None):
     items = synthetic_items(type('A', (), {'num_frames': 4}), 12, 2, seed=0)
     out = torch.utils.data.default_collate(items)
     if core is not None:
-        out['core_mask'] = core.expand(2, -1).clone()
+        out['loss_core_mask'] = core.expand(2, -1).clone()
     return out
 
 

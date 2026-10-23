@@ -17,7 +17,7 @@ logger = get_logger(__name__)
 
 import json  # peak_memory
 import torch, os, wandb
-from mdgen.dataset import MDGenDataset
+from mdgen.dataset import MDGenDataset, collate
 from mdgen.wrapper import NewMDGenWrapper
 from pytorch_lightning.callbacks import ModelCheckpoint, ModelSummary
 import pytorch_lightning as pl
@@ -299,19 +299,26 @@ trainset = MDGenDataset(args, split=args.train_split)
 if args.overfit:
     valset = trainset    
 else:
-    valset = MDGenDataset(args, split=args.val_split, repeat=args.val_repeat, region_seed=0)
+    valset = MDGenDataset(args, split=args.val_split, repeat=args.val_repeat, region_seed=0,
+                          replicates=args.val_replicates)
+if args.training_region:
+    trainset.check_region_budget()
+    if valset is not trainset:
+        valset.check_region_budget()
 
 train_loader = torch.utils.data.DataLoader(
     trainset,
     batch_size=args.batch_size,
     num_workers=args.num_workers,
     shuffle=True,
+    collate_fn=collate,
 )
 
 val_loader = torch.utils.data.DataLoader(
     valset,
     batch_size=args.batch_size,
     num_workers=args.num_workers,
+    collate_fn=collate,
 )
 model = NewMDGenWrapper(args, use_sdpa=use_sdpa)  # sdpa-route
 # sdpa-diagnostics:start

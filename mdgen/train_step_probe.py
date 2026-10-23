@@ -21,6 +21,7 @@ import numpy as np
 import torch
 import pytorch_lightning as pl
 
+from .dataset import collate
 from .precision import configure_precision, precision_state
 
 LIGHTNING_PRECISION = {'fp32-reference': '32-true', 'bf16-train': 'bf16-mixed'}
@@ -85,6 +86,28 @@ def synthetic_items(args, residues, count, seed):
             'mask': torch.ones(residues),
         })
     return items
+
+
+def synthetic_region_items(args, items, seed):
+    """Cut a Training region from each synthetic item's frame-0 full-protein partition."""
+    from .dataset import pad_region, sample_region
+    from .full_length.partition import PartitionParams, build_spatial_partition
+    regions = []
+    for i, item in enumerate(items):
+        L = len(item['seqres'])
+        chain = {'chain_id': torch.zeros(L, dtype=torch.long), 'residue_index': torch.arange(L)}
+        ca = item['trans'][0]
+        partition = build_spatial_partition(ca, mask=torch.ones(L, dtype=torch.bool), **chain,
+                                            **PartitionParams.from_args(args).partition_kwargs())
+        selection, region = sample_region(partition, ca, args,
+                                          torch.Generator().manual_seed(seed + i))
+        residues = region.residues
+        fields = {**item, **{key: value.numpy() for key, value in chain.items()}}
+        regions.append({'name': item['name'], **pad_region(
+            {key: value[:, residues] if key in ('trans', 'rots', 'torsions') else value[residues]
+             for key, value in fields.items() if key != 'name'},
+            selection, region, args.region_residues)})
+    return regions
 
 
 def dataset_items(args, index):
@@ -203,7 +226,8 @@ def run_step(args, items, name, seed, initial_state=None, use_sdpa=True):
         enable_progress_bar=False, callbacks=[probe])
     # Fixed items keep the batch identical; reseeding fixes t, noise and dropout.
     pl.seed_everything(seed, verbose=False)
-    trainer.fit(model, torch.utils.data.DataLoader(items, batch_size=len(items)))
+    trainer.fit(model, torch.utils.data.DataLoader(items, batch_size=len(items),
+                                                   collate_fn=collate))
     groups = group_gradients(probe.gradients)
     summary = gradient_summary(groups)
     report = {
@@ -294,11 +318,7 @@ def main(argv=None):
         items = synthetic_items(args, probe_args.synthetic_residues, args.batch_size,
                                 probe_args.seed)
         if args.training_region:
-            from .dataset import gather_training_region
-            L = probe_args.synthetic_residues
-            items = [gather_training_region(item, np.zeros(L, dtype=np.int64), np.arange(L), args,
-                                            torch.Generator().manual_seed(probe_args.seed + i))
-                     for i, item in enumerate(items)]
+            items = synthetic_region_items(args, items, probe_args.seed)
     else:
         items = dataset_items(args, probe_args.dataset_index)
     report = run_probe(args, items, probe_args.configs, probe_args.seed,

@@ -11,8 +11,9 @@
 #SBATCH --error=logs/training_region_probe_%j.err
 # #9 Ticket 3 (training half): peak memory and time of one fp32-reference
 # training step of the 5-layer --local_spatial ATLAS configuration on one
-# Training region (K = G = 256 by default) x 250 frames, cut from a synthetic
-# 7,500-residue chain. Extra train.py arguments pass through, e.g.
+# Training region (--region_residues 1024, --halo_rings 1 by default) x 250
+# frames, cut from the frame-0 partition of a synthetic 7,500-residue chain.
+# Extra train.py arguments pass through, e.g.
 #   MDGEN_VENV=... sbatch job/submit_training_region_probe.sh --grad_checkpointing
 # An OOM ends the job non-zero; the traceback in logs/ is the result.
 

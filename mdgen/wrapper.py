@@ -287,6 +287,14 @@ class NewMDGenWrapper(Wrapper):
         }
 
         
+    def transfer_batch_to_device(self, batch, device, dataloader_idx):
+        # Lightning cannot copy the frozen group dataclasses; move each partition once here.
+        partitions = batch.pop('partition', None) if isinstance(batch, dict) else None
+        batch = super().transfer_batch_to_device(batch, device, dataloader_idx)
+        if partitions is not None:
+            batch['partition'] = [partition.to(device) for partition in partitions]
+        return batch
+
     def prep_batch(self, batch):
 
         if self.args.no_frames:
@@ -339,8 +347,8 @@ class NewMDGenWrapper(Wrapper):
             torsion_loss_mask = torch.zeros_like(torsion_loss_mask)
 
         loss_mask = torch.cat([frame_loss_mask, torsion_loss_mask], -1)
-        if 'core_mask' in batch:  # Training region: ghosts are context only
-            loss_mask = loss_mask * batch['core_mask'].unsqueeze(-1)
+        if 'loss_core_mask' in batch:  # Training region: only loss-group cores count
+            loss_mask = loss_mask * batch['loss_core_mask'].unsqueeze(-1)
         loss_mask = loss_mask.unsqueeze(1).expand(-1, T, -1, -1)
 
         ########
@@ -365,9 +373,11 @@ class NewMDGenWrapper(Wrapper):
             chain_id = batch.get('chain_id', torch.zeros_like(batch['seqres']))
             residue_index = batch.get('residue_index',
                 torch.arange(L, device=offsets.device)[None].expand(B, -1))
-            partitions = partitions_from_args(
-                self.args, rigids[:, 0].get_trans(), batch['mask'],
-                chain_id=chain_id, residue_index=residue_index)
+            partitions = batch.get('partition')  # a Training region's sub-partitions
+            if partitions is None:
+                partitions = partitions_from_args(
+                    self.args, rigids[:, 0].get_trans(), batch['mask'],
+                    chain_id=chain_id, residue_index=residue_index)
             local_kwargs = dict(chain_id=chain_id, residue_index=residue_index,
                                 spatial_partitions=partitions)
 
