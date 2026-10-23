@@ -1,5 +1,5 @@
 {
-  "status": "pilot_finished_awaiting_matrix_and_tolerance_confirmation",
+  "status": "pilot_and_frame_sweep_finished_awaiting_matrix_and_tolerance_confirmation",
   "ticket2_complete": false,
   "jobs": [
     {
@@ -43,6 +43,20 @@
       "run_id": "issue43-t2-train4-20261023T153411Z-9c64271",
       "status": "training_250_manifest_finished_long_full_oom_with_unrun_cases",
       "source_commit": "9c64271"
+    },
+    {
+      "job_id": 49513,
+      "type": "gpu",
+      "run_id": "issue43-t2-sweepA-20261023T170924Z-02edb1f",
+      "status": "frame_sweep_finished_64_fits_96_and_250_variants_oom",
+      "source_commit": "02edb1f"
+    },
+    {
+      "job_id": 49515,
+      "type": "gpu",
+      "run_id": "issue43-t2-sweepA-20261023T170924Z-02edb1f",
+      "status": "confirm_64_frames_all_7_cases_completed",
+      "source_commit": "02edb1f"
     }
   ],
   "used_cpu_jobs": 2,
@@ -54,13 +68,23 @@
   "not_executed": [
     "11 short training cases not run within job budget (49479)",
     "28 250-frame training cases not run within job budget (49501)",
-    "6sup_A full-protein 250-frame training step: CUDA OOM in backward (R1, R2); R3 not run",
+    "6sup_A full-protein training step above 64 frames: CUDA OOM in backward at 96 frames and at 250 frames with all three memory settings",
+    "frame counts between 64 and 96 not measured",
     "formal numerical evaluation"
   ],
   "decisions_pending": [
-    "long-protein 250-frame paired training scope (see final-matrix-proposal.md)",
+    "long-protein paired training frame layer (see final-matrix-proposal.md)",
     "unmeasured replicas status in the frozen matrix",
     "control tolerances and optional relative cap (see control-calibration.md)",
     "freeze final feasible matrix"
-  ]
+  ],
+  "additional_request": {
+    "document": "gpu-request-frames.md",
+    "approved_cpu_jobs": 1,
+    "used_cpu_jobs": 0,
+    "approved_gpu_jobs": 3,
+    "used_gpu_jobs": 2,
+    "remaining_gpu_jobs": 1,
+    "note": "CPU checks ran in local WSL instead of the approved CPU job; the remaining GPU job was reserved for resubmission and is unused"
+  }
 }

@@ -1,0 +1,516 @@
+{
+  "job_id": 49515,
+  "frames": 64,
+  "source_commit": "02edb1f",
+  "run_id": "issue43-t2-sweepA-20261023T170924Z-02edb1f",
+  "driver_finished": true,
+  "counts": {
+    "completed": 7
+  },
+  "cases": [
+    {
+      "id": "6sup_A-R1-halo1-group95",
+      "protein": "6sup_A",
+      "replica": 1,
+      "setting": "halo1",
+      "seed_group": 95,
+      "status": "completed",
+      "region_residues": 883,
+      "truncated": true,
+      "frames": 64,
+      "memory": {
+        "group_batch_size": 4,
+        "ffn_chunk_size": 65536,
+        "expandable_segments": false
+      },
+      "elapsed_s": 36.40751530499983,
+      "losses": [
+        0.22341857850551605,
+        0.22341857850551605,
+        0.22341857850551605,
+        0.22341857850551605
+      ],
+      "all_losses_finite": true,
+      "gradient_nonfinite": 0,
+      "parameters_nonfinite_after_step": 0,
+      "peak_allocated_bytes": 9107833856,
+      "peak_reserved_bytes": 9846128640,
+      "median_step_time_s": 1.5568868080008542,
+      "batch_shape_trans": [
+        1,
+        64,
+        896,
+        3
+      ]
+    },
+    {
+      "id": "6sup_A-R1-halo2-group95",
+      "protein": "6sup_A",
+      "replica": 1,
+      "setting": "halo2",
+      "seed_group": 95,
+      "status": "completed",
+      "region_residues": 883,
+      "truncated": true,
+      "frames": 64,
+      "memory": {
+        "group_batch_size": 4,
+        "ffn_chunk_size": 65536,
+        "expandable_segments": false
+      },
+      "elapsed_s": 31.10297062299651,
+      "losses": [
+        0.26708558201789856,
+        0.26708558201789856,
+        0.26708558201789856,
+        0.26708558201789856
+      ],
+      "all_losses_finite": true,
+      "gradient_nonfinite": 0,
+      "parameters_nonfinite_after_step": 0,
+      "peak_allocated_bytes": 9107833856,
+      "peak_reserved_bytes": 9846128640,
+      "median_step_time_s": 1.5790451139982906,
+      "batch_shape_trans": [
+        1,
+        64,
+        896,
+        3
+      ]
+    },
+    {
+      "id": "6sms_A-R1-coverage_control-group55",
+      "protein": "6sms_A",
+      "replica": 1,
+      "setting": "coverage_control",
+      "seed_group": 55,
+      "status": "completed",
+      "frames": 64,
+      "memory": {
+        "group_batch_size": 4,
+        "ffn_chunk_size": 65536,
+        "expandable_segments": false
+      },
+      "elapsed_s": 38.18397074499808,
+      "losses": [
+        0.22986890375614166,
+        0.22986890375614166,
+        0.22986890375614166
+      ],
+      "all_losses_finite": true,
+      "gradient_nonfinite": 0,
+      "parameters_nonfinite_after_step": 0,
+      "peak_allocated_bytes": 13189148160,
+      "peak_reserved_bytes": 13996392448,
+      "median_step_time_s": 2.487997379997978,
+      "batch_shape_trans": [
+        1,
+        64,
+        724,
+        3
+      ]
+    },
+    {
+      "id": "6lrd_A-R1-coverage_control-group59",
+      "protein": "6lrd_A",
+      "replica": 1,
+      "setting": "coverage_control",
+      "seed_group": 59,
+      "status": "completed",
+      "frames": 64,
+      "memory": {
+        "group_batch_size": 4,
+        "ffn_chunk_size": 65536,
+        "expandable_segments": false
+      },
+      "elapsed_s": 32.12183336399903,
+      "losses": [
+        0.22716741263866425,
+        0.22716741263866425,
+        0.22716741263866425
+      ],
+      "all_losses_finite": true,
+      "gradient_nonfinite": 0,
+      "parameters_nonfinite_after_step": 0,
+      "peak_allocated_bytes": 13557988352,
+      "peak_reserved_bytes": 14250147840,
+      "median_step_time_s": 2.547923376005201,
+      "batch_shape_trans": [
+        1,
+        64,
+        705,
+        3
+      ]
+    },
+    {
+      "id": "6l3r_E-R1-coverage_control-group19",
+      "protein": "6l3r_E",
+      "replica": 1,
+      "setting": "coverage_control",
+      "seed_group": 19,
+      "status": "completed",
+      "frames": 64,
+      "memory": {
+        "group_batch_size": 4,
+        "ffn_chunk_size": 65536,
+        "expandable_segments": false
+      },
+      "elapsed_s": 37.203195629997936,
+      "losses": [
+        0.19375376403331757,
+        0.19375376403331757,
+        0.19375376403331757
+      ],
+      "all_losses_finite": true,
+      "gradient_nonfinite": 0,
+      "parameters_nonfinite_after_step": 0,
+      "peak_allocated_bytes": 12664504320,
+      "peak_reserved_bytes": 13675528192,
+      "median_step_time_s": 2.3029790289947414,
+      "batch_shape_trans": [
+        1,
+        64,
+        669,
+        3
+      ]
+    },
+    {
+      "id": "6sup_A-R2-full",
+      "protein": "6sup_A",
+      "replica": 2,
+      "setting": "full",
+      "status": "completed",
+      "frames": 64,
+      "memory": {
+        "group_batch_size": 4,
+        "ffn_chunk_size": 65536,
+        "expandable_segments": false
+      },
+      "elapsed_s": 59.07460306400026,
+      "losses": [
+        0.2149261087179184,
+        0.2149261087179184,
+        0.2149261087179184,
+        0.2149261087179184
+      ],
+      "all_losses_finite": true,
+      "gradient_nonfinite": 0,
+      "parameters_nonfinite_after_step": 0,
+      "peak_allocated_bytes": 34668308992,
+      "peak_reserved_bytes": 35567697920,
+      "median_step_time_s": 7.98417765799968,
+      "batch_shape_trans": [
+        1,
+        64,
+        2128,
+        3
+      ]
+    },
+    {
+      "id": "6sup_A-R3-full",
+      "protein": "6sup_A",
+      "replica": 3,
+      "setting": "full",
+      "status": "completed",
+      "frames": 64,
+      "memory": {
+        "group_batch_size": 4,
+        "ffn_chunk_size": 65536,
+        "expandable_segments": false
+      },
+      "elapsed_s": 62.826457066999865,
+      "losses": [
+        0.2135528326034546,
+        0.2135528326034546,
+        0.2135528326034546,
+        0.2135528326034546
+      ],
+      "all_losses_finite": true,
+      "gradient_nonfinite": 0,
+      "parameters_nonfinite_after_step": 0,
+      "peak_allocated_bytes": 34668308992,
+      "peak_reserved_bytes": 35567697920,
+      "median_step_time_s": 8.022776525998779,
+      "batch_shape_trans": [
+        1,
+        64,
+        2128,
+        3
+      ]
+    }
+  ],
+  "controls": [
+    {
+      "case": "6sms_A-R1-coverage_control-group55",
+      "alignment": {
+        "full_noise_sha256": "4afcf2793594c10fd3ad23a8d401519b0531b6aa6b2708c46bb6149cd55fef83",
+        "region_noise_sha256": "4afcf2793594c10fd3ad23a8d401519b0531b6aa6b2708c46bb6149cd55fef83",
+        "full_mask_sha256": "9cf17ad8d829707414e1f5a15bf78b7e68e69cc6d8885b8b9f3d1a825e54d5c7",
+        "region_mask_sha256": "9cf17ad8d829707414e1f5a15bf78b7e68e69cc6d8885b8b9f3d1a825e54d5c7",
+        "full_denominator": 766080.0,
+        "region_denominator": 766080.0,
+        "residues": 724,
+        "region_width": 896,
+        "frame_start": 0,
+        "name": "6sms_A_R1"
+      },
+      "comparisons": [
+        {
+          "kind": "same_path_repeat",
+          "loss": {
+            "reference": 0.22986890375614166,
+            "candidate": 0.22986890375614166,
+            "absolute_difference": 0.0
+          },
+          "gradients": {
+            "groups": 61,
+            "max_difference_rms": 0.0,
+            "max_relative_difference": 0.0,
+            "min_nonzero_reference_rms": 6.938279722792432e-07,
+            "exact_zero_reference_groups": [],
+            "nonfinite": 0
+          },
+          "updates": {
+            "groups": 71,
+            "max_difference_rms": 0.0,
+            "max_relative_difference": 0.0,
+            "min_nonzero_reference_rms": 6.256991523121214e-05,
+            "exact_zero_reference_groups": [
+              "ipa_layers.0.cell_summaries",
+              "ipa_layers.1.cell_summaries",
+              "ipa_layers.2.cell_summaries",
+              "ipa_layers.3.cell_summaries",
+              "ipa_layers.4.cell_summaries",
+              "layers.0.cell_summaries",
+              "layers.1.cell_summaries",
+              "layers.2.cell_summaries",
+              "layers.3.cell_summaries",
+              "layers.4.cell_summaries"
+            ],
+            "nonfinite": 0
+          }
+        },
+        {
+          "kind": "full_coverage",
+          "loss": {
+            "reference": 0.22986890375614166,
+            "candidate": 0.22986890375614166,
+            "absolute_difference": 0.0
+          },
+          "gradients": {
+            "groups": 61,
+            "max_difference_rms": 9.73376928860213e-10,
+            "max_relative_difference": 1.3520637544045491e-05,
+            "min_nonzero_reference_rms": 6.938279722792432e-07,
+            "exact_zero_reference_groups": [],
+            "nonfinite": 0
+          },
+          "updates": {
+            "groups": 71,
+            "max_difference_rms": 3.9097379650074964e-08,
+            "max_relative_difference": 0.00040013911728843475,
+            "min_nonzero_reference_rms": 6.256991523121214e-05,
+            "exact_zero_reference_groups": [
+              "ipa_layers.0.cell_summaries",
+              "ipa_layers.1.cell_summaries",
+              "ipa_layers.2.cell_summaries",
+              "ipa_layers.3.cell_summaries",
+              "ipa_layers.4.cell_summaries",
+              "layers.0.cell_summaries",
+              "layers.1.cell_summaries",
+              "layers.2.cell_summaries",
+              "layers.3.cell_summaries",
+              "layers.4.cell_summaries"
+            ],
+            "nonfinite": 0
+          }
+        }
+      ],
+      "thresholds_applied": false
+    },
+    {
+      "case": "6lrd_A-R1-coverage_control-group59",
+      "alignment": {
+        "full_noise_sha256": "e440aff7f93afc0b83a665862824236da5ad7092eca3a85479311cdb0bba57f4",
+        "region_noise_sha256": "e440aff7f93afc0b83a665862824236da5ad7092eca3a85479311cdb0bba57f4",
+        "full_mask_sha256": "39eaa1a03a519372261012272203be1f995b13825ff04342b2015878f8855119",
+        "region_mask_sha256": "39eaa1a03a519372261012272203be1f995b13825ff04342b2015878f8855119",
+        "full_denominator": 726957.0,
+        "region_denominator": 726957.0,
+        "residues": 705,
+        "region_width": 896,
+        "frame_start": 0,
+        "name": "6lrd_A_R1"
+      },
+      "comparisons": [
+        {
+          "kind": "same_path_repeat",
+          "loss": {
+            "reference": 0.22716741263866425,
+            "candidate": 0.22716741263866425,
+            "absolute_difference": 0.0
+          },
+          "gradients": {
+            "groups": 61,
+            "max_difference_rms": 0.0,
+            "max_relative_difference": 0.0,
+            "min_nonzero_reference_rms": 7.309249655653187e-07,
+            "exact_zero_reference_groups": [],
+            "nonfinite": 0
+          },
+          "updates": {
+            "groups": 71,
+            "max_difference_rms": 0.0,
+            "max_relative_difference": 0.0,
+            "min_nonzero_reference_rms": 6.212080670342766e-05,
+            "exact_zero_reference_groups": [
+              "ipa_layers.0.cell_summaries",
+              "ipa_layers.1.cell_summaries",
+              "ipa_layers.2.cell_summaries",
+              "ipa_layers.3.cell_summaries",
+              "ipa_layers.4.cell_summaries",
+              "layers.0.cell_summaries",
+              "layers.1.cell_summaries",
+              "layers.2.cell_summaries",
+              "layers.3.cell_summaries",
+              "layers.4.cell_summaries"
+            ],
+            "nonfinite": 0
+          }
+        },
+        {
+          "kind": "full_coverage",
+          "loss": {
+            "reference": 0.22716741263866425,
+            "candidate": 0.22716741263866425,
+            "absolute_difference": 0.0
+          },
+          "gradients": {
+            "groups": 61,
+            "max_difference_rms": 2.0682549246336935e-09,
+            "max_relative_difference": 2.0902901769346726e-05,
+            "min_nonzero_reference_rms": 7.309249655653187e-07,
+            "exact_zero_reference_groups": [],
+            "nonfinite": 0
+          },
+          "updates": {
+            "groups": 71,
+            "max_difference_rms": 4.782807220805507e-08,
+            "max_relative_difference": 0.0005156965621111021,
+            "min_nonzero_reference_rms": 6.212080670342766e-05,
+            "exact_zero_reference_groups": [
+              "ipa_layers.0.cell_summaries",
+              "ipa_layers.1.cell_summaries",
+              "ipa_layers.2.cell_summaries",
+              "ipa_layers.3.cell_summaries",
+              "ipa_layers.4.cell_summaries",
+              "layers.0.cell_summaries",
+              "layers.1.cell_summaries",
+              "layers.2.cell_summaries",
+              "layers.3.cell_summaries",
+              "layers.4.cell_summaries"
+            ],
+            "nonfinite": 0
+          }
+        }
+      ],
+      "thresholds_applied": false
+    },
+    {
+      "case": "6l3r_E-R1-coverage_control-group19",
+      "alignment": {
+        "full_noise_sha256": "8c58a9b51141873ac48cafad3e7963500cf35aec26c98546dfd7d951f478a070",
+        "region_noise_sha256": "8c58a9b51141873ac48cafad3e7963500cf35aec26c98546dfd7d951f478a070",
+        "full_mask_sha256": "7f3a00accf7ec8cb5336db113454ba68e9404fe3c195f08331575775ab7c056b",
+        "region_mask_sha256": "7f3a00accf7ec8cb5336db113454ba68e9404fe3c195f08331575775ab7c056b",
+        "full_denominator": 708813.0,
+        "region_denominator": 708813.0,
+        "residues": 669,
+        "region_width": 896,
+        "frame_start": 0,
+        "name": "6l3r_E_R1"
+      },
+      "comparisons": [
+        {
+          "kind": "same_path_repeat",
+          "loss": {
+            "reference": 0.19375376403331757,
+            "candidate": 0.19375376403331757,
+            "absolute_difference": 0.0
+          },
+          "gradients": {
+            "groups": 61,
+            "max_difference_rms": 0.0,
+            "max_relative_difference": 0.0,
+            "min_nonzero_reference_rms": 5.538526032865658e-07,
+            "exact_zero_reference_groups": [],
+            "nonfinite": 0
+          },
+          "updates": {
+            "groups": 71,
+            "max_difference_rms": 0.0,
+            "max_relative_difference": 0.0,
+            "min_nonzero_reference_rms": 6.0734695475284525e-05,
+            "exact_zero_reference_groups": [
+              "ipa_layers.0.cell_summaries",
+              "ipa_layers.1.cell_summaries",
+              "ipa_layers.2.cell_summaries",
+              "ipa_layers.3.cell_summaries",
+              "ipa_layers.4.cell_summaries",
+              "layers.0.cell_summaries",
+              "layers.1.cell_summaries",
+              "layers.2.cell_summaries",
+              "layers.3.cell_summaries",
+              "layers.4.cell_summaries"
+            ],
+            "nonfinite": 0
+          }
+        },
+        {
+          "kind": "full_coverage",
+          "loss": {
+            "reference": 0.19375376403331757,
+            "candidate": 0.19375376403331757,
+            "absolute_difference": 0.0
+          },
+          "gradients": {
+            "groups": 61,
+            "max_difference_rms": 8.518802494042511e-10,
+            "max_relative_difference": 1.1427049047554437e-05,
+            "min_nonzero_reference_rms": 5.538526032865658e-07,
+            "exact_zero_reference_groups": [],
+            "nonfinite": 0
+          },
+          "updates": {
+            "groups": 71,
+            "max_difference_rms": 4.529832196901663e-08,
+            "max_relative_difference": 0.0004914007494564127,
+            "min_nonzero_reference_rms": 6.0734695475284525e-05,
+            "exact_zero_reference_groups": [
+              "ipa_layers.0.cell_summaries",
+              "ipa_layers.1.cell_summaries",
+              "ipa_layers.2.cell_summaries",
+              "ipa_layers.3.cell_summaries",
+              "ipa_layers.4.cell_summaries",
+              "layers.0.cell_summaries",
+              "layers.1.cell_summaries",
+              "layers.2.cell_summaries",
+              "layers.3.cell_summaries",
+              "layers.4.cell_summaries"
+            ],
+            "nonfinite": 0
+          }
+        }
+      ],
+      "thresholds_applied": false
+    }
+  ],
+  "scientific_training_approximation_pass": null,
+  "notes": [
+    "capacity cases have different supervision; losses must not be used for full/region approximation comparisons",
+    "controls have no applied numerical acceptance thresholds",
+    "first train config is warmup; three remaining configs measured; controls are three different aligned views, not timing replicates",
+    "all cases use the approved default memory settings (group_batch_size 4, ffn_chunk_size 65536)",
+    "6sup_A-R1-full at 64 frames was measured in job 49513 and is not repeated here"
+  ]
+}

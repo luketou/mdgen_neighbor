@@ -1,0 +1,12 @@
+{
+  "status": "passed",
+  "passed": true,
+  "python": "/share/home/r15543056/.venvs/mdgen/bin/python",
+  "env": {
+    "CUDA_VISIBLE_DEVICES": "0",
+    "GPU_DEVICE_ORDINAL": "0",
+    "SLURM_JOB_GPUS": "1"
+  },
+  "torch": "2.11.0+cu128",
+  "gpu": "NVIDIA L40S"
+}
