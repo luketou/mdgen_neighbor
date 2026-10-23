@@ -1,0 +1,3 @@
+host=node-19 job=49502 python=/share/home/r15543056/.venvs/mdgen/bin/python
+{"sha256": "bc90c66e7539f52c9d0514aeddd96c552061150a1eef3b10c120bc3aaff08015", "epoch": null, "global_step": null}
+abs_pos_emb = False

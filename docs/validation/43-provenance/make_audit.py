@@ -126,6 +126,11 @@ audit = {
         "mdgen/mdgen/model/latent_model.py": {
             "pos_embed_guard": find_line(mdgen / "mdgen/model/latent_model.py", "if args.abs_pos_emb:"),
             "pos_embed_add": find_line(mdgen / "mdgen/model/latent_model.py", "x = x + self.pos_embed"),
+            "rotary_flag": [
+                i
+                for i, line in enumerate(open(mdgen / "mdgen/model/latent_model.py", encoding="utf-8"), 1)
+                if "use_rotary_embeddings=not args.no_rope" in line
+            ],
         },
         "mdgen/sim_inference.py": {"full_length": find_line(mdgen / "sim_inference.py", "L = len(seqres)")},
         "alphaflow/scripts/download_atlas.sh": {"zip": find_line(alphaflow / "scripts/download_atlas.sh", "_protein.zip")},
