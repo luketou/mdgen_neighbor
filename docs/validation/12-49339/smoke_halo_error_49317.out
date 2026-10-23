@@ -1,0 +1,12 @@
+name, uuid, memory.total [MiB]
+NVIDIA L40S, GPU-83a6811b-8c82-590e-4fdb-e85d9e786e61, 46068 MiB
+PyTorch: 2.11.0+cu128
+GPU: NVIDIA L40S
+Warning: The cache directory for DeepSpeed Triton autotune, /home/r15543056/.triton/autotune, appears to be on an NFS system. While this is generally acceptable, if you experience slowdowns or hanging when DeepSpeed exits, it is recommended to set the TRITON_CACHE_DIR environment variable to a non-NFS path.
+3ilw_A_R1 {"1": {"l2": {"count": 54, "nonfinite": 0, "median": 1.7305232377287796, "max": 6.727219454477475}, "relative": {"count": 54, "nonfinite": 0, "median": 0.01908901548245833, "max": 0.08112375128780493}, "by_ring": {"0": {"l2": {"count": 45, "nonfinite": 0, "median": 1.9743990908346314, "max": 6.727219454477475}, "relative": {"count": 45, "nonfinite": 0, "median": 0.020158579183087104, "max": 0.08112375128780493}}, "1": {"l2": {"count": 9, "nonfinite": 0, "median": 0.7416161291851924, "max": 1.1861987162789345}, "relative": {"count": 9, "nonfinite": 0, "median": 0.00746118595308933, "max": 0.01271788131808173}}}}, "2": {"l2": {"count": 54, "nonfinite": 0, "median": 0.33073989926458747, "max": 1.383810611378344}, "relative": {"count": 54, "nonfinite": 0, "median": 0.003202789069700709, "max": 0.016687415748294725}, "by_ring": {"0": {"l2": {"count": 45, "nonfinite": 0, "median": 0.35818959330211253, "max": 1.383810611378344}, "relative": {"count": 45, "nonfinite": 0, "median": 0.0034975288541153654, "max": 0.016687415748294725}}, "1": {"l2": {"count": 9, "nonfinite": 0, "median": 0.10252046955094367, "max": 0.29145653326951804}, "relative": {"count": 9, "nonfinite": 0, "median": 0.0010471432862992065, "max": 0.003124863944490762}}}}}
+halo_rings=1: relative median 0.0191, max 0.0811 over 54 loss residues
+  ring 0: relative median 0.0202, max 0.0811 (45)
+  ring 1: relative median 0.00746, max 0.0127 (9)
+halo_rings=2: relative median 0.0032, max 0.0167 over 54 loss residues
+  ring 0: relative median 0.0035, max 0.0167 (45)
+  ring 1: relative median 0.00105, max 0.00312 (9)

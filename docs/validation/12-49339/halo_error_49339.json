@@ -1,0 +1,395 @@
+{
+  "experiment": "halo-error",
+  "settings": {
+    "sim_ckpt": "/share/home/r15543056/MDgen/mdgen/ckpt/atlas.ckpt",
+    "data_dir": "/share/home/r15543056/MDgen/mdgen/data/atlas_data",
+    "split": "/share/home/r15543056/MDgen/mdgen/splits/atlas.csv",
+    "output": "results/halo_error_49339/halo_error.json",
+    "pdb_id": [
+      "3ilw_A"
+    ],
+    "replicate": 1,
+    "suffix": "_i40",
+    "partition_dir": null,
+    "region_residues": 320,
+    "halo_rings": [
+      1,
+      2
+    ],
+    "regions": 8,
+    "times": [
+      0.25,
+      0.5,
+      0.75
+    ],
+    "seed": 0,
+    "local_spatial": null,
+    "cell_summaries": null,
+    "spatial_cell_width": null,
+    "spatial_contact_radius": null,
+    "core_capacity": null,
+    "ghost_capacity": null,
+    "group_batch_size": null,
+    "ffn_chunk_size": null,
+    "model": {
+      "num_frames": 250,
+      "num_layers": 5,
+      "spatial_cell_width": 16.0,
+      "spatial_contact_radius": 16.0,
+      "core_capacity": 128,
+      "ghost_capacity": 128,
+      "cell_summaries": false,
+      "frame_interval": null
+    }
+  },
+  "summary": {
+    "1": {
+      "l2": {
+        "count": 162,
+        "nonfinite": 0,
+        "median": 2.064563591436811,
+        "max": 7.5226204392158715
+      },
+      "relative": {
+        "count": 162,
+        "nonfinite": 0,
+        "median": 0.021744195231967498,
+        "max": 0.10809425469904656
+      },
+      "by_ring": {
+        "0": {
+          "l2": {
+            "count": 135,
+            "nonfinite": 0,
+            "median": 2.2630483046412784,
+            "max": 7.5226204392158715
+          },
+          "relative": {
+            "count": 135,
+            "nonfinite": 0,
+            "median": 0.02333892030799252,
+            "max": 0.10809425469904656
+          }
+        },
+        "1": {
+          "l2": {
+            "count": 27,
+            "nonfinite": 0,
+            "median": 0.8584718840616752,
+            "max": 2.0304405203705835
+          },
+          "relative": {
+            "count": 27,
+            "nonfinite": 0,
+            "median": 0.0073030277081968225,
+            "max": 0.021365112151468798
+          }
+        }
+      }
+    },
+    "2": {
+      "l2": {
+        "count": 162,
+        "nonfinite": 0,
+        "median": 0.36955872080754104,
+        "max": 1.4408832843915909
+      },
+      "relative": {
+        "count": 162,
+        "nonfinite": 0,
+        "median": 0.0037473370359949283,
+        "max": 0.020704381670339632
+      },
+      "by_ring": {
+        "0": {
+          "l2": {
+            "count": 135,
+            "nonfinite": 0,
+            "median": 0.39235616277451424,
+            "max": 1.4408832843915909
+          },
+          "relative": {
+            "count": 135,
+            "nonfinite": 0,
+            "median": 0.004014550525054835,
+            "max": 0.020704381670339632
+          }
+        },
+        "1": {
+          "l2": {
+            "count": 27,
+            "nonfinite": 0,
+            "median": 0.13068404121272917,
+            "max": 0.5988946560366781
+          },
+          "relative": {
+            "count": 27,
+            "nonfinite": 0,
+            "median": 0.001060510460303998,
+            "max": 0.006301810550354664
+          }
+        }
+      }
+    }
+  },
+  "proteins": [
+    {
+      "name": "3ilw_A_R1",
+      "residues": 470,
+      "groups": 48,
+      "regions": [
+        {
+          "loss_groups": [
+            41,
+            42,
+            43,
+            44,
+            45,
+            46,
+            47
+          ],
+          "by_halo": {
+            "1": {
+              "halo_groups": 3,
+              "region_residues": 115,
+              "loss_residues": 54,
+              "times": [
+                {
+                  "t": 0.25,
+                  "l2": {
+                    "count": 54,
+                    "nonfinite": 0,
+                    "median": 2.385700121106283,
+                    "max": 7.5226204392158715
+                  },
+                  "relative": {
+                    "count": 54,
+                    "nonfinite": 0,
+                    "median": 0.0270052125962552,
+                    "max": 0.10809425469904656
+                  }
+                },
+                {
+                  "t": 0.5,
+                  "l2": {
+                    "count": 54,
+                    "nonfinite": 0,
+                    "median": 1.7311210176290315,
+                    "max": 6.1240407222725315
+                  },
+                  "relative": {
+                    "count": 54,
+                    "nonfinite": 0,
+                    "median": 0.017314117700640355,
+                    "max": 0.07490163013201619
+                  }
+                },
+                {
+                  "t": 0.75,
+                  "l2": {
+                    "count": 54,
+                    "nonfinite": 0,
+                    "median": 2.0193078633366706,
+                    "max": 6.299398584888935
+                  },
+                  "relative": {
+                    "count": 54,
+                    "nonfinite": 0,
+                    "median": 0.022057954936899566,
+                    "max": 0.06638258165720977
+                  }
+                }
+              ]
+            },
+            "2": {
+              "halo_groups": 7,
+              "region_residues": 250,
+              "loss_residues": 54,
+              "times": [
+                {
+                  "t": 0.25,
+                  "l2": {
+                    "count": 54,
+                    "nonfinite": 0,
+                    "median": 0.49307118081053136,
+                    "max": 1.4408832843915909
+                  },
+                  "relative": {
+                    "count": 54,
+                    "nonfinite": 0,
+                    "median": 0.004800458611226173,
+                    "max": 0.020704381670339632
+                  }
+                },
+                {
+                  "t": 0.5,
+                  "l2": {
+                    "count": 54,
+                    "nonfinite": 0,
+                    "median": 0.3528295049372986,
+                    "max": 1.3516072052460095
+                  },
+                  "relative": {
+                    "count": 54,
+                    "nonfinite": 0,
+                    "median": 0.0034233573592733933,
+                    "max": 0.016531174033986025
+                  }
+                },
+                {
+                  "t": 0.75,
+                  "l2": {
+                    "count": 54,
+                    "nonfinite": 0,
+                    "median": 0.3054859793266368,
+                    "max": 1.331883943786525
+                  },
+                  "relative": {
+                    "count": 54,
+                    "nonfinite": 0,
+                    "median": 0.0030532238610304742,
+                    "max": 0.014035291379787236
+                  }
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "skipped_seeds": [
+        {
+          "seed": 1,
+          "reason": "region_residues=320 cannot hold seed group 37 with 2 halo ring(s) (435 residues)"
+        },
+        {
+          "seed": 2,
+          "reason": "region_residues=320 cannot hold seed group 24 with 2 halo ring(s) (470 residues)"
+        },
+        {
+          "seed": 3,
+          "reason": "region_residues=320 cannot hold seed group 10 with 2 halo ring(s) (402 residues)"
+        },
+        {
+          "seed": 4,
+          "reason": "region_residues=320 cannot hold seed group 10 with 2 halo ring(s) (402 residues)"
+        },
+        {
+          "seed": 5,
+          "reason": "region_residues=320 cannot hold seed group 35 with 2 halo ring(s) (452 residues)"
+        },
+        {
+          "seed": 6,
+          "reason": "region_residues=320 cannot hold seed group 26 with 2 halo ring(s) (402 residues)"
+        },
+        {
+          "seed": 7,
+          "reason": "region_residues=320 cannot hold seed group 15 with 2 halo ring(s) (402 residues)"
+        }
+      ],
+      "summary": {
+        "1": {
+          "l2": {
+            "count": 162,
+            "nonfinite": 0,
+            "median": 2.064563591436811,
+            "max": 7.5226204392158715
+          },
+          "relative": {
+            "count": 162,
+            "nonfinite": 0,
+            "median": 0.021744195231967498,
+            "max": 0.10809425469904656
+          },
+          "by_ring": {
+            "0": {
+              "l2": {
+                "count": 135,
+                "nonfinite": 0,
+                "median": 2.2630483046412784,
+                "max": 7.5226204392158715
+              },
+              "relative": {
+                "count": 135,
+                "nonfinite": 0,
+                "median": 0.02333892030799252,
+                "max": 0.10809425469904656
+              }
+            },
+            "1": {
+              "l2": {
+                "count": 27,
+                "nonfinite": 0,
+                "median": 0.8584718840616752,
+                "max": 2.0304405203705835
+              },
+              "relative": {
+                "count": 27,
+                "nonfinite": 0,
+                "median": 0.0073030277081968225,
+                "max": 0.021365112151468798
+              }
+            }
+          }
+        },
+        "2": {
+          "l2": {
+            "count": 162,
+            "nonfinite": 0,
+            "median": 0.36955872080754104,
+            "max": 1.4408832843915909
+          },
+          "relative": {
+            "count": 162,
+            "nonfinite": 0,
+            "median": 0.0037473370359949283,
+            "max": 0.020704381670339632
+          },
+          "by_ring": {
+            "0": {
+              "l2": {
+                "count": 135,
+                "nonfinite": 0,
+                "median": 0.39235616277451424,
+                "max": 1.4408832843915909
+              },
+              "relative": {
+                "count": 135,
+                "nonfinite": 0,
+                "median": 0.004014550525054835,
+                "max": 0.020704381670339632
+              }
+            },
+            "1": {
+              "l2": {
+                "count": 27,
+                "nonfinite": 0,
+                "median": 0.13068404121272917,
+                "max": 0.5988946560366781
+              },
+              "relative": {
+                "count": 27,
+                "nonfinite": 0,
+                "median": 0.001060510460303998,
+                "max": 0.006301810550354664
+              }
+            }
+          }
+        }
+      }
+    }
+  ],
+  "environment": {
+    "hostname": "node-201",
+    "platform": "Linux-5.14.0-570.62.1.0.1.el9_6.x86_64-x86_64-with-glibc2.34",
+    "python": "3.11.12",
+    "torch": "2.11.0+cu128",
+    "pytorch_lightning": "2.6.5",
+    "numpy": "2.2.6",
+    "cuda_available": true,
+    "cuda_version": "12.8",
+    "cudnn_version": 91900,
+    "device_name": "NVIDIA L40S",
+    "git_commit": null,
+    "slurm_job_id": "49339"
+  }
+}

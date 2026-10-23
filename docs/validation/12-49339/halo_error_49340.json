@@ -1,0 +1,473 @@
+{
+  "experiment": "halo-error",
+  "settings": {
+    "sim_ckpt": "/share/home/r15543056/MDgen/mdgen/ckpt/atlas.ckpt",
+    "data_dir": "/share/home/r15543056/MDgen/mdgen/data/atlas_data",
+    "split": "/share/home/r15543056/MDgen/mdgen/splits/atlas.csv",
+    "output": "results/halo_error_49340/halo_error.json",
+    "pdb_id": [
+      "6irx_A"
+    ],
+    "replicate": 1,
+    "suffix": "_i40",
+    "partition_dir": null,
+    "region_residues": 320,
+    "halo_rings": [
+      1
+    ],
+    "regions": 8,
+    "times": [
+      0.25,
+      0.5,
+      0.75
+    ],
+    "seed": 0,
+    "local_spatial": null,
+    "cell_summaries": null,
+    "spatial_cell_width": null,
+    "spatial_contact_radius": null,
+    "core_capacity": null,
+    "ghost_capacity": null,
+    "group_batch_size": null,
+    "ffn_chunk_size": null,
+    "model": {
+      "num_frames": 250,
+      "num_layers": 5,
+      "spatial_cell_width": 16.0,
+      "spatial_contact_radius": 16.0,
+      "core_capacity": 128,
+      "ghost_capacity": 128,
+      "cell_summaries": false,
+      "frame_interval": null
+    }
+  },
+  "summary": {
+    "1": {
+      "l2": {
+        "count": 333,
+        "nonfinite": 0,
+        "median": 2.1900047290697255,
+        "max": 12.299700591847133
+      },
+      "relative": {
+        "count": 333,
+        "nonfinite": 0,
+        "median": 0.0259790318940596,
+        "max": 0.15769534262143714
+      },
+      "by_ring": {
+        "0": {
+          "l2": {
+            "count": 315,
+            "nonfinite": 0,
+            "median": 2.317676388236799,
+            "max": 12.299700591847133
+          },
+          "relative": {
+            "count": 315,
+            "nonfinite": 0,
+            "median": 0.028252370127349092,
+            "max": 0.15769534262143714
+          }
+        },
+        "1": {
+          "l2": {
+            "count": 18,
+            "nonfinite": 0,
+            "median": 0.6577677326631597,
+            "max": 1.1011023100819253
+          },
+          "relative": {
+            "count": 18,
+            "nonfinite": 0,
+            "median": 0.006742656686877706,
+            "max": 0.012695765862809127
+          }
+        }
+      }
+    }
+  },
+  "proteins": [
+    {
+      "name": "6irx_A_R1",
+      "residues": 496,
+      "groups": 46,
+      "regions": [
+        {
+          "loss_groups": [
+            40,
+            42,
+            43,
+            44,
+            45
+          ],
+          "by_halo": {
+            "1": {
+              "halo_groups": 7,
+              "region_residues": 316,
+              "loss_residues": 66,
+              "times": [
+                {
+                  "t": 0.25,
+                  "l2": {
+                    "count": 66,
+                    "nonfinite": 0,
+                    "median": 1.9567083100623297,
+                    "max": 4.991856184271093
+                  },
+                  "relative": {
+                    "count": 66,
+                    "nonfinite": 0,
+                    "median": 0.023011075939595723,
+                    "max": 0.05702450765391223
+                  }
+                },
+                {
+                  "t": 0.5,
+                  "l2": {
+                    "count": 66,
+                    "nonfinite": 0,
+                    "median": 1.2983981742446882,
+                    "max": 4.23552025112499
+                  },
+                  "relative": {
+                    "count": 66,
+                    "nonfinite": 0,
+                    "median": 0.014707754626606277,
+                    "max": 0.04261418670853136
+                  }
+                },
+                {
+                  "t": 0.75,
+                  "l2": {
+                    "count": 66,
+                    "nonfinite": 0,
+                    "median": 1.3210817312276029,
+                    "max": 4.428022270919122
+                  },
+                  "relative": {
+                    "count": 66,
+                    "nonfinite": 0,
+                    "median": 0.013952597515388764,
+                    "max": 0.04378700755728705
+                  }
+                }
+              ]
+            }
+          }
+        },
+        {
+          "loss_groups": [
+            23,
+            24,
+            37
+          ],
+          "by_halo": {
+            "1": {
+              "halo_groups": 10,
+              "region_residues": 297,
+              "loss_residues": 18,
+              "times": [
+                {
+                  "t": 0.25,
+                  "l2": {
+                    "count": 18,
+                    "nonfinite": 0,
+                    "median": 5.924669516185121,
+                    "max": 9.00856856297834
+                  },
+                  "relative": {
+                    "count": 18,
+                    "nonfinite": 0,
+                    "median": 0.08969620618816916,
+                    "max": 0.13314878568282817
+                  }
+                },
+                {
+                  "t": 0.5,
+                  "l2": {
+                    "count": 18,
+                    "nonfinite": 0,
+                    "median": 4.490439526119636,
+                    "max": 6.852190255047078
+                  },
+                  "relative": {
+                    "count": 18,
+                    "nonfinite": 0,
+                    "median": 0.057528173250589065,
+                    "max": 0.08438750311635906
+                  }
+                },
+                {
+                  "t": 0.75,
+                  "l2": {
+                    "count": 18,
+                    "nonfinite": 0,
+                    "median": 5.093632963822964,
+                    "max": 8.450766501487129
+                  },
+                  "relative": {
+                    "count": 18,
+                    "nonfinite": 0,
+                    "median": 0.05685798608879167,
+                    "max": 0.09105349924992365
+                  }
+                }
+              ]
+            }
+          }
+        },
+        {
+          "loss_groups": [
+            2,
+            3
+          ],
+          "by_halo": {
+            "1": {
+              "halo_groups": 7,
+              "region_residues": 239,
+              "loss_residues": 7,
+              "times": [
+                {
+                  "t": 0.25,
+                  "l2": {
+                    "count": 7,
+                    "nonfinite": 0,
+                    "median": 7.388467789963411,
+                    "max": 12.299700591847133
+                  },
+                  "relative": {
+                    "count": 7,
+                    "nonfinite": 0,
+                    "median": 0.10359142358814907,
+                    "max": 0.1180600105550866
+                  }
+                },
+                {
+                  "t": 0.5,
+                  "l2": {
+                    "count": 7,
+                    "nonfinite": 0,
+                    "median": 5.863910474767973,
+                    "max": 8.154431895548957
+                  },
+                  "relative": {
+                    "count": 7,
+                    "nonfinite": 0,
+                    "median": 0.06520291323053523,
+                    "max": 0.08093716434299335
+                  }
+                },
+                {
+                  "t": 0.75,
+                  "l2": {
+                    "count": 7,
+                    "nonfinite": 0,
+                    "median": 5.672417549902819,
+                    "max": 7.917677970484976
+                  },
+                  "relative": {
+                    "count": 7,
+                    "nonfinite": 0,
+                    "median": 0.0652291918686469,
+                    "max": 0.08667713790446256
+                  }
+                }
+              ]
+            }
+          }
+        },
+        {
+          "loss_groups": [
+            2,
+            3,
+            14
+          ],
+          "by_halo": {
+            "1": {
+              "halo_groups": 8,
+              "region_residues": 284,
+              "loss_residues": 13,
+              "times": [
+                {
+                  "t": 0.25,
+                  "l2": {
+                    "count": 13,
+                    "nonfinite": 0,
+                    "median": 5.8632621126838895,
+                    "max": 12.24975157798964
+                  },
+                  "relative": {
+                    "count": 13,
+                    "nonfinite": 0,
+                    "median": 0.08707465477181131,
+                    "max": 0.11758056952648623
+                  }
+                },
+                {
+                  "t": 0.5,
+                  "l2": {
+                    "count": 13,
+                    "nonfinite": 0,
+                    "median": 4.4881346826160415,
+                    "max": 8.08134714658597
+                  },
+                  "relative": {
+                    "count": 13,
+                    "nonfinite": 0,
+                    "median": 0.05713439078233822,
+                    "max": 0.08021175852520578
+                  }
+                },
+                {
+                  "t": 0.75,
+                  "l2": {
+                    "count": 13,
+                    "nonfinite": 0,
+                    "median": 5.04571924826402,
+                    "max": 7.663279296592772
+                  },
+                  "relative": {
+                    "count": 13,
+                    "nonfinite": 0,
+                    "median": 0.053950331457054176,
+                    "max": 0.08389216116988639
+                  }
+                }
+              ]
+            }
+          }
+        },
+        {
+          "loss_groups": [
+            33
+          ],
+          "by_halo": {
+            "1": {
+              "halo_groups": 10,
+              "region_residues": 298,
+              "loss_residues": 7,
+              "times": [
+                {
+                  "t": 0.25,
+                  "l2": {
+                    "count": 7,
+                    "nonfinite": 0,
+                    "median": 9.294469396056401,
+                    "max": 10.737317544412983
+                  },
+                  "relative": {
+                    "count": 7,
+                    "nonfinite": 0,
+                    "median": 0.1447628727628385,
+                    "max": 0.15769534262143714
+                  }
+                },
+                {
+                  "t": 0.5,
+                  "l2": {
+                    "count": 7,
+                    "nonfinite": 0,
+                    "median": 6.762912035934355,
+                    "max": 7.248501351509915
+                  },
+                  "relative": {
+                    "count": 7,
+                    "nonfinite": 0,
+                    "median": 0.08272694786878021,
+                    "max": 0.09701960154844823
+                  }
+                },
+                {
+                  "t": 0.75,
+                  "l2": {
+                    "count": 7,
+                    "nonfinite": 0,
+                    "median": 8.084184054166016,
+                    "max": 9.488080068818224
+                  },
+                  "relative": {
+                    "count": 7,
+                    "nonfinite": 0,
+                    "median": 0.09588389216590767,
+                    "max": 0.10853492046086419
+                  }
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "skipped_seeds": [
+        {
+          "seed": 1,
+          "reason": "region_residues=320 cannot hold seed group 9 with 1 halo ring(s) (359 residues)"
+        },
+        {
+          "seed": 3,
+          "reason": "region_residues=320 cannot hold seed group 12 with 1 halo ring(s) (417 residues)"
+        }
+      ],
+      "summary": {
+        "1": {
+          "l2": {
+            "count": 333,
+            "nonfinite": 0,
+            "median": 2.1900047290697255,
+            "max": 12.299700591847133
+          },
+          "relative": {
+            "count": 333,
+            "nonfinite": 0,
+            "median": 0.0259790318940596,
+            "max": 0.15769534262143714
+          },
+          "by_ring": {
+            "0": {
+              "l2": {
+                "count": 315,
+                "nonfinite": 0,
+                "median": 2.317676388236799,
+                "max": 12.299700591847133
+              },
+              "relative": {
+                "count": 315,
+                "nonfinite": 0,
+                "median": 0.028252370127349092,
+                "max": 0.15769534262143714
+              }
+            },
+            "1": {
+              "l2": {
+                "count": 18,
+                "nonfinite": 0,
+                "median": 0.6577677326631597,
+                "max": 1.1011023100819253
+              },
+              "relative": {
+                "count": 18,
+                "nonfinite": 0,
+                "median": 0.006742656686877706,
+                "max": 0.012695765862809127
+              }
+            }
+          }
+        }
+      }
+    }
+  ],
+  "environment": {
+    "hostname": "node-201",
+    "platform": "Linux-5.14.0-570.62.1.0.1.el9_6.x86_64-x86_64-with-glibc2.34",
+    "python": "3.11.12",
+    "torch": "2.11.0+cu128",
+    "pytorch_lightning": "2.6.5",
+    "numpy": "2.2.6",
+    "cuda_available": true,
+    "cuda_version": "12.8",
+    "cudnn_version": 91900,
+    "device_name": "NVIDIA L40S",
+    "git_commit": null,
+    "slurm_job_id": "49340"
+  }
+}

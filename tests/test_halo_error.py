@@ -96,6 +96,20 @@ def test_region_budget_counts_the_deepest_halo(tmp_path, checkpoint):
         run(tmp_path, checkpoint, '--halo_rings', '1', '200')
 
 
+def test_seeds_that_do_not_fit_are_skipped_and_reported(monkeypatch, tmp_path, checkpoint):
+    calls = []
+
+    def first_seed_too_big(*args, **kwargs):
+        calls.append(None)
+        if len(calls) == 1:
+            raise ValueError('region_residues=80 cannot hold seed group 0')
+        return sample_region_groups(*args, **kwargs)
+    monkeypatch.setattr('mdgen.full_length.halo_error.sample_region_groups', first_seed_too_big)
+    protein, = run(tmp_path, checkpoint, '--halo_rings', '0', '1')['proteins']
+    assert protein['skipped_seeds'] == [{'seed': 0, 'reason': 'region_residues=80 cannot hold seed group 0'}]
+    assert len(protein['regions']) == 1
+
+
 def test_boundary_rings_count_hops_to_groups_outside_the_loss_set():
     # chain of groups 0-1-2-3: each group's ghost is a core of its neighbours
     cores = [[0], [1], [2], [3]]

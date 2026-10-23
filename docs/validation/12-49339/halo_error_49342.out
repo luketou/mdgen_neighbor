@@ -1,0 +1,9 @@
+name, uuid, memory.total [MiB]
+NVIDIA L40S, GPU-83a6811b-8c82-590e-4fdb-e85d9e786e61, 46068 MiB
+PyTorch: 2.11.0+cu128
+GPU: NVIDIA L40S
+Warning: The cache directory for DeepSpeed Triton autotune, /home/r15543056/.triton/autotune, appears to be on an NFS system. While this is generally acceptable, if you experience slowdowns or hanging when DeepSpeed exits, it is recommended to set the TRITON_CACHE_DIR environment variable to a non-NFS path.
+6irx_A_R2 {"1": {"l2": {"count": 333, "nonfinite": 0, "median": 2.0445872125981706, "max": 10.911537935220766}, "relative": {"count": 333, "nonfinite": 0, "median": 0.021371754581155793, "max": 0.13686055897676488}, "by_ring": {"0": {"l2": {"count": 315, "nonfinite": 0, "median": 2.2232152401651843, "max": 10.911537935220766}, "relative": {"count": 315, "nonfinite": 0, "median": 0.024840638772366568, "max": 0.13686055897676488}}, "1": {"l2": {"count": 18, "nonfinite": 0, "median": 0.5992574635579215, "max": 1.2956588418447998}, "relative": {"count": 18, "nonfinite": 0, "median": 0.005317785273374441, "max": 0.010685491882182674}}}}}
+halo_rings=1: relative median 0.0214, max 0.137 over 333 loss residues
+  ring 0: relative median 0.0248, max 0.137 (315)
+  ring 1: relative median 0.00532, max 0.0107 (18)
