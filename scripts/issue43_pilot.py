@@ -130,6 +130,7 @@ def main(argv=None):
                               if setting != 'full' else []),
                             '--configs', *(['fp32-reference'] * 4), '--',
                             '--train_split', str(split), '--val_split', str(split),
+                            '--model_dir', str(args.output_dir / 'workdir' / identity),
                             '--data_dir', str(root / 'arrays'), '--suffix', '_i400ps',
                             '--partition_dir', str(root / 'partitions'), '--atlas',
                             '--replicates', str(replica), '--overfit_frame', '--batch_size', '1',
