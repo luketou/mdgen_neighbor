@@ -52,7 +52,7 @@ sbatch --nodelist=node-201 job/submit_neighbor_scaling.sh
 
 ## Training region 訓練步量測（#9 Ticket 3）
 
-`submit_training_region_probe.sh` 以 `mdgen.train_step_probe` 對 5 層 `--local_spatial` ATLAS 組態（`--sim_condition --prepend_ipa --num_frames 250 --batch_size 1`）跑一次 `fp32-reference` training step；輸入是從 7,500 殘基合成鏈切出的一個 Training region（預設 `--region_residues 1024 --halo_rings 1`）。報告寫到 `results/training_region_probe_<job>/probe.json`，log 末尾印出 region、峰值記憶體與 step 時間。OOM 時 job 以非零結束，traceback 即為結果。
+`submit_training_region_probe.sh` 以 `mdgen.train_step_probe` 對 5 層 `--local_spatial` ATLAS 組態（`--sim_condition --prepend_ipa --num_frames 250 --batch_size 1`）跑一次 `fp32-reference` training step；輸入是從 7,500 殘基合成鏈切出的一個 Training region（預設 `--region_residues 896 --halo_rings 1`，見 [ADR 0001](../docs/adr/0001-training-region-defaults.md)）。報告寫到 `results/training_region_probe_<job>/probe.json`，log 末尾印出 region、峰值記憶體與 step 時間。OOM 時 job 以非零結束，traceback 即為結果。
 
 ```bash
 mkdir -p logs
