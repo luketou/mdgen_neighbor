@@ -75,8 +75,8 @@ def sample_region_groups(partition, ca_coordinates, *, region_residues, halo_rin
     loss, halo, residues, next_size = [], (), None, None
     for group in order:
         trial = loss + [group]
-        trial_halo = _halo(partition, trial, halo_rings)
-        trial_residues = _residues(partition, trial + list(trial_halo))
+        trial_selection = with_halo(partition, trial, halo_rings)
+        trial_halo, trial_residues = trial_selection.halo_groups, trial_selection.residues
         if len(trial_residues) > region_residues:
             if not loss:
                 raise ValueError(
@@ -86,6 +86,13 @@ def sample_region_groups(partition, ca_coordinates, *, region_residues, halo_rin
             break
         loss, halo, residues = trial, trial_halo, trial_residues
     return RegionSelection(tuple(sorted(loss)), halo, residues, next_size)
+
+
+def with_halo(partition, loss_groups, halo_rings):
+    """The selection of the given loss groups with halo_rings rings of halo groups."""
+    loss = sorted(loss_groups)
+    halo = _halo(partition, loss, halo_rings)
+    return RegionSelection(tuple(loss), halo, _residues(partition, loss + list(halo)), None)
 
 
 def largest_seed_region(partition, halo_rings=1):
