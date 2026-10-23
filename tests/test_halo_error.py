@@ -110,8 +110,14 @@ def test_boundary_rings_count_hops_to_groups_outside_the_loss_set():
 
 
 def test_with_halo_keeps_the_loss_groups():
-    from tests.test_group_region import protein
-    ca, partition = protein()
+    # built here: on HPC an installed `tests` package can shadow `tests.test_group_region`
+    from mdgen.full_length.partition import build_spatial_partition
+    step = torch.randn(120, 3, generator=torch.Generator().manual_seed(0))
+    ca = (3.8 * step / step.norm(dim=-1, keepdim=True)).cumsum(0)
+    partition = build_spatial_partition(
+        ca, mask=torch.ones(120, dtype=torch.bool), chain_id=(torch.arange(120) >= 60).long(),
+        residue_index=torch.arange(120) % 60, cell_width=8.0, contact_radius=8.0,
+        core_capacity=8, ghost_capacity=64)
     selection = sample_region_groups(partition, ca, region_residues=90, halo_rings=2,
                                      generator=torch.Generator().manual_seed(0))
     for k in (0, 1, 2):

@@ -37,3 +37,15 @@ def load_chain_numbering(path, length):
     if any(len(value) != length for value in numbering.values()):
         raise ValueError(f'{path}: expected {length} residues')
     return numbering
+
+
+def follows_previous(chain_id, residue_index):
+    """Per residue: the previous tensor residue is its same-chain, consecutive predecessor.
+
+    Pre-omega and phi use the previous residue's atoms, so they are undefined
+    where this is False (first residue, chain starts and numbering gaps).
+    """
+    chain_id, residue_index = np.asarray(chain_id), np.asarray(residue_index)
+    follows = np.zeros(len(chain_id), dtype=bool)
+    follows[1:] = (chain_id[1:] == chain_id[:-1]) & (residue_index[1:] == residue_index[:-1] + 1)
+    return follows

@@ -5,7 +5,7 @@ from .full_length.group_region import (largest_seed_region, region_subpartition,
                                        sample_region_groups)
 from .full_length.partition import PartitionParams, build_spatial_partition
 from .full_length.partition_store import load_partition
-from .topology import default_numbering, load_chain_numbering
+from .topology import default_numbering, follows_previous, load_chain_numbering
 from .rigid_utils import Rigid
 from .residue_constants import restype_order, restype_atom37_mask
 import numpy as np
@@ -113,6 +113,14 @@ class MDGenDataset(torch.utils.data.Dataset):
         torsions, torsion_mask = atom37_to_torsions(atom37, aatype)
         
         torsion_mask = torsion_mask[0]
+        if region is None:
+            chain = self.chain_numbering(full_name, L)
+            numbering = chain
+        else:  # torsions follow `ext`, the region residues with their predecessors
+            numbering = {key: value[ext] for key, value in chain.items()}
+        # pre-omega and phi are undefined across chain breaks and numbering gaps
+        torsion_mask[:, :2] *= torch.from_numpy(
+            follows_previous(numbering['chain_id'], numbering['residue_index']))[:, None]
 
         if region is not None:
             return {
@@ -129,7 +137,6 @@ class MDGenDataset(torch.utils.data.Dataset):
                 }, selection, region, self.args.region_residues),
             }
 
-        chain = self.chain_numbering(full_name, L)
         if self.args.atlas:
             if L > self.args.crop:
                 start = np.random.randint(0, L - self.args.crop + 1)
