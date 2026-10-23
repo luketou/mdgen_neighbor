@@ -1,1 +1,4 @@
 * text=auto eol=lf
+# Raw HPC job output is kept verbatim as evidence; skip `git diff --check` on it.
+docs/validation/**/*.out -whitespace
+docs/validation/**/*.err -whitespace

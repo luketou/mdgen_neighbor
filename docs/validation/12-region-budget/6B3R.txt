@@ -1,0 +1,8 @@
+6B3R.pdb: 4554 residues, 6 chains, 435 groups
+  rings=0 seed-region median/p90/max = 101/148/159  seeds fitting {768: '100%', 1024: '100%', 1536: '100%', 2048: '100%'}
+  rings=1 seed-region median/p90/max = 409/611/859  seeds fitting {768: '99%', 1024: '100%', 1536: '100%', 2048: '100%'}
+  rings=2 seed-region median/p90/max = 843/1286/1873  seeds fitting {768: '43%', 1024: '71%', 1536: '96%', 2048: '100%'}
+  budget=768 rings=1: unfit 0/16, loss residues [22, 25, 41, 46, 49, 60, 126, 148, 173, 195, 341, 342, 348, 354, 366, 367]
+  budget=768 rings=2: unfit 7/16, loss residues [3, 10, 30, 31, 117, 133, 133, 148, 188]
+  budget=1024 rings=1: unfit 0/16, loss residues [43, 112, 116, 130, 155, 243, 280, 370, 382, 423, 498, 511, 546, 549, 552, 610]
+  budget=1024 rings=2: unfit 6/16, loss residues [45, 118, 126, 260, 272, 319, 329, 354, 366, 367]

@@ -158,7 +158,7 @@ def parse_train_args(include_runtime_args=False):  # runtime-args-separation
     group.add_argument('--short_md', action='store_true')
     group.add_argument('--training_region', action='store_true',
                        help='Train on groups of the frame-0 full-protein partition instead of --crop.')
-    group.add_argument('--region_residues', type=positive_int, default=1024,
+    group.add_argument('--region_residues', type=positive_int, default=896,
                        help='Training region size, counting loss, halo and context residues.')
     group.add_argument('--halo_rings', type=int, default=1,
                        help='Rings of halo groups around the loss groups (no loss).')

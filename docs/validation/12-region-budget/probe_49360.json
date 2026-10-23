@@ -1,0 +1,718 @@
+{
+  "probe": "train-step",
+  "seed": 0,
+  "configs": [
+    "fp32-reference"
+  ],
+  "batch": {
+    "names": [
+      "synthetic_0"
+    ],
+    "batch_size": 1,
+    "shapes": {
+      "trans": [
+        250,
+        896,
+        3
+      ],
+      "rots": [
+        250,
+        896,
+        3,
+        3
+      ],
+      "torsions": [
+        250,
+        896,
+        7,
+        2
+      ],
+      "torsion_mask": [
+        896,
+        7
+      ],
+      "seqres": [
+        896
+      ],
+      "mask": [
+        896
+      ],
+      "chain_id": [
+        896
+      ],
+      "residue_index": [
+        896
+      ],
+      "loss_core_mask": [
+        896
+      ]
+    },
+    "regions": [
+      {
+        "loss_groups": 38,
+        "halo_groups": 18,
+        "residues": 869,
+        "loss_residues": 373,
+        "next_region_size": 965
+      }
+    ],
+    "source": "synthetic"
+  },
+  "model_args": {
+    "ckpt": null,
+    "validate": false,
+    "num_workers": 4,
+    "train_seed": null,
+    "model_dir": "results/workdir_896",
+    "deterministic": false,
+    "benchmark": false,
+    "epochs": 100,
+    "overfit": false,
+    "overfit_peptide": null,
+    "overfit_frame": false,
+    "train_batches": null,
+    "val_batches": null,
+    "val_repeat": 1,
+    "inference_batches": 0,
+    "batch_size": 1,
+    "val_freq": null,
+    "val_epoch_freq": 1,
+    "no_validate": false,
+    "designability_freq": 1,
+    "print_freq": 100,
+    "ckpt_freq": 1,
+    "wandb": false,
+    "run_name": "default",
+    "accumulate_grad": 1,
+    "grad_clip": 1.0,
+    "check_grad": false,
+    "grad_checkpointing": true,
+    "adamW": false,
+    "ema": false,
+    "ema_decay": 0.999,
+    "lr": 0.0001,
+    "train_split": "unused",
+    "val_split": "unused",
+    "data_dir": "unused",
+    "num_frames": 250,
+    "crop": 256,
+    "suffix": "",
+    "atlas": false,
+    "replicates": [
+      1,
+      2,
+      3
+    ],
+    "val_replicates": null,
+    "copy_frames": false,
+    "no_pad": false,
+    "short_md": false,
+    "training_region": true,
+    "region_residues": 896,
+    "halo_rings": 1,
+    "partition_dir": null,
+    "design_key_frames": false,
+    "no_aa_emb": false,
+    "no_torsion": false,
+    "no_design_torsion": false,
+    "supervise_no_torsions": false,
+    "supervise_all_torsions": false,
+    "no_offsets": false,
+    "no_frames": false,
+    "hyena": false,
+    "no_rope": false,
+    "local_spatial": true,
+    "cell_summaries": false,
+    "spatial_cell_width": 16.0,
+    "spatial_contact_radius": 16.0,
+    "core_capacity": 128,
+    "ghost_capacity": 128,
+    "group_batch_size": 4,
+    "dropout": 0.0,
+    "scale_factor": 1.0,
+    "interleave_ipa": false,
+    "prepend_ipa": true,
+    "oracle": false,
+    "num_layers": 5,
+    "embed_dim": 384,
+    "mha_heads": 16,
+    "ipa_heads": 4,
+    "ipa_head_dim": 32,
+    "ipa_qk": 8,
+    "ipa_v": 8,
+    "time_multiplier": 100.0,
+    "abs_pos_emb": false,
+    "abs_time_emb": false,
+    "path_type": "GVP",
+    "prediction": "velocity",
+    "sampling_method": "dopri5",
+    "alpha_max": 8,
+    "discrete_loss_weight": 0.5,
+    "dirichlet_flow_temp": 1.0,
+    "allow_nan_cfactor": false,
+    "tps_condition": false,
+    "design": false,
+    "design_from_traj": false,
+    "sim_condition": true,
+    "inpainting": false,
+    "dynamic_mpnn": false,
+    "mpnn": false,
+    "frame_interval": null,
+    "cond_interval": null,
+    "ffn_chunk_size": 65536,
+    "spatial_attention_backend": "sdpa",
+    "use_sdpa": true
+  },
+  "environment": {
+    "hostname": "node-201",
+    "platform": "Linux-5.14.0-570.62.1.0.1.el9_6.x86_64-x86_64-with-glibc2.34",
+    "python": "3.11.12",
+    "torch": "2.11.0+cu128",
+    "pytorch_lightning": "2.6.5",
+    "numpy": "2.2.6",
+    "cuda_available": true,
+    "cuda_version": "12.8",
+    "cudnn_version": 91900,
+    "device_name": "NVIDIA L40S",
+    "git_commit": null,
+    "slurm_job_id": "49360"
+  },
+  "runs": [
+    {
+      "precision_config": "fp32-reference",
+      "precision_state": {
+        "precision_config": "fp32-reference",
+        "lightning_precision": "32-true",
+        "device_type": "cuda",
+        "autocast_enabled": false,
+        "autocast_dtype": null,
+        "parameter_dtypes": [
+          "torch.float32"
+        ],
+        "float32_matmul_precision": "highest",
+        "cuda_matmul_allow_tf32": false,
+        "cudnn_allow_tf32": false
+      },
+      "batch_shapes": {
+        "trans": [
+          1,
+          250,
+          896,
+          3
+        ],
+        "rots": [
+          1,
+          250,
+          896,
+          3,
+          3
+        ],
+        "torsions": [
+          1,
+          250,
+          896,
+          7,
+          2
+        ],
+        "torsion_mask": [
+          1,
+          896,
+          7
+        ],
+        "seqres": [
+          1,
+          896
+        ],
+        "mask": [
+          1,
+          896
+        ],
+        "chain_id": [
+          1,
+          896
+        ],
+        "residue_index": [
+          1,
+          896
+        ],
+        "loss_core_mask": [
+          1,
+          896
+        ],
+        "partition.residue_mask": [
+          1,
+          896
+        ]
+      },
+      "missing_gradients": [
+        "ipa_layers.0.cell_summaries.gate",
+        "ipa_layers.0.cell_summaries.summary_attention.in_proj_weight",
+        "ipa_layers.0.cell_summaries.summary_attention.in_proj_bias",
+        "ipa_layers.0.cell_summaries.summary_attention.out_proj.weight",
+        "ipa_layers.0.cell_summaries.summary_attention.out_proj.bias",
+        "ipa_layers.0.cell_summaries.summary_norm.weight",
+        "ipa_layers.0.cell_summaries.summary_norm.bias",
+        "ipa_layers.0.cell_summaries.inject.weight",
+        "ipa_layers.0.cell_summaries.inject.bias",
+        "ipa_layers.1.cell_summaries.gate",
+        "ipa_layers.1.cell_summaries.summary_attention.in_proj_weight",
+        "ipa_layers.1.cell_summaries.summary_attention.in_proj_bias",
+        "ipa_layers.1.cell_summaries.summary_attention.out_proj.weight",
+        "ipa_layers.1.cell_summaries.summary_attention.out_proj.bias",
+        "ipa_layers.1.cell_summaries.summary_norm.weight",
+        "ipa_layers.1.cell_summaries.summary_norm.bias",
+        "ipa_layers.1.cell_summaries.inject.weight",
+        "ipa_layers.1.cell_summaries.inject.bias",
+        "ipa_layers.2.cell_summaries.gate",
+        "ipa_layers.2.cell_summaries.summary_attention.in_proj_weight",
+        "ipa_layers.2.cell_summaries.summary_attention.in_proj_bias",
+        "ipa_layers.2.cell_summaries.summary_attention.out_proj.weight",
+        "ipa_layers.2.cell_summaries.summary_attention.out_proj.bias",
+        "ipa_layers.2.cell_summaries.summary_norm.weight",
+        "ipa_layers.2.cell_summaries.summary_norm.bias",
+        "ipa_layers.2.cell_summaries.inject.weight",
+        "ipa_layers.2.cell_summaries.inject.bias",
+        "ipa_layers.3.cell_summaries.gate",
+        "ipa_layers.3.cell_summaries.summary_attention.in_proj_weight",
+        "ipa_layers.3.cell_summaries.summary_attention.in_proj_bias",
+        "ipa_layers.3.cell_summaries.summary_attention.out_proj.weight",
+        "ipa_layers.3.cell_summaries.summary_attention.out_proj.bias",
+        "ipa_layers.3.cell_summaries.summary_norm.weight",
+        "ipa_layers.3.cell_summaries.summary_norm.bias",
+        "ipa_layers.3.cell_summaries.inject.weight",
+        "ipa_layers.3.cell_summaries.inject.bias",
+        "ipa_layers.4.cell_summaries.gate",
+        "ipa_layers.4.cell_summaries.summary_attention.in_proj_weight",
+        "ipa_layers.4.cell_summaries.summary_attention.in_proj_bias",
+        "ipa_layers.4.cell_summaries.summary_attention.out_proj.weight",
+        "ipa_layers.4.cell_summaries.summary_attention.out_proj.bias",
+        "ipa_layers.4.cell_summaries.summary_norm.weight",
+        "ipa_layers.4.cell_summaries.summary_norm.bias",
+        "ipa_layers.4.cell_summaries.inject.weight",
+        "ipa_layers.4.cell_summaries.inject.bias",
+        "layers.0.cell_summaries.gate",
+        "layers.0.cell_summaries.summary_attention.in_proj_weight",
+        "layers.0.cell_summaries.summary_attention.in_proj_bias",
+        "layers.0.cell_summaries.summary_attention.out_proj.weight",
+        "layers.0.cell_summaries.summary_attention.out_proj.bias",
+        "layers.0.cell_summaries.summary_norm.weight",
+        "layers.0.cell_summaries.summary_norm.bias",
+        "layers.0.cell_summaries.inject.weight",
+        "layers.0.cell_summaries.inject.bias",
+        "layers.1.cell_summaries.gate",
+        "layers.1.cell_summaries.summary_attention.in_proj_weight",
+        "layers.1.cell_summaries.summary_attention.in_proj_bias",
+        "layers.1.cell_summaries.summary_attention.out_proj.weight",
+        "layers.1.cell_summaries.summary_attention.out_proj.bias",
+        "layers.1.cell_summaries.summary_norm.weight",
+        "layers.1.cell_summaries.summary_norm.bias",
+        "layers.1.cell_summaries.inject.weight",
+        "layers.1.cell_summaries.inject.bias",
+        "layers.2.cell_summaries.gate",
+        "layers.2.cell_summaries.summary_attention.in_proj_weight",
+        "layers.2.cell_summaries.summary_attention.in_proj_bias",
+        "layers.2.cell_summaries.summary_attention.out_proj.weight",
+        "layers.2.cell_summaries.summary_attention.out_proj.bias",
+        "layers.2.cell_summaries.summary_norm.weight",
+        "layers.2.cell_summaries.summary_norm.bias",
+        "layers.2.cell_summaries.inject.weight",
+        "layers.2.cell_summaries.inject.bias",
+        "layers.3.cell_summaries.gate",
+        "layers.3.cell_summaries.summary_attention.in_proj_weight",
+        "layers.3.cell_summaries.summary_attention.in_proj_bias",
+        "layers.3.cell_summaries.summary_attention.out_proj.weight",
+        "layers.3.cell_summaries.summary_attention.out_proj.bias",
+        "layers.3.cell_summaries.summary_norm.weight",
+        "layers.3.cell_summaries.summary_norm.bias",
+        "layers.3.cell_summaries.inject.weight",
+        "layers.3.cell_summaries.inject.bias",
+        "layers.4.cell_summaries.gate",
+        "layers.4.cell_summaries.summary_attention.in_proj_weight",
+        "layers.4.cell_summaries.summary_attention.in_proj_bias",
+        "layers.4.cell_summaries.summary_attention.out_proj.weight",
+        "layers.4.cell_summaries.summary_attention.out_proj.bias",
+        "layers.4.cell_summaries.summary_norm.weight",
+        "layers.4.cell_summaries.summary_norm.bias",
+        "layers.4.cell_summaries.inject.weight",
+        "layers.4.cell_summaries.inject.bias"
+      ],
+      "step_time_s": 6.264842152999336,
+      "peak_memory_allocated_bytes": 32457998848,
+      "peak_memory_reserved_bytes": 35022438400,
+      "loss": 2841.503173828125,
+      "loss_finite": true,
+      "parameters_nonfinite_after_step": 0,
+      "grad_checkpointing": true,
+      "gradient_nonfinite": 0,
+      "gradients": {
+        "latent_to_emb": {
+          "numel": 8448,
+          "norm": 0.0,
+          "max_abs": 0.0,
+          "nonfinite": 0
+        },
+        "cond_to_emb": {
+          "numel": 8448,
+          "norm": 0.0,
+          "max_abs": 0.0,
+          "nonfinite": 0
+        },
+        "mask_to_emb": {
+          "numel": 768,
+          "norm": 0.0,
+          "max_abs": 0.0,
+          "nonfinite": 0
+        },
+        "aatype_to_emb": {
+          "numel": 8064,
+          "norm": 0.0,
+          "max_abs": 0.0,
+          "nonfinite": 0
+        },
+        "ipa_layers.0.adaLN_modulation": {
+          "numel": 887040,
+          "norm": 0.0,
+          "max_abs": 0.0,
+          "nonfinite": 0
+        },
+        "ipa_layers.0.ipa_norm": {
+          "numel": 768,
+          "norm": 0.0,
+          "max_abs": 0.0,
+          "nonfinite": 0
+        },
+        "ipa_layers.0.ipa": {
+          "numel": 357412,
+          "norm": 0.0,
+          "max_abs": 0.0,
+          "nonfinite": 0
+        },
+        "ipa_layers.0.mha_l": {
+          "numel": 592128,
+          "norm": 0.0,
+          "max_abs": 0.0,
+          "nonfinite": 0
+        },
+        "ipa_layers.0.fc1": {
+          "numel": 591360,
+          "norm": 0.0,
+          "max_abs": 0.0,
+          "nonfinite": 0
+        },
+        "ipa_layers.0.fc2": {
+          "numel": 590208,
+          "norm": 0.0,
+          "max_abs": 0.0,
+          "nonfinite": 0
+        },
+        "ipa_layers.1.adaLN_modulation": {
+          "numel": 887040,
+          "norm": 0.0,
+          "max_abs": 0.0,
+          "nonfinite": 0
+        },
+        "ipa_layers.1.ipa_norm": {
+          "numel": 768,
+          "norm": 0.0,
+          "max_abs": 0.0,
+          "nonfinite": 0
+        },
+        "ipa_layers.1.ipa": {
+          "numel": 357412,
+          "norm": 0.0,
+          "max_abs": 0.0,
+          "nonfinite": 0
+        },
+        "ipa_layers.1.mha_l": {
+          "numel": 592128,
+          "norm": 0.0,
+          "max_abs": 0.0,
+          "nonfinite": 0
+        },
+        "ipa_layers.1.fc1": {
+          "numel": 591360,
+          "norm": 0.0,
+          "max_abs": 0.0,
+          "nonfinite": 0
+        },
+        "ipa_layers.1.fc2": {
+          "numel": 590208,
+          "norm": 0.0,
+          "max_abs": 0.0,
+          "nonfinite": 0
+        },
+        "ipa_layers.2.adaLN_modulation": {
+          "numel": 887040,
+          "norm": 0.0,
+          "max_abs": 0.0,
+          "nonfinite": 0
+        },
+        "ipa_layers.2.ipa_norm": {
+          "numel": 768,
+          "norm": 0.0,
+          "max_abs": 0.0,
+          "nonfinite": 0
+        },
+        "ipa_layers.2.ipa": {
+          "numel": 357412,
+          "norm": 0.0,
+          "max_abs": 0.0,
+          "nonfinite": 0
+        },
+        "ipa_layers.2.mha_l": {
+          "numel": 592128,
+          "norm": 0.0,
+          "max_abs": 0.0,
+          "nonfinite": 0
+        },
+        "ipa_layers.2.fc1": {
+          "numel": 591360,
+          "norm": 0.0,
+          "max_abs": 0.0,
+          "nonfinite": 0
+        },
+        "ipa_layers.2.fc2": {
+          "numel": 590208,
+          "norm": 0.0,
+          "max_abs": 0.0,
+          "nonfinite": 0
+        },
+        "ipa_layers.3.adaLN_modulation": {
+          "numel": 887040,
+          "norm": 0.0,
+          "max_abs": 0.0,
+          "nonfinite": 0
+        },
+        "ipa_layers.3.ipa_norm": {
+          "numel": 768,
+          "norm": 0.0,
+          "max_abs": 0.0,
+          "nonfinite": 0
+        },
+        "ipa_layers.3.ipa": {
+          "numel": 357412,
+          "norm": 0.0,
+          "max_abs": 0.0,
+          "nonfinite": 0
+        },
+        "ipa_layers.3.mha_l": {
+          "numel": 592128,
+          "norm": 0.0,
+          "max_abs": 0.0,
+          "nonfinite": 0
+        },
+        "ipa_layers.3.fc1": {
+          "numel": 591360,
+          "norm": 0.0,
+          "max_abs": 0.0,
+          "nonfinite": 0
+        },
+        "ipa_layers.3.fc2": {
+          "numel": 590208,
+          "norm": 0.0,
+          "max_abs": 0.0,
+          "nonfinite": 0
+        },
+        "ipa_layers.4.adaLN_modulation": {
+          "numel": 887040,
+          "norm": 0.0,
+          "max_abs": 0.0,
+          "nonfinite": 0
+        },
+        "ipa_layers.4.ipa_norm": {
+          "numel": 768,
+          "norm": 0.0,
+          "max_abs": 0.0,
+          "nonfinite": 0
+        },
+        "ipa_layers.4.ipa": {
+          "numel": 357412,
+          "norm": 0.0,
+          "max_abs": 0.0,
+          "nonfinite": 0
+        },
+        "ipa_layers.4.mha_l": {
+          "numel": 592128,
+          "norm": 0.0,
+          "max_abs": 0.0,
+          "nonfinite": 0
+        },
+        "ipa_layers.4.fc1": {
+          "numel": 591360,
+          "norm": 0.0,
+          "max_abs": 0.0,
+          "nonfinite": 0
+        },
+        "ipa_layers.4.fc2": {
+          "numel": 590208,
+          "norm": 0.0,
+          "max_abs": 0.0,
+          "nonfinite": 0
+        },
+        "layers.0.adaLN_modulation": {
+          "numel": 1330560,
+          "norm": 0.0,
+          "max_abs": 0.0,
+          "nonfinite": 0
+        },
+        "layers.0.mha_t": {
+          "numel": 592128,
+          "norm": 0.0,
+          "max_abs": 0.0,
+          "nonfinite": 0
+        },
+        "layers.0.mha_l": {
+          "numel": 592128,
+          "norm": 0.0,
+          "max_abs": 0.0,
+          "nonfinite": 0
+        },
+        "layers.0.fc1": {
+          "numel": 591360,
+          "norm": 0.0,
+          "max_abs": 0.0,
+          "nonfinite": 0
+        },
+        "layers.0.fc2": {
+          "numel": 590208,
+          "norm": 0.0,
+          "max_abs": 0.0,
+          "nonfinite": 0
+        },
+        "layers.1.adaLN_modulation": {
+          "numel": 1330560,
+          "norm": 0.0,
+          "max_abs": 0.0,
+          "nonfinite": 0
+        },
+        "layers.1.mha_t": {
+          "numel": 592128,
+          "norm": 0.0,
+          "max_abs": 0.0,
+          "nonfinite": 0
+        },
+        "layers.1.mha_l": {
+          "numel": 592128,
+          "norm": 0.0,
+          "max_abs": 0.0,
+          "nonfinite": 0
+        },
+        "layers.1.fc1": {
+          "numel": 591360,
+          "norm": 0.0,
+          "max_abs": 0.0,
+          "nonfinite": 0
+        },
+        "layers.1.fc2": {
+          "numel": 590208,
+          "norm": 0.0,
+          "max_abs": 0.0,
+          "nonfinite": 0
+        },
+        "layers.2.adaLN_modulation": {
+          "numel": 1330560,
+          "norm": 0.0,
+          "max_abs": 0.0,
+          "nonfinite": 0
+        },
+        "layers.2.mha_t": {
+          "numel": 592128,
+          "norm": 0.0,
+          "max_abs": 0.0,
+          "nonfinite": 0
+        },
+        "layers.2.mha_l": {
+          "numel": 592128,
+          "norm": 0.0,
+          "max_abs": 0.0,
+          "nonfinite": 0
+        },
+        "layers.2.fc1": {
+          "numel": 591360,
+          "norm": 0.0,
+          "max_abs": 0.0,
+          "nonfinite": 0
+        },
+        "layers.2.fc2": {
+          "numel": 590208,
+          "norm": 0.0,
+          "max_abs": 0.0,
+          "nonfinite": 0
+        },
+        "layers.3.adaLN_modulation": {
+          "numel": 1330560,
+          "norm": 0.0,
+          "max_abs": 0.0,
+          "nonfinite": 0
+        },
+        "layers.3.mha_t": {
+          "numel": 592128,
+          "norm": 0.0,
+          "max_abs": 0.0,
+          "nonfinite": 0
+        },
+        "layers.3.mha_l": {
+          "numel": 592128,
+          "norm": 0.0,
+          "max_abs": 0.0,
+          "nonfinite": 0
+        },
+        "layers.3.fc1": {
+          "numel": 591360,
+          "norm": 0.0,
+          "max_abs": 0.0,
+          "nonfinite": 0
+        },
+        "layers.3.fc2": {
+          "numel": 590208,
+          "norm": 0.0,
+          "max_abs": 0.0,
+          "nonfinite": 0
+        },
+        "layers.4.adaLN_modulation": {
+          "numel": 1330560,
+          "norm": 0.0,
+          "max_abs": 0.0,
+          "nonfinite": 0
+        },
+        "layers.4.mha_t": {
+          "numel": 592128,
+          "norm": 0.0,
+          "max_abs": 0.0,
+          "nonfinite": 0
+        },
+        "layers.4.mha_l": {
+          "numel": 592128,
+          "norm": 0.0,
+          "max_abs": 0.0,
+          "nonfinite": 0
+        },
+        "layers.4.fc1": {
+          "numel": 591360,
+          "norm": 0.0,
+          "max_abs": 0.0,
+          "nonfinite": 0
+        },
+        "layers.4.fc2": {
+          "numel": 590208,
+          "norm": 0.0,
+          "max_abs": 0.0,
+          "nonfinite": 0
+        },
+        "emb_to_latent": {
+          "numel": 303765,
+          "norm": 196.8263728574595,
+          "max_abs": 15.69347858428955,
+          "nonfinite": 0
+        },
+        "t_embedder": {
+          "numel": 246528,
+          "norm": 0.0,
+          "max_abs": 0.0,
+          "nonfinite": 0
+        }
+      }
+    }
+  ],
+  "comparisons": []
+}
