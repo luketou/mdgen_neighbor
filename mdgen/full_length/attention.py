@@ -91,16 +91,20 @@ def run_pretrained_local_attention(
         gathered = replace(partition, groups=selected).gather(states.transpose(0, 1))
         chunk = gathered.values.permute(2, 0, 1, 3)
         flat = chunk.reshape(-1, chunk.shape[-2], chunk.shape[-1])
-        positions = gathered.indices.clamp_min(0).repeat(states.shape[0], 1)
+        positions = gathered.indices.clamp_min(0)
+        if partition.position_index is not None:  # a region: rotate at full-protein positions
+            positions = partition.position_index.to(positions.device)[positions]
+        positions = positions.repeat(states.shape[0], 1)
         valid = gathered.mask.repeat(states.shape[0], 1)
         if mask is not None:
             runtime_mask = mask[:, gathered.indices.clamp_min(0)].bool()
             valid = valid & runtime_mask.reshape_as(valid)
         query_width = max(g.core_indices.numel() for g in partition.groups[start:stop])
+        full_length = states.shape[1] if partition.full_length is None else partition.full_length
         updates = _pretrained_group_attention(
-            attention, flat, valid, positions, states.shape[1], query_width=query_width
+            attention, flat, valid, positions, full_length, query_width=query_width
         ).reshape(states.shape[0], stop - start, query_width, states.shape[-1])
-        core_indices = torch.cat([g.core_indices for g in partition.groups[start:stop]])
+        core_indices = torch.cat([g.core_indices for g in partition.groups[start:stop]]).to(states.device)
         core_updates = torch.cat([
             updates[:, i, :g.core_indices.numel()]
             for i, g in enumerate(partition.groups[start:stop])

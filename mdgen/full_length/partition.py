@@ -88,6 +88,20 @@ class SpatialPartition:
     core_capacity: int
     ghost_capacity: int
     cell_width: float
+    # Set when the tensor is a region of a larger protein: each residue's index in
+    # the full protein (used as its RoPE position) and the full protein length.
+    position_index: torch.Tensor | None = None
+    full_length: int | None = None
+
+    def __post_init__(self):
+        if (self.position_index is None) != (self.full_length is None):
+            raise ValueError("position_index and full_length must be set together")
+        if self.position_index is not None and (
+            self.position_index.shape != self.residue_mask.shape
+            or int(self.position_index.min()) < 0
+            or int(self.position_index.max()) >= self.full_length
+        ):
+            raise ValueError("position_index must give each residue a position in [0, full_length)")
 
     def diagnostics(self) -> dict:
         """JSON-ready ownership and neighborhood retention at construction time.
