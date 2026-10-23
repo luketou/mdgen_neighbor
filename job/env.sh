@@ -7,6 +7,17 @@ if [ ! -f mdgen/wrapper.py ]; then
     exit 1
 fi
 : "${MDGEN_VENV:?set MDGEN_VENV to the virtualenv used for this repository}"
+# sbatch from an SSH session exports SSH_CLIENT, so the `bash -c` inside
+# `module load auto_gpu` sources ~/.bashrc, whose mkdir of the login node's
+# /run/user/<uid> fails on compute nodes and aborts the module load (49304).
+unset SSH_CLIENT SSH_CONNECTION SSH_TTY
+export XDG_RUNTIME_DIR="/tmp/xdg-$USER"
+mkdir -p "$XDG_RUNTIME_DIR"
+# mdgen/logger.py creates $MODEL_DIR (default ./workdir/default) on import;
+# a read-only snapshot needs it outside the source tree (49313).
+if [ -z "${MODEL_DIR:-}" ] && [ ! -w . ]; then
+    export MODEL_DIR="${MDGEN_RUN_DIR:-$PWD/..}/workdir/${SLURM_JOB_ID:-$$}"
+fi
 mdgen_modules="${MDGEN_MODULES-python/3.11.12-gpu cuda/12.8}"
 if [ -n "$mdgen_modules" ]; then
     source /etc/profile.d/modules.sh
