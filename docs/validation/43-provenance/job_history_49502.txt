@@ -1,0 +1,1 @@
+49502 issue43-ckpt-hparams-20261023T163215Z-0b955a3:issue43-ckpt-hparams:163219 job/submit_atlas_validation_cpu.sh python docs/validation/43-provenance/dump_ckpt_hparams.py --checkpoint /share/home/r15543056/MDgen/mdgen/ckpt/atlas.ckpt --output results/ckpt_hparams/atlas_hparams.json

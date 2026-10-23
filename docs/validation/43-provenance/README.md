@@ -19,7 +19,7 @@ python -I make_audit.py <bjing2016/mdgen clone> <bjing2016/alphaflow clone> audi
 - MDGen 論文 Jing, Stärk, Jaakkola, Berger，[arXiv:2409.17808](https://arxiv.org/abs/2409.17808)（HTML 版，2026-10-23 讀取）。
 - AlphaFlow 論文 Jing, Berger, Jaakkola，[arXiv:2402.04845](https://arxiv.org/abs/2402.04845)（HTML 版，2026-10-23 讀取；只讀到 Appendix B.2，之後的附錄未讀）。
 - RCSB Data API `https://data.rcsb.org/rest/v1/core/entry/{id}` 的 `deposit_date` 與 `initial_release_date`。
-- Checkpoint 內的 `hyper_parameters`：Job `49502`（run `issue43-ckpt-hparams-20261023T163215Z-0b955a3`，`node-19`，CPU，snapshot commit `0b955a3`，dirty=false）以 [`dump_ckpt_hparams.py`](dump_ckpt_hparams.py) 讀取 `/share/home/r15543056/MDgen/mdgen/ckpt/atlas.ckpt`，輸出 [`atlas_hparams_49502.json`](atlas_hparams_49502.json) 與 log [`49502.out`](49502.out)；檔案 SHA-256 與 Ticket 1 記錄的相同。
+- Checkpoint 內的 `hyper_parameters`：Job `49502`（run `issue43-ckpt-hparams-20261023T163215Z-0b955a3`，`node-19`，CPU，snapshot commit `0b955a3`，dirty=false）以 [`dump_ckpt_hparams.py`](dump_ckpt_hparams.py) 讀取 `/share/home/r15543056/MDgen/mdgen/ckpt/atlas.ckpt`，輸出 [`atlas_hparams_49502.json`](atlas_hparams_49502.json) 與 log [`49502.out`](49502.out)；檔案 SHA-256 與 Ticket 1 記錄的相同。Run ID、snapshot commit 與 dirty 狀態見 `hpc_run.py` 在 run 目錄寫下的 [`run_meta_49502.json`](run_meta_49502.json)，Job ID 與實際指令見 [`job_history_49502.txt`](job_history_49502.txt)，節點見 `49502.out` 第 1 行。
 - 未查：Hugging Face `bjing-mit/mdgen` 的 model card、上游 GitHub issues。
 
 ## 1. Checkpoint 的訓練幀間隔
