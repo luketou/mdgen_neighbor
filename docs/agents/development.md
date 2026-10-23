@@ -21,6 +21,12 @@ bash scripts/check.sh
 
 Bootstrap 會檢查 Git 作者設定；若尚未設定，請用自己的身分執行 `git config --local user.name ...` 與 `git config --local user.email ...`。它不會猜測或改寫作者。`gh` 的可用性另有提示，備援見[工具指引](tools.md)。
 
+## Windows 主機
+
+CPU 環境與 `scripts/check.sh` 都在 WSL 執行：Windows 的 `python` 沒有 torch，CPU venv 位於 WSL 的 `$HOME/.local/share/mdgen/venvs/cpu-py311`。
+
+要在 WSL 跑檢查的 worktree，以 WSL 的 git 建立，例如 `wsl -d Ubuntu -e git -C <repo> worktree add ../<name> -b <branch> origin/main`，之後的 commit 也用 WSL 的 git。Windows git 建立的 worktree，`.git` 記錄 `C:/...` 路徑，WSL 的 git（2.43，不支援相對路徑 worktree）無法讀取，`check_repository.py` 與 `check_git_whitespace.sh` 會直接失敗；反之 WSL 建立的 worktree 在 Windows 的 `git worktree list` 會顯示為 `prunable`，屬預期。
+
 ## 共用檢查入口
 
 CI 使用相同的 `bash scripts/bootstrap_cpu.sh` 與 `bash scripts/check.sh`。檢查依序執行：
