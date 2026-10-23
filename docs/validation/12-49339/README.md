@@ -4,7 +4,7 @@
 
 結論（只陳述量到的範圍）：
 
-- **1 圈 halo**：第 0 圈（loss group 的 ghost 直接由 region 外的 group 擁有）的相對誤差中位數 2.2–2.8%，最大 9.9–15.8%；較內側的第 1 圈中位數 0.5–0.8%、最大 ≤ 2.1%。
+- **1 圈 halo**：第 0 圈（loss group 的 ghost 直接由 region 外的 group 擁有）的相對誤差中位數 2.2–2.8%，最大 9.9–15.8%；較內側的第 1 圈中位數 0.5–0.8%、最大 ≤ 2.14%。
 - **2 圈 halo**（只有 3ilw_A 量得到）：第 0 圈中位數降到 0.39–0.41%、最大 2.1–2.2%，約為 1 圈的 1/6 與 1/5。
 - 代價：3ilw_A 同一組 54 個 loss 殘基，1 圈 region 共 115 殘基，2 圈為 250 殘基（2.2 倍）。在固定 `--region_residues` 下，2 圈代表每步的 loss 殘基約少一半。
 - 判讀：1 圈的典型誤差約 2%，但邊界 loss group 有個別殘基達 10–16%；若要把邊界最大誤差壓在約 2%，需要 2 圈。是否加深取決於能否接受每步 loss 殘基減半，本紀錄不替這個取捨下結論。
@@ -34,7 +34,7 @@ sbatch --chdir=<run>/src job/submit_halo_error.sh --pdb_id 6irx_A --replicate R 
 ## 蛋白與 region 的選擇
 
 - 用 `atlas_data` 中最長的兩個蛋白：6irx_A（496 殘基、46 group）與 3ilw_A（470 殘基、48 group）。其餘 18 個 ≤ 301 殘基，2 圈 halo 幾乎涵蓋整個蛋白，沒有 region 外的殘基可比。
-- 2 圈 halo 太大：3ilw_A 的 8 個 seed 中 7 個放不進 320（種子 group 加 2 圈需 413–496 殘基），每個 replicate 只剩 seed 0 的一個 region；6irx_A 沒有任何 seed 放得下 2 圈（job 49335–49337），因此只量 1 圈。
+- 2 圈 halo 太大：3ilw_A 的 8 個 seed 中 7 個放不進 320（種子 group 加 2 圈需 402–470 殘基），每個 replicate 只剩 seed 0 的一個 region；6irx_A 沒有任何 seed 放得下 2 圈（job 49335–49337），因此只量 1 圈。
 - 6irx_A 用 1 圈時 8 個 seed 中 2 個（seed 1、3）放不下，其餘 6 個得到 5 個不同的 region（兩個 seed 長出相同的 loss group）。
 - 三個 replicate 的第 0 幀完全相同（R1–R3 的 Cα 最大差 0.0 Å，第 125 幀差 10.8–11.9 Å），所以分區與 region 相同，差別只在軌跡內容。三個 replicate 不是三個獨立的 region 樣本。
 - 跳過的 seed 多是需要較大 halo 的 group，結果只代表放得下的 region（見 `skipped_seeds`）。

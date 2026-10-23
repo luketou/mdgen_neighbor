@@ -13,7 +13,7 @@ L40S 上用 `job/submit_halo_error.sh`（見 `job/README.md`）。實測結果�
 
 ## 方法
 
-- loss group 由 `sample_region_groups` 以最深的 `--halo_rings` 選出，因此每種設定都放得進 `--region_residues`；較淺的設定只是 halo 較少，loss group 相同。種子 group 加上最深 halo 就超過預算的 seed 會跳過並記在 `skipped_seeds`；同一蛋白沒有任何 seed 放得下時報錯。跳過的 seed 偏向 halo 較大的內部 group，結果只代表放得下的 region。
+- loss group 由 `sample_region_groups` 以最深的 `--halo_rings` 選出，因此每種設定都放得進 `--region_residues`；較淺的設定只是 halo 較少，loss group 相同。種子 group 加上最深 halo 就超過預算的 seed 會跳過並記在 `skipped_seeds`；同一蛋白沒有任何 seed 放得下時報錯。跳過的 seed 偏向 halo 較大的 group，結果只代表放得下的 region。
 - 每個 region 以 `--seed + region 編號` 選種子 group，選出相同 loss group 的 region 只算一次；模型輸入沿用 checkpoint 的 `frame_interval`、取第 0 幀起的視窗；雜訊以 `--seed` 產生，每個 `--times` 值一份，完整蛋白與所有 region 共用。結果與蛋白在 split 中的順序無關。
 - 只比較 loss core 殘基、`x_cond_mask` 為 0 的幀，且只計 loss mask 監督的通道（未定義的 torsion 不計）。逐殘基 L2 = 差值在幀與通道上的 L2；相對誤差 = 該 L2 ÷ 完整蛋白輸出的 L2。
 - 邊界圈數：loss group 的 ghost 若由 loss group 以外的 group 擁有，為第 0 圈；ghost 由第 r − 1 圈擁有者為第 r 圈。沒有 ghost 擁有者路徑通到 loss group 以外時（例如整個蛋白都是 loss group）為 `None`。

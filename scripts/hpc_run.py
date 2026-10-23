@@ -14,7 +14,7 @@ to <run>/job_history as "<job id> <comment> <launcher> <args>". REMOTE_PATH is r
 directory, e.g. results/halo_error_49339/halo_error.json or logs/49339.out.
 """
 import argparse, datetime, fnmatch, hashlib, json, shlex, subprocess, sys, tempfile
-from pathlib import Path, PureWindowsPath
+from pathlib import Path, PurePosixPath, PureWindowsPath
 
 ROOT = Path(__file__).resolve().parents[1]
 TARGET = "r15543056@zinfandel.ncree.org"
@@ -29,6 +29,7 @@ MAX_BYTES = 10 * 2**20
 MAX_FETCH_BYTES = 20 * 2**20
 EXCLUDE = ["data/*", "splits/*", "results/*", "logs/*", "*.ckpt", "*.pt", "*.pth", "*.safetensors",
            ".env*", "*.pem", "id_rsa*", "id_ed25519*", ".claude/*", ".scratch/*", "tests/reference/*"]
+UNTRACKED_DIRS = ("job/", "scripts/", "mdgen/", "hpc/")  # untracked files here are uploaded too
 
 
 def git(*a):
@@ -59,7 +60,7 @@ def scp(src, dst, timeout=300):
 def select_files():
     names = git("ls-files", "-z").split("\0")
     names += [n for n in git("ls-files", "-z", "--others", "--exclude-standard").split("\0")
-              if n.startswith(("job/", "scripts/", "mdgen/", "hpc/"))]
+              if n.startswith(UNTRACKED_DIRS)]
     keep = []
     for n in sorted(set(filter(None, names))):
         p = ROOT / n
@@ -74,7 +75,8 @@ def select_files():
 def upload(tag):
     files = select_files()
     commit = git("rev-parse", "--short", "HEAD").strip()
-    dirty = bool(git("status", "--porcelain", "--untracked-files=no").strip())
+    dirty = bool(git("status", "--porcelain", "--untracked-files=no").strip()
+                 or git("ls-files", "--others", "--exclude-standard", "--", *UNTRACKED_DIRS).strip())
     run_id = f"{tag}-{datetime.datetime.now(datetime.timezone.utc):%Y%m%dT%H%M%SZ}-{commit}"
     run = f"{RUNS_ROOT}/{run_id}"
     print(f"run_id={run_id} files={len(files)} commit={commit} dirty={dirty}")
@@ -118,15 +120,19 @@ def submit(a):
     env = " ".join(shlex.quote(kv) for kv in a.env)
     command = " ".join(shlex.quote(x) for x in [a.launcher, *a.args])
     sbatch = " ".join(shlex.quote(x) for x in a.sbatch)
-    r = remote(f"""set -e
+    try:
+        # printf, not echo "...": inside double quotes the shell would expand $(...) in the args
+        r = remote(f"""set -e
 cd {run}/src
 export MDGEN_VENV={VENV} MDGEN_RESOURCE_ROOT={RESOURCE_ROOT} MDGEN_RUN_DIR={run} {env}
 job=$(sbatch --parsable --comment={shlex.quote(comment)} --chdir={run}/src \\
   --output={run}/logs/%j.out --error={run}/logs/%j.err {sbatch} {command})
 job=${{job%%;*}}
-echo "$job {shlex.quote(comment)} {shlex.quote(command)}" >> {run}/job_history
+printf '%s %s %s\\n' "$job" {shlex.quote(comment)} {shlex.quote(command)} >> {run}/job_history
 echo "JOB=$job"
 """)
+    except subprocess.TimeoutExpired:  # sbatch may still have accepted the job
+        r = subprocess.CompletedProcess([], 1, "", "timed out waiting for the headnode\n")
     job = next((line[4:] for line in r.stdout.splitlines() if line.startswith("JOB=")), None)
     if r.returncode or not job:
         print(f"submission_unknown: check `squeue -u $USER -o '%i %k'` for comment={comment} "
@@ -150,9 +156,13 @@ def tail(a):
 
 
 def fetch(a):
+    for p in a.paths:  # stay inside the run directory remotely and inside DEST locally
+        pp = PurePosixPath(p)
+        if not pp.parts or pp.is_absolute() or ".." in pp.parts or ":" in p or "\\" in p:
+            sys.exit(f"fetch: {p!r} must be a relative path inside the run directory")
     run = f"{RUNS_ROOT}/{a.run_id}"
     paths = " ".join(shlex.quote(p) for p in a.paths)
-    r = remote(f"cd {run} && du -cb -- {paths} | tail -n 1")
+    r = remote(f"set -o pipefail; cd {run} && du -cb -- {paths} | tail -n 1")
     if r.returncode:
         sys.exit(f"fetch: {r.stderr}")
     total = int(r.stdout.split()[0])
