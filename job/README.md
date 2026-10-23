@@ -36,3 +36,17 @@ sbatch --nodelist=node-201 job/submit_neighbor_scaling.sh
 ## 共用 GPU 健康檢查
 
 `job/env.sh` 在 module 與 venv 載入後，使用 venv 的絕對 Python 路徑執行 GPU preflight；CUDA 不可用或矩陣運算失敗即停止。最小獨立診斷、不可變快照與 Slurm 投遞工具見 [HPC 操作入口](../docs/validation/hpc/README.md)。
+
+
+## Training region 訓練步量測（#9 Ticket 3）
+
+`submit_training_region_probe.sh` 以 `mdgen.train_step_probe` 對 5 層 `--local_spatial` ATLAS 組態（`--sim_condition --prepend_ipa --num_frames 250 --batch_size 1`）跑一次 `fp32-reference` training step；輸入是從 7,500 殘基合成鏈切出的一個 Training region（預設 `--region_core 256 --region_ghost 256`）。報告寫到 `results/training_region_probe_<job>/probe.json`，log 末尾印出 region、峰值記憶體與 step 時間。OOM 時 job 以非零結束，traceback 即為結果。
+
+```bash
+mkdir -p logs
+MDGEN_VENV=/path/to/venv sbatch job/submit_training_region_probe.sh
+# 其他 train.py 參數直接附在後面，例如層間 checkpointing 或不同 region 大小：
+MDGEN_VENV=/path/to/venv sbatch job/submit_training_region_probe.sh --grad_checkpointing --region_core 128
+```
+
+合成鏈每幀為獨立隨機漫步，loss 數值無意義，只用於記憶體與時間量測。

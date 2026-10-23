@@ -8,6 +8,7 @@ import io
 import json
 import os
 import posixpath
+import re
 from pathlib import Path, PurePosixPath
 import shlex
 import subprocess
@@ -136,7 +137,12 @@ def verify(state, config):
 
 def launcher(config, remote, entries):
     q = shlex.quote
-    modules = shlex.split(config['runtime']['env'].get('MDGEN_MODULES', ''))
+    runtime_env = config['runtime']['env']
+    if any(re.fullmatch(r'[A-Za-z_][A-Za-z0-9_]*', key) is None for key in runtime_env):
+        raise ValueError('Invalid runtime environment variable name')
+    exports = '\n'.join('export ' + key + '=' + q(str(value))
+                        for key, value in runtime_env.items() if key != 'MDGEN_MODULES')
+    modules = shlex.split(runtime_env.get('MDGEN_MODULES', ''))
     setup = 'source /etc/profile.d/modules.sh\nmodule load ' + shlex.join(modules) if modules else ':'
     command = shlex.join([config['runtime']['python'], config['smoke']['entrypoint'],
                           '--require-gpu', '--output', remote + '/results/preflight.json'])
@@ -144,7 +150,7 @@ def launcher(config, remote, entries):
             + 'run_results=' + q(remote + '/results') + '\n'
             + 'finish() { rc=$?; printf "%s\\n" "$rc" > "$run_results/exit-status.tmp"; '
             + 'mv "$run_results/exit-status.tmp" "$run_results/exit-status"; }\n'
-            + 'trap finish EXIT\ncd ' + q(remote + '/code') + '\n' + verification_command(remote, entries) + '\n' + setup + '\n' + command + '\n')
+            + 'trap finish EXIT\ncd ' + q(remote + '/code') + '\n' + verification_command(remote, entries) + '\n' + setup + '\n' + exports + '\n' + command + '\n')
 
 
 

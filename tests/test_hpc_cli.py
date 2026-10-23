@@ -204,3 +204,27 @@ def test_queued_job_refuses_payload_changed_after_submit(remote):
     assert job.returncode != 0
     assert not (repo / 'executed').exists()
     assert (Path(ready['remote']) / 'results/exit-status').read_text().strip() != '0'
+
+
+def test_configured_cuda_home_reaches_the_actual_job(remote):
+    repo, config, env = remote
+    settings = yaml.safe_load(config.read_text())
+    settings['runtime']['env']['CUDA_HOME'] = '/fixture/cuda-12.8'
+    config.write_text(yaml.safe_dump(settings))
+    (repo / 'probe.py').write_text(
+        'import argparse,json,os,pathlib\n'
+        'p=argparse.ArgumentParser();p.add_argument("--require-gpu",action="store_true");'
+        'p.add_argument("--output");a=p.parse_args()\n'
+        'passed=os.environ.get("CUDA_HOME")=="/fixture/cuda-12.8"\n'
+        'pathlib.Path(a.output).write_text(json.dumps({"passed":passed}))\n'
+        'raise SystemExit(0 if passed else 1)\n')
+    commands = Path(env['PATH'].split(':')[0])
+    (commands / 'sbatch').write_text('#!/bin/bash\nbash "${@: -1}" >/dev/null 2>&1\necho 123\n')
+    (commands / 'squeue').write_text('#!/bin/bash\nexit 0\n')
+    for name in ('sbatch', 'squeue'):
+        (commands / name).chmod(0o755)
+    ready = json.loads(cli(remote, 'prepare', '--files', 'probe.py').stdout)
+    assert cli(remote, 'submit', '--state', ready['state_file']).returncode == 0
+    result = cli(remote, 'collect', '--state', ready['state_file'])
+    assert result.returncode == 0, result.stdout + result.stderr
+    assert json.loads(result.stdout)['status'] == 'passed'

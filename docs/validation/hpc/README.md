@@ -1,12 +1,16 @@
 # HPC 診斷與執行
 
-固定設定見 [hpc/project.yaml](../../../hpc/project.yaml)。`deployment_ready: false` 保留：GPU 健康檢查尚未通過，正式模型 launcher 與資料路徑尚未驗證。
+Ticket 2 的 [L40S 實測報告](../l40s-ticket2/2026-10-23/README.md) 記錄 GPU preflight、完整小尺寸訓練步與兩個阻塞的修正證據。
+
+固定設定見 [hpc/project.yaml](../../../hpc/project.yaml)。`deployment_ready: false` 保留：GPU preflight 與小尺寸訓練探針已通過，但正式模型 launcher、容量與資料路徑尚未驗證。
 
 2026-10-22 的 [CUDA 診斷](2026-10-22-cuda-diagnosis.md) 記錄 job 49048/49051 的實際證據。當時 node-201 分配 GPU 0 的裝置存取回傳 EIO；不能據此判定另一張 GPU 或其他節點的狀態，也不能推論目前健康狀態。
 
 ## GPU readiness
 
 `python scripts/diagnostics/gpu_preflight.py --output report.json` 使用目前解譯器做真正的 2×2 CUDA matmul、同步並驗證結果。CPU runner 無 GPU 時輸出 `status: skipped`、`passed: false`，退出碼為 0。`--require-gpu` 或 `SLURM_JOB_GPUS` 有值時，無法使用 CUDA 會輸出失敗報告與非零退出碼。報告亦記錄解譯器、PyTorch 版本與分配裝置變數。
+
+`runtime.env` 中除 `MDGEN_MODULES` 之外的設定會以 shell quoting 匯出到 job。此 server 的 Python GPU module 含 DeepSpeed，模型匯入時會探測 CUDA 工具鏈；`CUDA_HOME` 指向已核對的 CUDA 12.8 module 路徑，避免 `MissingCUDAException`。設定檔只放非機密環境值。
 
 `job/env.sh` 在啟用指定 venv 後，呼叫相同 preflight 並強制 GPU；報告預設 `results/preflight_JOBID.json`，可用 `MDGEN_PREFLIGHT_OUTPUT` 指向 run 的獨立輸出目錄。既有模型 launcher 在 preflight 失敗後停止。CPU 共用檢查入口也會執行可略過模式。
 

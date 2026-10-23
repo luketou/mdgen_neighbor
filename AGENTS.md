@@ -10,4 +10,4 @@
 - 涉及領域術語或架構決策時，先讀[領域文件入口](docs/agents/domain.md)。
 - 發現或選擇外部工具、`gh` 不可用時，依[工具查找與備援](docs/agents/tools.md) 操作。
 
-- HPC 診斷、module 環境與最小資源設定見 [HPC 操作入口](docs/validation/hpc/README.md)。
+- 部署、驗證及查詢遠端結果時，先讀取 [HPC skill](.agents/skills/hpc-workflow/SKILL.md) 與 [HPC 操作入口](docs/validation/hpc/README.md)。

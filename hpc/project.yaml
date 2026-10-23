@@ -15,7 +15,7 @@ ssh:
 
 # null 代表尚未確認。runs_root 必須位於 Compute Node 可見的共享儲存。
 remote:
-  # Shared code/results path verified by jobs 49048 and 49051; GPU health failed.
+  # Shared code/results path verified; GPU preflight passed in job 49228.
   verified: false
   runs_root: /share/home/r15543056/MDgen/codex-runs
   datasets_root: null
@@ -26,7 +26,10 @@ runtime:
   # Smoke launcher loads this module before invoking the explicit interpreter.
   setup_script: job/env.sh
   python: /share/home/r15543056/.venvs/mdgen2026/bin/python
-  env: {MDGEN_MODULES: "python/3.11.12-gpu"}
+  env:
+    MDGEN_MODULES: "python/3.11.12-gpu"
+    # CUDA 12.8 module path; DeepSpeed import verified in job 49235.
+    CUDA_HOME: /opt/cuda-12.8.0_570.86.10
 
 sync:
   selection: git-tracked-code-plus-explicit-untracked

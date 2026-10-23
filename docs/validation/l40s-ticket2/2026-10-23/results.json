@@ -1,0 +1,5711 @@
+{
+  "passed": true,
+  "status": "passed",
+  "scope": "Ticket 2 small synthetic batch",
+  "cases": {
+    "global-1": {
+      "probe": "train-step",
+      "seed": 137,
+      "configs": [
+        "fp32-reference",
+        "fp32-reference",
+        "bf16-train"
+      ],
+      "batch": {
+        "names": [
+          "synthetic_0",
+          "synthetic_1"
+        ],
+        "batch_size": 2,
+        "shapes": {
+          "trans": [
+            4,
+            12,
+            3
+          ],
+          "rots": [
+            4,
+            12,
+            3,
+            3
+          ],
+          "torsions": [
+            4,
+            12,
+            7,
+            2
+          ],
+          "torsion_mask": [
+            12,
+            7
+          ],
+          "seqres": [
+            12
+          ],
+          "mask": [
+            12
+          ]
+        },
+        "source": "synthetic"
+      },
+      "model_args": {
+        "ckpt": null,
+        "validate": false,
+        "num_workers": 4,
+        "train_seed": null,
+        "model_dir": "/share/home/r15543056/MDgen/codex-runs/preflight-20261023T035755Z-95f050bf/results/models",
+        "deterministic": true,
+        "benchmark": false,
+        "epochs": 100,
+        "overfit": false,
+        "overfit_peptide": null,
+        "overfit_frame": false,
+        "train_batches": null,
+        "val_batches": null,
+        "val_repeat": 1,
+        "inference_batches": 0,
+        "batch_size": 2,
+        "val_freq": null,
+        "val_epoch_freq": 1,
+        "no_validate": false,
+        "designability_freq": 1,
+        "print_freq": 100,
+        "ckpt_freq": 1,
+        "wandb": false,
+        "run_name": "default",
+        "accumulate_grad": 1,
+        "grad_clip": 1.0,
+        "check_grad": false,
+        "grad_checkpointing": false,
+        "adamW": false,
+        "ema": false,
+        "ema_decay": 0.999,
+        "lr": 0.0001,
+        "train_split": "unused",
+        "val_split": "unused",
+        "data_dir": "unused",
+        "num_frames": 4,
+        "crop": 256,
+        "suffix": "",
+        "atlas": false,
+        "copy_frames": false,
+        "no_pad": false,
+        "short_md": false,
+        "training_region": false,
+        "region_core": 256,
+        "region_ghost": 256,
+        "design_key_frames": false,
+        "no_aa_emb": false,
+        "no_torsion": false,
+        "no_design_torsion": false,
+        "supervise_no_torsions": false,
+        "supervise_all_torsions": false,
+        "no_offsets": false,
+        "no_frames": false,
+        "hyena": false,
+        "no_rope": false,
+        "local_spatial": false,
+        "cell_summaries": false,
+        "spatial_cell_width": 16.0,
+        "spatial_contact_radius": 16.0,
+        "core_capacity": 128,
+        "ghost_capacity": 128,
+        "group_batch_size": 4,
+        "dropout": 0.0,
+        "scale_factor": 1.0,
+        "interleave_ipa": true,
+        "prepend_ipa": true,
+        "oracle": false,
+        "num_layers": 2,
+        "embed_dim": 32,
+        "mha_heads": 4,
+        "ipa_heads": 2,
+        "ipa_head_dim": 4,
+        "ipa_qk": 2,
+        "ipa_v": 2,
+        "time_multiplier": 100.0,
+        "abs_pos_emb": false,
+        "abs_time_emb": false,
+        "path_type": "GVP",
+        "prediction": "velocity",
+        "sampling_method": "dopri5",
+        "alpha_max": 8,
+        "discrete_loss_weight": 0.5,
+        "dirichlet_flow_temp": 1.0,
+        "allow_nan_cfactor": false,
+        "tps_condition": false,
+        "design": false,
+        "design_from_traj": false,
+        "sim_condition": true,
+        "inpainting": false,
+        "dynamic_mpnn": false,
+        "mpnn": false,
+        "frame_interval": null,
+        "cond_interval": null,
+        "ffn_chunk_size": 65536,
+        "spatial_attention_backend": "sdpa",
+        "use_sdpa": true
+      },
+      "environment": {
+        "hostname": "node-201",
+        "platform": "Linux-5.14.0-570.62.1.0.1.el9_6.x86_64-x86_64-with-glibc2.34",
+        "python": "3.11.12",
+        "torch": "2.11.0+cu128",
+        "pytorch_lightning": "2.6.5",
+        "numpy": "2.2.6",
+        "cuda_available": true,
+        "cuda_version": "12.8",
+        "cudnn_version": 91900,
+        "device_name": "NVIDIA L40S",
+        "git_commit": null,
+        "slurm_job_id": "49246"
+      },
+      "runs": [
+        {
+          "precision_config": "fp32-reference",
+          "precision_state": {
+            "precision_config": "fp32-reference",
+            "lightning_precision": "32-true",
+            "device_type": "cuda",
+            "autocast_enabled": false,
+            "autocast_dtype": null,
+            "parameter_dtypes": [
+              "torch.float32"
+            ],
+            "float32_matmul_precision": "highest",
+            "cuda_matmul_allow_tf32": false,
+            "cudnn_allow_tf32": false
+          },
+          "missing_gradients": [],
+          "step_time_s": 0.27774320899970917,
+          "peak_memory_allocated_bytes": 71804928,
+          "peak_memory_reserved_bytes": 98566144,
+          "loss": 7.396536827087402,
+          "loss_finite": true,
+          "parameters_nonfinite_after_step": 0,
+          "grad_checkpointing": false,
+          "gradient_nonfinite": 0,
+          "gradients": {
+            "latent_to_emb": {
+              "numel": 704,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "cond_to_emb": {
+              "numel": 704,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "mask_to_emb": {
+              "numel": 64,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "aatype_to_emb": {
+              "numel": 672,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.0.adaLN_modulation": {
+              "numel": 6336,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.0.ipa_norm": {
+              "numel": 64,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.0.ipa": {
+              "numel": 2782,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.0.mha_l": {
+              "numel": 4288,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.0.fc1": {
+              "numel": 4224,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.0.fc2": {
+              "numel": 4128,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.1.adaLN_modulation": {
+              "numel": 6336,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.1.ipa_norm": {
+              "numel": 64,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.1.ipa": {
+              "numel": 2782,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.1.mha_l": {
+              "numel": 4288,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.1.fc1": {
+              "numel": 4224,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.1.fc2": {
+              "numel": 4128,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.0.adaLN_modulation": {
+              "numel": 9504,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.0.ipa_norm": {
+              "numel": 64,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.0.ipa": {
+              "numel": 2782,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.0.mha_t": {
+              "numel": 4288,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.0.mha_l": {
+              "numel": 4288,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.0.fc1": {
+              "numel": 4224,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.0.fc2": {
+              "numel": 4128,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.1.adaLN_modulation": {
+              "numel": 9504,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.1.ipa_norm": {
+              "numel": 64,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.1.ipa": {
+              "numel": 2782,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.1.mha_t": {
+              "numel": 4288,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.1.mha_l": {
+              "numel": 4288,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.1.fc1": {
+              "numel": 4224,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.1.fc2": {
+              "numel": 4128,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "emb_to_latent": {
+              "numel": 2805,
+              "norm": 2.3034202727980695,
+              "max_abs": 0.4483068585395813,
+              "nonfinite": 0
+            },
+            "t_embedder": {
+              "numel": 9280,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            }
+          }
+        },
+        {
+          "precision_config": "fp32-reference",
+          "precision_state": {
+            "precision_config": "fp32-reference",
+            "lightning_precision": "32-true",
+            "device_type": "cuda",
+            "autocast_enabled": false,
+            "autocast_dtype": null,
+            "parameter_dtypes": [
+              "torch.float32"
+            ],
+            "float32_matmul_precision": "highest",
+            "cuda_matmul_allow_tf32": false,
+            "cudnn_allow_tf32": false
+          },
+          "missing_gradients": [],
+          "step_time_s": 0.044670580999991216,
+          "peak_memory_allocated_bytes": 71811072,
+          "peak_memory_reserved_bytes": 98566144,
+          "loss": 7.396536827087402,
+          "loss_finite": true,
+          "parameters_nonfinite_after_step": 0,
+          "grad_checkpointing": false,
+          "gradient_nonfinite": 0,
+          "gradients": {
+            "latent_to_emb": {
+              "numel": 704,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "cond_to_emb": {
+              "numel": 704,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "mask_to_emb": {
+              "numel": 64,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "aatype_to_emb": {
+              "numel": 672,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.0.adaLN_modulation": {
+              "numel": 6336,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.0.ipa_norm": {
+              "numel": 64,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.0.ipa": {
+              "numel": 2782,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.0.mha_l": {
+              "numel": 4288,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.0.fc1": {
+              "numel": 4224,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.0.fc2": {
+              "numel": 4128,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.1.adaLN_modulation": {
+              "numel": 6336,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.1.ipa_norm": {
+              "numel": 64,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.1.ipa": {
+              "numel": 2782,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.1.mha_l": {
+              "numel": 4288,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.1.fc1": {
+              "numel": 4224,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.1.fc2": {
+              "numel": 4128,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.0.adaLN_modulation": {
+              "numel": 9504,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.0.ipa_norm": {
+              "numel": 64,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.0.ipa": {
+              "numel": 2782,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.0.mha_t": {
+              "numel": 4288,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.0.mha_l": {
+              "numel": 4288,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.0.fc1": {
+              "numel": 4224,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.0.fc2": {
+              "numel": 4128,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.1.adaLN_modulation": {
+              "numel": 9504,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.1.ipa_norm": {
+              "numel": 64,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.1.ipa": {
+              "numel": 2782,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.1.mha_t": {
+              "numel": 4288,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.1.mha_l": {
+              "numel": 4288,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.1.fc1": {
+              "numel": 4224,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.1.fc2": {
+              "numel": 4128,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "emb_to_latent": {
+              "numel": 2805,
+              "norm": 2.3034202727980695,
+              "max_abs": 0.4483068585395813,
+              "nonfinite": 0
+            },
+            "t_embedder": {
+              "numel": 9280,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            }
+          }
+        },
+        {
+          "precision_config": "bf16-train",
+          "precision_state": {
+            "precision_config": "bf16-train",
+            "lightning_precision": "bf16-mixed",
+            "device_type": "cuda",
+            "autocast_enabled": true,
+            "autocast_dtype": "torch.bfloat16",
+            "parameter_dtypes": [
+              "torch.float32"
+            ],
+            "float32_matmul_precision": "high",
+            "cuda_matmul_allow_tf32": true,
+            "cudnn_allow_tf32": true
+          },
+          "missing_gradients": [],
+          "step_time_s": 0.31115718899991407,
+          "peak_memory_allocated_bytes": 73165824,
+          "peak_memory_reserved_bytes": 98566144,
+          "loss": 7.396536827087402,
+          "loss_finite": true,
+          "parameters_nonfinite_after_step": 0,
+          "grad_checkpointing": false,
+          "gradient_nonfinite": 0,
+          "gradients": {
+            "latent_to_emb": {
+              "numel": 704,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "cond_to_emb": {
+              "numel": 704,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "mask_to_emb": {
+              "numel": 64,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "aatype_to_emb": {
+              "numel": 672,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.0.adaLN_modulation": {
+              "numel": 6336,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.0.ipa_norm": {
+              "numel": 64,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.0.ipa": {
+              "numel": 2782,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.0.mha_l": {
+              "numel": 4288,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.0.fc1": {
+              "numel": 4224,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.0.fc2": {
+              "numel": 4128,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.1.adaLN_modulation": {
+              "numel": 6336,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.1.ipa_norm": {
+              "numel": 64,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.1.ipa": {
+              "numel": 2782,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.1.mha_l": {
+              "numel": 4288,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.1.fc1": {
+              "numel": 4224,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.1.fc2": {
+              "numel": 4128,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.0.adaLN_modulation": {
+              "numel": 9504,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.0.ipa_norm": {
+              "numel": 64,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.0.ipa": {
+              "numel": 2782,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.0.mha_t": {
+              "numel": 4288,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.0.mha_l": {
+              "numel": 4288,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.0.fc1": {
+              "numel": 4224,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.0.fc2": {
+              "numel": 4128,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.1.adaLN_modulation": {
+              "numel": 9504,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.1.ipa_norm": {
+              "numel": 64,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.1.ipa": {
+              "numel": 2782,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.1.mha_t": {
+              "numel": 4288,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.1.mha_l": {
+              "numel": 4288,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.1.fc1": {
+              "numel": 4224,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.1.fc2": {
+              "numel": 4128,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "emb_to_latent": {
+              "numel": 2805,
+              "norm": 2.3033762781736686,
+              "max_abs": 0.44921875,
+              "nonfinite": 0
+            },
+            "t_embedder": {
+              "numel": 9280,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            }
+          }
+        }
+      ],
+      "comparisons": [
+        {
+          "reference": "fp32-reference",
+          "candidate": "fp32-reference",
+          "gradient_cosine": {
+            "latent_to_emb": 1.0,
+            "cond_to_emb": 1.0,
+            "mask_to_emb": 1.0,
+            "aatype_to_emb": 1.0,
+            "ipa_layers.0.adaLN_modulation": 1.0,
+            "ipa_layers.0.ipa_norm": 1.0,
+            "ipa_layers.0.ipa": 1.0,
+            "ipa_layers.0.mha_l": 1.0,
+            "ipa_layers.0.fc1": 1.0,
+            "ipa_layers.0.fc2": 1.0,
+            "ipa_layers.1.adaLN_modulation": 1.0,
+            "ipa_layers.1.ipa_norm": 1.0,
+            "ipa_layers.1.ipa": 1.0,
+            "ipa_layers.1.mha_l": 1.0,
+            "ipa_layers.1.fc1": 1.0,
+            "ipa_layers.1.fc2": 1.0,
+            "layers.0.adaLN_modulation": 1.0,
+            "layers.0.ipa_norm": 1.0,
+            "layers.0.ipa": 1.0,
+            "layers.0.mha_t": 1.0,
+            "layers.0.mha_l": 1.0,
+            "layers.0.fc1": 1.0,
+            "layers.0.fc2": 1.0,
+            "layers.1.adaLN_modulation": 1.0,
+            "layers.1.ipa_norm": 1.0,
+            "layers.1.ipa": 1.0,
+            "layers.1.mha_t": 1.0,
+            "layers.1.mha_l": 1.0,
+            "layers.1.fc1": 1.0,
+            "layers.1.fc2": 1.0,
+            "emb_to_latent": 1.0,
+            "t_embedder": 1.0
+          },
+          "max_abs_difference": {
+            "latent_to_emb": 0.0,
+            "cond_to_emb": 0.0,
+            "mask_to_emb": 0.0,
+            "aatype_to_emb": 0.0,
+            "ipa_layers.0.adaLN_modulation": 0.0,
+            "ipa_layers.0.ipa_norm": 0.0,
+            "ipa_layers.0.ipa": 0.0,
+            "ipa_layers.0.mha_l": 0.0,
+            "ipa_layers.0.fc1": 0.0,
+            "ipa_layers.0.fc2": 0.0,
+            "ipa_layers.1.adaLN_modulation": 0.0,
+            "ipa_layers.1.ipa_norm": 0.0,
+            "ipa_layers.1.ipa": 0.0,
+            "ipa_layers.1.mha_l": 0.0,
+            "ipa_layers.1.fc1": 0.0,
+            "ipa_layers.1.fc2": 0.0,
+            "layers.0.adaLN_modulation": 0.0,
+            "layers.0.ipa_norm": 0.0,
+            "layers.0.ipa": 0.0,
+            "layers.0.mha_t": 0.0,
+            "layers.0.mha_l": 0.0,
+            "layers.0.fc1": 0.0,
+            "layers.0.fc2": 0.0,
+            "layers.1.adaLN_modulation": 0.0,
+            "layers.1.ipa_norm": 0.0,
+            "layers.1.ipa": 0.0,
+            "layers.1.mha_t": 0.0,
+            "layers.1.mha_l": 0.0,
+            "layers.1.fc1": 0.0,
+            "layers.1.fc2": 0.0,
+            "emb_to_latent": 0.0,
+            "t_embedder": 0.0
+          },
+          "min_gradient_cosine": 1.0,
+          "min_gradient_cosine_group": "latent_to_emb",
+          "cosine_threshold": 0.99,
+          "all_groups_pass": true,
+          "step_time_speedup": 6.217586670738932
+        },
+        {
+          "reference": "fp32-reference",
+          "candidate": "bf16-train",
+          "gradient_cosine": {
+            "latent_to_emb": 1.0,
+            "cond_to_emb": 1.0,
+            "mask_to_emb": 1.0,
+            "aatype_to_emb": 1.0,
+            "ipa_layers.0.adaLN_modulation": 1.0,
+            "ipa_layers.0.ipa_norm": 1.0,
+            "ipa_layers.0.ipa": 1.0,
+            "ipa_layers.0.mha_l": 1.0,
+            "ipa_layers.0.fc1": 1.0,
+            "ipa_layers.0.fc2": 1.0,
+            "ipa_layers.1.adaLN_modulation": 1.0,
+            "ipa_layers.1.ipa_norm": 1.0,
+            "ipa_layers.1.ipa": 1.0,
+            "ipa_layers.1.mha_l": 1.0,
+            "ipa_layers.1.fc1": 1.0,
+            "ipa_layers.1.fc2": 1.0,
+            "layers.0.adaLN_modulation": 1.0,
+            "layers.0.ipa_norm": 1.0,
+            "layers.0.ipa": 1.0,
+            "layers.0.mha_t": 1.0,
+            "layers.0.mha_l": 1.0,
+            "layers.0.fc1": 1.0,
+            "layers.0.fc2": 1.0,
+            "layers.1.adaLN_modulation": 1.0,
+            "layers.1.ipa_norm": 1.0,
+            "layers.1.ipa": 1.0,
+            "layers.1.mha_t": 1.0,
+            "layers.1.mha_l": 1.0,
+            "layers.1.fc1": 1.0,
+            "layers.1.fc2": 1.0,
+            "emb_to_latent": 0.999997046091613,
+            "t_embedder": 1.0
+          },
+          "max_abs_difference": {
+            "latent_to_emb": 0.0,
+            "cond_to_emb": 0.0,
+            "mask_to_emb": 0.0,
+            "aatype_to_emb": 0.0,
+            "ipa_layers.0.adaLN_modulation": 0.0,
+            "ipa_layers.0.ipa_norm": 0.0,
+            "ipa_layers.0.ipa": 0.0,
+            "ipa_layers.0.mha_l": 0.0,
+            "ipa_layers.0.fc1": 0.0,
+            "ipa_layers.0.fc2": 0.0,
+            "ipa_layers.1.adaLN_modulation": 0.0,
+            "ipa_layers.1.ipa_norm": 0.0,
+            "ipa_layers.1.ipa": 0.0,
+            "ipa_layers.1.mha_l": 0.0,
+            "ipa_layers.1.fc1": 0.0,
+            "ipa_layers.1.fc2": 0.0,
+            "layers.0.adaLN_modulation": 0.0,
+            "layers.0.ipa_norm": 0.0,
+            "layers.0.ipa": 0.0,
+            "layers.0.mha_t": 0.0,
+            "layers.0.mha_l": 0.0,
+            "layers.0.fc1": 0.0,
+            "layers.0.fc2": 0.0,
+            "layers.1.adaLN_modulation": 0.0,
+            "layers.1.ipa_norm": 0.0,
+            "layers.1.ipa": 0.0,
+            "layers.1.mha_t": 0.0,
+            "layers.1.mha_l": 0.0,
+            "layers.1.fc1": 0.0,
+            "layers.1.fc2": 0.0,
+            "emb_to_latent": 0.0019224882125854492,
+            "t_embedder": 0.0
+          },
+          "min_gradient_cosine": 0.999997046091613,
+          "min_gradient_cosine_group": "emb_to_latent",
+          "cosine_threshold": 0.99,
+          "all_groups_pass": true,
+          "step_time_speedup": 0.8926138261256302
+        }
+      ]
+    },
+    "global-2": {
+      "probe": "train-step",
+      "seed": 137,
+      "configs": [
+        "fp32-reference",
+        "fp32-reference",
+        "bf16-train"
+      ],
+      "batch": {
+        "names": [
+          "synthetic_0",
+          "synthetic_1"
+        ],
+        "batch_size": 2,
+        "shapes": {
+          "trans": [
+            4,
+            12,
+            3
+          ],
+          "rots": [
+            4,
+            12,
+            3,
+            3
+          ],
+          "torsions": [
+            4,
+            12,
+            7,
+            2
+          ],
+          "torsion_mask": [
+            12,
+            7
+          ],
+          "seqres": [
+            12
+          ],
+          "mask": [
+            12
+          ]
+        },
+        "source": "synthetic"
+      },
+      "model_args": {
+        "ckpt": null,
+        "validate": false,
+        "num_workers": 4,
+        "train_seed": null,
+        "model_dir": "/share/home/r15543056/MDgen/codex-runs/preflight-20261023T035755Z-95f050bf/results/models",
+        "deterministic": true,
+        "benchmark": false,
+        "epochs": 100,
+        "overfit": false,
+        "overfit_peptide": null,
+        "overfit_frame": false,
+        "train_batches": null,
+        "val_batches": null,
+        "val_repeat": 1,
+        "inference_batches": 0,
+        "batch_size": 2,
+        "val_freq": null,
+        "val_epoch_freq": 1,
+        "no_validate": false,
+        "designability_freq": 1,
+        "print_freq": 100,
+        "ckpt_freq": 1,
+        "wandb": false,
+        "run_name": "default",
+        "accumulate_grad": 1,
+        "grad_clip": 1.0,
+        "check_grad": false,
+        "grad_checkpointing": false,
+        "adamW": false,
+        "ema": false,
+        "ema_decay": 0.999,
+        "lr": 0.0001,
+        "train_split": "unused",
+        "val_split": "unused",
+        "data_dir": "unused",
+        "num_frames": 4,
+        "crop": 256,
+        "suffix": "",
+        "atlas": false,
+        "copy_frames": false,
+        "no_pad": false,
+        "short_md": false,
+        "training_region": false,
+        "region_core": 256,
+        "region_ghost": 256,
+        "design_key_frames": false,
+        "no_aa_emb": false,
+        "no_torsion": false,
+        "no_design_torsion": false,
+        "supervise_no_torsions": false,
+        "supervise_all_torsions": false,
+        "no_offsets": false,
+        "no_frames": false,
+        "hyena": false,
+        "no_rope": false,
+        "local_spatial": false,
+        "cell_summaries": false,
+        "spatial_cell_width": 16.0,
+        "spatial_contact_radius": 16.0,
+        "core_capacity": 128,
+        "ghost_capacity": 128,
+        "group_batch_size": 4,
+        "dropout": 0.0,
+        "scale_factor": 1.0,
+        "interleave_ipa": true,
+        "prepend_ipa": true,
+        "oracle": false,
+        "num_layers": 2,
+        "embed_dim": 32,
+        "mha_heads": 4,
+        "ipa_heads": 2,
+        "ipa_head_dim": 4,
+        "ipa_qk": 2,
+        "ipa_v": 2,
+        "time_multiplier": 100.0,
+        "abs_pos_emb": false,
+        "abs_time_emb": false,
+        "path_type": "GVP",
+        "prediction": "velocity",
+        "sampling_method": "dopri5",
+        "alpha_max": 8,
+        "discrete_loss_weight": 0.5,
+        "dirichlet_flow_temp": 1.0,
+        "allow_nan_cfactor": false,
+        "tps_condition": false,
+        "design": false,
+        "design_from_traj": false,
+        "sim_condition": true,
+        "inpainting": false,
+        "dynamic_mpnn": false,
+        "mpnn": false,
+        "frame_interval": null,
+        "cond_interval": null,
+        "ffn_chunk_size": 65536,
+        "spatial_attention_backend": "sdpa",
+        "use_sdpa": true
+      },
+      "environment": {
+        "hostname": "node-201",
+        "platform": "Linux-5.14.0-570.62.1.0.1.el9_6.x86_64-x86_64-with-glibc2.34",
+        "python": "3.11.12",
+        "torch": "2.11.0+cu128",
+        "pytorch_lightning": "2.6.5",
+        "numpy": "2.2.6",
+        "cuda_available": true,
+        "cuda_version": "12.8",
+        "cudnn_version": 91900,
+        "device_name": "NVIDIA L40S",
+        "git_commit": null,
+        "slurm_job_id": "49246"
+      },
+      "runs": [
+        {
+          "precision_config": "fp32-reference",
+          "precision_state": {
+            "precision_config": "fp32-reference",
+            "lightning_precision": "32-true",
+            "device_type": "cuda",
+            "autocast_enabled": false,
+            "autocast_dtype": null,
+            "parameter_dtypes": [
+              "torch.float32"
+            ],
+            "float32_matmul_precision": "highest",
+            "cuda_matmul_allow_tf32": false,
+            "cudnn_allow_tf32": false
+          },
+          "missing_gradients": [],
+          "step_time_s": 0.276569383000151,
+          "peak_memory_allocated_bytes": 71804928,
+          "peak_memory_reserved_bytes": 98566144,
+          "loss": 7.396536827087402,
+          "loss_finite": true,
+          "parameters_nonfinite_after_step": 0,
+          "grad_checkpointing": false,
+          "gradient_nonfinite": 0,
+          "gradients": {
+            "latent_to_emb": {
+              "numel": 704,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "cond_to_emb": {
+              "numel": 704,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "mask_to_emb": {
+              "numel": 64,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "aatype_to_emb": {
+              "numel": 672,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.0.adaLN_modulation": {
+              "numel": 6336,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.0.ipa_norm": {
+              "numel": 64,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.0.ipa": {
+              "numel": 2782,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.0.mha_l": {
+              "numel": 4288,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.0.fc1": {
+              "numel": 4224,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.0.fc2": {
+              "numel": 4128,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.1.adaLN_modulation": {
+              "numel": 6336,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.1.ipa_norm": {
+              "numel": 64,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.1.ipa": {
+              "numel": 2782,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.1.mha_l": {
+              "numel": 4288,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.1.fc1": {
+              "numel": 4224,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.1.fc2": {
+              "numel": 4128,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.0.adaLN_modulation": {
+              "numel": 9504,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.0.ipa_norm": {
+              "numel": 64,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.0.ipa": {
+              "numel": 2782,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.0.mha_t": {
+              "numel": 4288,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.0.mha_l": {
+              "numel": 4288,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.0.fc1": {
+              "numel": 4224,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.0.fc2": {
+              "numel": 4128,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.1.adaLN_modulation": {
+              "numel": 9504,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.1.ipa_norm": {
+              "numel": 64,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.1.ipa": {
+              "numel": 2782,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.1.mha_t": {
+              "numel": 4288,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.1.mha_l": {
+              "numel": 4288,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.1.fc1": {
+              "numel": 4224,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.1.fc2": {
+              "numel": 4128,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "emb_to_latent": {
+              "numel": 2805,
+              "norm": 2.3034202727980695,
+              "max_abs": 0.4483068585395813,
+              "nonfinite": 0
+            },
+            "t_embedder": {
+              "numel": 9280,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            }
+          }
+        },
+        {
+          "precision_config": "fp32-reference",
+          "precision_state": {
+            "precision_config": "fp32-reference",
+            "lightning_precision": "32-true",
+            "device_type": "cuda",
+            "autocast_enabled": false,
+            "autocast_dtype": null,
+            "parameter_dtypes": [
+              "torch.float32"
+            ],
+            "float32_matmul_precision": "highest",
+            "cuda_matmul_allow_tf32": false,
+            "cudnn_allow_tf32": false
+          },
+          "missing_gradients": [],
+          "step_time_s": 0.04326563199992961,
+          "peak_memory_allocated_bytes": 71811072,
+          "peak_memory_reserved_bytes": 98566144,
+          "loss": 7.396536827087402,
+          "loss_finite": true,
+          "parameters_nonfinite_after_step": 0,
+          "grad_checkpointing": false,
+          "gradient_nonfinite": 0,
+          "gradients": {
+            "latent_to_emb": {
+              "numel": 704,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "cond_to_emb": {
+              "numel": 704,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "mask_to_emb": {
+              "numel": 64,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "aatype_to_emb": {
+              "numel": 672,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.0.adaLN_modulation": {
+              "numel": 6336,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.0.ipa_norm": {
+              "numel": 64,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.0.ipa": {
+              "numel": 2782,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.0.mha_l": {
+              "numel": 4288,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.0.fc1": {
+              "numel": 4224,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.0.fc2": {
+              "numel": 4128,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.1.adaLN_modulation": {
+              "numel": 6336,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.1.ipa_norm": {
+              "numel": 64,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.1.ipa": {
+              "numel": 2782,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.1.mha_l": {
+              "numel": 4288,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.1.fc1": {
+              "numel": 4224,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.1.fc2": {
+              "numel": 4128,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.0.adaLN_modulation": {
+              "numel": 9504,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.0.ipa_norm": {
+              "numel": 64,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.0.ipa": {
+              "numel": 2782,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.0.mha_t": {
+              "numel": 4288,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.0.mha_l": {
+              "numel": 4288,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.0.fc1": {
+              "numel": 4224,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.0.fc2": {
+              "numel": 4128,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.1.adaLN_modulation": {
+              "numel": 9504,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.1.ipa_norm": {
+              "numel": 64,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.1.ipa": {
+              "numel": 2782,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.1.mha_t": {
+              "numel": 4288,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.1.mha_l": {
+              "numel": 4288,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.1.fc1": {
+              "numel": 4224,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.1.fc2": {
+              "numel": 4128,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "emb_to_latent": {
+              "numel": 2805,
+              "norm": 2.3034202727980695,
+              "max_abs": 0.4483068585395813,
+              "nonfinite": 0
+            },
+            "t_embedder": {
+              "numel": 9280,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            }
+          }
+        },
+        {
+          "precision_config": "bf16-train",
+          "precision_state": {
+            "precision_config": "bf16-train",
+            "lightning_precision": "bf16-mixed",
+            "device_type": "cuda",
+            "autocast_enabled": true,
+            "autocast_dtype": "torch.bfloat16",
+            "parameter_dtypes": [
+              "torch.float32"
+            ],
+            "float32_matmul_precision": "high",
+            "cuda_matmul_allow_tf32": true,
+            "cudnn_allow_tf32": true
+          },
+          "missing_gradients": [],
+          "step_time_s": 0.12788992800005872,
+          "peak_memory_allocated_bytes": 73165824,
+          "peak_memory_reserved_bytes": 98566144,
+          "loss": 7.396536827087402,
+          "loss_finite": true,
+          "parameters_nonfinite_after_step": 0,
+          "grad_checkpointing": false,
+          "gradient_nonfinite": 0,
+          "gradients": {
+            "latent_to_emb": {
+              "numel": 704,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "cond_to_emb": {
+              "numel": 704,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "mask_to_emb": {
+              "numel": 64,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "aatype_to_emb": {
+              "numel": 672,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.0.adaLN_modulation": {
+              "numel": 6336,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.0.ipa_norm": {
+              "numel": 64,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.0.ipa": {
+              "numel": 2782,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.0.mha_l": {
+              "numel": 4288,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.0.fc1": {
+              "numel": 4224,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.0.fc2": {
+              "numel": 4128,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.1.adaLN_modulation": {
+              "numel": 6336,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.1.ipa_norm": {
+              "numel": 64,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.1.ipa": {
+              "numel": 2782,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.1.mha_l": {
+              "numel": 4288,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.1.fc1": {
+              "numel": 4224,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.1.fc2": {
+              "numel": 4128,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.0.adaLN_modulation": {
+              "numel": 9504,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.0.ipa_norm": {
+              "numel": 64,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.0.ipa": {
+              "numel": 2782,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.0.mha_t": {
+              "numel": 4288,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.0.mha_l": {
+              "numel": 4288,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.0.fc1": {
+              "numel": 4224,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.0.fc2": {
+              "numel": 4128,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.1.adaLN_modulation": {
+              "numel": 9504,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.1.ipa_norm": {
+              "numel": 64,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.1.ipa": {
+              "numel": 2782,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.1.mha_t": {
+              "numel": 4288,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.1.mha_l": {
+              "numel": 4288,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.1.fc1": {
+              "numel": 4224,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.1.fc2": {
+              "numel": 4128,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "emb_to_latent": {
+              "numel": 2805,
+              "norm": 2.3033762781736686,
+              "max_abs": 0.44921875,
+              "nonfinite": 0
+            },
+            "t_embedder": {
+              "numel": 9280,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            }
+          }
+        }
+      ],
+      "comparisons": [
+        {
+          "reference": "fp32-reference",
+          "candidate": "fp32-reference",
+          "gradient_cosine": {
+            "latent_to_emb": 1.0,
+            "cond_to_emb": 1.0,
+            "mask_to_emb": 1.0,
+            "aatype_to_emb": 1.0,
+            "ipa_layers.0.adaLN_modulation": 1.0,
+            "ipa_layers.0.ipa_norm": 1.0,
+            "ipa_layers.0.ipa": 1.0,
+            "ipa_layers.0.mha_l": 1.0,
+            "ipa_layers.0.fc1": 1.0,
+            "ipa_layers.0.fc2": 1.0,
+            "ipa_layers.1.adaLN_modulation": 1.0,
+            "ipa_layers.1.ipa_norm": 1.0,
+            "ipa_layers.1.ipa": 1.0,
+            "ipa_layers.1.mha_l": 1.0,
+            "ipa_layers.1.fc1": 1.0,
+            "ipa_layers.1.fc2": 1.0,
+            "layers.0.adaLN_modulation": 1.0,
+            "layers.0.ipa_norm": 1.0,
+            "layers.0.ipa": 1.0,
+            "layers.0.mha_t": 1.0,
+            "layers.0.mha_l": 1.0,
+            "layers.0.fc1": 1.0,
+            "layers.0.fc2": 1.0,
+            "layers.1.adaLN_modulation": 1.0,
+            "layers.1.ipa_norm": 1.0,
+            "layers.1.ipa": 1.0,
+            "layers.1.mha_t": 1.0,
+            "layers.1.mha_l": 1.0,
+            "layers.1.fc1": 1.0,
+            "layers.1.fc2": 1.0,
+            "emb_to_latent": 1.0,
+            "t_embedder": 1.0
+          },
+          "max_abs_difference": {
+            "latent_to_emb": 0.0,
+            "cond_to_emb": 0.0,
+            "mask_to_emb": 0.0,
+            "aatype_to_emb": 0.0,
+            "ipa_layers.0.adaLN_modulation": 0.0,
+            "ipa_layers.0.ipa_norm": 0.0,
+            "ipa_layers.0.ipa": 0.0,
+            "ipa_layers.0.mha_l": 0.0,
+            "ipa_layers.0.fc1": 0.0,
+            "ipa_layers.0.fc2": 0.0,
+            "ipa_layers.1.adaLN_modulation": 0.0,
+            "ipa_layers.1.ipa_norm": 0.0,
+            "ipa_layers.1.ipa": 0.0,
+            "ipa_layers.1.mha_l": 0.0,
+            "ipa_layers.1.fc1": 0.0,
+            "ipa_layers.1.fc2": 0.0,
+            "layers.0.adaLN_modulation": 0.0,
+            "layers.0.ipa_norm": 0.0,
+            "layers.0.ipa": 0.0,
+            "layers.0.mha_t": 0.0,
+            "layers.0.mha_l": 0.0,
+            "layers.0.fc1": 0.0,
+            "layers.0.fc2": 0.0,
+            "layers.1.adaLN_modulation": 0.0,
+            "layers.1.ipa_norm": 0.0,
+            "layers.1.ipa": 0.0,
+            "layers.1.mha_t": 0.0,
+            "layers.1.mha_l": 0.0,
+            "layers.1.fc1": 0.0,
+            "layers.1.fc2": 0.0,
+            "emb_to_latent": 0.0,
+            "t_embedder": 0.0
+          },
+          "min_gradient_cosine": 1.0,
+          "min_gradient_cosine_group": "latent_to_emb",
+          "cosine_threshold": 0.99,
+          "all_groups_pass": true,
+          "step_time_speedup": 6.392357402767188
+        },
+        {
+          "reference": "fp32-reference",
+          "candidate": "bf16-train",
+          "gradient_cosine": {
+            "latent_to_emb": 1.0,
+            "cond_to_emb": 1.0,
+            "mask_to_emb": 1.0,
+            "aatype_to_emb": 1.0,
+            "ipa_layers.0.adaLN_modulation": 1.0,
+            "ipa_layers.0.ipa_norm": 1.0,
+            "ipa_layers.0.ipa": 1.0,
+            "ipa_layers.0.mha_l": 1.0,
+            "ipa_layers.0.fc1": 1.0,
+            "ipa_layers.0.fc2": 1.0,
+            "ipa_layers.1.adaLN_modulation": 1.0,
+            "ipa_layers.1.ipa_norm": 1.0,
+            "ipa_layers.1.ipa": 1.0,
+            "ipa_layers.1.mha_l": 1.0,
+            "ipa_layers.1.fc1": 1.0,
+            "ipa_layers.1.fc2": 1.0,
+            "layers.0.adaLN_modulation": 1.0,
+            "layers.0.ipa_norm": 1.0,
+            "layers.0.ipa": 1.0,
+            "layers.0.mha_t": 1.0,
+            "layers.0.mha_l": 1.0,
+            "layers.0.fc1": 1.0,
+            "layers.0.fc2": 1.0,
+            "layers.1.adaLN_modulation": 1.0,
+            "layers.1.ipa_norm": 1.0,
+            "layers.1.ipa": 1.0,
+            "layers.1.mha_t": 1.0,
+            "layers.1.mha_l": 1.0,
+            "layers.1.fc1": 1.0,
+            "layers.1.fc2": 1.0,
+            "emb_to_latent": 0.999997046091613,
+            "t_embedder": 1.0
+          },
+          "max_abs_difference": {
+            "latent_to_emb": 0.0,
+            "cond_to_emb": 0.0,
+            "mask_to_emb": 0.0,
+            "aatype_to_emb": 0.0,
+            "ipa_layers.0.adaLN_modulation": 0.0,
+            "ipa_layers.0.ipa_norm": 0.0,
+            "ipa_layers.0.ipa": 0.0,
+            "ipa_layers.0.mha_l": 0.0,
+            "ipa_layers.0.fc1": 0.0,
+            "ipa_layers.0.fc2": 0.0,
+            "ipa_layers.1.adaLN_modulation": 0.0,
+            "ipa_layers.1.ipa_norm": 0.0,
+            "ipa_layers.1.ipa": 0.0,
+            "ipa_layers.1.mha_l": 0.0,
+            "ipa_layers.1.fc1": 0.0,
+            "ipa_layers.1.fc2": 0.0,
+            "layers.0.adaLN_modulation": 0.0,
+            "layers.0.ipa_norm": 0.0,
+            "layers.0.ipa": 0.0,
+            "layers.0.mha_t": 0.0,
+            "layers.0.mha_l": 0.0,
+            "layers.0.fc1": 0.0,
+            "layers.0.fc2": 0.0,
+            "layers.1.adaLN_modulation": 0.0,
+            "layers.1.ipa_norm": 0.0,
+            "layers.1.ipa": 0.0,
+            "layers.1.mha_t": 0.0,
+            "layers.1.mha_l": 0.0,
+            "layers.1.fc1": 0.0,
+            "layers.1.fc2": 0.0,
+            "emb_to_latent": 0.0019224882125854492,
+            "t_embedder": 0.0
+          },
+          "min_gradient_cosine": 0.999997046091613,
+          "min_gradient_cosine_group": "emb_to_latent",
+          "cosine_threshold": 0.99,
+          "all_groups_pass": true,
+          "step_time_speedup": 2.1625579693814827
+        }
+      ]
+    },
+    "local-1": {
+      "probe": "train-step",
+      "seed": 137,
+      "configs": [
+        "fp32-reference",
+        "fp32-reference",
+        "bf16-train"
+      ],
+      "batch": {
+        "names": [
+          "synthetic_0",
+          "synthetic_1"
+        ],
+        "batch_size": 2,
+        "shapes": {
+          "trans": [
+            4,
+            12,
+            3
+          ],
+          "rots": [
+            4,
+            12,
+            3,
+            3
+          ],
+          "torsions": [
+            4,
+            12,
+            7,
+            2
+          ],
+          "torsion_mask": [
+            12,
+            7
+          ],
+          "seqres": [
+            12
+          ],
+          "mask": [
+            12
+          ]
+        },
+        "source": "synthetic"
+      },
+      "model_args": {
+        "ckpt": null,
+        "validate": false,
+        "num_workers": 4,
+        "train_seed": null,
+        "model_dir": "/share/home/r15543056/MDgen/codex-runs/preflight-20261023T035755Z-95f050bf/results/models",
+        "deterministic": true,
+        "benchmark": false,
+        "epochs": 100,
+        "overfit": false,
+        "overfit_peptide": null,
+        "overfit_frame": false,
+        "train_batches": null,
+        "val_batches": null,
+        "val_repeat": 1,
+        "inference_batches": 0,
+        "batch_size": 2,
+        "val_freq": null,
+        "val_epoch_freq": 1,
+        "no_validate": false,
+        "designability_freq": 1,
+        "print_freq": 100,
+        "ckpt_freq": 1,
+        "wandb": false,
+        "run_name": "default",
+        "accumulate_grad": 1,
+        "grad_clip": 1.0,
+        "check_grad": false,
+        "grad_checkpointing": false,
+        "adamW": false,
+        "ema": false,
+        "ema_decay": 0.999,
+        "lr": 0.0001,
+        "train_split": "unused",
+        "val_split": "unused",
+        "data_dir": "unused",
+        "num_frames": 4,
+        "crop": 256,
+        "suffix": "",
+        "atlas": false,
+        "copy_frames": false,
+        "no_pad": false,
+        "short_md": false,
+        "training_region": false,
+        "region_core": 256,
+        "region_ghost": 256,
+        "design_key_frames": false,
+        "no_aa_emb": false,
+        "no_torsion": false,
+        "no_design_torsion": false,
+        "supervise_no_torsions": false,
+        "supervise_all_torsions": false,
+        "no_offsets": false,
+        "no_frames": false,
+        "hyena": false,
+        "no_rope": false,
+        "local_spatial": true,
+        "cell_summaries": false,
+        "spatial_cell_width": 4.0,
+        "spatial_contact_radius": 8.0,
+        "core_capacity": 4,
+        "ghost_capacity": 20,
+        "group_batch_size": 2,
+        "dropout": 0.0,
+        "scale_factor": 1.0,
+        "interleave_ipa": true,
+        "prepend_ipa": true,
+        "oracle": false,
+        "num_layers": 2,
+        "embed_dim": 32,
+        "mha_heads": 4,
+        "ipa_heads": 2,
+        "ipa_head_dim": 4,
+        "ipa_qk": 2,
+        "ipa_v": 2,
+        "time_multiplier": 100.0,
+        "abs_pos_emb": false,
+        "abs_time_emb": false,
+        "path_type": "GVP",
+        "prediction": "velocity",
+        "sampling_method": "dopri5",
+        "alpha_max": 8,
+        "discrete_loss_weight": 0.5,
+        "dirichlet_flow_temp": 1.0,
+        "allow_nan_cfactor": false,
+        "tps_condition": false,
+        "design": false,
+        "design_from_traj": false,
+        "sim_condition": true,
+        "inpainting": false,
+        "dynamic_mpnn": false,
+        "mpnn": false,
+        "frame_interval": null,
+        "cond_interval": null,
+        "ffn_chunk_size": 65536,
+        "spatial_attention_backend": "sdpa",
+        "use_sdpa": true
+      },
+      "environment": {
+        "hostname": "node-201",
+        "platform": "Linux-5.14.0-570.62.1.0.1.el9_6.x86_64-x86_64-with-glibc2.34",
+        "python": "3.11.12",
+        "torch": "2.11.0+cu128",
+        "pytorch_lightning": "2.6.5",
+        "numpy": "2.2.6",
+        "cuda_available": true,
+        "cuda_version": "12.8",
+        "cudnn_version": 91900,
+        "device_name": "NVIDIA L40S",
+        "git_commit": null,
+        "slurm_job_id": "49246"
+      },
+      "runs": [
+        {
+          "precision_config": "fp32-reference",
+          "precision_state": {
+            "precision_config": "fp32-reference",
+            "lightning_precision": "32-true",
+            "device_type": "cuda",
+            "autocast_enabled": false,
+            "autocast_dtype": null,
+            "parameter_dtypes": [
+              "torch.float32"
+            ],
+            "float32_matmul_precision": "highest",
+            "cuda_matmul_allow_tf32": false,
+            "cudnn_allow_tf32": false
+          },
+          "missing_gradients": [
+            "ipa_layers.0.cell_summaries.gate",
+            "ipa_layers.0.cell_summaries.summary_attention.in_proj_weight",
+            "ipa_layers.0.cell_summaries.summary_attention.in_proj_bias",
+            "ipa_layers.0.cell_summaries.summary_attention.out_proj.weight",
+            "ipa_layers.0.cell_summaries.summary_attention.out_proj.bias",
+            "ipa_layers.0.cell_summaries.summary_norm.weight",
+            "ipa_layers.0.cell_summaries.summary_norm.bias",
+            "ipa_layers.0.cell_summaries.inject.weight",
+            "ipa_layers.0.cell_summaries.inject.bias",
+            "ipa_layers.1.cell_summaries.gate",
+            "ipa_layers.1.cell_summaries.summary_attention.in_proj_weight",
+            "ipa_layers.1.cell_summaries.summary_attention.in_proj_bias",
+            "ipa_layers.1.cell_summaries.summary_attention.out_proj.weight",
+            "ipa_layers.1.cell_summaries.summary_attention.out_proj.bias",
+            "ipa_layers.1.cell_summaries.summary_norm.weight",
+            "ipa_layers.1.cell_summaries.summary_norm.bias",
+            "ipa_layers.1.cell_summaries.inject.weight",
+            "ipa_layers.1.cell_summaries.inject.bias",
+            "layers.0.cell_summaries.gate",
+            "layers.0.cell_summaries.summary_attention.in_proj_weight",
+            "layers.0.cell_summaries.summary_attention.in_proj_bias",
+            "layers.0.cell_summaries.summary_attention.out_proj.weight",
+            "layers.0.cell_summaries.summary_attention.out_proj.bias",
+            "layers.0.cell_summaries.summary_norm.weight",
+            "layers.0.cell_summaries.summary_norm.bias",
+            "layers.0.cell_summaries.inject.weight",
+            "layers.0.cell_summaries.inject.bias",
+            "layers.1.cell_summaries.gate",
+            "layers.1.cell_summaries.summary_attention.in_proj_weight",
+            "layers.1.cell_summaries.summary_attention.in_proj_bias",
+            "layers.1.cell_summaries.summary_attention.out_proj.weight",
+            "layers.1.cell_summaries.summary_attention.out_proj.bias",
+            "layers.1.cell_summaries.summary_norm.weight",
+            "layers.1.cell_summaries.summary_norm.bias",
+            "layers.1.cell_summaries.inject.weight",
+            "layers.1.cell_summaries.inject.bias"
+          ],
+          "step_time_s": 0.7926180580006985,
+          "peak_memory_allocated_bytes": 75082752,
+          "peak_memory_reserved_bytes": 102760448,
+          "loss": 7.396536827087402,
+          "loss_finite": true,
+          "parameters_nonfinite_after_step": 0,
+          "grad_checkpointing": false,
+          "gradient_nonfinite": 0,
+          "gradients": {
+            "latent_to_emb": {
+              "numel": 704,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "cond_to_emb": {
+              "numel": 704,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "mask_to_emb": {
+              "numel": 64,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "aatype_to_emb": {
+              "numel": 672,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.0.adaLN_modulation": {
+              "numel": 6336,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.0.ipa_norm": {
+              "numel": 64,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.0.ipa": {
+              "numel": 2782,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.0.mha_l": {
+              "numel": 4288,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.0.fc1": {
+              "numel": 4224,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.0.fc2": {
+              "numel": 4128,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.1.adaLN_modulation": {
+              "numel": 6336,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.1.ipa_norm": {
+              "numel": 64,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.1.ipa": {
+              "numel": 2782,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.1.mha_l": {
+              "numel": 4288,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.1.fc1": {
+              "numel": 4224,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.1.fc2": {
+              "numel": 4128,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.0.adaLN_modulation": {
+              "numel": 9504,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.0.ipa_norm": {
+              "numel": 64,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.0.ipa": {
+              "numel": 2782,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.0.mha_t": {
+              "numel": 4288,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.0.mha_l": {
+              "numel": 4288,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.0.fc1": {
+              "numel": 4224,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.0.fc2": {
+              "numel": 4128,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.1.adaLN_modulation": {
+              "numel": 9504,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.1.ipa_norm": {
+              "numel": 64,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.1.ipa": {
+              "numel": 2782,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.1.mha_t": {
+              "numel": 4288,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.1.mha_l": {
+              "numel": 4288,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.1.fc1": {
+              "numel": 4224,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.1.fc2": {
+              "numel": 4128,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "emb_to_latent": {
+              "numel": 2805,
+              "norm": 2.359781378533981,
+              "max_abs": 0.5624673366546631,
+              "nonfinite": 0
+            },
+            "t_embedder": {
+              "numel": 9280,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            }
+          }
+        },
+        {
+          "precision_config": "fp32-reference",
+          "precision_state": {
+            "precision_config": "fp32-reference",
+            "lightning_precision": "32-true",
+            "device_type": "cuda",
+            "autocast_enabled": false,
+            "autocast_dtype": null,
+            "parameter_dtypes": [
+              "torch.float32"
+            ],
+            "float32_matmul_precision": "highest",
+            "cuda_matmul_allow_tf32": false,
+            "cudnn_allow_tf32": false
+          },
+          "missing_gradients": [
+            "ipa_layers.0.cell_summaries.gate",
+            "ipa_layers.0.cell_summaries.summary_attention.in_proj_weight",
+            "ipa_layers.0.cell_summaries.summary_attention.in_proj_bias",
+            "ipa_layers.0.cell_summaries.summary_attention.out_proj.weight",
+            "ipa_layers.0.cell_summaries.summary_attention.out_proj.bias",
+            "ipa_layers.0.cell_summaries.summary_norm.weight",
+            "ipa_layers.0.cell_summaries.summary_norm.bias",
+            "ipa_layers.0.cell_summaries.inject.weight",
+            "ipa_layers.0.cell_summaries.inject.bias",
+            "ipa_layers.1.cell_summaries.gate",
+            "ipa_layers.1.cell_summaries.summary_attention.in_proj_weight",
+            "ipa_layers.1.cell_summaries.summary_attention.in_proj_bias",
+            "ipa_layers.1.cell_summaries.summary_attention.out_proj.weight",
+            "ipa_layers.1.cell_summaries.summary_attention.out_proj.bias",
+            "ipa_layers.1.cell_summaries.summary_norm.weight",
+            "ipa_layers.1.cell_summaries.summary_norm.bias",
+            "ipa_layers.1.cell_summaries.inject.weight",
+            "ipa_layers.1.cell_summaries.inject.bias",
+            "layers.0.cell_summaries.gate",
+            "layers.0.cell_summaries.summary_attention.in_proj_weight",
+            "layers.0.cell_summaries.summary_attention.in_proj_bias",
+            "layers.0.cell_summaries.summary_attention.out_proj.weight",
+            "layers.0.cell_summaries.summary_attention.out_proj.bias",
+            "layers.0.cell_summaries.summary_norm.weight",
+            "layers.0.cell_summaries.summary_norm.bias",
+            "layers.0.cell_summaries.inject.weight",
+            "layers.0.cell_summaries.inject.bias",
+            "layers.1.cell_summaries.gate",
+            "layers.1.cell_summaries.summary_attention.in_proj_weight",
+            "layers.1.cell_summaries.summary_attention.in_proj_bias",
+            "layers.1.cell_summaries.summary_attention.out_proj.weight",
+            "layers.1.cell_summaries.summary_attention.out_proj.bias",
+            "layers.1.cell_summaries.summary_norm.weight",
+            "layers.1.cell_summaries.summary_norm.bias",
+            "layers.1.cell_summaries.inject.weight",
+            "layers.1.cell_summaries.inject.bias"
+          ],
+          "step_time_s": 0.3053834430002098,
+          "peak_memory_allocated_bytes": 75084800,
+          "peak_memory_reserved_bytes": 102760448,
+          "loss": 7.396536827087402,
+          "loss_finite": true,
+          "parameters_nonfinite_after_step": 0,
+          "grad_checkpointing": false,
+          "gradient_nonfinite": 0,
+          "gradients": {
+            "latent_to_emb": {
+              "numel": 704,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "cond_to_emb": {
+              "numel": 704,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "mask_to_emb": {
+              "numel": 64,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "aatype_to_emb": {
+              "numel": 672,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.0.adaLN_modulation": {
+              "numel": 6336,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.0.ipa_norm": {
+              "numel": 64,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.0.ipa": {
+              "numel": 2782,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.0.mha_l": {
+              "numel": 4288,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.0.fc1": {
+              "numel": 4224,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.0.fc2": {
+              "numel": 4128,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.1.adaLN_modulation": {
+              "numel": 6336,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.1.ipa_norm": {
+              "numel": 64,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.1.ipa": {
+              "numel": 2782,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.1.mha_l": {
+              "numel": 4288,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.1.fc1": {
+              "numel": 4224,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.1.fc2": {
+              "numel": 4128,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.0.adaLN_modulation": {
+              "numel": 9504,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.0.ipa_norm": {
+              "numel": 64,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.0.ipa": {
+              "numel": 2782,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.0.mha_t": {
+              "numel": 4288,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.0.mha_l": {
+              "numel": 4288,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.0.fc1": {
+              "numel": 4224,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.0.fc2": {
+              "numel": 4128,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.1.adaLN_modulation": {
+              "numel": 9504,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.1.ipa_norm": {
+              "numel": 64,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.1.ipa": {
+              "numel": 2782,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.1.mha_t": {
+              "numel": 4288,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.1.mha_l": {
+              "numel": 4288,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.1.fc1": {
+              "numel": 4224,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.1.fc2": {
+              "numel": 4128,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "emb_to_latent": {
+              "numel": 2805,
+              "norm": 2.359781378533981,
+              "max_abs": 0.5624673366546631,
+              "nonfinite": 0
+            },
+            "t_embedder": {
+              "numel": 9280,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            }
+          }
+        },
+        {
+          "precision_config": "bf16-train",
+          "precision_state": {
+            "precision_config": "bf16-train",
+            "lightning_precision": "bf16-mixed",
+            "device_type": "cuda",
+            "autocast_enabled": true,
+            "autocast_dtype": "torch.bfloat16",
+            "parameter_dtypes": [
+              "torch.float32"
+            ],
+            "float32_matmul_precision": "high",
+            "cuda_matmul_allow_tf32": true,
+            "cudnn_allow_tf32": true
+          },
+          "missing_gradients": [
+            "ipa_layers.0.cell_summaries.gate",
+            "ipa_layers.0.cell_summaries.summary_attention.in_proj_weight",
+            "ipa_layers.0.cell_summaries.summary_attention.in_proj_bias",
+            "ipa_layers.0.cell_summaries.summary_attention.out_proj.weight",
+            "ipa_layers.0.cell_summaries.summary_attention.out_proj.bias",
+            "ipa_layers.0.cell_summaries.summary_norm.weight",
+            "ipa_layers.0.cell_summaries.summary_norm.bias",
+            "ipa_layers.0.cell_summaries.inject.weight",
+            "ipa_layers.0.cell_summaries.inject.bias",
+            "ipa_layers.1.cell_summaries.gate",
+            "ipa_layers.1.cell_summaries.summary_attention.in_proj_weight",
+            "ipa_layers.1.cell_summaries.summary_attention.in_proj_bias",
+            "ipa_layers.1.cell_summaries.summary_attention.out_proj.weight",
+            "ipa_layers.1.cell_summaries.summary_attention.out_proj.bias",
+            "ipa_layers.1.cell_summaries.summary_norm.weight",
+            "ipa_layers.1.cell_summaries.summary_norm.bias",
+            "ipa_layers.1.cell_summaries.inject.weight",
+            "ipa_layers.1.cell_summaries.inject.bias",
+            "layers.0.cell_summaries.gate",
+            "layers.0.cell_summaries.summary_attention.in_proj_weight",
+            "layers.0.cell_summaries.summary_attention.in_proj_bias",
+            "layers.0.cell_summaries.summary_attention.out_proj.weight",
+            "layers.0.cell_summaries.summary_attention.out_proj.bias",
+            "layers.0.cell_summaries.summary_norm.weight",
+            "layers.0.cell_summaries.summary_norm.bias",
+            "layers.0.cell_summaries.inject.weight",
+            "layers.0.cell_summaries.inject.bias",
+            "layers.1.cell_summaries.gate",
+            "layers.1.cell_summaries.summary_attention.in_proj_weight",
+            "layers.1.cell_summaries.summary_attention.in_proj_bias",
+            "layers.1.cell_summaries.summary_attention.out_proj.weight",
+            "layers.1.cell_summaries.summary_attention.out_proj.bias",
+            "layers.1.cell_summaries.summary_norm.weight",
+            "layers.1.cell_summaries.summary_norm.bias",
+            "layers.1.cell_summaries.inject.weight",
+            "layers.1.cell_summaries.inject.bias"
+          ],
+          "step_time_s": 0.5434147129999474,
+          "peak_memory_allocated_bytes": 76974080,
+          "peak_memory_reserved_bytes": 102760448,
+          "loss": 7.396536827087402,
+          "loss_finite": true,
+          "parameters_nonfinite_after_step": 0,
+          "grad_checkpointing": false,
+          "gradient_nonfinite": 0,
+          "gradients": {
+            "latent_to_emb": {
+              "numel": 704,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "cond_to_emb": {
+              "numel": 704,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "mask_to_emb": {
+              "numel": 64,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "aatype_to_emb": {
+              "numel": 672,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.0.adaLN_modulation": {
+              "numel": 6336,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.0.ipa_norm": {
+              "numel": 64,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.0.ipa": {
+              "numel": 2782,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.0.mha_l": {
+              "numel": 4288,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.0.fc1": {
+              "numel": 4224,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.0.fc2": {
+              "numel": 4128,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.1.adaLN_modulation": {
+              "numel": 6336,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.1.ipa_norm": {
+              "numel": 64,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.1.ipa": {
+              "numel": 2782,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.1.mha_l": {
+              "numel": 4288,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.1.fc1": {
+              "numel": 4224,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.1.fc2": {
+              "numel": 4128,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.0.adaLN_modulation": {
+              "numel": 9504,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.0.ipa_norm": {
+              "numel": 64,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.0.ipa": {
+              "numel": 2782,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.0.mha_t": {
+              "numel": 4288,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.0.mha_l": {
+              "numel": 4288,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.0.fc1": {
+              "numel": 4224,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.0.fc2": {
+              "numel": 4128,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.1.adaLN_modulation": {
+              "numel": 9504,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.1.ipa_norm": {
+              "numel": 64,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.1.ipa": {
+              "numel": 2782,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.1.mha_t": {
+              "numel": 4288,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.1.mha_l": {
+              "numel": 4288,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.1.fc1": {
+              "numel": 4224,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.1.fc2": {
+              "numel": 4128,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "emb_to_latent": {
+              "numel": 2805,
+              "norm": 2.3600821094283138,
+              "max_abs": 0.5625,
+              "nonfinite": 0
+            },
+            "t_embedder": {
+              "numel": 9280,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            }
+          }
+        }
+      ],
+      "comparisons": [
+        {
+          "reference": "fp32-reference",
+          "candidate": "fp32-reference",
+          "gradient_cosine": {
+            "latent_to_emb": 1.0,
+            "cond_to_emb": 1.0,
+            "mask_to_emb": 1.0,
+            "aatype_to_emb": 1.0,
+            "ipa_layers.0.adaLN_modulation": 1.0,
+            "ipa_layers.0.ipa_norm": 1.0,
+            "ipa_layers.0.ipa": 1.0,
+            "ipa_layers.0.mha_l": 1.0,
+            "ipa_layers.0.fc1": 1.0,
+            "ipa_layers.0.fc2": 1.0,
+            "ipa_layers.1.adaLN_modulation": 1.0,
+            "ipa_layers.1.ipa_norm": 1.0,
+            "ipa_layers.1.ipa": 1.0,
+            "ipa_layers.1.mha_l": 1.0,
+            "ipa_layers.1.fc1": 1.0,
+            "ipa_layers.1.fc2": 1.0,
+            "layers.0.adaLN_modulation": 1.0,
+            "layers.0.ipa_norm": 1.0,
+            "layers.0.ipa": 1.0,
+            "layers.0.mha_t": 1.0,
+            "layers.0.mha_l": 1.0,
+            "layers.0.fc1": 1.0,
+            "layers.0.fc2": 1.0,
+            "layers.1.adaLN_modulation": 1.0,
+            "layers.1.ipa_norm": 1.0,
+            "layers.1.ipa": 1.0,
+            "layers.1.mha_t": 1.0,
+            "layers.1.mha_l": 1.0,
+            "layers.1.fc1": 1.0,
+            "layers.1.fc2": 1.0,
+            "emb_to_latent": 0.9999999999999999,
+            "t_embedder": 1.0
+          },
+          "max_abs_difference": {
+            "latent_to_emb": 0.0,
+            "cond_to_emb": 0.0,
+            "mask_to_emb": 0.0,
+            "aatype_to_emb": 0.0,
+            "ipa_layers.0.adaLN_modulation": 0.0,
+            "ipa_layers.0.ipa_norm": 0.0,
+            "ipa_layers.0.ipa": 0.0,
+            "ipa_layers.0.mha_l": 0.0,
+            "ipa_layers.0.fc1": 0.0,
+            "ipa_layers.0.fc2": 0.0,
+            "ipa_layers.1.adaLN_modulation": 0.0,
+            "ipa_layers.1.ipa_norm": 0.0,
+            "ipa_layers.1.ipa": 0.0,
+            "ipa_layers.1.mha_l": 0.0,
+            "ipa_layers.1.fc1": 0.0,
+            "ipa_layers.1.fc2": 0.0,
+            "layers.0.adaLN_modulation": 0.0,
+            "layers.0.ipa_norm": 0.0,
+            "layers.0.ipa": 0.0,
+            "layers.0.mha_t": 0.0,
+            "layers.0.mha_l": 0.0,
+            "layers.0.fc1": 0.0,
+            "layers.0.fc2": 0.0,
+            "layers.1.adaLN_modulation": 0.0,
+            "layers.1.ipa_norm": 0.0,
+            "layers.1.ipa": 0.0,
+            "layers.1.mha_t": 0.0,
+            "layers.1.mha_l": 0.0,
+            "layers.1.fc1": 0.0,
+            "layers.1.fc2": 0.0,
+            "emb_to_latent": 0.0,
+            "t_embedder": 0.0
+          },
+          "min_gradient_cosine": 0.9999999999999999,
+          "min_gradient_cosine_group": "emb_to_latent",
+          "cosine_threshold": 0.99,
+          "all_groups_pass": true,
+          "step_time_speedup": 2.595484713295848
+        },
+        {
+          "reference": "fp32-reference",
+          "candidate": "bf16-train",
+          "gradient_cosine": {
+            "latent_to_emb": 1.0,
+            "cond_to_emb": 1.0,
+            "mask_to_emb": 1.0,
+            "aatype_to_emb": 1.0,
+            "ipa_layers.0.adaLN_modulation": 1.0,
+            "ipa_layers.0.ipa_norm": 1.0,
+            "ipa_layers.0.ipa": 1.0,
+            "ipa_layers.0.mha_l": 1.0,
+            "ipa_layers.0.fc1": 1.0,
+            "ipa_layers.0.fc2": 1.0,
+            "ipa_layers.1.adaLN_modulation": 1.0,
+            "ipa_layers.1.ipa_norm": 1.0,
+            "ipa_layers.1.ipa": 1.0,
+            "ipa_layers.1.mha_l": 1.0,
+            "ipa_layers.1.fc1": 1.0,
+            "ipa_layers.1.fc2": 1.0,
+            "layers.0.adaLN_modulation": 1.0,
+            "layers.0.ipa_norm": 1.0,
+            "layers.0.ipa": 1.0,
+            "layers.0.mha_t": 1.0,
+            "layers.0.mha_l": 1.0,
+            "layers.0.fc1": 1.0,
+            "layers.0.fc2": 1.0,
+            "layers.1.adaLN_modulation": 1.0,
+            "layers.1.ipa_norm": 1.0,
+            "layers.1.ipa": 1.0,
+            "layers.1.mha_t": 1.0,
+            "layers.1.mha_l": 1.0,
+            "layers.1.fc1": 1.0,
+            "layers.1.fc2": 1.0,
+            "emb_to_latent": 0.9999975726265548,
+            "t_embedder": 1.0
+          },
+          "max_abs_difference": {
+            "latent_to_emb": 0.0,
+            "cond_to_emb": 0.0,
+            "mask_to_emb": 0.0,
+            "aatype_to_emb": 0.0,
+            "ipa_layers.0.adaLN_modulation": 0.0,
+            "ipa_layers.0.ipa_norm": 0.0,
+            "ipa_layers.0.ipa": 0.0,
+            "ipa_layers.0.mha_l": 0.0,
+            "ipa_layers.0.fc1": 0.0,
+            "ipa_layers.0.fc2": 0.0,
+            "ipa_layers.1.adaLN_modulation": 0.0,
+            "ipa_layers.1.ipa_norm": 0.0,
+            "ipa_layers.1.ipa": 0.0,
+            "ipa_layers.1.mha_l": 0.0,
+            "ipa_layers.1.fc1": 0.0,
+            "ipa_layers.1.fc2": 0.0,
+            "layers.0.adaLN_modulation": 0.0,
+            "layers.0.ipa_norm": 0.0,
+            "layers.0.ipa": 0.0,
+            "layers.0.mha_t": 0.0,
+            "layers.0.mha_l": 0.0,
+            "layers.0.fc1": 0.0,
+            "layers.0.fc2": 0.0,
+            "layers.1.adaLN_modulation": 0.0,
+            "layers.1.ipa_norm": 0.0,
+            "layers.1.ipa": 0.0,
+            "layers.1.mha_t": 0.0,
+            "layers.1.mha_l": 0.0,
+            "layers.1.fc1": 0.0,
+            "layers.1.fc2": 0.0,
+            "emb_to_latent": 0.0017492175102233887,
+            "t_embedder": 0.0
+          },
+          "min_gradient_cosine": 0.9999975726265548,
+          "min_gradient_cosine_group": "emb_to_latent",
+          "cosine_threshold": 0.99,
+          "all_groups_pass": true,
+          "step_time_speedup": 1.4585877765896547
+        }
+      ]
+    },
+    "local-2": {
+      "probe": "train-step",
+      "seed": 137,
+      "configs": [
+        "fp32-reference",
+        "fp32-reference",
+        "bf16-train"
+      ],
+      "batch": {
+        "names": [
+          "synthetic_0",
+          "synthetic_1"
+        ],
+        "batch_size": 2,
+        "shapes": {
+          "trans": [
+            4,
+            12,
+            3
+          ],
+          "rots": [
+            4,
+            12,
+            3,
+            3
+          ],
+          "torsions": [
+            4,
+            12,
+            7,
+            2
+          ],
+          "torsion_mask": [
+            12,
+            7
+          ],
+          "seqres": [
+            12
+          ],
+          "mask": [
+            12
+          ]
+        },
+        "source": "synthetic"
+      },
+      "model_args": {
+        "ckpt": null,
+        "validate": false,
+        "num_workers": 4,
+        "train_seed": null,
+        "model_dir": "/share/home/r15543056/MDgen/codex-runs/preflight-20261023T035755Z-95f050bf/results/models",
+        "deterministic": true,
+        "benchmark": false,
+        "epochs": 100,
+        "overfit": false,
+        "overfit_peptide": null,
+        "overfit_frame": false,
+        "train_batches": null,
+        "val_batches": null,
+        "val_repeat": 1,
+        "inference_batches": 0,
+        "batch_size": 2,
+        "val_freq": null,
+        "val_epoch_freq": 1,
+        "no_validate": false,
+        "designability_freq": 1,
+        "print_freq": 100,
+        "ckpt_freq": 1,
+        "wandb": false,
+        "run_name": "default",
+        "accumulate_grad": 1,
+        "grad_clip": 1.0,
+        "check_grad": false,
+        "grad_checkpointing": false,
+        "adamW": false,
+        "ema": false,
+        "ema_decay": 0.999,
+        "lr": 0.0001,
+        "train_split": "unused",
+        "val_split": "unused",
+        "data_dir": "unused",
+        "num_frames": 4,
+        "crop": 256,
+        "suffix": "",
+        "atlas": false,
+        "copy_frames": false,
+        "no_pad": false,
+        "short_md": false,
+        "training_region": false,
+        "region_core": 256,
+        "region_ghost": 256,
+        "design_key_frames": false,
+        "no_aa_emb": false,
+        "no_torsion": false,
+        "no_design_torsion": false,
+        "supervise_no_torsions": false,
+        "supervise_all_torsions": false,
+        "no_offsets": false,
+        "no_frames": false,
+        "hyena": false,
+        "no_rope": false,
+        "local_spatial": true,
+        "cell_summaries": false,
+        "spatial_cell_width": 4.0,
+        "spatial_contact_radius": 8.0,
+        "core_capacity": 4,
+        "ghost_capacity": 20,
+        "group_batch_size": 2,
+        "dropout": 0.0,
+        "scale_factor": 1.0,
+        "interleave_ipa": true,
+        "prepend_ipa": true,
+        "oracle": false,
+        "num_layers": 2,
+        "embed_dim": 32,
+        "mha_heads": 4,
+        "ipa_heads": 2,
+        "ipa_head_dim": 4,
+        "ipa_qk": 2,
+        "ipa_v": 2,
+        "time_multiplier": 100.0,
+        "abs_pos_emb": false,
+        "abs_time_emb": false,
+        "path_type": "GVP",
+        "prediction": "velocity",
+        "sampling_method": "dopri5",
+        "alpha_max": 8,
+        "discrete_loss_weight": 0.5,
+        "dirichlet_flow_temp": 1.0,
+        "allow_nan_cfactor": false,
+        "tps_condition": false,
+        "design": false,
+        "design_from_traj": false,
+        "sim_condition": true,
+        "inpainting": false,
+        "dynamic_mpnn": false,
+        "mpnn": false,
+        "frame_interval": null,
+        "cond_interval": null,
+        "ffn_chunk_size": 65536,
+        "spatial_attention_backend": "sdpa",
+        "use_sdpa": true
+      },
+      "environment": {
+        "hostname": "node-201",
+        "platform": "Linux-5.14.0-570.62.1.0.1.el9_6.x86_64-x86_64-with-glibc2.34",
+        "python": "3.11.12",
+        "torch": "2.11.0+cu128",
+        "pytorch_lightning": "2.6.5",
+        "numpy": "2.2.6",
+        "cuda_available": true,
+        "cuda_version": "12.8",
+        "cudnn_version": 91900,
+        "device_name": "NVIDIA L40S",
+        "git_commit": null,
+        "slurm_job_id": "49246"
+      },
+      "runs": [
+        {
+          "precision_config": "fp32-reference",
+          "precision_state": {
+            "precision_config": "fp32-reference",
+            "lightning_precision": "32-true",
+            "device_type": "cuda",
+            "autocast_enabled": false,
+            "autocast_dtype": null,
+            "parameter_dtypes": [
+              "torch.float32"
+            ],
+            "float32_matmul_precision": "highest",
+            "cuda_matmul_allow_tf32": false,
+            "cudnn_allow_tf32": false
+          },
+          "missing_gradients": [
+            "ipa_layers.0.cell_summaries.gate",
+            "ipa_layers.0.cell_summaries.summary_attention.in_proj_weight",
+            "ipa_layers.0.cell_summaries.summary_attention.in_proj_bias",
+            "ipa_layers.0.cell_summaries.summary_attention.out_proj.weight",
+            "ipa_layers.0.cell_summaries.summary_attention.out_proj.bias",
+            "ipa_layers.0.cell_summaries.summary_norm.weight",
+            "ipa_layers.0.cell_summaries.summary_norm.bias",
+            "ipa_layers.0.cell_summaries.inject.weight",
+            "ipa_layers.0.cell_summaries.inject.bias",
+            "ipa_layers.1.cell_summaries.gate",
+            "ipa_layers.1.cell_summaries.summary_attention.in_proj_weight",
+            "ipa_layers.1.cell_summaries.summary_attention.in_proj_bias",
+            "ipa_layers.1.cell_summaries.summary_attention.out_proj.weight",
+            "ipa_layers.1.cell_summaries.summary_attention.out_proj.bias",
+            "ipa_layers.1.cell_summaries.summary_norm.weight",
+            "ipa_layers.1.cell_summaries.summary_norm.bias",
+            "ipa_layers.1.cell_summaries.inject.weight",
+            "ipa_layers.1.cell_summaries.inject.bias",
+            "layers.0.cell_summaries.gate",
+            "layers.0.cell_summaries.summary_attention.in_proj_weight",
+            "layers.0.cell_summaries.summary_attention.in_proj_bias",
+            "layers.0.cell_summaries.summary_attention.out_proj.weight",
+            "layers.0.cell_summaries.summary_attention.out_proj.bias",
+            "layers.0.cell_summaries.summary_norm.weight",
+            "layers.0.cell_summaries.summary_norm.bias",
+            "layers.0.cell_summaries.inject.weight",
+            "layers.0.cell_summaries.inject.bias",
+            "layers.1.cell_summaries.gate",
+            "layers.1.cell_summaries.summary_attention.in_proj_weight",
+            "layers.1.cell_summaries.summary_attention.in_proj_bias",
+            "layers.1.cell_summaries.summary_attention.out_proj.weight",
+            "layers.1.cell_summaries.summary_attention.out_proj.bias",
+            "layers.1.cell_summaries.summary_norm.weight",
+            "layers.1.cell_summaries.summary_norm.bias",
+            "layers.1.cell_summaries.inject.weight",
+            "layers.1.cell_summaries.inject.bias"
+          ],
+          "step_time_s": 0.6149878710002668,
+          "peak_memory_allocated_bytes": 75082752,
+          "peak_memory_reserved_bytes": 102760448,
+          "loss": 7.396536827087402,
+          "loss_finite": true,
+          "parameters_nonfinite_after_step": 0,
+          "grad_checkpointing": false,
+          "gradient_nonfinite": 0,
+          "gradients": {
+            "latent_to_emb": {
+              "numel": 704,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "cond_to_emb": {
+              "numel": 704,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "mask_to_emb": {
+              "numel": 64,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "aatype_to_emb": {
+              "numel": 672,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.0.adaLN_modulation": {
+              "numel": 6336,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.0.ipa_norm": {
+              "numel": 64,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.0.ipa": {
+              "numel": 2782,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.0.mha_l": {
+              "numel": 4288,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.0.fc1": {
+              "numel": 4224,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.0.fc2": {
+              "numel": 4128,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.1.adaLN_modulation": {
+              "numel": 6336,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.1.ipa_norm": {
+              "numel": 64,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.1.ipa": {
+              "numel": 2782,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.1.mha_l": {
+              "numel": 4288,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.1.fc1": {
+              "numel": 4224,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.1.fc2": {
+              "numel": 4128,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.0.adaLN_modulation": {
+              "numel": 9504,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.0.ipa_norm": {
+              "numel": 64,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.0.ipa": {
+              "numel": 2782,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.0.mha_t": {
+              "numel": 4288,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.0.mha_l": {
+              "numel": 4288,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.0.fc1": {
+              "numel": 4224,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.0.fc2": {
+              "numel": 4128,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.1.adaLN_modulation": {
+              "numel": 9504,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.1.ipa_norm": {
+              "numel": 64,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.1.ipa": {
+              "numel": 2782,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.1.mha_t": {
+              "numel": 4288,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.1.mha_l": {
+              "numel": 4288,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.1.fc1": {
+              "numel": 4224,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.1.fc2": {
+              "numel": 4128,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "emb_to_latent": {
+              "numel": 2805,
+              "norm": 2.359781378533981,
+              "max_abs": 0.5624673366546631,
+              "nonfinite": 0
+            },
+            "t_embedder": {
+              "numel": 9280,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            }
+          }
+        },
+        {
+          "precision_config": "fp32-reference",
+          "precision_state": {
+            "precision_config": "fp32-reference",
+            "lightning_precision": "32-true",
+            "device_type": "cuda",
+            "autocast_enabled": false,
+            "autocast_dtype": null,
+            "parameter_dtypes": [
+              "torch.float32"
+            ],
+            "float32_matmul_precision": "highest",
+            "cuda_matmul_allow_tf32": false,
+            "cudnn_allow_tf32": false
+          },
+          "missing_gradients": [
+            "ipa_layers.0.cell_summaries.gate",
+            "ipa_layers.0.cell_summaries.summary_attention.in_proj_weight",
+            "ipa_layers.0.cell_summaries.summary_attention.in_proj_bias",
+            "ipa_layers.0.cell_summaries.summary_attention.out_proj.weight",
+            "ipa_layers.0.cell_summaries.summary_attention.out_proj.bias",
+            "ipa_layers.0.cell_summaries.summary_norm.weight",
+            "ipa_layers.0.cell_summaries.summary_norm.bias",
+            "ipa_layers.0.cell_summaries.inject.weight",
+            "ipa_layers.0.cell_summaries.inject.bias",
+            "ipa_layers.1.cell_summaries.gate",
+            "ipa_layers.1.cell_summaries.summary_attention.in_proj_weight",
+            "ipa_layers.1.cell_summaries.summary_attention.in_proj_bias",
+            "ipa_layers.1.cell_summaries.summary_attention.out_proj.weight",
+            "ipa_layers.1.cell_summaries.summary_attention.out_proj.bias",
+            "ipa_layers.1.cell_summaries.summary_norm.weight",
+            "ipa_layers.1.cell_summaries.summary_norm.bias",
+            "ipa_layers.1.cell_summaries.inject.weight",
+            "ipa_layers.1.cell_summaries.inject.bias",
+            "layers.0.cell_summaries.gate",
+            "layers.0.cell_summaries.summary_attention.in_proj_weight",
+            "layers.0.cell_summaries.summary_attention.in_proj_bias",
+            "layers.0.cell_summaries.summary_attention.out_proj.weight",
+            "layers.0.cell_summaries.summary_attention.out_proj.bias",
+            "layers.0.cell_summaries.summary_norm.weight",
+            "layers.0.cell_summaries.summary_norm.bias",
+            "layers.0.cell_summaries.inject.weight",
+            "layers.0.cell_summaries.inject.bias",
+            "layers.1.cell_summaries.gate",
+            "layers.1.cell_summaries.summary_attention.in_proj_weight",
+            "layers.1.cell_summaries.summary_attention.in_proj_bias",
+            "layers.1.cell_summaries.summary_attention.out_proj.weight",
+            "layers.1.cell_summaries.summary_attention.out_proj.bias",
+            "layers.1.cell_summaries.summary_norm.weight",
+            "layers.1.cell_summaries.summary_norm.bias",
+            "layers.1.cell_summaries.inject.weight",
+            "layers.1.cell_summaries.inject.bias"
+          ],
+          "step_time_s": 0.3045654450006623,
+          "peak_memory_allocated_bytes": 75084800,
+          "peak_memory_reserved_bytes": 102760448,
+          "loss": 7.396536827087402,
+          "loss_finite": true,
+          "parameters_nonfinite_after_step": 0,
+          "grad_checkpointing": false,
+          "gradient_nonfinite": 0,
+          "gradients": {
+            "latent_to_emb": {
+              "numel": 704,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "cond_to_emb": {
+              "numel": 704,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "mask_to_emb": {
+              "numel": 64,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "aatype_to_emb": {
+              "numel": 672,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.0.adaLN_modulation": {
+              "numel": 6336,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.0.ipa_norm": {
+              "numel": 64,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.0.ipa": {
+              "numel": 2782,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.0.mha_l": {
+              "numel": 4288,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.0.fc1": {
+              "numel": 4224,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.0.fc2": {
+              "numel": 4128,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.1.adaLN_modulation": {
+              "numel": 6336,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.1.ipa_norm": {
+              "numel": 64,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.1.ipa": {
+              "numel": 2782,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.1.mha_l": {
+              "numel": 4288,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.1.fc1": {
+              "numel": 4224,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.1.fc2": {
+              "numel": 4128,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.0.adaLN_modulation": {
+              "numel": 9504,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.0.ipa_norm": {
+              "numel": 64,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.0.ipa": {
+              "numel": 2782,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.0.mha_t": {
+              "numel": 4288,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.0.mha_l": {
+              "numel": 4288,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.0.fc1": {
+              "numel": 4224,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.0.fc2": {
+              "numel": 4128,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.1.adaLN_modulation": {
+              "numel": 9504,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.1.ipa_norm": {
+              "numel": 64,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.1.ipa": {
+              "numel": 2782,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.1.mha_t": {
+              "numel": 4288,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.1.mha_l": {
+              "numel": 4288,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.1.fc1": {
+              "numel": 4224,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.1.fc2": {
+              "numel": 4128,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "emb_to_latent": {
+              "numel": 2805,
+              "norm": 2.359781378533981,
+              "max_abs": 0.5624673366546631,
+              "nonfinite": 0
+            },
+            "t_embedder": {
+              "numel": 9280,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            }
+          }
+        },
+        {
+          "precision_config": "bf16-train",
+          "precision_state": {
+            "precision_config": "bf16-train",
+            "lightning_precision": "bf16-mixed",
+            "device_type": "cuda",
+            "autocast_enabled": true,
+            "autocast_dtype": "torch.bfloat16",
+            "parameter_dtypes": [
+              "torch.float32"
+            ],
+            "float32_matmul_precision": "high",
+            "cuda_matmul_allow_tf32": true,
+            "cudnn_allow_tf32": true
+          },
+          "missing_gradients": [
+            "ipa_layers.0.cell_summaries.gate",
+            "ipa_layers.0.cell_summaries.summary_attention.in_proj_weight",
+            "ipa_layers.0.cell_summaries.summary_attention.in_proj_bias",
+            "ipa_layers.0.cell_summaries.summary_attention.out_proj.weight",
+            "ipa_layers.0.cell_summaries.summary_attention.out_proj.bias",
+            "ipa_layers.0.cell_summaries.summary_norm.weight",
+            "ipa_layers.0.cell_summaries.summary_norm.bias",
+            "ipa_layers.0.cell_summaries.inject.weight",
+            "ipa_layers.0.cell_summaries.inject.bias",
+            "ipa_layers.1.cell_summaries.gate",
+            "ipa_layers.1.cell_summaries.summary_attention.in_proj_weight",
+            "ipa_layers.1.cell_summaries.summary_attention.in_proj_bias",
+            "ipa_layers.1.cell_summaries.summary_attention.out_proj.weight",
+            "ipa_layers.1.cell_summaries.summary_attention.out_proj.bias",
+            "ipa_layers.1.cell_summaries.summary_norm.weight",
+            "ipa_layers.1.cell_summaries.summary_norm.bias",
+            "ipa_layers.1.cell_summaries.inject.weight",
+            "ipa_layers.1.cell_summaries.inject.bias",
+            "layers.0.cell_summaries.gate",
+            "layers.0.cell_summaries.summary_attention.in_proj_weight",
+            "layers.0.cell_summaries.summary_attention.in_proj_bias",
+            "layers.0.cell_summaries.summary_attention.out_proj.weight",
+            "layers.0.cell_summaries.summary_attention.out_proj.bias",
+            "layers.0.cell_summaries.summary_norm.weight",
+            "layers.0.cell_summaries.summary_norm.bias",
+            "layers.0.cell_summaries.inject.weight",
+            "layers.0.cell_summaries.inject.bias",
+            "layers.1.cell_summaries.gate",
+            "layers.1.cell_summaries.summary_attention.in_proj_weight",
+            "layers.1.cell_summaries.summary_attention.in_proj_bias",
+            "layers.1.cell_summaries.summary_attention.out_proj.weight",
+            "layers.1.cell_summaries.summary_attention.out_proj.bias",
+            "layers.1.cell_summaries.summary_norm.weight",
+            "layers.1.cell_summaries.summary_norm.bias",
+            "layers.1.cell_summaries.inject.weight",
+            "layers.1.cell_summaries.inject.bias"
+          ],
+          "step_time_s": 0.4322907820005639,
+          "peak_memory_allocated_bytes": 76974080,
+          "peak_memory_reserved_bytes": 102760448,
+          "loss": 7.396536827087402,
+          "loss_finite": true,
+          "parameters_nonfinite_after_step": 0,
+          "grad_checkpointing": false,
+          "gradient_nonfinite": 0,
+          "gradients": {
+            "latent_to_emb": {
+              "numel": 704,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "cond_to_emb": {
+              "numel": 704,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "mask_to_emb": {
+              "numel": 64,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "aatype_to_emb": {
+              "numel": 672,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.0.adaLN_modulation": {
+              "numel": 6336,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.0.ipa_norm": {
+              "numel": 64,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.0.ipa": {
+              "numel": 2782,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.0.mha_l": {
+              "numel": 4288,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.0.fc1": {
+              "numel": 4224,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.0.fc2": {
+              "numel": 4128,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.1.adaLN_modulation": {
+              "numel": 6336,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.1.ipa_norm": {
+              "numel": 64,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.1.ipa": {
+              "numel": 2782,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.1.mha_l": {
+              "numel": 4288,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.1.fc1": {
+              "numel": 4224,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "ipa_layers.1.fc2": {
+              "numel": 4128,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.0.adaLN_modulation": {
+              "numel": 9504,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.0.ipa_norm": {
+              "numel": 64,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.0.ipa": {
+              "numel": 2782,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.0.mha_t": {
+              "numel": 4288,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.0.mha_l": {
+              "numel": 4288,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.0.fc1": {
+              "numel": 4224,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.0.fc2": {
+              "numel": 4128,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.1.adaLN_modulation": {
+              "numel": 9504,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.1.ipa_norm": {
+              "numel": 64,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.1.ipa": {
+              "numel": 2782,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.1.mha_t": {
+              "numel": 4288,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.1.mha_l": {
+              "numel": 4288,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.1.fc1": {
+              "numel": 4224,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "layers.1.fc2": {
+              "numel": 4128,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            },
+            "emb_to_latent": {
+              "numel": 2805,
+              "norm": 2.3600821094283138,
+              "max_abs": 0.5625,
+              "nonfinite": 0
+            },
+            "t_embedder": {
+              "numel": 9280,
+              "norm": 0.0,
+              "max_abs": 0.0,
+              "nonfinite": 0
+            }
+          }
+        }
+      ],
+      "comparisons": [
+        {
+          "reference": "fp32-reference",
+          "candidate": "fp32-reference",
+          "gradient_cosine": {
+            "latent_to_emb": 1.0,
+            "cond_to_emb": 1.0,
+            "mask_to_emb": 1.0,
+            "aatype_to_emb": 1.0,
+            "ipa_layers.0.adaLN_modulation": 1.0,
+            "ipa_layers.0.ipa_norm": 1.0,
+            "ipa_layers.0.ipa": 1.0,
+            "ipa_layers.0.mha_l": 1.0,
+            "ipa_layers.0.fc1": 1.0,
+            "ipa_layers.0.fc2": 1.0,
+            "ipa_layers.1.adaLN_modulation": 1.0,
+            "ipa_layers.1.ipa_norm": 1.0,
+            "ipa_layers.1.ipa": 1.0,
+            "ipa_layers.1.mha_l": 1.0,
+            "ipa_layers.1.fc1": 1.0,
+            "ipa_layers.1.fc2": 1.0,
+            "layers.0.adaLN_modulation": 1.0,
+            "layers.0.ipa_norm": 1.0,
+            "layers.0.ipa": 1.0,
+            "layers.0.mha_t": 1.0,
+            "layers.0.mha_l": 1.0,
+            "layers.0.fc1": 1.0,
+            "layers.0.fc2": 1.0,
+            "layers.1.adaLN_modulation": 1.0,
+            "layers.1.ipa_norm": 1.0,
+            "layers.1.ipa": 1.0,
+            "layers.1.mha_t": 1.0,
+            "layers.1.mha_l": 1.0,
+            "layers.1.fc1": 1.0,
+            "layers.1.fc2": 1.0,
+            "emb_to_latent": 0.9999999999999999,
+            "t_embedder": 1.0
+          },
+          "max_abs_difference": {
+            "latent_to_emb": 0.0,
+            "cond_to_emb": 0.0,
+            "mask_to_emb": 0.0,
+            "aatype_to_emb": 0.0,
+            "ipa_layers.0.adaLN_modulation": 0.0,
+            "ipa_layers.0.ipa_norm": 0.0,
+            "ipa_layers.0.ipa": 0.0,
+            "ipa_layers.0.mha_l": 0.0,
+            "ipa_layers.0.fc1": 0.0,
+            "ipa_layers.0.fc2": 0.0,
+            "ipa_layers.1.adaLN_modulation": 0.0,
+            "ipa_layers.1.ipa_norm": 0.0,
+            "ipa_layers.1.ipa": 0.0,
+            "ipa_layers.1.mha_l": 0.0,
+            "ipa_layers.1.fc1": 0.0,
+            "ipa_layers.1.fc2": 0.0,
+            "layers.0.adaLN_modulation": 0.0,
+            "layers.0.ipa_norm": 0.0,
+            "layers.0.ipa": 0.0,
+            "layers.0.mha_t": 0.0,
+            "layers.0.mha_l": 0.0,
+            "layers.0.fc1": 0.0,
+            "layers.0.fc2": 0.0,
+            "layers.1.adaLN_modulation": 0.0,
+            "layers.1.ipa_norm": 0.0,
+            "layers.1.ipa": 0.0,
+            "layers.1.mha_t": 0.0,
+            "layers.1.mha_l": 0.0,
+            "layers.1.fc1": 0.0,
+            "layers.1.fc2": 0.0,
+            "emb_to_latent": 0.0,
+            "t_embedder": 0.0
+          },
+          "min_gradient_cosine": 0.9999999999999999,
+          "min_gradient_cosine_group": "emb_to_latent",
+          "cosine_threshold": 0.99,
+          "all_groups_pass": true,
+          "step_time_speedup": 2.0192306156035835
+        },
+        {
+          "reference": "fp32-reference",
+          "candidate": "bf16-train",
+          "gradient_cosine": {
+            "latent_to_emb": 1.0,
+            "cond_to_emb": 1.0,
+            "mask_to_emb": 1.0,
+            "aatype_to_emb": 1.0,
+            "ipa_layers.0.adaLN_modulation": 1.0,
+            "ipa_layers.0.ipa_norm": 1.0,
+            "ipa_layers.0.ipa": 1.0,
+            "ipa_layers.0.mha_l": 1.0,
+            "ipa_layers.0.fc1": 1.0,
+            "ipa_layers.0.fc2": 1.0,
+            "ipa_layers.1.adaLN_modulation": 1.0,
+            "ipa_layers.1.ipa_norm": 1.0,
+            "ipa_layers.1.ipa": 1.0,
+            "ipa_layers.1.mha_l": 1.0,
+            "ipa_layers.1.fc1": 1.0,
+            "ipa_layers.1.fc2": 1.0,
+            "layers.0.adaLN_modulation": 1.0,
+            "layers.0.ipa_norm": 1.0,
+            "layers.0.ipa": 1.0,
+            "layers.0.mha_t": 1.0,
+            "layers.0.mha_l": 1.0,
+            "layers.0.fc1": 1.0,
+            "layers.0.fc2": 1.0,
+            "layers.1.adaLN_modulation": 1.0,
+            "layers.1.ipa_norm": 1.0,
+            "layers.1.ipa": 1.0,
+            "layers.1.mha_t": 1.0,
+            "layers.1.mha_l": 1.0,
+            "layers.1.fc1": 1.0,
+            "layers.1.fc2": 1.0,
+            "emb_to_latent": 0.9999975726265548,
+            "t_embedder": 1.0
+          },
+          "max_abs_difference": {
+            "latent_to_emb": 0.0,
+            "cond_to_emb": 0.0,
+            "mask_to_emb": 0.0,
+            "aatype_to_emb": 0.0,
+            "ipa_layers.0.adaLN_modulation": 0.0,
+            "ipa_layers.0.ipa_norm": 0.0,
+            "ipa_layers.0.ipa": 0.0,
+            "ipa_layers.0.mha_l": 0.0,
+            "ipa_layers.0.fc1": 0.0,
+            "ipa_layers.0.fc2": 0.0,
+            "ipa_layers.1.adaLN_modulation": 0.0,
+            "ipa_layers.1.ipa_norm": 0.0,
+            "ipa_layers.1.ipa": 0.0,
+            "ipa_layers.1.mha_l": 0.0,
+            "ipa_layers.1.fc1": 0.0,
+            "ipa_layers.1.fc2": 0.0,
+            "layers.0.adaLN_modulation": 0.0,
+            "layers.0.ipa_norm": 0.0,
+            "layers.0.ipa": 0.0,
+            "layers.0.mha_t": 0.0,
+            "layers.0.mha_l": 0.0,
+            "layers.0.fc1": 0.0,
+            "layers.0.fc2": 0.0,
+            "layers.1.adaLN_modulation": 0.0,
+            "layers.1.ipa_norm": 0.0,
+            "layers.1.ipa": 0.0,
+            "layers.1.mha_t": 0.0,
+            "layers.1.mha_l": 0.0,
+            "layers.1.fc1": 0.0,
+            "layers.1.fc2": 0.0,
+            "emb_to_latent": 0.0017492175102233887,
+            "t_embedder": 0.0
+          },
+          "min_gradient_cosine": 0.9999975726265548,
+          "min_gradient_cosine_group": "emb_to_latent",
+          "cosine_threshold": 0.99,
+          "all_groups_pass": true,
+          "step_time_speedup": 1.4226254563056229
+        }
+      ]
+    }
+  },
+  "job_id": "49246",
+  "minimal_mha": {
+    "passed": true,
+    "status": "passed",
+    "runs": [
+      {
+        "passed": true,
+        "seconds": 0.11298740700021881
+      },
+      {
+        "passed": true,
+        "seconds": 0.0011718729997483024
+      }
+    ]
+  },
+  "gpu": {
+    "status": "passed",
+    "passed": true,
+    "python": "/share/home/r15543056/.venvs/mdgen2026/bin/python",
+    "env": {
+      "CUDA_VISIBLE_DEVICES": "0",
+      "GPU_DEVICE_ORDINAL": "0",
+      "SLURM_JOB_GPUS": "0"
+    },
+    "torch": "2.11.0+cu128",
+    "gpu": "NVIDIA L40S"
+  },
+  "commands": [
+    [
+      "/share/home/r15543056/.venvs/mdgen2026/bin/python",
+      "-m",
+      "mdgen.train_step_probe",
+      "--output",
+      "/share/home/r15543056/MDgen/codex-runs/preflight-20261023T035755Z-95f050bf/results/global-1.json",
+      "--configs",
+      "fp32-reference",
+      "fp32-reference",
+      "bf16-train",
+      "--synthetic_residues",
+      "12",
+      "--seed",
+      "137",
+      "--",
+      "--train_split",
+      "unused",
+      "--val_split",
+      "unused",
+      "--data_dir",
+      "unused",
+      "--num_layers",
+      "2",
+      "--embed_dim",
+      "32",
+      "--mha_heads",
+      "4",
+      "--ipa_heads",
+      "2",
+      "--ipa_head_dim",
+      "4",
+      "--ipa_qk",
+      "2",
+      "--ipa_v",
+      "2",
+      "--num_frames",
+      "4",
+      "--prepend_ipa",
+      "--interleave_ipa",
+      "--sim_condition",
+      "--batch_size",
+      "2",
+      "--deterministic",
+      "--model_dir",
+      "/share/home/r15543056/MDgen/codex-runs/preflight-20261023T035755Z-95f050bf/results/models"
+    ],
+    [
+      "/share/home/r15543056/.venvs/mdgen2026/bin/python",
+      "-m",
+      "mdgen.train_step_probe",
+      "--output",
+      "/share/home/r15543056/MDgen/codex-runs/preflight-20261023T035755Z-95f050bf/results/global-2.json",
+      "--configs",
+      "fp32-reference",
+      "fp32-reference",
+      "bf16-train",
+      "--synthetic_residues",
+      "12",
+      "--seed",
+      "137",
+      "--",
+      "--train_split",
+      "unused",
+      "--val_split",
+      "unused",
+      "--data_dir",
+      "unused",
+      "--num_layers",
+      "2",
+      "--embed_dim",
+      "32",
+      "--mha_heads",
+      "4",
+      "--ipa_heads",
+      "2",
+      "--ipa_head_dim",
+      "4",
+      "--ipa_qk",
+      "2",
+      "--ipa_v",
+      "2",
+      "--num_frames",
+      "4",
+      "--prepend_ipa",
+      "--interleave_ipa",
+      "--sim_condition",
+      "--batch_size",
+      "2",
+      "--deterministic",
+      "--model_dir",
+      "/share/home/r15543056/MDgen/codex-runs/preflight-20261023T035755Z-95f050bf/results/models"
+    ],
+    [
+      "/share/home/r15543056/.venvs/mdgen2026/bin/python",
+      "-m",
+      "mdgen.train_step_probe",
+      "--output",
+      "/share/home/r15543056/MDgen/codex-runs/preflight-20261023T035755Z-95f050bf/results/local-1.json",
+      "--configs",
+      "fp32-reference",
+      "fp32-reference",
+      "bf16-train",
+      "--synthetic_residues",
+      "12",
+      "--seed",
+      "137",
+      "--",
+      "--train_split",
+      "unused",
+      "--val_split",
+      "unused",
+      "--data_dir",
+      "unused",
+      "--num_layers",
+      "2",
+      "--embed_dim",
+      "32",
+      "--mha_heads",
+      "4",
+      "--ipa_heads",
+      "2",
+      "--ipa_head_dim",
+      "4",
+      "--ipa_qk",
+      "2",
+      "--ipa_v",
+      "2",
+      "--num_frames",
+      "4",
+      "--prepend_ipa",
+      "--interleave_ipa",
+      "--sim_condition",
+      "--batch_size",
+      "2",
+      "--deterministic",
+      "--model_dir",
+      "/share/home/r15543056/MDgen/codex-runs/preflight-20261023T035755Z-95f050bf/results/models",
+      "--local_spatial",
+      "--spatial_cell_width",
+      "4",
+      "--spatial_contact_radius",
+      "8",
+      "--core_capacity",
+      "4",
+      "--ghost_capacity",
+      "20",
+      "--group_batch_size",
+      "2"
+    ],
+    [
+      "/share/home/r15543056/.venvs/mdgen2026/bin/python",
+      "-m",
+      "mdgen.train_step_probe",
+      "--output",
+      "/share/home/r15543056/MDgen/codex-runs/preflight-20261023T035755Z-95f050bf/results/local-2.json",
+      "--configs",
+      "fp32-reference",
+      "fp32-reference",
+      "bf16-train",
+      "--synthetic_residues",
+      "12",
+      "--seed",
+      "137",
+      "--",
+      "--train_split",
+      "unused",
+      "--val_split",
+      "unused",
+      "--data_dir",
+      "unused",
+      "--num_layers",
+      "2",
+      "--embed_dim",
+      "32",
+      "--mha_heads",
+      "4",
+      "--ipa_heads",
+      "2",
+      "--ipa_head_dim",
+      "4",
+      "--ipa_qk",
+      "2",
+      "--ipa_v",
+      "2",
+      "--num_frames",
+      "4",
+      "--prepend_ipa",
+      "--interleave_ipa",
+      "--sim_condition",
+      "--batch_size",
+      "2",
+      "--deterministic",
+      "--model_dir",
+      "/share/home/r15543056/MDgen/codex-runs/preflight-20261023T035755Z-95f050bf/results/models",
+      "--local_spatial",
+      "--spatial_cell_width",
+      "4",
+      "--spatial_contact_radius",
+      "8",
+      "--core_capacity",
+      "4",
+      "--ghost_capacity",
+      "20",
+      "--group_batch_size",
+      "2"
+    ]
+  ],
+  "cross_process_reproducible": {
+    "global": true,
+    "local": true
+  },
+  "pytest": ".....                                                                    [100%]\n=============================== warnings summary ===============================\ncode/tests/test_train_step_probe.py::test_nonfinite_batch_is_counted\ncode/tests/test_train_step_probe.py::test_nonfinite_batch_is_counted\ncode/tests/test_train_step_probe.py::test_nonfinite_batch_is_counted\ncode/tests/test_train_step_probe.py::test_nonfinite_batch_is_counted\ncode/tests/test_train_step_probe.py::test_nonfinite_batch_is_counted\n  /opt/python-3.11.12-gpu/lib/python3.11/site-packages/torch/jit/_script.py:1488: DeprecationWarning: `torch.jit.script` is deprecated. Please switch to `torch.compile` or `torch.export`.\n    warnings.warn(\n\ncode/tests/test_train_step_probe.py::test_nonfinite_batch_is_counted\n  /share/home/r15543056/.venvs/mdgen2026/lib/python3.11/site-packages/lightning_fabric/plugins/environments/slurm.py:204: The `srun` command is available on your system but is not used. HINT: If your intention is to run Lightning on SLURM, prepend your python command with `srun` like so: srun python train.py --train_split x --val_split x --data_dir x  ...\n\ncode/tests/test_train_step_probe.py::test_nonfinite_batch_is_counted\ncode/tests/test_train_step_probe.py::test_cuda_reports_peak_memory\ncode/tests/test_train_step_probe.py::test_cuda_bf16_probe_keeps_fp32_weights_and_finite_gradients[False]\ncode/tests/test_train_step_probe.py::test_cuda_bf16_probe_keeps_fp32_weights_and_finite_gradients[True]\n  /share/home/r15543056/.venvs/mdgen2026/lib/python3.11/site-packages/pytorch_lightning/trainer/configuration_validator.py:70: You defined a `validation_step` but have no `val_dataloader`. Skipping val loop.\n\ncode/tests/test_train_step_probe.py::test_nonfinite_batch_is_counted\ncode/tests/test_train_step_probe.py::test_cuda_reports_peak_memory\ncode/tests/test_train_step_probe.py::test_cuda_bf16_probe_keeps_fp32_weights_and_finite_gradients[False]\ncode/tests/test_train_step_probe.py::test_cuda_bf16_probe_keeps_fp32_weights_and_finite_gradients[True]\n  /share/home/r15543056/.venvs/mdgen2026/lib/python3.11/site-packages/pytorch_lightning/utilities/_pytree.py:21: `isinstance(treespec, LeafSpec)` is deprecated, use `isinstance(treespec, TreeSpec) and treespec.is_leaf()` instead.\n\ncode/tests/test_train_step_probe.py::test_nonfinite_batch_is_counted\n  /share/home/r15543056/MDgen/codex-runs/preflight-20261023T035755Z-95f050bf/code/mdgen/wrapper.py:36: RuntimeWarning: Mean of empty slice\n    out[key] = np.nanmean(log[key])\n\ncode/tests/test_train_step_probe.py::test_cuda_reports_peak_memory\ncode/tests/test_train_step_probe.py::test_cuda_bf16_probe_keeps_fp32_weights_and_finite_gradients[False]\ncode/tests/test_train_step_probe.py::test_cuda_bf16_probe_keeps_fp32_weights_and_finite_gradients[True]\n  /share/home/r15543056/.venvs/mdgen2026/lib/python3.11/site-packages/lightning_fabric/plugins/environments/slurm.py:204: The `srun` command is available on your system but is not used. HINT: If your intention is to run Lightning on SLURM, prepend your python command with `srun` like so: srun python /opt/python-3.11.12-gpu/lib/python3.11/site-packages ...\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n5 passed, 18 warnings in 18.60s\n",
+  "nonfinite_injections": {
+    "nan": {
+      "probe": "train-step",
+      "seed": 137,
+      "configs": [
+        "fp32-reference",
+        "fp32-reference"
+      ],
+      "batch": {
+        "names": [
+          "synthetic_0",
+          "synthetic_1"
+        ],
+        "batch_size": 2,
+        "shapes": {
+          "trans": [
+            4,
+            12,
+            3
+          ],
+          "rots": [
+            4,
+            12,
+            3,
+            3
+          ],
+          "torsions": [
+            4,
+            12,
+            7,
+            2
+          ],
+          "torsion_mask": [
+            12,
+            7
+          ],
+          "seqres": [
+            12
+          ],
+          "mask": [
+            12
+          ]
+        }
+      },
+      "model_args": {
+        "ckpt": null,
+        "validate": false,
+        "num_workers": 4,
+        "train_seed": null,
+        "model_dir": "/share/home/r15543056/MDgen/codex-runs/preflight-20261023T035755Z-95f050bf/results/models",
+        "deterministic": true,
+        "benchmark": false,
+        "epochs": 100,
+        "overfit": false,
+        "overfit_peptide": null,
+        "overfit_frame": false,
+        "train_batches": null,
+        "val_batches": null,
+        "val_repeat": 1,
+        "inference_batches": 0,
+        "batch_size": 2,
+        "val_freq": null,
+        "val_epoch_freq": 1,
+        "no_validate": false,
+        "designability_freq": 1,
+        "print_freq": 100,
+        "ckpt_freq": 1,
+        "wandb": false,
+        "run_name": "default",
+        "accumulate_grad": 1,
+        "grad_clip": 1.0,
+        "check_grad": false,
+        "grad_checkpointing": false,
+        "adamW": false,
+        "ema": false,
+        "ema_decay": 0.999,
+        "lr": 0.0001,
+        "train_split": "unused",
+        "val_split": "unused",
+        "data_dir": "unused",
+        "num_frames": 4,
+        "crop": 256,
+        "suffix": "",
+        "atlas": false,
+        "copy_frames": false,
+        "no_pad": false,
+        "short_md": false,
+        "training_region": false,
+        "region_core": 256,
+        "region_ghost": 256,
+        "design_key_frames": false,
+        "no_aa_emb": false,
+        "no_torsion": false,
+        "no_design_torsion": false,
+        "supervise_no_torsions": false,
+        "supervise_all_torsions": false,
+        "no_offsets": false,
+        "no_frames": false,
+        "hyena": false,
+        "no_rope": false,
+        "local_spatial": false,
+        "cell_summaries": false,
+        "spatial_cell_width": 16.0,
+        "spatial_contact_radius": 16.0,
+        "core_capacity": 128,
+        "ghost_capacity": 128,
+        "group_batch_size": 4,
+        "dropout": 0.0,
+        "scale_factor": 1.0,
+        "interleave_ipa": true,
+        "prepend_ipa": true,
+        "oracle": false,
+        "num_layers": 2,
+        "embed_dim": 32,
+        "mha_heads": 4,
+        "ipa_heads": 2,
+        "ipa_head_dim": 4,
+        "ipa_qk": 2,
+        "ipa_v": 2,
+        "time_multiplier": 100.0,
+        "abs_pos_emb": false,
+        "abs_time_emb": false,
+        "path_type": "GVP",
+        "prediction": "velocity",
+        "sampling_method": "dopri5",
+        "alpha_max": 8,
+        "discrete_loss_weight": 0.5,
+        "dirichlet_flow_temp": 1.0,
+        "allow_nan_cfactor": false,
+        "tps_condition": false,
+        "design": false,
+        "design_from_traj": false,
+        "sim_condition": true,
+        "inpainting": false,
+        "dynamic_mpnn": false,
+        "mpnn": false,
+        "frame_interval": null,
+        "cond_interval": null,
+        "ffn_chunk_size": 65536,
+        "spatial_attention_backend": "sdpa"
+      },
+      "environment": {
+        "hostname": "node-201",
+        "platform": "Linux-5.14.0-570.62.1.0.1.el9_6.x86_64-x86_64-with-glibc2.34",
+        "python": "3.11.12",
+        "torch": "2.11.0+cu128",
+        "pytorch_lightning": "2.6.5",
+        "numpy": "2.2.6",
+        "cuda_available": true,
+        "cuda_version": "12.8",
+        "cudnn_version": 91900,
+        "device_name": "NVIDIA L40S",
+        "git_commit": null,
+        "slurm_job_id": "49246"
+      },
+      "runs": [
+        {
+          "precision_config": "fp32-reference",
+          "precision_state": {
+            "precision_config": "fp32-reference",
+            "lightning_precision": "32-true",
+            "device_type": "cuda",
+            "autocast_enabled": false,
+            "autocast_dtype": null,
+            "parameter_dtypes": [
+              "torch.float32"
+            ],
+            "float32_matmul_precision": "highest",
+            "cuda_matmul_allow_tf32": false,
+            "cudnn_allow_tf32": false
+          },
+          "missing_gradients": [],
+          "step_time_s": 0.29059274500014,
+          "peak_memory_allocated_bytes": 71804928,
+          "peak_memory_reserved_bytes": 98566144,
+          "loss": null,
+          "loss_finite": false,
+          "parameters_nonfinite_after_step": 116429,
+          "grad_checkpointing": false,
+          "gradient_nonfinite": 116045,
+          "gradients": {
+            "latent_to_emb": {
+              "numel": 704,
+              "norm": null,
+              "max_abs": null,
+              "nonfinite": 704
+            },
+            "cond_to_emb": {
+              "numel": 704,
+              "norm": null,
+              "max_abs": null,
+              "nonfinite": 704
+            },
+            "mask_to_emb": {
+              "numel": 64,
+              "norm": null,
+              "max_abs": null,
+              "nonfinite": 64
+            },
+            "aatype_to_emb": {
+              "numel": 672,
+              "norm": null,
+              "max_abs": null,
+              "nonfinite": 288
+            },
+            "ipa_layers.0.adaLN_modulation": {
+              "numel": 6336,
+              "norm": null,
+              "max_abs": null,
+              "nonfinite": 6336
+            },
+            "ipa_layers.0.ipa_norm": {
+              "numel": 64,
+              "norm": null,
+              "max_abs": null,
+              "nonfinite": 64
+            },
+            "ipa_layers.0.ipa": {
+              "numel": 2782,
+              "norm": null,
+              "max_abs": null,
+              "nonfinite": 2782
+            },
+            "ipa_layers.0.mha_l": {
+              "numel": 4288,
+              "norm": null,
+              "max_abs": null,
+              "nonfinite": 4288
+            },
+            "ipa_layers.0.fc1": {
+              "numel": 4224,
+              "norm": null,
+              "max_abs": null,
+              "nonfinite": 4224
+            },
+            "ipa_layers.0.fc2": {
+              "numel": 4128,
+              "norm": null,
+              "max_abs": null,
+              "nonfinite": 4128
+            },
+            "ipa_layers.1.adaLN_modulation": {
+              "numel": 6336,
+              "norm": null,
+              "max_abs": null,
+              "nonfinite": 6336
+            },
+            "ipa_layers.1.ipa_norm": {
+              "numel": 64,
+              "norm": null,
+              "max_abs": null,
+              "nonfinite": 64
+            },
+            "ipa_layers.1.ipa": {
+              "numel": 2782,
+              "norm": null,
+              "max_abs": null,
+              "nonfinite": 2782
+            },
+            "ipa_layers.1.mha_l": {
+              "numel": 4288,
+              "norm": null,
+              "max_abs": null,
+              "nonfinite": 4288
+            },
+            "ipa_layers.1.fc1": {
+              "numel": 4224,
+              "norm": null,
+              "max_abs": null,
+              "nonfinite": 4224
+            },
+            "ipa_layers.1.fc2": {
+              "numel": 4128,
+              "norm": null,
+              "max_abs": null,
+              "nonfinite": 4128
+            },
+            "layers.0.adaLN_modulation": {
+              "numel": 9504,
+              "norm": null,
+              "max_abs": null,
+              "nonfinite": 9504
+            },
+            "layers.0.ipa_norm": {
+              "numel": 64,
+              "norm": null,
+              "max_abs": null,
+              "nonfinite": 64
+            },
+            "layers.0.ipa": {
+              "numel": 2782,
+              "norm": null,
+              "max_abs": null,
+              "nonfinite": 2782
+            },
+            "layers.0.mha_t": {
+              "numel": 4288,
+              "norm": null,
+              "max_abs": null,
+              "nonfinite": 4288
+            },
+            "layers.0.mha_l": {
+              "numel": 4288,
+              "norm": null,
+              "max_abs": null,
+              "nonfinite": 4288
+            },
+            "layers.0.fc1": {
+              "numel": 4224,
+              "norm": null,
+              "max_abs": null,
+              "nonfinite": 4224
+            },
+            "layers.0.fc2": {
+              "numel": 4128,
+              "norm": null,
+              "max_abs": null,
+              "nonfinite": 4128
+            },
+            "layers.1.adaLN_modulation": {
+              "numel": 9504,
+              "norm": null,
+              "max_abs": null,
+              "nonfinite": 9504
+            },
+            "layers.1.ipa_norm": {
+              "numel": 64,
+              "norm": null,
+              "max_abs": null,
+              "nonfinite": 64
+            },
+            "layers.1.ipa": {
+              "numel": 2782,
+              "norm": null,
+              "max_abs": null,
+              "nonfinite": 2782
+            },
+            "layers.1.mha_t": {
+              "numel": 4288,
+              "norm": null,
+              "max_abs": null,
+              "nonfinite": 4288
+            },
+            "layers.1.mha_l": {
+              "numel": 4288,
+              "norm": null,
+              "max_abs": null,
+              "nonfinite": 4288
+            },
+            "layers.1.fc1": {
+              "numel": 4224,
+              "norm": null,
+              "max_abs": null,
+              "nonfinite": 4224
+            },
+            "layers.1.fc2": {
+              "numel": 4128,
+              "norm": null,
+              "max_abs": null,
+              "nonfinite": 4128
+            },
+            "emb_to_latent": {
+              "numel": 2805,
+              "norm": null,
+              "max_abs": null,
+              "nonfinite": 2805
+            },
+            "t_embedder": {
+              "numel": 9280,
+              "norm": null,
+              "max_abs": null,
+              "nonfinite": 9280
+            }
+          }
+        },
+        {
+          "precision_config": "fp32-reference",
+          "precision_state": {
+            "precision_config": "fp32-reference",
+            "lightning_precision": "32-true",
+            "device_type": "cuda",
+            "autocast_enabled": false,
+            "autocast_dtype": null,
+            "parameter_dtypes": [
+              "torch.float32"
+            ],
+            "float32_matmul_precision": "highest",
+            "cuda_matmul_allow_tf32": false,
+            "cudnn_allow_tf32": false
+          },
+          "missing_gradients": [],
+          "step_time_s": 0.04428903799998807,
+          "peak_memory_allocated_bytes": 71811072,
+          "peak_memory_reserved_bytes": 98566144,
+          "loss": null,
+          "loss_finite": false,
+          "parameters_nonfinite_after_step": 116429,
+          "grad_checkpointing": false,
+          "gradient_nonfinite": 116045,
+          "gradients": {
+            "latent_to_emb": {
+              "numel": 704,
+              "norm": null,
+              "max_abs": null,
+              "nonfinite": 704
+            },
+            "cond_to_emb": {
+              "numel": 704,
+              "norm": null,
+              "max_abs": null,
+              "nonfinite": 704
+            },
+            "mask_to_emb": {
+              "numel": 64,
+              "norm": null,
+              "max_abs": null,
+              "nonfinite": 64
+            },
+            "aatype_to_emb": {
+              "numel": 672,
+              "norm": null,
+              "max_abs": null,
+              "nonfinite": 288
+            },
+            "ipa_layers.0.adaLN_modulation": {
+              "numel": 6336,
+              "norm": null,
+              "max_abs": null,
+              "nonfinite": 6336
+            },
+            "ipa_layers.0.ipa_norm": {
+              "numel": 64,
+              "norm": null,
+              "max_abs": null,
+              "nonfinite": 64
+            },
+            "ipa_layers.0.ipa": {
+              "numel": 2782,
+              "norm": null,
+              "max_abs": null,
+              "nonfinite": 2782
+            },
+            "ipa_layers.0.mha_l": {
+              "numel": 4288,
+              "norm": null,
+              "max_abs": null,
+              "nonfinite": 4288
+            },
+            "ipa_layers.0.fc1": {
+              "numel": 4224,
+              "norm": null,
+              "max_abs": null,
+              "nonfinite": 4224
+            },
+            "ipa_layers.0.fc2": {
+              "numel": 4128,
+              "norm": null,
+              "max_abs": null,
+              "nonfinite": 4128
+            },
+            "ipa_layers.1.adaLN_modulation": {
+              "numel": 6336,
+              "norm": null,
+              "max_abs": null,
+              "nonfinite": 6336
+            },
+            "ipa_layers.1.ipa_norm": {
+              "numel": 64,
+              "norm": null,
+              "max_abs": null,
+              "nonfinite": 64
+            },
+            "ipa_layers.1.ipa": {
+              "numel": 2782,
+              "norm": null,
+              "max_abs": null,
+              "nonfinite": 2782
+            },
+            "ipa_layers.1.mha_l": {
+              "numel": 4288,
+              "norm": null,
+              "max_abs": null,
+              "nonfinite": 4288
+            },
+            "ipa_layers.1.fc1": {
+              "numel": 4224,
+              "norm": null,
+              "max_abs": null,
+              "nonfinite": 4224
+            },
+            "ipa_layers.1.fc2": {
+              "numel": 4128,
+              "norm": null,
+              "max_abs": null,
+              "nonfinite": 4128
+            },
+            "layers.0.adaLN_modulation": {
+              "numel": 9504,
+              "norm": null,
+              "max_abs": null,
+              "nonfinite": 9504
+            },
+            "layers.0.ipa_norm": {
+              "numel": 64,
+              "norm": null,
+              "max_abs": null,
+              "nonfinite": 64
+            },
+            "layers.0.ipa": {
+              "numel": 2782,
+              "norm": null,
+              "max_abs": null,
+              "nonfinite": 2782
+            },
+            "layers.0.mha_t": {
+              "numel": 4288,
+              "norm": null,
+              "max_abs": null,
+              "nonfinite": 4288
+            },
+            "layers.0.mha_l": {
+              "numel": 4288,
+              "norm": null,
+              "max_abs": null,
+              "nonfinite": 4288
+            },
+            "layers.0.fc1": {
+              "numel": 4224,
+              "norm": null,
+              "max_abs": null,
+              "nonfinite": 4224
+            },
+            "layers.0.fc2": {
+              "numel": 4128,
+              "norm": null,
+              "max_abs": null,
+              "nonfinite": 4128
+            },
+            "layers.1.adaLN_modulation": {
+              "numel": 9504,
+              "norm": null,
+              "max_abs": null,
+              "nonfinite": 9504
+            },
+            "layers.1.ipa_norm": {
+              "numel": 64,
+              "norm": null,
+              "max_abs": null,
+              "nonfinite": 64
+            },
+            "layers.1.ipa": {
+              "numel": 2782,
+              "norm": null,
+              "max_abs": null,
+              "nonfinite": 2782
+            },
+            "layers.1.mha_t": {
+              "numel": 4288,
+              "norm": null,
+              "max_abs": null,
+              "nonfinite": 4288
+            },
+            "layers.1.mha_l": {
+              "numel": 4288,
+              "norm": null,
+              "max_abs": null,
+              "nonfinite": 4288
+            },
+            "layers.1.fc1": {
+              "numel": 4224,
+              "norm": null,
+              "max_abs": null,
+              "nonfinite": 4224
+            },
+            "layers.1.fc2": {
+              "numel": 4128,
+              "norm": null,
+              "max_abs": null,
+              "nonfinite": 4128
+            },
+            "emb_to_latent": {
+              "numel": 2805,
+              "norm": null,
+              "max_abs": null,
+              "nonfinite": 2805
+            },
+            "t_embedder": {
+              "numel": 9280,
+              "norm": null,
+              "max_abs": null,
+              "nonfinite": 9280
+            }
+          }
+        }
+      ],
+      "comparisons": [
+        {
+          "reference": "fp32-reference",
+          "candidate": "fp32-reference",
+          "gradient_cosine": {
+            "latent_to_emb": null,
+            "cond_to_emb": null,
+            "mask_to_emb": null,
+            "aatype_to_emb": null,
+            "ipa_layers.0.adaLN_modulation": null,
+            "ipa_layers.0.ipa_norm": null,
+            "ipa_layers.0.ipa": null,
+            "ipa_layers.0.mha_l": null,
+            "ipa_layers.0.fc1": null,
+            "ipa_layers.0.fc2": null,
+            "ipa_layers.1.adaLN_modulation": null,
+            "ipa_layers.1.ipa_norm": null,
+            "ipa_layers.1.ipa": null,
+            "ipa_layers.1.mha_l": null,
+            "ipa_layers.1.fc1": null,
+            "ipa_layers.1.fc2": null,
+            "layers.0.adaLN_modulation": null,
+            "layers.0.ipa_norm": null,
+            "layers.0.ipa": null,
+            "layers.0.mha_t": null,
+            "layers.0.mha_l": null,
+            "layers.0.fc1": null,
+            "layers.0.fc2": null,
+            "layers.1.adaLN_modulation": null,
+            "layers.1.ipa_norm": null,
+            "layers.1.ipa": null,
+            "layers.1.mha_t": null,
+            "layers.1.mha_l": null,
+            "layers.1.fc1": null,
+            "layers.1.fc2": null,
+            "emb_to_latent": null,
+            "t_embedder": null
+          },
+          "max_abs_difference": {
+            "latent_to_emb": null,
+            "cond_to_emb": null,
+            "mask_to_emb": null,
+            "aatype_to_emb": null,
+            "ipa_layers.0.adaLN_modulation": null,
+            "ipa_layers.0.ipa_norm": null,
+            "ipa_layers.0.ipa": null,
+            "ipa_layers.0.mha_l": null,
+            "ipa_layers.0.fc1": null,
+            "ipa_layers.0.fc2": null,
+            "ipa_layers.1.adaLN_modulation": null,
+            "ipa_layers.1.ipa_norm": null,
+            "ipa_layers.1.ipa": null,
+            "ipa_layers.1.mha_l": null,
+            "ipa_layers.1.fc1": null,
+            "ipa_layers.1.fc2": null,
+            "layers.0.adaLN_modulation": null,
+            "layers.0.ipa_norm": null,
+            "layers.0.ipa": null,
+            "layers.0.mha_t": null,
+            "layers.0.mha_l": null,
+            "layers.0.fc1": null,
+            "layers.0.fc2": null,
+            "layers.1.adaLN_modulation": null,
+            "layers.1.ipa_norm": null,
+            "layers.1.ipa": null,
+            "layers.1.mha_t": null,
+            "layers.1.mha_l": null,
+            "layers.1.fc1": null,
+            "layers.1.fc2": null,
+            "emb_to_latent": null,
+            "t_embedder": null
+          },
+          "min_gradient_cosine": null,
+          "min_gradient_cosine_group": null,
+          "cosine_threshold": 0.99,
+          "all_groups_pass": false,
+          "step_time_speedup": 6.561279226706579
+        }
+      ]
+    },
+    "inf": {
+      "probe": "train-step",
+      "seed": 137,
+      "configs": [
+        "fp32-reference",
+        "fp32-reference"
+      ],
+      "batch": {
+        "names": [
+          "synthetic_0",
+          "synthetic_1"
+        ],
+        "batch_size": 2,
+        "shapes": {
+          "trans": [
+            4,
+            12,
+            3
+          ],
+          "rots": [
+            4,
+            12,
+            3,
+            3
+          ],
+          "torsions": [
+            4,
+            12,
+            7,
+            2
+          ],
+          "torsion_mask": [
+            12,
+            7
+          ],
+          "seqres": [
+            12
+          ],
+          "mask": [
+            12
+          ]
+        }
+      },
+      "model_args": {
+        "ckpt": null,
+        "validate": false,
+        "num_workers": 4,
+        "train_seed": null,
+        "model_dir": "/share/home/r15543056/MDgen/codex-runs/preflight-20261023T035755Z-95f050bf/results/models",
+        "deterministic": true,
+        "benchmark": false,
+        "epochs": 100,
+        "overfit": false,
+        "overfit_peptide": null,
+        "overfit_frame": false,
+        "train_batches": null,
+        "val_batches": null,
+        "val_repeat": 1,
+        "inference_batches": 0,
+        "batch_size": 2,
+        "val_freq": null,
+        "val_epoch_freq": 1,
+        "no_validate": false,
+        "designability_freq": 1,
+        "print_freq": 100,
+        "ckpt_freq": 1,
+        "wandb": false,
+        "run_name": "default",
+        "accumulate_grad": 1,
+        "grad_clip": 1.0,
+        "check_grad": false,
+        "grad_checkpointing": false,
+        "adamW": false,
+        "ema": false,
+        "ema_decay": 0.999,
+        "lr": 0.0001,
+        "train_split": "unused",
+        "val_split": "unused",
+        "data_dir": "unused",
+        "num_frames": 4,
+        "crop": 256,
+        "suffix": "",
+        "atlas": false,
+        "copy_frames": false,
+        "no_pad": false,
+        "short_md": false,
+        "training_region": false,
+        "region_core": 256,
+        "region_ghost": 256,
+        "design_key_frames": false,
+        "no_aa_emb": false,
+        "no_torsion": false,
+        "no_design_torsion": false,
+        "supervise_no_torsions": false,
+        "supervise_all_torsions": false,
+        "no_offsets": false,
+        "no_frames": false,
+        "hyena": false,
+        "no_rope": false,
+        "local_spatial": false,
+        "cell_summaries": false,
+        "spatial_cell_width": 16.0,
+        "spatial_contact_radius": 16.0,
+        "core_capacity": 128,
+        "ghost_capacity": 128,
+        "group_batch_size": 4,
+        "dropout": 0.0,
+        "scale_factor": 1.0,
+        "interleave_ipa": true,
+        "prepend_ipa": true,
+        "oracle": false,
+        "num_layers": 2,
+        "embed_dim": 32,
+        "mha_heads": 4,
+        "ipa_heads": 2,
+        "ipa_head_dim": 4,
+        "ipa_qk": 2,
+        "ipa_v": 2,
+        "time_multiplier": 100.0,
+        "abs_pos_emb": false,
+        "abs_time_emb": false,
+        "path_type": "GVP",
+        "prediction": "velocity",
+        "sampling_method": "dopri5",
+        "alpha_max": 8,
+        "discrete_loss_weight": 0.5,
+        "dirichlet_flow_temp": 1.0,
+        "allow_nan_cfactor": false,
+        "tps_condition": false,
+        "design": false,
+        "design_from_traj": false,
+        "sim_condition": true,
+        "inpainting": false,
+        "dynamic_mpnn": false,
+        "mpnn": false,
+        "frame_interval": null,
+        "cond_interval": null,
+        "ffn_chunk_size": 65536,
+        "spatial_attention_backend": "sdpa"
+      },
+      "environment": {
+        "hostname": "node-201",
+        "platform": "Linux-5.14.0-570.62.1.0.1.el9_6.x86_64-x86_64-with-glibc2.34",
+        "python": "3.11.12",
+        "torch": "2.11.0+cu128",
+        "pytorch_lightning": "2.6.5",
+        "numpy": "2.2.6",
+        "cuda_available": true,
+        "cuda_version": "12.8",
+        "cudnn_version": 91900,
+        "device_name": "NVIDIA L40S",
+        "git_commit": null,
+        "slurm_job_id": "49246"
+      },
+      "runs": [
+        {
+          "precision_config": "fp32-reference",
+          "precision_state": {
+            "precision_config": "fp32-reference",
+            "lightning_precision": "32-true",
+            "device_type": "cuda",
+            "autocast_enabled": false,
+            "autocast_dtype": null,
+            "parameter_dtypes": [
+              "torch.float32"
+            ],
+            "float32_matmul_precision": "highest",
+            "cuda_matmul_allow_tf32": false,
+            "cudnn_allow_tf32": false
+          },
+          "missing_gradients": [],
+          "step_time_s": 0.04313723999985086,
+          "peak_memory_allocated_bytes": 71811072,
+          "peak_memory_reserved_bytes": 98566144,
+          "loss": null,
+          "loss_finite": false,
+          "parameters_nonfinite_after_step": 116429,
+          "grad_checkpointing": false,
+          "gradient_nonfinite": 116045,
+          "gradients": {
+            "latent_to_emb": {
+              "numel": 704,
+              "norm": null,
+              "max_abs": null,
+              "nonfinite": 704
+            },
+            "cond_to_emb": {
+              "numel": 704,
+              "norm": null,
+              "max_abs": null,
+              "nonfinite": 704
+            },
+            "mask_to_emb": {
+              "numel": 64,
+              "norm": null,
+              "max_abs": null,
+              "nonfinite": 64
+            },
+            "aatype_to_emb": {
+              "numel": 672,
+              "norm": null,
+              "max_abs": null,
+              "nonfinite": 288
+            },
+            "ipa_layers.0.adaLN_modulation": {
+              "numel": 6336,
+              "norm": null,
+              "max_abs": null,
+              "nonfinite": 6336
+            },
+            "ipa_layers.0.ipa_norm": {
+              "numel": 64,
+              "norm": null,
+              "max_abs": null,
+              "nonfinite": 64
+            },
+            "ipa_layers.0.ipa": {
+              "numel": 2782,
+              "norm": null,
+              "max_abs": null,
+              "nonfinite": 2782
+            },
+            "ipa_layers.0.mha_l": {
+              "numel": 4288,
+              "norm": null,
+              "max_abs": null,
+              "nonfinite": 4288
+            },
+            "ipa_layers.0.fc1": {
+              "numel": 4224,
+              "norm": null,
+              "max_abs": null,
+              "nonfinite": 4224
+            },
+            "ipa_layers.0.fc2": {
+              "numel": 4128,
+              "norm": null,
+              "max_abs": null,
+              "nonfinite": 4128
+            },
+            "ipa_layers.1.adaLN_modulation": {
+              "numel": 6336,
+              "norm": null,
+              "max_abs": null,
+              "nonfinite": 6336
+            },
+            "ipa_layers.1.ipa_norm": {
+              "numel": 64,
+              "norm": null,
+              "max_abs": null,
+              "nonfinite": 64
+            },
+            "ipa_layers.1.ipa": {
+              "numel": 2782,
+              "norm": null,
+              "max_abs": null,
+              "nonfinite": 2782
+            },
+            "ipa_layers.1.mha_l": {
+              "numel": 4288,
+              "norm": null,
+              "max_abs": null,
+              "nonfinite": 4288
+            },
+            "ipa_layers.1.fc1": {
+              "numel": 4224,
+              "norm": null,
+              "max_abs": null,
+              "nonfinite": 4224
+            },
+            "ipa_layers.1.fc2": {
+              "numel": 4128,
+              "norm": null,
+              "max_abs": null,
+              "nonfinite": 4128
+            },
+            "layers.0.adaLN_modulation": {
+              "numel": 9504,
+              "norm": null,
+              "max_abs": null,
+              "nonfinite": 9504
+            },
+            "layers.0.ipa_norm": {
+              "numel": 64,
+              "norm": null,
+              "max_abs": null,
+              "nonfinite": 64
+            },
+            "layers.0.ipa": {
+              "numel": 2782,
+              "norm": null,
+              "max_abs": null,
+              "nonfinite": 2782
+            },
+            "layers.0.mha_t": {
+              "numel": 4288,
+              "norm": null,
+              "max_abs": null,
+              "nonfinite": 4288
+            },
+            "layers.0.mha_l": {
+              "numel": 4288,
+              "norm": null,
+              "max_abs": null,
+              "nonfinite": 4288
+            },
+            "layers.0.fc1": {
+              "numel": 4224,
+              "norm": null,
+              "max_abs": null,
+              "nonfinite": 4224
+            },
+            "layers.0.fc2": {
+              "numel": 4128,
+              "norm": null,
+              "max_abs": null,
+              "nonfinite": 4128
+            },
+            "layers.1.adaLN_modulation": {
+              "numel": 9504,
+              "norm": null,
+              "max_abs": null,
+              "nonfinite": 9504
+            },
+            "layers.1.ipa_norm": {
+              "numel": 64,
+              "norm": null,
+              "max_abs": null,
+              "nonfinite": 64
+            },
+            "layers.1.ipa": {
+              "numel": 2782,
+              "norm": null,
+              "max_abs": null,
+              "nonfinite": 2782
+            },
+            "layers.1.mha_t": {
+              "numel": 4288,
+              "norm": null,
+              "max_abs": null,
+              "nonfinite": 4288
+            },
+            "layers.1.mha_l": {
+              "numel": 4288,
+              "norm": null,
+              "max_abs": null,
+              "nonfinite": 4288
+            },
+            "layers.1.fc1": {
+              "numel": 4224,
+              "norm": null,
+              "max_abs": null,
+              "nonfinite": 4224
+            },
+            "layers.1.fc2": {
+              "numel": 4128,
+              "norm": null,
+              "max_abs": null,
+              "nonfinite": 4128
+            },
+            "emb_to_latent": {
+              "numel": 2805,
+              "norm": null,
+              "max_abs": null,
+              "nonfinite": 2805
+            },
+            "t_embedder": {
+              "numel": 9280,
+              "norm": null,
+              "max_abs": null,
+              "nonfinite": 9280
+            }
+          }
+        },
+        {
+          "precision_config": "fp32-reference",
+          "precision_state": {
+            "precision_config": "fp32-reference",
+            "lightning_precision": "32-true",
+            "device_type": "cuda",
+            "autocast_enabled": false,
+            "autocast_dtype": null,
+            "parameter_dtypes": [
+              "torch.float32"
+            ],
+            "float32_matmul_precision": "highest",
+            "cuda_matmul_allow_tf32": false,
+            "cudnn_allow_tf32": false
+          },
+          "missing_gradients": [],
+          "step_time_s": 0.04321554299986019,
+          "peak_memory_allocated_bytes": 71817216,
+          "peak_memory_reserved_bytes": 98566144,
+          "loss": null,
+          "loss_finite": false,
+          "parameters_nonfinite_after_step": 116429,
+          "grad_checkpointing": false,
+          "gradient_nonfinite": 116045,
+          "gradients": {
+            "latent_to_emb": {
+              "numel": 704,
+              "norm": null,
+              "max_abs": null,
+              "nonfinite": 704
+            },
+            "cond_to_emb": {
+              "numel": 704,
+              "norm": null,
+              "max_abs": null,
+              "nonfinite": 704
+            },
+            "mask_to_emb": {
+              "numel": 64,
+              "norm": null,
+              "max_abs": null,
+              "nonfinite": 64
+            },
+            "aatype_to_emb": {
+              "numel": 672,
+              "norm": null,
+              "max_abs": null,
+              "nonfinite": 288
+            },
+            "ipa_layers.0.adaLN_modulation": {
+              "numel": 6336,
+              "norm": null,
+              "max_abs": null,
+              "nonfinite": 6336
+            },
+            "ipa_layers.0.ipa_norm": {
+              "numel": 64,
+              "norm": null,
+              "max_abs": null,
+              "nonfinite": 64
+            },
+            "ipa_layers.0.ipa": {
+              "numel": 2782,
+              "norm": null,
+              "max_abs": null,
+              "nonfinite": 2782
+            },
+            "ipa_layers.0.mha_l": {
+              "numel": 4288,
+              "norm": null,
+              "max_abs": null,
+              "nonfinite": 4288
+            },
+            "ipa_layers.0.fc1": {
+              "numel": 4224,
+              "norm": null,
+              "max_abs": null,
+              "nonfinite": 4224
+            },
+            "ipa_layers.0.fc2": {
+              "numel": 4128,
+              "norm": null,
+              "max_abs": null,
+              "nonfinite": 4128
+            },
+            "ipa_layers.1.adaLN_modulation": {
+              "numel": 6336,
+              "norm": null,
+              "max_abs": null,
+              "nonfinite": 6336
+            },
+            "ipa_layers.1.ipa_norm": {
+              "numel": 64,
+              "norm": null,
+              "max_abs": null,
+              "nonfinite": 64
+            },
+            "ipa_layers.1.ipa": {
+              "numel": 2782,
+              "norm": null,
+              "max_abs": null,
+              "nonfinite": 2782
+            },
+            "ipa_layers.1.mha_l": {
+              "numel": 4288,
+              "norm": null,
+              "max_abs": null,
+              "nonfinite": 4288
+            },
+            "ipa_layers.1.fc1": {
+              "numel": 4224,
+              "norm": null,
+              "max_abs": null,
+              "nonfinite": 4224
+            },
+            "ipa_layers.1.fc2": {
+              "numel": 4128,
+              "norm": null,
+              "max_abs": null,
+              "nonfinite": 4128
+            },
+            "layers.0.adaLN_modulation": {
+              "numel": 9504,
+              "norm": null,
+              "max_abs": null,
+              "nonfinite": 9504
+            },
+            "layers.0.ipa_norm": {
+              "numel": 64,
+              "norm": null,
+              "max_abs": null,
+              "nonfinite": 64
+            },
+            "layers.0.ipa": {
+              "numel": 2782,
+              "norm": null,
+              "max_abs": null,
+              "nonfinite": 2782
+            },
+            "layers.0.mha_t": {
+              "numel": 4288,
+              "norm": null,
+              "max_abs": null,
+              "nonfinite": 4288
+            },
+            "layers.0.mha_l": {
+              "numel": 4288,
+              "norm": null,
+              "max_abs": null,
+              "nonfinite": 4288
+            },
+            "layers.0.fc1": {
+              "numel": 4224,
+              "norm": null,
+              "max_abs": null,
+              "nonfinite": 4224
+            },
+            "layers.0.fc2": {
+              "numel": 4128,
+              "norm": null,
+              "max_abs": null,
+              "nonfinite": 4128
+            },
+            "layers.1.adaLN_modulation": {
+              "numel": 9504,
+              "norm": null,
+              "max_abs": null,
+              "nonfinite": 9504
+            },
+            "layers.1.ipa_norm": {
+              "numel": 64,
+              "norm": null,
+              "max_abs": null,
+              "nonfinite": 64
+            },
+            "layers.1.ipa": {
+              "numel": 2782,
+              "norm": null,
+              "max_abs": null,
+              "nonfinite": 2782
+            },
+            "layers.1.mha_t": {
+              "numel": 4288,
+              "norm": null,
+              "max_abs": null,
+              "nonfinite": 4288
+            },
+            "layers.1.mha_l": {
+              "numel": 4288,
+              "norm": null,
+              "max_abs": null,
+              "nonfinite": 4288
+            },
+            "layers.1.fc1": {
+              "numel": 4224,
+              "norm": null,
+              "max_abs": null,
+              "nonfinite": 4224
+            },
+            "layers.1.fc2": {
+              "numel": 4128,
+              "norm": null,
+              "max_abs": null,
+              "nonfinite": 4128
+            },
+            "emb_to_latent": {
+              "numel": 2805,
+              "norm": null,
+              "max_abs": null,
+              "nonfinite": 2805
+            },
+            "t_embedder": {
+              "numel": 9280,
+              "norm": null,
+              "max_abs": null,
+              "nonfinite": 9280
+            }
+          }
+        }
+      ],
+      "comparisons": [
+        {
+          "reference": "fp32-reference",
+          "candidate": "fp32-reference",
+          "gradient_cosine": {
+            "latent_to_emb": null,
+            "cond_to_emb": null,
+            "mask_to_emb": null,
+            "aatype_to_emb": null,
+            "ipa_layers.0.adaLN_modulation": null,
+            "ipa_layers.0.ipa_norm": null,
+            "ipa_layers.0.ipa": null,
+            "ipa_layers.0.mha_l": null,
+            "ipa_layers.0.fc1": null,
+            "ipa_layers.0.fc2": null,
+            "ipa_layers.1.adaLN_modulation": null,
+            "ipa_layers.1.ipa_norm": null,
+            "ipa_layers.1.ipa": null,
+            "ipa_layers.1.mha_l": null,
+            "ipa_layers.1.fc1": null,
+            "ipa_layers.1.fc2": null,
+            "layers.0.adaLN_modulation": null,
+            "layers.0.ipa_norm": null,
+            "layers.0.ipa": null,
+            "layers.0.mha_t": null,
+            "layers.0.mha_l": null,
+            "layers.0.fc1": null,
+            "layers.0.fc2": null,
+            "layers.1.adaLN_modulation": null,
+            "layers.1.ipa_norm": null,
+            "layers.1.ipa": null,
+            "layers.1.mha_t": null,
+            "layers.1.mha_l": null,
+            "layers.1.fc1": null,
+            "layers.1.fc2": null,
+            "emb_to_latent": null,
+            "t_embedder": null
+          },
+          "max_abs_difference": {
+            "latent_to_emb": null,
+            "cond_to_emb": null,
+            "mask_to_emb": null,
+            "aatype_to_emb": null,
+            "ipa_layers.0.adaLN_modulation": null,
+            "ipa_layers.0.ipa_norm": null,
+            "ipa_layers.0.ipa": null,
+            "ipa_layers.0.mha_l": null,
+            "ipa_layers.0.fc1": null,
+            "ipa_layers.0.fc2": null,
+            "ipa_layers.1.adaLN_modulation": null,
+            "ipa_layers.1.ipa_norm": null,
+            "ipa_layers.1.ipa": null,
+            "ipa_layers.1.mha_l": null,
+            "ipa_layers.1.fc1": null,
+            "ipa_layers.1.fc2": null,
+            "layers.0.adaLN_modulation": null,
+            "layers.0.ipa_norm": null,
+            "layers.0.ipa": null,
+            "layers.0.mha_t": null,
+            "layers.0.mha_l": null,
+            "layers.0.fc1": null,
+            "layers.0.fc2": null,
+            "layers.1.adaLN_modulation": null,
+            "layers.1.ipa_norm": null,
+            "layers.1.ipa": null,
+            "layers.1.mha_t": null,
+            "layers.1.mha_l": null,
+            "layers.1.fc1": null,
+            "layers.1.fc2": null,
+            "emb_to_latent": null,
+            "t_embedder": null
+          },
+          "min_gradient_cosine": null,
+          "min_gradient_cosine_group": null,
+          "cosine_threshold": 0.99,
+          "all_groups_pass": false,
+          "step_time_speedup": 0.9981880824681624
+        }
+      ]
+    }
+  }
+}

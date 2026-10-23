@@ -1,0 +1,329 @@
+{
+  "run_id": "preflight-20261023T035755Z-95f050bf",
+  "remote": "/share/home/r15543056/MDgen/codex-runs/preflight-20261023T035755Z-95f050bf",
+  "state_file": "/mnt/c/users/toulu/desktop/remote_cmi/mdgen2026/mdgen_neighbor-hpc-tools/.scratch/hpc/preflight-20261023T035755Z-95f050bf/manifest.json",
+  "commit": "8f77bae8bcfe494502d6c03bdcafacc93a132c9a",
+  "dirty": true,
+  "extra_files": [
+    ".scratch/l40s-validation/validate_ticket2.py",
+    ".scratch/l40s-validation/minimal_mha.py"
+  ],
+  "files": {
+    "mdgen/analysis.py": {
+      "sha256": "f0e9823545fa66a3679fbac1cf3b36459a12b4845329c6a88d22a472794892d4",
+      "size": 3712,
+      "link": null
+    },
+    "mdgen/dataset.py": {
+      "sha256": "decb17dd6ea17a7adbff4244ff6a769480441f9633fae3d1fce0be35d265452a",
+      "size": 7828,
+      "link": null
+    },
+    "mdgen/ema.py": {
+      "sha256": "6be0ae7e79c2e622bac5d65bfd873a311222f5342986cdd253d5c3c55d263888",
+      "size": 2424,
+      "link": null
+    },
+    "mdgen/full_length/__init__.py": {
+      "sha256": "3bb5b237bf1c656b41529839c18d496d136d7f38769f0f2223ca6da3fa1d4961",
+      "size": 179,
+      "link": null
+    },
+    "mdgen/full_length/attention.py": {
+      "sha256": "77baa0c2ab31c6de8d519db8c8a480036225fedec0441bfe23a7f26546bcbf8e",
+      "size": 5867,
+      "link": null
+    },
+    "mdgen/full_length/checkpoint.py": {
+      "sha256": "950e06a59a99d974a71363f4bb3efd8acfed341ef3c732e2459688fe9e08592e",
+      "size": 1908,
+      "link": null
+    },
+    "mdgen/full_length/local_ipa.py": {
+      "sha256": "7a1cc61ab509780f4cff466b6eecd01904b755814b1de7b05f269a015fc82f63",
+      "size": 1974,
+      "link": null
+    },
+    "mdgen/full_length/model.py": {
+      "sha256": "095e950736cf28d42465c1c9cdb7d64b1a3056559fa80399eb17635566240857",
+      "size": 8391,
+      "link": null
+    },
+    "mdgen/full_length/partition.py": {
+      "sha256": "25205203df318bd0a57dcf91f643680e0590a3775337274fd2269c144362ffc0",
+      "size": 15004,
+      "link": null
+    },
+    "mdgen/full_length/region.py": {
+      "sha256": "babf735673f3492da9d7d071ebd9a25101468bf51368a1d057eae3c204a0cd12",
+      "size": 4574,
+      "link": null
+    },
+    "mdgen/full_length/summaries.py": {
+      "sha256": "baec142f799850f7fdfbc679078692175e94fc952e545a4b7224fcaf29db7b71",
+      "size": 2051,
+      "link": null
+    },
+    "mdgen/geometry.py": {
+      "sha256": "d94835d537b354ca0fb58a8c0edf9e82fa3490ea09bac35a09eb4837d2ed52f2",
+      "size": 10968,
+      "link": null
+    },
+    "mdgen/logger.py": {
+      "sha256": "3443dd4c6354fd7d4ea90bbcc8eacf6b90e4112775743be4333b3440d693f97d",
+      "size": 1174,
+      "link": null
+    },
+    "mdgen/model/ipa.py": {
+      "sha256": "9bd380b05ebffcf92fbd36d2f8e61ac771d73928146d752721191437a63cad0f",
+      "size": 12211,
+      "link": null
+    },
+    "mdgen/model/latent_model.py": {
+      "sha256": "aeaff4693669860b813e0ecb2dff8aa219fe228fa53419e5ac600c17a9f43a9e",
+      "size": 24389,
+      "link": null
+    },
+    "mdgen/model/layers.py": {
+      "sha256": "fc6d4a7624fd60b80a2a924234d173625de331b225d61c82aac8b3f7c3a38ee2",
+      "size": 10467,
+      "link": null
+    },
+    "mdgen/model/mha.py": {
+      "sha256": "46274ef7a50f368ae0534158b15a04840fd1f60aea24fcc678dabcdf42fbbe05",
+      "size": 26439,
+      "link": null
+    },
+    "mdgen/model/primitives.py": {
+      "sha256": "9d37b57406771d9b53f60e42495dd2d29e8bb780fd062a8acb1e286715876b23",
+      "size": 25615,
+      "link": null
+    },
+    "mdgen/model/standalone_hyena.py": {
+      "sha256": "fa8f64ba3bad557ebd05ed6c2e6f1b475b3314a67798ae392504871f56e4e05c",
+      "size": 9426,
+      "link": null
+    },
+    "mdgen/parsing.py": {
+      "sha256": "00bb6674034eadc7a202e486c5685b718340daecf5bc08a3ae84c7316386fb8f",
+      "size": 12425,
+      "link": null
+    },
+    "mdgen/precision.py": {
+      "sha256": "ea53e125449049f5ca129b135121911510eec83207d62c349b7ab79c9d022591",
+      "size": 1834,
+      "link": null
+    },
+    "mdgen/precision_parity.py": {
+      "sha256": "c1693b0e2e16e53d2d4b6ca52a4b1a131ae06f81341c4e90f98d459fb3bb4191",
+      "size": 8178,
+      "link": null
+    },
+    "mdgen/protein.py": {
+      "sha256": "ecc0ad83352c430813333935cb0e61ed98422a15f3815fbf53d98b625aed70d0",
+      "size": 22695,
+      "link": null
+    },
+    "mdgen/residue_constants.py": {
+      "sha256": "2d047616bee3fadfbeacbdb6434497fd3bbcd4cae8da64428bd37bff4e46f5be",
+      "size": 46568,
+      "link": null
+    },
+    "mdgen/rigid_utils.py": {
+      "sha256": "25b1ce32b5cc2cf1e8e02fec4d5e9fdfd0ea1720435516258c62b0625e4290d5",
+      "size": 44390,
+      "link": null
+    },
+    "mdgen/tensor_utils.py": {
+      "sha256": "62189d6c353547ba35ec2a80e07ad6f4d6b1dfb3a8a0fa6959a905caeecb9d1e",
+      "size": 3646,
+      "link": null
+    },
+    "mdgen/train_step_probe.py": {
+      "sha256": "c4c6535b6bf2889556e30f015ad58d4da02e9859e6b7d0b519db8f9e1967179f",
+      "size": 12202,
+      "link": null
+    },
+    "mdgen/transport/integrators.py": {
+      "sha256": "62cb55a2528f0b1b26399a41c2783a5b288309738b0894f256c6b2e24dd7b0e5",
+      "size": 3491,
+      "link": null
+    },
+    "mdgen/transport/path.py": {
+      "sha256": "93c7ac97b4b69b618e626a25acd12bbe1ca727864cc8b428dbf24ef1b854a423",
+      "size": 6995,
+      "link": null
+    },
+    "mdgen/transport/transport.py": {
+      "sha256": "3a73c5af20ec88261dfbf2d494b16ea9bdbfe0781a5dabfc12b77c5163b19de7",
+      "size": 19396,
+      "link": null
+    },
+    "mdgen/utils.py": {
+      "sha256": "e5924ca5cbe7f9e7a476ff0948b8bf31cfd101a2fe9dd52f0d73590e92eb0a3a",
+      "size": 3609,
+      "link": null
+    },
+    "mdgen/wrapper.py": {
+      "sha256": "7683a52c95da1b34001a589825434f081e961f855caae072b077fcc6fce83023",
+      "size": 20727,
+      "link": null
+    },
+    "scripts/diagnostics/gpu_preflight.py": {
+      "sha256": "28721a34fbb9c286cb528840da103ee04e04b0ac7fd1e31b5122d64a8a313725",
+      "size": 1632,
+      "link": null
+    },
+    "tests/test_train_step_probe.py": {
+      "sha256": "406b0af112f0fd526416b60a34dbe48b87fe4ae3736c7f703a5f1cfe67b271bc",
+      "size": 6739,
+      "link": null
+    },
+    ".scratch/l40s-validation/validate_ticket2.py": {
+      "sha256": "c503ba50277adb8f7a23df5ef1b56fe90c2cae2a32c0c161dfb00bc6490db712",
+      "size": 6726,
+      "link": null
+    },
+    ".scratch/l40s-validation/minimal_mha.py": {
+      "sha256": "d5d843a34e5758aba4025441bfec33fb24f239b61128fe8ee10d94ed4193c92c",
+      "size": 1001,
+      "link": null
+    },
+    "_hpc_run.sh": {
+      "sha256": "5f9b16f671ea40cffe0fc41f66fd63405a508cc63079804e83d61a5f9493102b",
+      "size": 4571
+    }
+  },
+  "status": "passed",
+  "config": {
+    "schema_version": 1,
+    "project": "mdgen_neighbor",
+    "deployment_ready": false,
+    "ssh": {
+      "target": "r15543056@zinfandel.ncree.org",
+      "options": [
+        "BatchMode=yes",
+        "ConnectTimeout=10",
+        "ConnectionAttempts=1",
+        "ServerAliveInterval=15",
+        "ServerAliveCountMax=2"
+      ],
+      "command_timeout_seconds": 60
+    },
+    "remote": {
+      "verified": false,
+      "runs_root": "/share/home/r15543056/MDgen/codex-runs",
+      "datasets_root": null,
+      "models_root": null,
+      "checkpoints_root": null
+    },
+    "runtime": {
+      "setup_script": "job/env.sh",
+      "python": "/share/home/r15543056/.venvs/mdgen2026/bin/python",
+      "env": {
+        "MDGEN_MODULES": "python/3.11.12-gpu",
+        "CUDA_HOME": "/opt/cuda-12.8.0_570.86.10"
+      }
+    },
+    "sync": {
+      "selection": "git-tracked-code-plus-explicit-untracked",
+      "extra_files": [],
+      "max_file_mib": 10,
+      "follow_symlinks": false,
+      "delete": false,
+      "exclude": [
+        "**/.git/**",
+        "**/.venv*/**",
+        "**/.env*",
+        "**/__pycache__/**",
+        "**/.cache/**",
+        "**/data/**",
+        "**/splits/**",
+        "**/datasets/**",
+        "**/models/**",
+        "**/checkpoints/**",
+        "**/ckpt/**",
+        "**/logs/**",
+        "**/results/**",
+        "**/outputs/**",
+        "**/*.ckpt",
+        "**/*.pt",
+        "**/*.pth",
+        "**/*.safetensors",
+        "**/.aws/**",
+        "**/.ssh/**",
+        "**/*.pem",
+        "**/id_rsa*",
+        "**/id_ed25519*"
+      ]
+    },
+    "scheduler": {
+      "type": "slurm",
+      "poll_interval_seconds": 30
+    },
+    "smoke": {
+      "entrypoint": ".scratch/l40s-validation/validate_ticket2.py",
+      "resources": {
+        "partition": "l40s",
+        "account": "l40s",
+        "cpus": 1,
+        "gpus": 1,
+        "memory": "2G",
+        "time": "00:05:00"
+      },
+      "required_checks": [
+        "cuda-matmul"
+      ]
+    },
+    "training": {
+      "entrypoint": null,
+      "resources": {
+        "partition": null,
+        "account": null,
+        "cpus": null,
+        "gpus": null,
+        "memory": null,
+        "time": null
+      }
+    },
+    "checkpoint": {
+      "enabled": true,
+      "resume_entrypoint": null,
+      "source": null,
+      "cleanup_enabled": false
+    },
+    "results": {
+      "download_files": [
+        "results/preflight.json",
+        "results/exit-status",
+        "logs/slurm.log"
+      ],
+      "max_download_mib": 20,
+      "log_tail_lines": 100
+    },
+    "existing": {
+      "references": [
+        "job/env.sh",
+        "job/README.md",
+        "job/submit_neighbor_tests.sh"
+      ],
+      "path_hints": {
+        "neighbor_venv": "/share/home/r15543056/.venvs/mdgen",
+        "flrh_venv": "/share/home/r15543056/.venvs/mdgen2026",
+        "atlas_checkpoint": "/share/home/r15543056/.cache/mdgen/atlas.ckpt"
+      },
+      "notes": [
+        "smoke \u7684 Python \u8207\u5171\u4eab runs_root \u5df2\u7531 job 49048/49051 \u6838\u5c0d\uff1b\u5176\u4ed6 venv \u8207 checkpoint \u4ecd\u662f\u5019\u9078\u503c\u3002",
+        "MDGEN_VENV \u5fc5\u9808\u8a2d\u5b9a\u70ba\u5171\u4eab\u74b0\u5883\u7684\u7d55\u5c0d\u8def\u5f91\uff1b\u4e0d\u540c launcher \u4f7f\u7528\u4e0d\u540c venv\u3002",
+        "MDGEN_RESOURCE_ROOT \u9810\u8a2d ../mdgen\uff1b\u65b0\u5feb\u7167\u9700\u6539\u70ba\u5916\u90e8\u8cc7\u6e90\u6839\u76ee\u9304\u7684\u7d55\u5c0d\u8def\u5f91\uff0c\u5167\u542b ckpt\u3001data\u3001splits\u3002",
+        "job/submit_neighbor_tests.sh \u70ba\u5b8c\u6574 GPU \u9a57\u8b49\uff1al40s partition/account\u30012 CPU\u30011 GPU\u300120G\u300190 \u5206\u9418\uff0c\u4e0d\u8996\u70ba\u6700\u5c0f smoke \u7684\u9810\u8a2d\u6388\u6b0a\u3002",
+        "\u63d0\u4ea4\u524d\u5efa\u7acb logs\uff0c\u5c07 results \u8207\u5176\u4ed6\u53ef\u5beb\u7522\u7269\u5c0e\u5411\u8a72 run \u7684\u7368\u7acb\u4f4d\u7f6e\u3002",
+        "\u6b63\u5f0f\u8207 smoke \u5165\u53e3\u9700\u4f9d\u672c\u6b21\u529f\u80fd\u9078\u64c7\uff1b\u5404 worktree \u4f7f\u7528\u4e0d\u540c\u5feb\u7167\uff0c\u4fdd\u7559\u81ea\u8eab dirty \u7a0b\u5f0f\u3002"
+      ]
+    }
+  },
+  "submit_time": "2026-10-23T03:57:59.469968+00:00",
+  "job_id": "49246",
+  "queue": "49246 RUNNING",
+  "collected": "/mnt/c/users/toulu/desktop/remote_cmi/mdgen2026/mdgen_neighbor-hpc-tools/.scratch/hpc/preflight-20261023T035755Z-95f050bf/collected"
+}
