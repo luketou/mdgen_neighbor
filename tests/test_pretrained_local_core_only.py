@@ -91,6 +91,7 @@ def test_model_inference_preserves_local_outputs_and_gradients():
     assert_parity(old, new, torch.randn(1, 3, 12, 21), kwargs, call)
 
 
+@pytest.mark.gpu
 @pytest.mark.skipif(not torch.cuda.is_available(), reason='GPU allocation budget needs CUDA')
 @pytest.mark.parametrize('fraction', [.9, .3], ids=['core-output', 'streamed-workspace'])
 def test_owned_output_attention_uses_less_peak_memory_than_ghost_output_reference(fraction):

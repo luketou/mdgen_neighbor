@@ -18,8 +18,8 @@ python -m mdgen.train_step_probe --output results/probe.json \
   免資料、只用於記憶體與流程檢查；`--train_split`／`--val_split`／`--data_dir` 仍須給值但不會讀取。
 
 `--` 之後加上 `--training_region`（及 `--region_residues`／`--halo_rings`）時，兩種來源都改為 Training region
-batch：資料集由 `MDGenDataset` 取樣，合成鏈則對第 0 幀完整分區、以 `--seed` 決定種子 group，再用同一個
-`pad_region` 組成 batch；只有 loss group 的 core 計入 loss（`loss_core_mask`），halo 與上下文殘基只提供上下文。#9 Ticket 3 量測一個 Training region × 250 幀即用此模式，例如
+batch：資料集由 `MDGenDataset` 取樣，合成鏈則對第 0 幀完整分區、以 `--seed` 決定種子 group，再由同一個
+`mdgen/full_length/region_batch.py` 統一欄位選取與 padding、組成 batch；只有 loss group 的 core 計入 loss（`loss_core_mask`），halo 與上下文殘基只提供上下文。#9 Ticket 3 量測一個 Training region × 250 幀即用此模式，例如
 `--synthetic_residues 7500 -- … --local_spatial --training_region --num_frames 250`。
 
 `--configs` 可列多個組態（可重複）。每個組態都使用同一份 batch、同一組初始權重

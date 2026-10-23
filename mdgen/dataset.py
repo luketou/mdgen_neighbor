@@ -1,8 +1,7 @@
-from dataclasses import replace
 import torch
 from torch.utils.data import default_collate
-from .full_length.group_region import (largest_seed_region, region_subpartition,
-                                       sample_region_groups)
+from .full_length.group_region import largest_seed_region
+from .full_length.region_batch import assemble_region, sample_region, select_residues
 from .full_length.partition import PartitionParams, build_spatial_partition
 from .full_length.partition_store import load_partition
 from .topology import default_numbering, follows_previous, load_chain_numbering
@@ -82,7 +81,6 @@ class MDGenDataset(torch.utils.data.Dataset):
             residues = region.residues.numpy()
             # with each residue's predecessor, phi and pre-omega match the full protein
             ext = np.unique(np.concatenate([residues, np.maximum(residues - 1, 0)]))
-            pick = np.searchsorted(ext, residues)
             arr = arr[frame_start:end, ext]
         else:
             arr = arr[frame_start:end]
@@ -126,15 +124,15 @@ class MDGenDataset(torch.utils.data.Dataset):
             return {
                 'name': full_name,
                 'frame_start': frame_start,
-                **pad_region({
-                    'torsions': torsions[:, pick],
-                    'torsion_mask': torsion_mask[pick],
-                    'trans': frames._trans[:, pick],
-                    'rots': frames._rots._rot_mats[:, pick],
-                    'seqres': seqres[pick],
-                    'mask': mask[pick],
-                    **{key: value[residues] for key, value in chain.items()},
-                }, selection, region, self.args.region_residues),
+                **assemble_region({
+                    'torsions': torsions,
+                    'torsion_mask': torsion_mask,
+                    'trans': frames._trans,
+                    'rots': frames._rots._rot_mats,
+                    'seqres': seqres,
+                    'mask': mask,
+                    **select_residues(chain, ext),
+                }, selection, region, self.args.region_residues, source_residues=ext),
             }
 
         if self.args.atlas:
@@ -217,59 +215,6 @@ class MDGenDataset(torch.utils.data.Dataset):
 def frame0_ca(arr):
     """C-alpha (atom14 slot 1) of the trajectory's first frame, the one partitions are built on."""
     return np.asarray(arr[0, :, 1], dtype=np.float32)
-
-
-def sample_region(partition, ca, args, generator=None):
-    """(selection, region partition) for one Training region of a full-protein partition."""
-    selection = sample_region_groups(partition, ca, region_residues=args.region_residues,
-                                     halo_rings=args.halo_rings, generator=generator)
-    return selection, region_subpartition(partition, selection)
-
-
-REGION_AXIS = {'torsions': 1, 'trans': 1, 'rots': 1, 'torsion_mask': 0, 'seqres': 0,
-               'mask': 0, 'chain_id': 0, 'residue_index': 0}
-
-
-def pad_region(item, selection, region, width):
-    """Pad a region's per-residue fields (in region order) to width residues.
-
-    Adds the padded sub-partition (whose `position_index` holds full-protein
-    indices), `loss_core_mask` (residues owned by a loss group) and a `region`
-    summary. Padding is masked, ownerless and outside the loss. Group indices
-    share one storage, so a DataLoader worker sends one tensor, not two per group.
-    """
-    n = len(region.residues)
-    pad = width - n
-
-    def padded(value, axis):
-        if isinstance(value, np.ndarray):
-            return np.concatenate([value, np.zeros((pad, *value.shape[1:]), dtype=value.dtype)])
-        shape = list(value.shape)
-        shape[axis] = pad
-        return torch.cat([value, value.new_zeros(shape)], axis)
-
-    out = {key: padded(value, REGION_AXIS[key]) if key in REGION_AXIS else value
-           for key, value in item.items()}
-    out['rots'][:, n:] = torch.eye(3)
-    partition = region.partition
-    groups = [index for g in partition.groups for index in (g.core_indices, g.ghost_indices)]
-    views = torch.cat(groups).split([len(index) for index in groups])
-    out['partition'] = replace(
-        partition,
-        groups=tuple(replace(g, core_indices=views[2 * i], ghost_indices=views[2 * i + 1])
-                     for i, g in enumerate(partition.groups)),
-        owner_group=torch.cat([partition.owner_group, partition.owner_group.new_full((pad,), -1)]),
-        residue_mask=padded(partition.residue_mask, 0),
-        position_index=padded(partition.position_index, 0))
-    out['loss_core_mask'] = padded(region.loss_core_mask.numpy().astype(np.float32), 0)
-    out['region'] = {
-        'loss_groups': len(selection.loss_groups),
-        'halo_groups': len(selection.halo_groups),
-        'residues': n,
-        'loss_residues': int(region.loss_core_mask.sum()),
-        'next_region_size': selection.next_region_size,
-    }
-    return out
 
 
 def collate(items):

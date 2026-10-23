@@ -114,6 +114,7 @@ def test_parameter_groups_split_layers_but_not_embedders():
     assert parameter_group('latent_to_emb.weight') == 'latent_to_emb'
 
 
+@pytest.mark.gpu
 @pytest.mark.skipif(not torch.cuda.is_available(), reason='requires CUDA')
 def test_cuda_reports_peak_memory(tmp_path):
     output = tmp_path / 'report.json'

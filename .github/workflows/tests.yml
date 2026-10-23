@@ -20,6 +20,6 @@ jobs:
             requirements-dev.txt
       - name: Install dependencies
         run: bash scripts/bootstrap_cpu.sh
-      # CUDA-only tests skip themselves on this runner.
+      # Shared checks select CPU tests without GPU or checkpoint requirements.
       - name: Run shared checks
         run: bash scripts/check.sh
