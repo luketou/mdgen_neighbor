@@ -9,6 +9,14 @@ import subprocess
 import time
 
 
+def sha256(path):
+    digest = hashlib.sha256()
+    with path.open('rb') as stream:
+        for chunk in iter(lambda: stream.read(1024 * 1024), b''):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
 def verify(path, entry):
     size = path.stat().st_size
     if size != entry['bytes']:
@@ -57,7 +65,7 @@ def install(protein, manifest, destination):
     topology = md.load_pdb(str(pdb)).topology
     sequence = ''.join(topology.to_fasta())
     if sequence != protein['expected_sequence']:
-        raise ValueError(f'{name}: PDB sequence does not match atlas_test.csv')
+        raise ValueError(f'{name}: PDB sequence does not match the manifest')
     trajectories = []
     for replica in (1, 2, 3):
         path = stage / f'{name}_R{replica}.xtc'
@@ -87,7 +95,7 @@ def install(protein, manifest, destination):
               'repository': manifest['repository'], 'revision': manifest['revision'],
               'source_type': manifest['source_type'], 'official_origin': manifest['official_origin'],
               'sampling_note': '100 ps ATLAS analysis mirror; not the dense protein ZIP',
-              'sequence_matches_local_test_split': True, 'residues': len(sequence),
+              'sequence_matches_manifest': True, 'residues': len(sequence),
               'training_independence': 'not yet verified', 'files': records,
               'trajectories': trajectories}
     (stage / 'installation.json').write_text(json.dumps(record, indent=2) + '\n')

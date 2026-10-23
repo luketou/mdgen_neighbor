@@ -12,8 +12,7 @@ import mdtraj as md
 import numpy as np
 import torch
 
-from install_atlas_mirror import install, verify
-from install_atlas_validation import sha256
+from install_atlas_mirror import install, sha256, verify
 from mdgen import residue_constants as rc
 from mdgen.dataset import MDGenDataset
 from mdgen.full_length.partition import PartitionParams
@@ -192,7 +191,8 @@ def main():
                 item = MDGenDataset(dataset_args, split, replicates=[replica])[index]
                 if not all(torch.isfinite(v).all() for v in item.values() if torch.is_tensor(v)):
                     raise ValueError(f'{stem}: nonfinite official Dataset item')
-                # Independent coordinate check at source frame 0, after the same rigid alignment.
+                # Units (nm -> A) and frame mapping at source frame 0; repeats prep_sims' alignment,
+                # so it does not check the alignment itself.
                 source = md.load(str(args.source_dir / name / f'{name}_R{replica}.xtc'),
                                  top=str(args.source_dir / name / f'{name}.pdb'), stride=4)
                 source.atom_slice(source.topology.select('not element H'), inplace=True)

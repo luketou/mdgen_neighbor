@@ -9,13 +9,21 @@
 - 指令：`scripts/prepare_atlas_validation.py`，manifest `scripts/atlas_validation_ticket1_manifest.json`。
 - 輸出：`/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/`（`arrays/`、`partitions/`、`validation.csv`、`summary.json`、`checkpoint_metadata.json`；512 MiB）。本目錄保存兩份 JSON 的副本。
 - 先前失敗：Job `49424`（run `issue43-t1-prepare-20261023T122808Z-967e437`）在 checkpoint 時間設定檢查即停止，未產出資料；其輸出目錄 `atlas_validation_ticket1_20261023/` 只有失敗的 `summary.json`，保留未動。
-- 工具測試：Job `49421` 以新測試重現 `prep_sims.py` 缺少 analysis 格式參數（red）；Job `49422` 在修改後通過 `tests/test_atlas_validation_prep.py` 與 `tests/test_chain_numbering.py`，17 passed（green）。
+- 工具測試：Job `49421` 以新測試重現 `prep_sims.py` 缺少 analysis 格式參數（red）；Job `49422` 在修改後通過 `tests/test_atlas_validation_prep.py` 與 `tests/test_chain_numbering.py`，17 passed（green）。Review 後補上反例測試（錯誤時間間隔、序列不符、PDB/XTC 原子數不符時不產出檔案；鏡像檔大小與 SHA-256 不符），Job `49444`（run `issue43-t1-review-fixes-20261023T131749Z-4b0720d`）21 passed。非有限座標的反例未測：XTC 壓縮格式無法可靠寫入 NaN。
 
 ## 資料來源
 
 - Hugging Face `sxsaxx/data` revision `a91392e2d08aea15ef19fac00e42c18d97a54c74`，社群鏡像的 ATLAS analysis 版（100 ps），非官方 10 ps protein ZIP。雜湊驗證只證明與鏡像一致，不證明與官方檔案一致。
 - 三個基準沿用 Job `49375` 的安裝；`6sup_A` 由本 Job 下載安裝，`installation.json` 記錄各檔 SHA-256 與來源網址。
 - `6sup_A` 實測：R1–R3 各 1001 幀、0–100,000 ps、100 ps 間隔，全幀解碼且座標有限；PDB 序列與 manifest 一致（2128 殘基、33,377 原子）。
+- `6sup_A/installation.json` 的 `sequence_matches_local_test_split: true` 是錯誤欄位：installer 當時把它寫死，實際只比對了 manifest 序列，`6sup_A` 不在任何 split。之後的 installer 改寫為 `sequence_matches_manifest`；server 上的既有紀錄未改動。
+- Job `49362` 使用的官方 ZIP installer（`scripts/install_atlas_validation.py`）因連線逾時從未安裝資料，已從 repo 移除；其快照仍在 run `atlas-test3-install-20261023T101031Z-967e437`。
+
+## 授權與作者
+
+- 四個蛋白的鏡像 `README.txt` 內容相同（SHA-256 `7b3e140e…35527590`）。其中聲明：ATLAS 資料庫以 Creative Commons Attribution-NonCommercial 4.0（CC-BY-NC 4.0）釋出，使用須標示來源且不得商用；商業用途需另行聯絡。
+- 作者與聯絡人：Tatiana Galochkina、Jean-Christophe Gelly（Université Paris Cité），ATLAS：https://www.dsimb.inserm.fr/ATLAS。
+- 鏡像 repository `sxsaxx/data` 本身的授權標示未查核；授權依據是隨檔附的 ATLAS `README.txt`。
 
 ## 時間間隔
 
