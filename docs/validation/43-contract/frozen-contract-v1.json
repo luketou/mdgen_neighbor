@@ -1,0 +1,134 @@
+{
+  "contract_version": 1,
+  "status": "frozen",
+  "frozen_local_date": "2026-10-24",
+  "confirmation": {
+    "source": "current chat",
+    "user_reply": "照最終矩陣草案凍結：長蛋白成對訓練在 64 幀（另保留 4 幀短幀層），250 幀記為第一期不可行；未量測的 replica 標為同形狀未實測；控制容差選 B（梯度相對上限 5e-4、更新 2e-2）。",
+    "draft": "final-matrix-proposal.md"
+  },
+  "change_policy": "Tickets 3-5 execute this version unchanged; any change needs a new version with its own user confirmation and must not be derived from formal results",
+  "fixed_settings": {
+    "checkpoint_path": "/share/home/r15543056/MDgen/mdgen/ckpt/atlas.ckpt",
+    "checkpoint_sha256": "bc90c66e7539f52c9d0514aeddd96c552061150a1eef3b10c120bc3aaff08015",
+    "data_root": "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b",
+    "suffix": "_i400ps",
+    "frame_window_start": 0,
+    "precision": "fp32-reference",
+    "float32_matmul_precision": "highest",
+    "tf32": false,
+    "dropout": 0.0,
+    "batch_size": 1,
+    "local_spatial": {
+      "cell_width": 16.0,
+      "contact_radius": 16.0,
+      "core_capacity": 128,
+      "ghost_capacity": 128,
+      "cell_summaries": false,
+      "group_batch_size": 4,
+      "ffn_chunk_size": 65536
+    },
+    "forward_grad_checkpointing": false,
+    "training_grad_checkpointing": true,
+    "region_budget": 896,
+    "warmup": 1,
+    "measured_repeats": 3,
+    "hardware": "single NVIDIA L40S (44.39 GiB)"
+  },
+  "seed_groups": {
+    "selection": "torch CPU randperm with generator seed 43002, prefix 8, no replacement for infeasible or duplicate candidates",
+    "selection_seed": 43002,
+    "candidates_per_protein_replica": 8,
+    "halo_rings": [1, 2],
+    "paired_common_subset": "select loss groups with the 2-ring budget, then add 1 or 2 rings; a seed infeasible for 2 rings is reported with its own 1-ring result and excluded from the paired halo comparison",
+    "deduplication": "by loss-group set within each halo setting; duplicates kept and mapped, not counted as independent",
+    "long_protein_halo2_feasible_candidates": [95],
+    "all_seed_feasibility_6sup_A": {"halo1": "189/190", "halo2": "51/190", "source": "../43-49466/README.md"},
+    "general_training_startup_validated": false
+  },
+  "forward_matrix": {
+    "tickets": {"3": ["6sms_A", "6lrd_A", "6l3r_E"], "4": ["6sup_A"]},
+    "replicas": [1, 2, 3],
+    "frames": {"250": "target layer", "4": "separate short-frame diagnostic layer"},
+    "t": [0.25, 0.5, 0.75],
+    "noise_seeds": [0, 1, 2],
+    "reference": "same-model full-protein local forward",
+    "thresholds": {
+      "truncated": {
+        "relative": {"p95": 0.01, "max": 0.05},
+        "absolute_l2_over_sqrt_effective_components": {"p95": 0.01, "max": 0.05}
+      },
+      "full_coverage_per_residue": {"absolute_per_sqrt_component": 1e-05, "relative": 1e-05},
+      "near_zero_reference_rms": 1e-06,
+      "quantile_method": "linear",
+      "source": "approved-forward.json"
+    },
+    "baseline_note": "all baseline regions cover the whole protein at budget 896; Ticket 3 is tool-consistency evidence only, truncated forward evidence comes from 6sup_A in Ticket 4"
+  },
+  "training_matrix": {
+    "ticket": 5,
+    "comparison": "paired same supervision: identical weights, noise, t, loss residues, masks, denominators, fresh identical Adam state; record pre-clip gradients, clipping and actual optimizer delta",
+    "6sup_A": {
+      "frames": {"64": "long-protein paired training layer", "4": "short-frame layer"},
+      "replicas": [1, 2, 3],
+      "regions": {"halo1": "8 fixed candidates", "halo2": "group 95 only"},
+      "frames_250": "phase1_infeasible_oom"
+    },
+    "baselines": {
+      "proteins": ["6sms_A", "6lrd_A", "6l3r_E"],
+      "frames": {"250": "target layer", "4": "short-frame layer"},
+      "replicas": [1, 2, 3],
+      "regions": "full coverage only (no truncation at budget 896)"
+    },
+    "t": [0.25, 0.5, 0.75],
+    "noise_seeds": [0, 1, 2],
+    "truncated_policy": "descriptive only; no training-approximation pass is issued",
+    "control_tolerances": {
+      "option": "B",
+      "loss_absolute": 2e-06,
+      "gradient_difference_rms": 1e-07,
+      "update_difference_rms": 2e-06,
+      "gradient_relative_difference": 0.0005,
+      "update_relative_difference": 0.02,
+      "relative_applies_to": "parameter groups whose reference RMS is above the near-zero cutoff",
+      "near_zero_reference_rms": {"gradients": 1e-07, "updates": 2e-06},
+      "near_zero_policy": "relative difference, norm ratio and cosine null; keep raw norms, RMS and absolute differences; count exact zero, one-sided zero and missing groups separately",
+      "required_alignment": "finite values, identical noise and mask hashes, equal effective denominators, same t, same initial weights and optimizer state",
+      "per_group": "every parameter group must pass; no averaging across groups",
+      "calibration_frames": [4, 64, 250],
+      "source": "control-calibration.json",
+      "applies_to": "zero-truncation controls only (same-path repeat and full coverage); never to truncated cases"
+    }
+  },
+  "capacity_status": {
+    "measured_feasible": "see final-matrix-proposal.md capacity table",
+    "same_shape_unmeasured": "cases not run within pilot job budgets (11 in job 49479, 28 in job 49501); same batch shape as measured R1, capacity not measured",
+    "phase1_infeasible": [
+      {
+        "case": "6sup_A full-protein training step above 64 frames",
+        "evidence": ["../43-49501/README.md", "../43-49513/README.md"],
+        "reason": "CUDA OOM in backward at 96 frames and at 250 frames, including group_batch_size 1, ffn_chunk_size 8192 and expandable_segments"
+      }
+    ],
+    "unmeasured_frame_counts": "between 64 and 96 for the 6sup_A full-protein training step"
+  },
+  "reporting": {
+    "strata": ["protein", "replica", "frames", "t", "noise_seed", "halo_rings", "boundary_ring", "full_coverage_or_truncated", "paired_common_subset"],
+    "statistics": ["median", "p95", "max", "effective_samples", "zero_reference", "near_zero_reference", "nonfinite"],
+    "coverage": ["attempted", "feasible", "skipped", "duplicate", "deduplicated_regions", "loss_residue_union_fraction"],
+    "pooling": "no pooled pass across proteins or boundaries; every non-empty stratum must meet its threshold",
+    "replicas_and_frames": "not independent proteins or spatial samples"
+  },
+  "failure_policy": {
+    "nonfinite": "case fails; counted separately; never dropped",
+    "oom_missing_gpu_timeout_program_error": "kept as separate failure classes with stage, exit code and log",
+    "same_shape_unmeasured_case_failure": "recorded under this policy, not silently removed",
+    "missing_required_result": "stratum marked incomplete"
+  },
+  "known_limits": [
+    "400 ps interval is documented by the upstream paper but not stored in the checkpoint",
+    "checkpoint trained with crop=256 and 250 frames; full proteins, 64 frames and 4 frames are extrapolation",
+    "independence of the four proteins from training data was only sequence-screened",
+    "results describe a fixed feasible subset and a single optimizer step"
+  ]
+}

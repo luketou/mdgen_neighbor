@@ -1,5 +1,5 @@
 {
-  "status": "proposal_pending_user_confirmation",
+  "status": "option_B_confirmed_frozen_in_contract_v1",
   "controls_only": true,
   "truncated_errors_used": false,
   "scope": "only observed frames/checkpoint/FP32/runtime; not a training approximation gate or statistical confidence bound",
@@ -1279,7 +1279,7 @@
     "control_acceptance": "all loss absolute differences and every parameter-group difference RMS within respective tolerance; all finite and exact noise/mask hashes, denominator, t and initial state agreement required; no tolerance applied until confirmation"
   },
   "option_relative_cap": {
-    "status": "option_pending_user_choice",
+    "status": "selected",
     "gradient_relative_difference_tolerance": 0.0005,
     "update_relative_difference_tolerance": 0.02,
     "rule": "same next 1/2/5 decade at or above 10x maximum full-coverage control relative difference; applies only to groups above the near-zero cutoff, in addition to the absolute RMS tolerance",
@@ -1303,5 +1303,6 @@
       "updates": 0.0015233179807189509
     }
   },
-  "absolute_proposal_unchanged_after_64_and_250_frames": true
+  "absolute_proposal_unchanged_after_64_and_250_frames": true,
+  "frozen_in": "frozen-contract-v1.json"
 }

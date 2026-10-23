@@ -1,6 +1,6 @@
 {
-  "status": "pilot_and_frame_sweep_finished_awaiting_matrix_and_tolerance_confirmation",
-  "ticket2_complete": false,
+  "status": "contract_v1_frozen",
+  "ticket2_complete": true,
   "jobs": [
     {
       "job_id": 49466,
@@ -72,12 +72,7 @@
     "frame counts between 64 and 96 not measured",
     "formal numerical evaluation"
   ],
-  "decisions_pending": [
-    "long-protein paired training frame layer (see final-matrix-proposal.md)",
-    "unmeasured replicas status in the frozen matrix",
-    "control tolerances and optional relative cap (see control-calibration.md)",
-    "freeze final feasible matrix"
-  ],
+  "decisions_pending": [],
   "additional_request": {
     "document": "gpu-request-frames.md",
     "approved_cpu_jobs": 1,
@@ -86,5 +81,6 @@
     "used_gpu_jobs": 2,
     "remaining_gpu_jobs": 1,
     "note": "CPU checks ran in local WSL instead of the approved CPU job; the remaining GPU job was reserved for resubmission and is unused"
-  }
+  },
+  "frozen_contract": "frozen-contract-v1.json"
 }

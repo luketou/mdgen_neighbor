@@ -1,6 +1,6 @@
 # 最終比較矩陣草案
 
-狀態：待使用者確認，尚未凍結。原核准的四個 GPU Job 與 [追加申請](gpu-request-frames.md) 的兩個 GPU Job 已結束。本文件依先導結果整理可行、不可行與未量測的 case，並列出凍結前需要決定的範圍問題。數字出處：[CPU 盤點](../43-49466/README.md)、[250 幀 forward](../43-49489/outcome.json)、[4 幀訓練](../43-49479/outcome.json)、[250 幀訓練](../43-49501/outcome.json)、[幀數掃描](../43-49513/outcome.json)、[64 幀確認](../43-49515/outcome.json)。
+狀態：使用者已確認，依此草案凍結為 [比較契約 v1](frozen-contract-v1.md)；以下保留凍結前的草案內容。原核准的四個 GPU Job 與 [追加申請](gpu-request-frames.md) 的兩個 GPU Job 已結束。本文件依先導結果整理可行、不可行與未量測的 case，並列出凍結前需要決定的範圍問題。數字出處：[CPU 盤點](../43-49466/README.md)、[250 幀 forward](../43-49489/outcome.json)、[4 幀訓練](../43-49479/outcome.json)、[250 幀訓練](../43-49501/outcome.json)、[幀數掃描](../43-49513/outcome.json)、[64 幀確認](../43-49515/outcome.json)。
 
 ## 固定設定（沿用已確認內容）
 
