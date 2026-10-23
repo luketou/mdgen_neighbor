@@ -23,6 +23,12 @@ python -m mdgen.train_step_probe --output results/probe.json \
 
 `--seed_group G`（分隔符之前）明確指定 Training region 的候選 group；實際 `seed_group`、`loss_group_ids`、`halo_group_ids` 保存在 region 摘要。先導 driver 使用核准的候選順序，各 halo 設定內按 loss-group 集合去重，保留重複與不可行候選的對應，不補抽。
 
+`--coverage_control` 執行 FP32 的同路徑重跑與完整涵蓋對照：需要 batch 1、local 模式、dropout 關閉，且 region 的全部真實殘基均受監督。先生成完整雜訊再映射到 padded region，兩側使用相同非條件幀、有效通道及 loss 分母；JSON 的 `alignment` 記錄實際 noise／mask hash 與分母。未給 `--time` 時固定為 0.5，避免不同 shape 消耗 RNG 後抽到不同時間。
+
+控制結果記錄每個參數群的 gradient／實際更新 norm、RMS、差向量、cosine 與精確零分類，以及 optimizer 設定和 clipping 前後 norm。零向量的 cosine 為 `null`；此模式尚不套近零 cutoff 或接受門檻。`comparisons` 區分 `same_path_repeat` 與 `full_coverage`，供控制容差校準；原本 precision probe 的 cosine 規則保持獨立，不能作為截斷比較的科學門檻。
+
+剩餘先導使用核准的八候選與長蛋白優先順序；三個基準蛋白 R1 加入完整涵蓋控制。`scripts/issue43_pilot.py --plan_only` 可在 CPU Compute Job 驗證檔案與候選並產出命令清單，不執行模型。計畫與實際執行由 manifest 的 `plan_only` 與 `driver_finished` 區分。
+
 既有 launcher 的 `MDGEN_ISSUE43_FRAMES` 模式會呼叫有時間上限的真實資料先導；需要明確設定 `MDGEN_ISSUE43_DATA` 與 `MDGEN_ATLAS_CKPT`。每個 case 重建相同初始權重與 optimizer，第一個 FP32 組態作暖機，其餘為量測。量測數及核准資源見 [提案](43-contract/proposal.md)，未跑到的 case 亦保留在 manifest。
 
 `--` 之後加上 `--training_region`（及 `--region_residues`／`--halo_rings`）時，兩種來源都改為 Training region

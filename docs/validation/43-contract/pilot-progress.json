@@ -1,5 +1,5 @@
 {
-  "status": "waiting_for_integrated_interview_consensus",
+  "status": "implementing_controls_and_revision2_pilot",
   "ticket2_complete": false,
   "jobs": [
     {
@@ -30,7 +30,6 @@
     "formal numerical evaluation"
   ],
   "decisions_pending": [
-    "final interview consensus",
     "control tolerance and near-zero cutoff confirmation after calibration",
     "freeze final feasible matrix after capacity results"
   ]

@@ -215,3 +215,43 @@ def test_cli_training_region_accepts_an_explicit_candidate_group(tmp_path):
         assert region['seed_group'] == 0
         assert 0 in region['loss_group_ids']
         assert len(region['loss_group_ids']) == region['loss_groups']
+
+
+def test_cli_full_coverage_control_shares_noise_and_supervision(tmp_path):
+    output = tmp_path / 'control.json'
+    main(['--output', str(output), '--coverage_control', '--synthetic_residues', '12',
+          '--time', '0.5', '--', *TINY, *LOCAL, '--batch_size', '1',
+          '--region_residues', '20', '--halo_rings', '1'])
+    report = json.loads(output.read_text())
+    assert report['probe'] == 'full-coverage-control'
+    assert report['thresholds_applied'] is False
+    alignment = report['alignment']
+    assert alignment['full_noise_sha256'] == alignment['region_noise_sha256']
+    assert alignment['full_mask_sha256'] == alignment['region_mask_sha256']
+    assert alignment['full_denominator'] == alignment['region_denominator'] > 0
+    assert [r['batch_shapes']['trans'][2] for r in report['runs']] == [12, 12, 20]
+    repeat, coverage = report['comparisons']
+    assert repeat['kind'] == 'same_path_repeat'
+    assert all(g['difference_rms'] == 0 for g in repeat['gradients'].values())
+    assert all(g['difference_rms'] == 0 for g in repeat['updates'].values())
+    assert coverage['kind'] == 'full_coverage'
+    assert max(g['difference_rms'] for g in coverage['gradients'].values()) < 1e-5
+    assert any(g['reference_norm'] > 0 for g in coverage['updates'].values())
+    zero_gradients = [g for g in coverage['gradients'].values() if g['reference_zero']]
+    assert zero_gradients and all(g['cosine'] is None for g in zero_gradients)
+
+
+def test_control_without_time_still_uses_the_same_actual_time(tmp_path):
+    output = tmp_path / 'default-time.json'
+    main(['--output', str(output), '--coverage_control', '--synthetic_residues', '12',
+          '--', *TINY, *LOCAL, '--batch_size', '1', '--region_residues', '20'])
+    report = json.loads(output.read_text())
+    assert [r['training_time'] for r in report['runs']] == [0.5, 0.5, 0.5]
+
+
+def test_control_rejects_a_truncated_region_before_running_steps(tmp_path):
+    with pytest.raises(ValueError, match='every full-protein residue'):
+        main(['--output', str(tmp_path / 'invalid.json'), '--coverage_control',
+              '--synthetic_residues', '60', '--', *TINY, *LOCAL, '--batch_size', '1',
+              '--region_residues', '40', '--halo_rings', '0'])
+    assert not (tmp_path / 'invalid.json').exists()

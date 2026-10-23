@@ -89,12 +89,11 @@
     }
   },
   "pending": [
-    "final interview consensus",
     "capacity measurements",
     "control tolerance and near-zero cutoff calibration and confirmation",
     "final feasible matrix"
   ],
-  "review_base": "f62c1e6",
+  "review_base": "28613b1",
   "comparison_scope": {
     "budget": 896,
     "population": "feasible seed subset for architecture approximation",
@@ -154,6 +153,7 @@
       "Q5",
       "Q6"
     ],
-    "integrated_summary_confirmed": false
+    "integrated_summary_confirmed": true,
+    "confirmation": "user invoked implement ticket2 after the integrated summary"
   }
 }

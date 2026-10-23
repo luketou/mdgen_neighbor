@@ -36,7 +36,7 @@ def training_candidates(root, protein, replica):
     partition = load_partition(root / 'partitions' / f'{stem}_partition.npz',
                                PartitionParams(16., 16., 128, 128), ca=ca, **chain)
     candidates = torch.randperm(len(partition.groups), generator=
-                                torch.Generator().manual_seed(43002))[:4].tolist()
+                                torch.Generator().manual_seed(43002))[:8].tolist()
     result = []
     for k in (1, 2):
         seen = {}
@@ -65,6 +65,8 @@ def main(argv=None):
     parser.add_argument('--data_root', type=Path, required=True)
     parser.add_argument('--checkpoint', type=Path, required=True)
     parser.add_argument('--output_dir', type=Path, required=True)
+    parser.add_argument('--plan_only', action='store_true',
+                        help='validate inputs and write the case manifest on a CPU Compute Job')
     args = parser.parse_args(argv)
     args.output_dir.mkdir(parents=True, exist_ok=True)
     with args.checkpoint.open('rb') as stream:
@@ -97,12 +99,16 @@ def main(argv=None):
                 '--replicate', str(replica), '--regions', '8', '--halo_rings', '1', '2',
                 '--inventory_only']})
     else:
-        # Visit all proteins in R1 before R2/R3. Order is fixed before seeing errors.
+        # Revision 2: long protein R1, baselines R1, then R2/R3. Never sort by errors.
         for replica in (1, 2, 3):
-            for protein, length in zip(PROTEINS, LENGTHS):
+            ordered = sorted(zip(PROTEINS, LENGTHS), key=lambda p: p[0] != '6sup_A')
+            for protein, length in ordered:
                 settings = ([{'setting': 'paired'}, {'setting': 'halo1'}]
                             if args.mode == 'forward' else
                             [{'setting': 'full'}, *training_candidates(root, protein, replica)])
+                if args.mode == 'train' and protein != '6sup_A' and replica == 1:
+                    settings.insert(1, {'setting': 'coverage_control',
+                                        'seed_group': settings[1]['seed_group']})
                 for candidate in settings:
                     setting = candidate['setting']
                     identity = f'{protein}-R{replica}-{setting}'
@@ -110,7 +116,7 @@ def main(argv=None):
                         identity += f"-group{candidate['seed_group']}"
                     if args.mode == 'forward':
                         command = [*halo, '--pdb_id', protein, '--replicate', str(replica),
-                                   '--regions', '4', '--warmup', '1', '--repeats', '3',
+                                   '--regions', '8', '--warmup', '1', '--repeats', '3',
                                    '--capacity_only',
                                    '--halo_rings', *(['1', '2'] if setting == 'paired' else ['1'])]
                     else:
@@ -126,9 +132,11 @@ def main(argv=None):
                             writer.writerow(selected)
                         command = [sys.executable, '-m', 'mdgen.train_step_probe',
                             '--sim_ckpt', str(args.checkpoint), '--seed', '0', '--time', '0.5',
+                            *(['--coverage_control'] if setting == 'coverage_control' else []),
                             *(['--seed_group', str(candidate['seed_group'])]
                               if setting != 'full' else []),
-                            '--configs', *(['fp32-reference'] * 4), '--',
+                            '--configs', *(['fp32-reference'] *
+                                           (1 if setting == 'coverage_control' else 4)), '--',
                             '--train_split', str(split), '--val_split', str(split),
                             '--model_dir', str(args.output_dir / 'workdir' / identity),
                             '--data_dir', str(root / 'arrays'), '--suffix', '_i400ps',
@@ -137,16 +145,22 @@ def main(argv=None):
                             '--num_frames', str(args.frames), '--crop', str(length),
                             '--precision', 'fp32-reference', '--grad_checkpointing',
                             '--dropout', '0', '--deterministic', *LOCAL]
-                        if setting != 'full':
+                        if setting == 'coverage_control':
+                            command.extend(['--region_residues', '896', '--halo_rings', '1'])
+                        elif setting != 'full':
                             command.extend(['--training_region', '--region_residues', '896',
                                             '--halo_rings', setting[-1]])
                     cases.append({'id': identity, 'protein': protein, 'replica': replica,
                                   **candidate, 'command': command})
     report = {'mode': args.mode, 'frames': args.frames, 'checkpoint_sha256': checkpoint_hash,
+              'plan_only': args.plan_only, 'driver_finished': False,
+              'policy_revision': 2, 'pilot_candidates': 8,
+              'case_order': 'long protein R1, baselines R1, then R2/R3',
               'input_manifest': input_manifest,
               'slurm_job_id': os.environ.get('SLURM_JOB_ID'),
               'warmup': 1, 'measured_repeats': 3,
-              'training_comparison': 'capacity only; full and region have different supervision',
+              'training_comparison': 'capacity cases have different supervision; '
+                                     'coverage controls align noise and supervision, no thresholds',
               'memory_policy': 'standalone full and region forward; reference output released',
               'cases': cases}
     if os.environ.get('MDGEN_RUN_DIR'):
@@ -161,7 +175,7 @@ def main(argv=None):
         manifest.write_text(json.dumps(report, indent=2))
 
     for case in cases:
-        case['status'] = case.get('pre_status', 'not_run_budget')
+        case['status'] = case.get('pre_status', 'planned_only' if args.plan_only else 'not_run_budget')
         output = args.output_dir / f"{case['id']}.json"
         # Probe arguments must precede the separator for train.py arguments.
         command = case['command']
@@ -169,6 +183,11 @@ def main(argv=None):
         command[where:where] = ['--output', str(output)]
         case['output'] = str(output)
     save()
+    if args.plan_only:
+        report['driver_finished'] = True
+        save()
+        print(f'planned {len(cases)} cases; no model executions', flush=True)
+        return report
     start = time.monotonic()
     for case in cases:
         if case['status'] in ('duplicate', 'infeasible_seed'):
@@ -194,6 +213,8 @@ def main(argv=None):
         if case['status'] == 'failed':
             case['failure_class'] = ('oom' if 'out of memory' in text.lower() else
                 'infeasible_seed' if 'cannot hold seed group' in text else 'program_error')
+            case['failure_phase'] = ('backward' if 'backward(' in text or 'run_backward' in text
+                else 'optimizer' if 'optimizer.step' in text else 'forward_or_setup')
         if case['status'] == 'completed' and not Path(case['output']).is_file():
             case['status'] = 'missing_report'
         elif case['status'] == 'completed':
@@ -207,6 +228,9 @@ def main(argv=None):
             (args.output_dir / 'summary.json').write_text(json.dumps(summary, indent=2))
         save()
         print(case['id'], case['status'], flush=True)
+    report['driver_finished'] = True
+    save()
+    print('pilot manifest finalized', flush=True)
     return report
 
 
