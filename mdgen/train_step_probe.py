@@ -9,6 +9,7 @@ Every configuration runs the same batch from the same initial weights and seed;
 gradient cosines are reported for each later configuration against the first.
 """
 import argparse
+import hashlib
 import json
 import os
 import platform
@@ -109,7 +110,19 @@ def synthetic_region_items(args, items, seed):
 def dataset_items(args, index):
     from .dataset import MDGenDataset
     dataset = MDGenDataset(args, split=args.train_split)
-    return [dataset[i] for i in range(index, index + args.batch_size)]
+    if args.atlas and not args.training_region:
+        # A full-protein step must neither randomly crop nor pad the protein.
+        for i in range(index, index + args.batch_size):
+            # Same row selection as MDGenDataset.__getitem__: --overfit always loads row 0.
+            name = dataset.df.index[0 if args.overfit else i % len(dataset.df)]
+            if len(dataset.df.seqres[name]) != args.crop:
+                raise ValueError(f'--crop {args.crop} differs from {name} length '
+                                 f'{len(dataset.df.seqres[name])}; full-protein mode needs them equal')
+    items =[dataset[i] for i in range(index, index + args.batch_size)]
+    if args.training_region and getattr(args, 'region_seed_group', None) is not None:
+        for item in items:
+            item['region']['seed_group'] = args.region_seed_group
+    return items
 
 
 def describe_batch(items):
@@ -117,10 +130,16 @@ def describe_batch(items):
     return {
         'names': [item.get('name') for item in items],
         'batch_size': len(items),
+        'frame_starts': [int(item['frame_start']) if 'frame_start' in item else None for item in items],
         'shapes': {key: list(value.shape) for key, value in first.items()
                    if hasattr(value, 'shape')},
         **({'regions': [item['region'] for item in items]} if 'region' in first else {}),
     }
+
+
+def file_sha256(path):
+    with open(path, 'rb') as stream:
+        return hashlib.file_digest(stream, 'sha256').hexdigest()
 
 
 def environment():
@@ -198,6 +217,9 @@ class StepProbe(pl.Callback):
                                             if p.requires_grad and p.grad is None]
         self.gradients = {n: p.grad.detach().float().cpu().clone()
                           for n, p in named.items() if p.grad is not None}
+        self.result['optimizer'] = {'class': type(optimizer).__name__, **optimizer.defaults}
+        self.result['pre_clip_norm'] = float(torch.stack([
+            g.double().square().sum() for g in self.gradients.values()]).sum().sqrt())
 
     def on_train_batch_end(self, trainer, pl_module, outputs, batch, batch_idx):
         self._sync(pl_module)
@@ -210,22 +232,44 @@ class StepProbe(pl.Callback):
         loss = outputs['loss'].detach().float()
         self.result['loss'] = float(loss) if loss.isfinite() else None
         self.result['loss_finite'] = bool(loss.isfinite())
+        counts = getattr(pl_module, 'probe_nonfinite_counts', None)
+        if counts is not None:
+            self.result['nonfinite_counts'] = counts
+        recorded_time = pl_module._log.get('train_time', [])
+        self.result['training_time'] = float(np.mean(recorded_time)) if len(recorded_time) else None
         self.result['parameters_nonfinite_after_step'] = sum(
             int((~p.detach().isfinite()).sum()) for p in pl_module.model.parameters())
+        post_norm = float(torch.stack([p.grad.detach().double().square().sum()
+            for p in pl_module.model.parameters() if p.grad is not None]).sum().sqrt())
+        pre_norm = self.result['pre_clip_norm']
+        self.result['post_clip_norm'] = post_norm if np.isfinite(post_norm) else None
+        self.result['clipping_coefficient'] = (post_norm / pre_norm
+            if np.isfinite(pre_norm) and pre_norm > 0 and np.isfinite(post_norm) else None)
+        if not np.isfinite(pre_norm):
+            self.result['pre_clip_norm'] = None
 
 
-def run_step(args, items, name, seed, initial_state=None, use_sdpa=True):
-    """One fit step of the real `NewMDGenWrapper`; returns (report, grouped gradients, weights)."""
+def run_step(args, items, name, seed, initial_state=None, use_sdpa=True, capture_updates=False):
+    """One real step; returns (report, grouped gradients, initial weights, optional updates)."""
     from .wrapper import NewMDGenWrapper
     args.precision_config, args.precision = name, LIGHTNING_PRECISION[name]
     configure_precision(name)
     pl.seed_everything(seed, verbose=False)
     model = NewMDGenWrapper(args, use_sdpa=use_sdpa)
     if initial_state is None:
+        if getattr(args, 'sim_ckpt', None):
+            from .full_length.checkpoint import load_compatible_state_dict
+            checkpoint = torch.load(args.sim_ckpt, map_location='cpu', weights_only=False)
+            loaded = load_compatible_state_dict(model, checkpoint)
+            missing = [n for n in loaded['newly_initialized'] if '.cell_summaries.' not in n]
+            if missing or loaded['shape_mismatch'] or loaded['unexpected']:
+                raise ValueError(f'Checkpoint incompatible: {loaded}')
         initial_state = {k: v.detach().clone() for k, v in model.state_dict().items()}
     else:
         model.load_state_dict(initial_state)
     probe = StepProbe(name, len(items))
+    initial_norm = float(torch.stack([p.detach().double().square().sum()
+                                     for p in model.parameters()]).sum().sqrt())
     trainer = pl.Trainer(
         accelerator='gpu' if torch.cuda.is_available() else 'cpu', devices=1,
         precision=args.precision, max_steps=1, num_sanity_val_steps=0,
@@ -239,23 +283,27 @@ def run_step(args, items, name, seed, initial_state=None, use_sdpa=True):
                                                    collate_fn=collate))
     groups = group_gradients(probe.gradients)
     summary = gradient_summary(groups)
+    updates = (group_gradients({n: p.detach().cpu() - initial_state[f'model.{n}']
+                for n, p in model.model.named_parameters()}) if capture_updates else None)
     report = {
         'precision_config': name,
+        'initial_parameter_norm': initial_norm if np.isfinite(initial_norm) else None,
         **probe.result,
         'grad_checkpointing': bool(args.grad_checkpointing),
         'gradient_nonfinite': sum(g['nonfinite'] for g in summary.values()),
         'gradients': summary,
+        **({'updates': gradient_summary(updates)} if updates is not None else {}),
     }
     del trainer, model
     if torch.cuda.is_available():
         torch.cuda.empty_cache()
-    return report, groups, initial_state
+    return report, groups, initial_state, updates
 
 
 def run_probe(args, items, configs, seed, use_sdpa=True, cosine_threshold=0.99):
     runs, grads, initial_state = [], [], None
     for name in configs:
-        report, groups, initial_state = run_step(
+        report, groups, initial_state, _ = run_step(
             args, items, name, seed, initial_state, use_sdpa=use_sdpa)
         runs.append(report)
         grads.append(groups)
@@ -302,13 +350,22 @@ def parse_probe_args(argv):
     parser.add_argument('--configs', nargs='+', choices=tuple(LIGHTNING_PRECISION),
                         default=['fp32-reference'])
     parser.add_argument('--seed', type=int, default=0)
+    parser.add_argument('--sim_ckpt', help='initialize model weights, not optimizer resume state')
+    parser.add_argument('--time', type=float, default=None, help='fixed transport time for capacity probes')
+    parser.add_argument('--seed_group', type=int, default=None,
+                        help='explicit Training region candidate group')
+    parser.add_argument('--coverage_control', action='store_true',
+                        help='FP32 repeat and full-coverage control; no thresholds applied')
     source = parser.add_mutually_exclusive_group()
     source.add_argument('--dataset_index', type=int, default=0,
                         help='first item of the --train_split dataset (default)')
     source.add_argument('--synthetic_residues', type=int, default=None,
                         help='use a random-walk batch with this many residues')
     parser.add_argument('--cosine_threshold', type=float, default=0.99)
-    return parser.parse_args(argv), train_argv
+    args = parser.parse_args(argv)
+    if args.time is not None and not 0 < args.time < 1:
+        parser.error('--time must lie in (0, 1)')
+    return args, train_argv
 
 
 def main(argv=None):
@@ -322,19 +379,61 @@ def main(argv=None):
         sys.argv = saved_argv
     use_sdpa = not args.manual_attention
     delattr(args, 'manual_attention')
+    args.sim_ckpt = probe_args.sim_ckpt
+    args.probe_time = probe_args.time
+    if probe_args.coverage_control:
+        if args.dropout != 0:
+            raise ValueError('coverage control requires dropout=0')
+        if any(name != 'fp32-reference' for name in probe_args.configs):
+            raise ValueError('coverage control requires fp32-reference')
+        args.probe_time = 0.5 if probe_args.time is None else probe_args.time
+    args.region_seed_group = probe_args.seed_group
+    if args.region_seed_group is not None and not (args.training_region or probe_args.coverage_control):
+        raise ValueError('--seed_group requires --training_region or --coverage_control')
+    if args.sim_ckpt:
+        saved = torch.load(args.sim_ckpt, map_location='cpu', weights_only=False)
+        trained_args = saved['hyper_parameters']['args']
+        # Restore architecture and conditioning; retain explicit data, capacity and runtime args.
+        keys = ('num_layers', 'embed_dim', 'mha_heads', 'ipa_heads', 'ipa_head_dim',
+                'ipa_qk', 'ipa_v', 'prepend_ipa', 'interleave_ipa', 'no_rope',
+                'hyena', 'abs_pos_emb', 'abs_time_emb', 'no_offsets', 'no_frames',
+                'no_torsion', 'no_design_torsion', 'supervise_no_torsions',
+                'supervise_all_torsions', 'no_aa_emb', 'scale_factor', 'time_multiplier',
+                'sim_condition', 'design', 'inpainting', 'dynamic_mpnn', 'mpnn',
+                'tps_condition', 'path_type', 'prediction', 'alpha_max',
+                'discrete_loss_weight', 'cond_interval')
+        for key in keys:
+            if hasattr(trained_args, key):
+                setattr(args, key, getattr(trained_args, key))
     pl.seed_everything(probe_args.seed, verbose=False)
+    dataset_rng_state = np.random.get_state()
+    if probe_args.coverage_control and args.training_region:
+        raise ValueError('--coverage_control starts from a full-protein batch')
     if probe_args.synthetic_residues is not None:
         items = synthetic_items(args, probe_args.synthetic_residues, args.batch_size,
                                 probe_args.seed)
         if args.training_region:
             items = synthetic_region_items(args, items, probe_args.seed)
+            if args.region_seed_group is not None:
+                for item in items:
+                    item['region']['seed_group'] = args.region_seed_group
     else:
         items = dataset_items(args, probe_args.dataset_index)
-    report = run_probe(args, items, probe_args.configs, probe_args.seed,
-                       use_sdpa=use_sdpa, cosine_threshold=probe_args.cosine_threshold)
+    if probe_args.coverage_control:
+        from .train_step_control import run_coverage_control
+        report = run_coverage_control(args, items, probe_args.seed,
+            synthetic=probe_args.synthetic_residues is not None,
+            dataset_index=probe_args.dataset_index, dataset_rng_state=dataset_rng_state,
+            use_sdpa=use_sdpa)
+    else:
+        report = run_probe(args, items, probe_args.configs, probe_args.seed,
+                           use_sdpa=use_sdpa, cosine_threshold=probe_args.cosine_threshold)
     report['batch']['source'] = ('synthetic' if probe_args.synthetic_residues is not None
                                  else f'{args.train_split}[{probe_args.dataset_index}]')
     report['model_args']['use_sdpa'] = use_sdpa
+    if args.sim_ckpt:
+        report['checkpoint'] = {'path': args.sim_ckpt, 'sha256': file_sha256(args.sim_ckpt),
+                                'optimizer_state': 'fresh'}
     os.makedirs(os.path.dirname(os.path.abspath(probe_args.output)), exist_ok=True)
     with open(probe_args.output, 'w') as f:
         json.dump(report, f, indent=2, default=str, allow_nan=False)

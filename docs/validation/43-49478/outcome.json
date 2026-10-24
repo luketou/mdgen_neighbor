@@ -1,0 +1,18 @@
+{
+  "job_id": 49478,
+  "plan_only": true,
+  "model_executions": 0,
+  "total_candidates": 207,
+  "counts": {
+    "planned_only": 60,
+    "infeasible_seed": 21,
+    "duplicate": 126
+  },
+  "source_commit": "6ba13d9",
+  "run_id": "issue43-t2-plan-20261023T152821Z-6ba13d9",
+  "controls": [
+    "6sms_A-R1-coverage_control-group55",
+    "6lrd_A-R1-coverage_control-group59",
+    "6l3r_E-R1-coverage_control-group19"
+  ]
+}

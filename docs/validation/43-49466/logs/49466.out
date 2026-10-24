@@ -1,0 +1,4 @@
+host=node-19 job=49466 python=/share/home/r15543056/.venvs/mdgen/bin/python
+inventory-R1 completed
+inventory-R2 completed
+inventory-R3 completed

@@ -141,7 +141,8 @@ class Transport:
             x1,           # target tokens
             aatype1=None, # target aatype
             mask=None,
-            model_kwargs=None
+            model_kwargs=None,
+            noise=None,
     ):
         """Loss for training the score model
         Args:
@@ -154,6 +155,12 @@ class Transport:
             model_kwargs = {}
 
         t, x0, x1 = self.sample(x1)
+        if noise is not None:
+            if noise.shape != x1.shape:
+                raise ValueError('probe noise must match the latent batch shape')
+            x0 = noise.to(x1)
+        if getattr(self.args, 'probe_time', None) is not None:
+            t = th.full_like(t, self.args.probe_time)
         t, xt, ut = self.path_sampler.plan(t, x0, x1)
 
 
@@ -182,6 +189,11 @@ class Transport:
                 model_output = model_output[:, :, :, :-20]
 
         terms = {}
+        if noise is not None:
+            terms['probe_nonfinite_counts'] = {
+                key: int((~value.isfinite()).sum()) for key, value in (
+                    ('latents', x1), ('noise', x0), ('interpolated_input', xt),
+                    ('model_output', model_output), ('loss_mask', mask)) if value is not None}
         terms['t'] = t
         terms['pred'] = model_output
         if not (self.args.dynamic_mpnn or self.args.mpnn):

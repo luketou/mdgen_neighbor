@@ -179,3 +179,89 @@ def test_unknown_pdb_id_is_rejected_before_loading(tmp_path):
     with pytest.raises(SystemExit):
         main(['--sim_ckpt', str(tmp_path / 'missing.ckpt'), '--data_dir', str(tmp_path),
               '--split', str(split), '--output', str(tmp_path / 'r.json'), '--pdb_id', 'typo'])
+
+
+def test_cli_short_window_reports_precision_and_tail_statistics(tmp_path, checkpoint):
+    report = run(tmp_path, checkpoint, '--halo_rings', '0', '1', '--num_frames', '2',
+                 '--warmup', '0', '--repeats', '1')
+    assert report['settings']['model']['num_frames'] == 2
+    assert report['precision_state']['float32_matmul_precision'] == 'highest'
+    assert not report['precision_state']['cuda_matmul_allow_tf32']
+    protein, = report['proteins']
+    assert protein['batch_shapes']['trans'] == [1, 2, L, 3]
+    # Every input tensor is recorded with its batch dimension, not only `trans`.
+    assert {'rots', 'torsions', 'seqres', 'mask'} <= set(protein['batch_shapes'])
+    assert all(shape[0] == 1 for shape in protein['batch_shapes'].values())
+    assert protein['summary']['0']['l2']['p95'] >= protein['summary']['0']['l2']['median']
+    assert len(protein['measurements']['full']) == 2  # one per t
+
+
+def test_cli_fixed_candidates_preserves_duplicates_and_all_group_coverage(tmp_path, checkpoint):
+    report = run(tmp_path, checkpoint, '--halo_rings', '0', '1',
+                 '--region_residues', str(L), '--seed_groups', '0', '0', '1')
+    protein, = report['proteins']
+    assert protein['coverage']['attempted'] == 3
+    assert protein['coverage']['feasible'] == 3
+    assert protein['coverage']['duplicates'] == 2
+    assert protein['coverage']['unique_regions'] == 1
+    assert protein['coverage']['loss_residue_fraction'] == 1.0
+    assert len(protein['seed_regions']['1']['sizes']) == protein['groups']
+    region, = protein['regions']
+    assert region['by_halo']['1']['truncated'] is False
+    sample = protein['observations'][0]
+    assert sample['effective_components'] > 0
+    assert sample['reference_class'] == 'regular'
+    assert sample['relative'] == 0
+    assert protein['strata'][0]['l2']['p95'] == 0
+
+
+def test_partition_inventory_never_runs_a_model_and_keeps_infeasible_groups(tmp_path, checkpoint):
+    report = run(tmp_path, checkpoint, '--inventory_only', '--halo_rings', '1', '2',
+                 '--region_residues', '1', '--selection_seed', '43002')
+    protein, = report['proteins']
+    for entry in protein['seed_regions'].values():
+        assert entry['feasible'] == 0
+        assert len(entry['infeasible']) == protein['groups']
+    assert 'observations' not in protein
+    assert 'precision_state' not in report
+
+
+@pytest.mark.parametrize('value, category', [(0.0, 'zero_reference'),
+                                           (1e-7, 'near_zero_reference'),
+                                           (float('nan'), 'nonfinite')])
+def test_cli_distinguishes_zero_reference_from_nonfinite(tmp_path, checkpoint, value, category):
+    saved = torch.load(checkpoint, weights_only=False)
+    for tensor in saved['state_dict'].values():
+        if tensor.is_floating_point():
+            tensor.fill_(0 if category == 'near_zero_reference' else value)
+    if category == 'near_zero_reference':
+        saved['state_dict']['model.emb_to_latent.linear.bias'].fill_(value)
+    torch.save(saved, checkpoint)
+    report = run(tmp_path, checkpoint, '--halo_rings', '1', '--region_residues', str(L))
+    strata = report['proteins'][0]['strata']
+    assert all(row[category] == row['samples'] for row in strata)
+    assert all(row['relative']['count'] == 0 for row in strata)
+    if category == 'zero_reference':
+        assert all(row['nonfinite'] == 0 and row['l2']['max'] == 0 for row in strata)
+        assert report['summary']['1']['relative']['nonfinite'] == 0
+        assert report['summary']['1']['relative']['undefined'] > 0
+    json.dumps(report, allow_nan=False)
+
+
+def test_cli_all_fixed_groups_infeasible_still_writes_a_report(tmp_path, checkpoint):
+    report = run(tmp_path, checkpoint, '--halo_rings', '1', '2',
+                 '--region_residues', '1', '--seed_groups', '0', '1')
+    protein, = report['proteins']
+    assert protein['coverage']['attempted'] == protein['coverage']['skipped'] == 2
+    assert protein['coverage']['feasible'] == 0
+    assert protein['regions'] == protein['observations'] == []
+
+
+def test_capacity_mode_measures_regions_without_retaining_a_reference(tmp_path, checkpoint):
+    report = run(tmp_path, checkpoint, '--halo_rings', '0', '1', '--capacity_only',
+                 '--seed_groups', '0')
+    protein, = report['proteins']
+    assert protein['observations'] == []
+    assert protein['measurements']['full'][0]['status'] == 'completed'
+    assert len(protein['measurements']['regions']) == 4  # two t, two halos
+    assert all(row['status'] == 'completed' for row in protein['measurements']['regions'])

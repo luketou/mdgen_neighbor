@@ -1,0 +1,2 @@
+Loading cuda/12.8
+  Loading requirement: auto_gpu cufft/24.01 TensorRT/10.13.3.9/cuda-12.0-12.9

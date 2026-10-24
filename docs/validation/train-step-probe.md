@@ -17,6 +17,27 @@ python -m mdgen.train_step_probe --output results/probe.json \
 - `--synthetic_residues L`：隨機漫步骨架（Cα 間距 3.8 Å、合法旋轉、單位 torsion 向量），
   免資料、只用於記憶體與流程檢查；`--train_split`／`--val_split`／`--data_dir` 仍須給值但不會讀取。
 
+`--sim_ckpt PATH`（放在分隔符之前）從指定 checkpoint 初始化權重及模型架構／條件設定，保留 CLI 的資料、空間容量與執行設定；不恢復 optimizer。載入不相容時直接失敗，報告保存完整檔案 SHA-256 與初始參數 norm。`--time T` 固定 transport 時間；未指定則維持原本隨機時間。`batch.frame_starts` 與 `runs[].training_time` 記錄實際視窗與時間。
+
+真實 ATLAS 容量探針可用 `--atlas --replicates R --overfit_frame` 固定 replica 與起始幀；完整蛋白模式的 `--crop` 必須明確等於蛋白長度。`--ffn_chunk_size` 可顯式固定 FFN chunking。完整蛋白與 Training region 各自的容量結果不代表相同 supervision 的 loss／gradient 比較。
+
+`--seed_group G`（分隔符之前）明確指定 Training region 的候選 group；實際 `seed_group`、`loss_group_ids`、`halo_group_ids` 保存在 region 摘要。先導 driver 使用核准的候選順序，各 halo 設定內按 loss-group 集合去重，保留重複與不可行候選的對應，不補抽。
+
+`--coverage_control` 執行 FP32 的同路徑重跑與完整涵蓋對照：需要 batch 1、local 模式、dropout 關閉，且 region 的全部真實殘基均受監督。先生成完整雜訊再映射到 padded region，兩側使用相同非條件幀、有效通道及 loss 分母；JSON 的 `alignment` 記錄實際 noise／mask hash 與分母。未給 `--time` 時固定為 0.5，避免不同 shape 消耗 RNG 後抽到不同時間。
+
+控制結果記錄每個參數群的 gradient／實際更新 norm、RMS、差向量、cosine 與精確零分類，以及 optimizer 設定和 clipping 前後 norm。零向量的 cosine 為 `null`；此模式尚不套近零 cutoff 或接受門檻。`comparisons` 區分 `same_path_repeat` 與 `full_coverage`，供控制容差校準；原本 precision probe 的 cosine 規則保持獨立，不能作為截斷比較的科學門檻。
+
+剩餘先導使用核准的八候選與長蛋白優先順序；三個基準蛋白 R1 加入完整涵蓋控制。`scripts/issue43_pilot.py --plan_only` 可在 CPU Compute Job 驗證檔案與候選並產出命令清單，不執行模型。計畫與實際執行由 manifest 的 `plan_only` 與 `driver_finished` 區分。
+
+既有 launcher 的 `MDGEN_ISSUE43_FRAMES` 模式會呼叫有時間上限的真實資料先導；需要明確設定 `MDGEN_ISSUE43_DATA` 與 `MDGEN_ATLAS_CKPT`。每個 case 重建相同初始權重與 optimizer，第一個 FP32 組態作暖機，其餘為量測。量測數及核准資源見 [提案](43-contract/proposal.md)，未跑到的 case 亦保留在 manifest。
+
+`MDGEN_ISSUE43_MODE` 模式把 launcher 參數直接交給 driver，供 [幀數掃描申請](43-contract/gpu-request-frames.md) 使用：
+
+- `--frames` 接受任意正整數。`--memory gbs=N,ffn=N,expandable` 覆寫 `group_batch_size`、`ffn_chunk_size`，並對子程序設定 `PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True`；未指定時沿用核准的 4／65536。實際設定逐 case 寫入 manifest 的 `memory`。
+- `--cases ID…` 只執行指定的計畫 case；未知 ID 直接報錯。
+- `--mode sweep --protein P --replica R --step FRAMES[:MEMORY] …` 依序對完整蛋白跑訓練步。同一記憶體設定在某幀數 OOM 後，跳過更多幀數；某幀數已放得下後，跳過同幀數的其他記憶體設定。被跳過的 case 標為 `skipped_by_rule` 並記錄原因。
+- `--budget_minutes` 與 `--case_timeout` 明確設定 Job 內時間預算與每個 case 的逾時。
+
 `--` 之後加上 `--training_region`（及 `--region_residues`／`--halo_rings`）時，兩種來源都改為 Training region
 batch：資料集由 `MDGenDataset` 取樣，合成鏈則對第 0 幀完整分區、以 `--seed` 決定種子 group，再由同一個
 `mdgen/full_length/region_batch.py` 統一欄位選取與 padding、組成 batch；只有 loss group 的 core 計入 loss（`loss_core_mask`），halo 與上下文殘基只提供上下文。#9 Ticket 3 量測一個 Training region × 250 幀即用此模式，例如

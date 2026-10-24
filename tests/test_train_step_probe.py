@@ -1,5 +1,8 @@
 """Seam 1: one real Lightning training step and its JSON report (#9 Ticket 2)."""
 import json
+import hashlib
+
+import numpy as np
 
 import pytest
 import torch
@@ -175,3 +178,153 @@ def test_batch_shapes_rejects_a_tensor_without_the_batch_dimension():
         batch_shapes({**batch, 'region': {'center': torch.zeros(3)}}, 2)
     with pytest.raises(ValueError, match='name'):
         batch_shapes({**batch, 'name': ['a']}, 2)
+
+
+def test_cli_real_replica_uses_checkpoint_weights_and_first_frame(monkeypatch, tmp_path):
+    from mdgen.wrapper import NewMDGenWrapper
+    args = tiny_args(monkeypatch)
+    model = NewMDGenWrapper(args)
+    with torch.no_grad():
+        for parameter in model.parameters():
+            parameter.zero_()
+    checkpoint = tmp_path / 'zero.ckpt'
+    torch.save({'state_dict': model.state_dict(), 'hyper_parameters': {'args': args}}, checkpoint)
+    atoms = np.random.default_rng(0).normal(size=(5, 12, 14, 3)).astype(np.float32)
+    np.save(tmp_path / 'prot_R1.npy', atoms)
+    split = tmp_path / 'split.csv'
+    split.write_text('name,seqres\nprot,ACDEFGHIKLMN\n')
+    output = tmp_path / 'real.json'
+    main(['--output', str(output), '--sim_ckpt', str(checkpoint), '--time', '0.5', '--', *TINY,
+          '--data_dir', str(tmp_path), '--train_split', str(split), '--val_split', str(split),
+          '--batch_size', '1', '--atlas', '--replicates', '1', '--crop', '12', '--overfit_frame'])
+    report = json.loads(output.read_text())
+    assert report['checkpoint']['sha256'] == hashlib.sha256(checkpoint.read_bytes()).hexdigest()
+    assert report['runs'][0]['initial_parameter_norm'] == 0
+    assert report['batch']['names'] == ['prot_R1']
+    assert report['batch']['frame_starts'] == [0]
+    assert report['runs'][0]['loss_finite']
+    assert report['runs'][0]['training_time'] == 0.5
+
+
+@pytest.mark.parametrize('crop', ['8', '16'])
+def test_full_protein_mode_rejects_a_crop_that_differs_from_the_protein(tmp_path, crop):
+    np.save(tmp_path / 'prot_R1.npy',
+            np.random.default_rng(0).normal(size=(5, 12, 14, 3)).astype(np.float32))
+    split = tmp_path / 'split.csv'
+    split.write_text('name,seqres\nprot,ACDEFGHIKLMN\n')
+    with pytest.raises(ValueError, match=f'--crop {crop} differs from prot length 12'):
+        main(['--output', str(tmp_path / 'cropped.json'), '--time', '0.5', '--', *TINY,
+              '--data_dir', str(tmp_path), '--train_split', str(split), '--val_split', str(split),
+              '--batch_size', '1', '--atlas', '--replicates', '1', '--crop', crop,
+              '--overfit_frame'])
+    assert not (tmp_path / 'cropped.json').exists()
+
+
+def test_full_protein_crop_check_uses_the_row_overfit_actually_loads(tmp_path):
+    np.save(tmp_path / 'prot_R1.npy',
+            np.random.default_rng(0).normal(size=(5, 12, 14, 3)).astype(np.float32))
+    split = tmp_path / 'split.csv'
+    split.write_text('name,seqres\nprot,ACDEFGHIKLMN\nshort,ACDEFGHI\n')
+    output = tmp_path / 'overfit.json'
+    main(['--output', str(output), '--time', '0.5', '--dataset_index', '1', '--', *TINY,
+          '--data_dir', str(tmp_path), '--train_split', str(split), '--val_split', str(split),
+          '--batch_size', '1', '--atlas', '--replicates', '1', '--crop', '12', '--overfit',
+          '--overfit_frame'])
+    assert json.loads(output.read_text())['batch']['names'] == ['prot_R1']
+
+
+def test_cli_training_region_accepts_an_explicit_candidate_group(tmp_path):
+    output = tmp_path / 'fixed.json'
+    main(['--output', str(output), '--synthetic_residues', '60', '--seed_group', '0',
+          '--', *TINY, *LOCAL, '--training_region', '--region_residues', '60'])
+    report = json.loads(output.read_text())
+    for region in report['batch']['regions']:
+        assert region['seed_group'] == 0
+        assert 0 in region['loss_group_ids']
+        assert len(region['loss_group_ids']) == region['loss_groups']
+
+
+def test_cli_full_coverage_control_shares_noise_and_supervision(tmp_path):
+    output = tmp_path / 'control.json'
+    main(['--output', str(output), '--coverage_control', '--synthetic_residues', '12',
+          '--time', '0.5', '--', *TINY, *LOCAL, '--batch_size', '1',
+          '--region_residues', '20', '--halo_rings', '1'])
+    report = json.loads(output.read_text())
+    assert report['probe'] == 'full-coverage-control'
+    assert report['thresholds_applied'] is False
+    alignment = report['alignment']
+    assert alignment['full_noise_sha256'] == alignment['region_noise_sha256']
+    assert alignment['full_mask_sha256'] == alignment['region_mask_sha256']
+    assert alignment['full_denominator'] == alignment['region_denominator'] > 0
+    assert [r['batch_shapes']['trans'][2] for r in report['runs']] == [12, 12, 20]
+    repeat, coverage = report['comparisons']
+    assert repeat['kind'] == 'same_path_repeat'
+    assert all(g['difference_rms'] == 0 for g in repeat['gradients'].values())
+    assert all(g['difference_rms'] == 0 for g in repeat['updates'].values())
+    assert coverage['kind'] == 'full_coverage'
+    assert max(g['difference_rms'] for g in coverage['gradients'].values()) < 1e-5
+    assert any(g['reference_norm'] > 0 for g in coverage['updates'].values())
+    zero_gradients = [g for g in coverage['gradients'].values() if g['reference_zero']]
+    assert zero_gradients and all(g['cosine'] is None for g in zero_gradients)
+
+
+def test_control_without_time_still_uses_the_same_actual_time(tmp_path):
+    output = tmp_path / 'default-time.json'
+    main(['--output', str(output), '--coverage_control', '--synthetic_residues', '12',
+          '--', *TINY, *LOCAL, '--batch_size', '1', '--region_residues', '20'])
+    report = json.loads(output.read_text())
+    assert [r['training_time'] for r in report['runs']] == [0.5, 0.5, 0.5]
+
+
+def test_seed_group_without_a_region_mode_names_both_region_options(tmp_path):
+    with pytest.raises(ValueError, match='--training_region or --coverage_control'):
+        main(['--output', str(tmp_path / 'invalid.json'), '--seed_group', '0',
+              '--synthetic_residues', '60', '--', *TINY, *LOCAL, '--batch_size', '1'])
+    assert not (tmp_path / 'invalid.json').exists()
+
+
+def test_control_rejects_a_truncated_region_before_running_steps(tmp_path):
+    with pytest.raises(ValueError, match='every full-protein residue'):
+        main(['--output', str(tmp_path / 'invalid.json'), '--coverage_control',
+              '--synthetic_residues', '60', '--', *TINY, *LOCAL, '--batch_size', '1',
+              '--region_residues', '40', '--halo_rings', '0'])
+    assert not (tmp_path / 'invalid.json').exists()
+
+
+def test_real_control_keeps_the_original_random_replica_and_window(tmp_path):
+    atoms = np.random.default_rng(1).normal(size=(9, 12, 14, 3)).astype(np.float32)
+    for replica in (1, 2):
+        np.save(tmp_path / f'prot_R{replica}.npy', atoms * replica)
+    split = tmp_path / 'split.csv'
+    split.write_text('name,seqres\nprot,ACDEFGHIKLMN\n')
+    output = tmp_path / 'real-control.json'
+    main(['--output', str(output), '--coverage_control', '--', *TINY, *LOCAL,
+          '--data_dir', str(tmp_path), '--train_split', str(split), '--val_split', str(split),
+          '--batch_size', '1', '--atlas', '--replicates', '1', '2', '--crop', '12',
+          '--region_residues', '20'])
+    report = json.loads(output.read_text())
+    assert report['alignment']['name'] in ('prot_R1', 'prot_R2')
+    assert 0 <= report['alignment']['frame_start'] <= 5
+    assert report['alignment']['full_mask_sha256'] == report['alignment']['region_mask_sha256']
+    assert max(g['difference_rms'] for g in report['comparisons'][1]['gradients'].values()) < 1e-5
+
+
+def test_control_identifies_nonfinite_predictions_separately_from_inputs(monkeypatch, tmp_path):
+    from mdgen.wrapper import NewMDGenWrapper
+    args = tiny_args(monkeypatch, LOCAL)
+    model = NewMDGenWrapper(args)
+    with torch.no_grad():
+        for parameter in model.parameters():
+            parameter.fill_(float('nan'))
+    checkpoint = tmp_path / 'nonfinite.ckpt'
+    torch.save({'state_dict': model.state_dict(), 'hyper_parameters': {'args': args}}, checkpoint)
+    output = tmp_path / 'nonfinite-control.json'
+    main(['--output', str(output), '--coverage_control', '--sim_ckpt', str(checkpoint),
+          '--synthetic_residues', '12', '--', *TINY, *LOCAL,
+          '--batch_size', '1', '--region_residues', '20'])
+    report = json.loads(output.read_text())
+    for run in report['runs']:
+        assert run['nonfinite_counts']['latents'] == run['nonfinite_counts']['noise'] == 0
+        assert run['nonfinite_counts']['model_output'] > 0
+        assert run['gradient_nonfinite'] > 0
+    json.dumps(report, allow_nan=False)

@@ -1,0 +1,379 @@
+{
+  "mode": "inventory",
+  "frames": 4,
+  "checkpoint_sha256": "bc90c66e7539f52c9d0514aeddd96c552061150a1eef3b10c120bc3aaff08015",
+  "input_manifest": [
+    {
+      "path": "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/validation.csv",
+      "bytes": 4275,
+      "sha256": "757c0754d1e7551f7c348ba6d7ae0740ba74161ba980ec5abe32e714c9d87a83"
+    },
+    {
+      "path": "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/arrays/6sms_A_R1_i400ps.npy",
+      "bytes": 30529760,
+      "sha256": "d9b29e68b417ec84430663c8ec2bafa39b1af8517afa8c556a540566385dd2d9"
+    },
+    {
+      "path": "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/arrays/6sms_A_R1_i400ps_chain.npz",
+      "bytes": 12112,
+      "sha256": "45fba7cdb4b663d23ea2566f0d4872ea89aa8c69c83c7074bcf278309b494c2c"
+    },
+    {
+      "path": "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/partitions/6sms_A_R1_i400ps_partition.npz",
+      "bytes": 86514,
+      "sha256": "30a271b2a799dd11f78b1cf85af444e5b3a7590acd400d22a4b2e774c6df9bca"
+    },
+    {
+      "path": "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/arrays/6lrd_A_R1_i400ps.npy",
+      "bytes": 29728568,
+      "sha256": "da0f69041eac0683ddc6846f415673272b211c8184fbb738a985e9ac25ab93c2"
+    },
+    {
+      "path": "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/arrays/6lrd_A_R1_i400ps_chain.npz",
+      "bytes": 11808,
+      "sha256": "8f995cac5be92542db11a5f4624c4ac410a77f4f814bd0c4695fd2b2404474c1"
+    },
+    {
+      "path": "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/partitions/6lrd_A_R1_i400ps_partition.npz",
+      "bytes": 87851,
+      "sha256": "f06dcece93b3a9dbb8cace36a1bb9ef09dea1c33a4fe4b4e0f0cecb02e46c851"
+    },
+    {
+      "path": "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/arrays/6l3r_E_R1_i400ps.npy",
+      "bytes": 28210520,
+      "sha256": "a6c39195cf8ecd671d165457d308dde0c5721e5baefc451b4776bd2facde32fd"
+    },
+    {
+      "path": "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/arrays/6l3r_E_R1_i400ps_chain.npz",
+      "bytes": 11232,
+      "sha256": "c430a0426b9aac94f219e4b2f29bd084238c3f1790561ef3830fca894f578c14"
+    },
+    {
+      "path": "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/partitions/6l3r_E_R1_i400ps_partition.npz",
+      "bytes": 80655,
+      "sha256": "46d5f14a44c5ccbcbae4ae0f4accbfe114303cf1957cf78b9ae498f81957873e"
+    },
+    {
+      "path": "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/arrays/6sup_A_R1_i400ps.npy",
+      "bytes": 89733632,
+      "sha256": "4e9a9fe631de6b06a6ef929f2c2a85ed8d9a068fe2f3ac8cb062eac4bc93a2f2"
+    },
+    {
+      "path": "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/arrays/6sup_A_R1_i400ps_chain.npz",
+      "bytes": 34576,
+      "sha256": "6baf00e0a37ff091bef3e304e19aea30a52bea5173741329c94ee30cb31d1c7d"
+    },
+    {
+      "path": "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/partitions/6sup_A_R1_i400ps_partition.npz",
+      "bytes": 257366,
+      "sha256": "6df5d741edd949688b2c31fd04df5d75fca6fdc8868e9efe1cf4c8e05dda1997"
+    },
+    {
+      "path": "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/arrays/6sms_A_R2_i400ps.npy",
+      "bytes": 30529760,
+      "sha256": "b6944c32751c022a667b8edcde3658b8a32c6b9d77c811640c26fc5ee3dd5cbc"
+    },
+    {
+      "path": "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/arrays/6sms_A_R2_i400ps_chain.npz",
+      "bytes": 12112,
+      "sha256": "45fba7cdb4b663d23ea2566f0d4872ea89aa8c69c83c7074bcf278309b494c2c"
+    },
+    {
+      "path": "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/partitions/6sms_A_R2_i400ps_partition.npz",
+      "bytes": 86514,
+      "sha256": "30a271b2a799dd11f78b1cf85af444e5b3a7590acd400d22a4b2e774c6df9bca"
+    },
+    {
+      "path": "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/arrays/6lrd_A_R2_i400ps.npy",
+      "bytes": 29728568,
+      "sha256": "30ef542afa7a4bc625425c9510cb1e3645fe391a214319f4711400641442e133"
+    },
+    {
+      "path": "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/arrays/6lrd_A_R2_i400ps_chain.npz",
+      "bytes": 11808,
+      "sha256": "8f995cac5be92542db11a5f4624c4ac410a77f4f814bd0c4695fd2b2404474c1"
+    },
+    {
+      "path": "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/partitions/6lrd_A_R2_i400ps_partition.npz",
+      "bytes": 87851,
+      "sha256": "f06dcece93b3a9dbb8cace36a1bb9ef09dea1c33a4fe4b4e0f0cecb02e46c851"
+    },
+    {
+      "path": "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/arrays/6l3r_E_R2_i400ps.npy",
+      "bytes": 28210520,
+      "sha256": "b3308b4275814e9f8e3f395f655822983c05658cf80dd98ddf4b2d4035f274d8"
+    },
+    {
+      "path": "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/arrays/6l3r_E_R2_i400ps_chain.npz",
+      "bytes": 11232,
+      "sha256": "c430a0426b9aac94f219e4b2f29bd084238c3f1790561ef3830fca894f578c14"
+    },
+    {
+      "path": "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/partitions/6l3r_E_R2_i400ps_partition.npz",
+      "bytes": 80655,
+      "sha256": "46d5f14a44c5ccbcbae4ae0f4accbfe114303cf1957cf78b9ae498f81957873e"
+    },
+    {
+      "path": "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/arrays/6sup_A_R2_i400ps.npy",
+      "bytes": 89733632,
+      "sha256": "9a00008e6f5621f3e473e5c8db521b4569a3449676e9a1d4ab959066576ad4e8"
+    },
+    {
+      "path": "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/arrays/6sup_A_R2_i400ps_chain.npz",
+      "bytes": 34576,
+      "sha256": "6baf00e0a37ff091bef3e304e19aea30a52bea5173741329c94ee30cb31d1c7d"
+    },
+    {
+      "path": "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/partitions/6sup_A_R2_i400ps_partition.npz",
+      "bytes": 257366,
+      "sha256": "6df5d741edd949688b2c31fd04df5d75fca6fdc8868e9efe1cf4c8e05dda1997"
+    },
+    {
+      "path": "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/arrays/6sms_A_R3_i400ps.npy",
+      "bytes": 30529760,
+      "sha256": "b6741ba399f88128ec6349d9f84aef7feb990159dd6b6c3be6a4226314a00996"
+    },
+    {
+      "path": "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/arrays/6sms_A_R3_i400ps_chain.npz",
+      "bytes": 12112,
+      "sha256": "45fba7cdb4b663d23ea2566f0d4872ea89aa8c69c83c7074bcf278309b494c2c"
+    },
+    {
+      "path": "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/partitions/6sms_A_R3_i400ps_partition.npz",
+      "bytes": 86514,
+      "sha256": "30a271b2a799dd11f78b1cf85af444e5b3a7590acd400d22a4b2e774c6df9bca"
+    },
+    {
+      "path": "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/arrays/6lrd_A_R3_i400ps.npy",
+      "bytes": 29728568,
+      "sha256": "9c3f4834275a713026eb37789b71ca64bffbfad7214fc8960a3c8e2160e460ae"
+    },
+    {
+      "path": "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/arrays/6lrd_A_R3_i400ps_chain.npz",
+      "bytes": 11808,
+      "sha256": "8f995cac5be92542db11a5f4624c4ac410a77f4f814bd0c4695fd2b2404474c1"
+    },
+    {
+      "path": "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/partitions/6lrd_A_R3_i400ps_partition.npz",
+      "bytes": 87851,
+      "sha256": "f06dcece93b3a9dbb8cace36a1bb9ef09dea1c33a4fe4b4e0f0cecb02e46c851"
+    },
+    {
+      "path": "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/arrays/6l3r_E_R3_i400ps.npy",
+      "bytes": 28210520,
+      "sha256": "54eca1aca548928438d3d3599e8e68c0013fc7473126609be05920cd147870dc"
+    },
+    {
+      "path": "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/arrays/6l3r_E_R3_i400ps_chain.npz",
+      "bytes": 11232,
+      "sha256": "c430a0426b9aac94f219e4b2f29bd084238c3f1790561ef3830fca894f578c14"
+    },
+    {
+      "path": "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/partitions/6l3r_E_R3_i400ps_partition.npz",
+      "bytes": 80655,
+      "sha256": "46d5f14a44c5ccbcbae4ae0f4accbfe114303cf1957cf78b9ae498f81957873e"
+    },
+    {
+      "path": "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/arrays/6sup_A_R3_i400ps.npy",
+      "bytes": 89733632,
+      "sha256": "ed11c2e72f416917908f7faad02d7a3aadda74cb59435afd5833d412a266ddb4"
+    },
+    {
+      "path": "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/arrays/6sup_A_R3_i400ps_chain.npz",
+      "bytes": 34576,
+      "sha256": "6baf00e0a37ff091bef3e304e19aea30a52bea5173741329c94ee30cb31d1c7d"
+    },
+    {
+      "path": "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/partitions/6sup_A_R3_i400ps_partition.npz",
+      "bytes": 257366,
+      "sha256": "6df5d741edd949688b2c31fd04df5d75fca6fdc8868e9efe1cf4c8e05dda1997"
+    }
+  ],
+  "slurm_job_id": "49466",
+  "warmup": 1,
+  "measured_repeats": 3,
+  "training_comparison": "capacity only; full and region have different supervision",
+  "memory_policy": "includes live reference outputs for halo comparisons",
+  "cases": [
+    {
+      "id": "inventory-R1",
+      "command": [
+        "/share/home/r15543056/.venvs/mdgen/bin/python",
+        "-m",
+        "mdgen.full_length.halo_error",
+        "--sim_ckpt",
+        "/share/home/r15543056/MDgen/mdgen/ckpt/atlas.ckpt",
+        "--data_dir",
+        "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/arrays",
+        "--split",
+        "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/validation.csv",
+        "--suffix",
+        "_i400ps",
+        "--partition_dir",
+        "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/partitions",
+        "--region_residues",
+        "896",
+        "--num_frames",
+        "4",
+        "--selection_seed",
+        "43002",
+        "--seed",
+        "0",
+        "--times",
+        "0.5",
+        "--local_spatial",
+        "--spatial_cell_width",
+        "16",
+        "--spatial_contact_radius",
+        "16",
+        "--core_capacity",
+        "128",
+        "--ghost_capacity",
+        "128",
+        "--no-cell_summaries",
+        "--group_batch_size",
+        "4",
+        "--ffn_chunk_size",
+        "65536",
+        "--replicate",
+        "1",
+        "--regions",
+        "8",
+        "--halo_rings",
+        "1",
+        "2",
+        "--inventory_only",
+        "--output",
+        "results/issue43-t2-inventory/inventory-R1.json"
+      ],
+      "status": "completed",
+      "output": "results/issue43-t2-inventory/inventory-R1.json",
+      "log": "results/issue43-t2-inventory/inventory-R1.log",
+      "returncode": 0,
+      "elapsed_s": 12.487606290727854,
+      "output_sha256": "5eca7f1759d556c08689a7e53452c30f0b0e22e174fddc7ca1b992ea5631337b"
+    },
+    {
+      "id": "inventory-R2",
+      "command": [
+        "/share/home/r15543056/.venvs/mdgen/bin/python",
+        "-m",
+        "mdgen.full_length.halo_error",
+        "--sim_ckpt",
+        "/share/home/r15543056/MDgen/mdgen/ckpt/atlas.ckpt",
+        "--data_dir",
+        "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/arrays",
+        "--split",
+        "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/validation.csv",
+        "--suffix",
+        "_i400ps",
+        "--partition_dir",
+        "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/partitions",
+        "--region_residues",
+        "896",
+        "--num_frames",
+        "4",
+        "--selection_seed",
+        "43002",
+        "--seed",
+        "0",
+        "--times",
+        "0.5",
+        "--local_spatial",
+        "--spatial_cell_width",
+        "16",
+        "--spatial_contact_radius",
+        "16",
+        "--core_capacity",
+        "128",
+        "--ghost_capacity",
+        "128",
+        "--no-cell_summaries",
+        "--group_batch_size",
+        "4",
+        "--ffn_chunk_size",
+        "65536",
+        "--replicate",
+        "2",
+        "--regions",
+        "8",
+        "--halo_rings",
+        "1",
+        "2",
+        "--inventory_only",
+        "--output",
+        "results/issue43-t2-inventory/inventory-R2.json"
+      ],
+      "status": "completed",
+      "output": "results/issue43-t2-inventory/inventory-R2.json",
+      "log": "results/issue43-t2-inventory/inventory-R2.log",
+      "returncode": 0,
+      "elapsed_s": 8.6821900755167,
+      "output_sha256": "6888dae834c65e0641796d75c574450704c6ca8dd51aefd908e84e12c8fb51a3"
+    },
+    {
+      "id": "inventory-R3",
+      "command": [
+        "/share/home/r15543056/.venvs/mdgen/bin/python",
+        "-m",
+        "mdgen.full_length.halo_error",
+        "--sim_ckpt",
+        "/share/home/r15543056/MDgen/mdgen/ckpt/atlas.ckpt",
+        "--data_dir",
+        "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/arrays",
+        "--split",
+        "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/validation.csv",
+        "--suffix",
+        "_i400ps",
+        "--partition_dir",
+        "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/partitions",
+        "--region_residues",
+        "896",
+        "--num_frames",
+        "4",
+        "--selection_seed",
+        "43002",
+        "--seed",
+        "0",
+        "--times",
+        "0.5",
+        "--local_spatial",
+        "--spatial_cell_width",
+        "16",
+        "--spatial_contact_radius",
+        "16",
+        "--core_capacity",
+        "128",
+        "--ghost_capacity",
+        "128",
+        "--no-cell_summaries",
+        "--group_batch_size",
+        "4",
+        "--ffn_chunk_size",
+        "65536",
+        "--replicate",
+        "3",
+        "--regions",
+        "8",
+        "--halo_rings",
+        "1",
+        "2",
+        "--inventory_only",
+        "--output",
+        "results/issue43-t2-inventory/inventory-R3.json"
+      ],
+      "status": "completed",
+      "output": "results/issue43-t2-inventory/inventory-R3.json",
+      "log": "results/issue43-t2-inventory/inventory-R3.log",
+      "returncode": 0,
+      "elapsed_s": 8.881576616317034,
+      "output_sha256": "9c1cb92a69bd3f92d3041ac714934e23abdf729a76bc06e578f606d224de4c10"
+    }
+  ],
+  "run": {
+    "run_id": "issue43-t2-inventory-20261023T142533Z-c754b85",
+    "commit": "c754b85",
+    "dirty": false
+  },
+  "snapshot_manifest_sha256": "15b64564bc08dcc933548001a52334976e5ffff1f1f415b130c6e2d5a556236f"
+}

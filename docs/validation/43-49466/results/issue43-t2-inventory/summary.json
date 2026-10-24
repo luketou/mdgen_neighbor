@@ -1,0 +1,5289 @@
+{
+  "mode": "inventory",
+  "frames": 4,
+  "reports": {
+    "inventory-R1": {
+      "experiment": "halo-error",
+      "settings": {
+        "sim_ckpt": "/share/home/r15543056/MDgen/mdgen/ckpt/atlas.ckpt",
+        "data_dir": "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/arrays",
+        "split": "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/validation.csv",
+        "output": "results/issue43-t2-inventory/inventory-R1.json",
+        "pdb_id": [],
+        "replicate": 1,
+        "suffix": "_i400ps",
+        "partition_dir": "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/partitions",
+        "region_residues": 896,
+        "halo_rings": [
+          1,
+          2
+        ],
+        "regions": 8,
+        "times": [
+          0.5
+        ],
+        "seed": 0,
+        "num_frames": 4,
+        "warmup": 0,
+        "repeats": 1,
+        "inventory_only": true,
+        "seed_groups": null,
+        "selection_seed": 43002,
+        "local_spatial": true,
+        "cell_summaries": false,
+        "spatial_cell_width": 16.0,
+        "spatial_contact_radius": 16.0,
+        "core_capacity": 128,
+        "ghost_capacity": 128,
+        "group_batch_size": 4,
+        "ffn_chunk_size": 65536,
+        "model": {
+          "num_frames": 4,
+          "num_layers": 5,
+          "spatial_cell_width": 16.0,
+          "spatial_contact_radius": 16.0,
+          "core_capacity": 128,
+          "ghost_capacity": 128,
+          "cell_summaries": false,
+          "frame_interval": null,
+          "grad_checkpointing": false,
+          "ffn_chunk_size": 65536,
+          "group_batch_size": 4
+        }
+      },
+      "summary": {
+        "1": {
+          "l2": {
+            "count": 0,
+            "nonfinite": 0,
+            "undefined": 0,
+            "median": null,
+            "p95": null,
+            "max": null
+          },
+          "relative": {
+            "count": 0,
+            "nonfinite": 0,
+            "undefined": 0,
+            "median": null,
+            "p95": null,
+            "max": null
+          },
+          "by_ring": {}
+        },
+        "2": {
+          "l2": {
+            "count": 0,
+            "nonfinite": 0,
+            "undefined": 0,
+            "median": null,
+            "p95": null,
+            "max": null
+          },
+          "relative": {
+            "count": 0,
+            "nonfinite": 0,
+            "undefined": 0,
+            "median": null,
+            "p95": null,
+            "max": null
+          },
+          "by_ring": {}
+        }
+      },
+      "proteins": [
+        {
+          "name": "6sms_A_R1",
+          "residues": 724,
+          "groups": 66,
+          "seed_regions": {
+            "1": {
+              "sizes": [
+                190,
+                197,
+                259,
+                289,
+                339,
+                460,
+                279,
+                414,
+                386,
+                311,
+                311,
+                206,
+                206,
+                189,
+                218,
+                218,
+                254,
+                304,
+                351,
+                421,
+                488,
+                468,
+                459,
+                561,
+                521,
+                381,
+                327,
+                534,
+                537,
+                414,
+                404,
+                419,
+                206,
+                277,
+                245,
+                219,
+                220,
+                304,
+                351,
+                328,
+                392,
+                447,
+                446,
+                248,
+                349,
+                585,
+                547,
+                398,
+                526,
+                493,
+                426,
+                400,
+                417,
+                356,
+                264,
+                252,
+                315,
+                336,
+                273,
+                339,
+                370,
+                387,
+                326,
+                292,
+                262,
+                171
+              ],
+              "min": 171,
+              "count": 66,
+              "nonfinite": 0,
+              "undefined": 0,
+              "median": 339.0,
+              "p95": 536.25,
+              "max": 585.0,
+              "feasible": 66,
+              "total": 66,
+              "infeasible": []
+            },
+            "2": {
+              "sizes": [
+                414,
+                414,
+                488,
+                608,
+                650,
+                712,
+                650,
+                665,
+                665,
+                549,
+                549,
+                419,
+                419,
+                304,
+                351,
+                351,
+                421,
+                488,
+                492,
+                675,
+                687,
+                687,
+                713,
+                724,
+                724,
+                705,
+                650,
+                681,
+                681,
+                631,
+                564,
+                564,
+                419,
+                448,
+                448,
+                351,
+                351,
+                488,
+                492,
+                492,
+                675,
+                687,
+                687,
+                632,
+                675,
+                724,
+                724,
+                705,
+                681,
+                681,
+                631,
+                564,
+                564,
+                549,
+                448,
+                447,
+                628,
+                628,
+                628,
+                702,
+                659,
+                659,
+                609,
+                526,
+                507,
+                387
+              ],
+              "min": 304,
+              "count": 66,
+              "nonfinite": 0,
+              "undefined": 0,
+              "median": 618.5,
+              "p95": 721.25,
+              "max": 724.0,
+              "feasible": 66,
+              "total": 66,
+              "infeasible": []
+            }
+          },
+          "candidate_seed_groups": [
+            55,
+            43,
+            1,
+            31,
+            28,
+            65,
+            60,
+            54
+          ]
+        },
+        {
+          "name": "6lrd_A_R1",
+          "residues": 705,
+          "groups": 70,
+          "seed_regions": {
+            "1": {
+              "sizes": [
+                22,
+                190,
+                190,
+                146,
+                204,
+                203,
+                146,
+                196,
+                196,
+                313,
+                313,
+                336,
+                177,
+                339,
+                401,
+                177,
+                272,
+                342,
+                310,
+                248,
+                357,
+                456,
+                375,
+                292,
+                574,
+                526,
+                469,
+                332,
+                182,
+                400,
+                497,
+                611,
+                480,
+                292,
+                316,
+                418,
+                429,
+                217,
+                212,
+                280,
+                395,
+                485,
+                397,
+                292,
+                313,
+                523,
+                524,
+                445,
+                345,
+                351,
+                475,
+                587,
+                479,
+                312,
+                375,
+                410,
+                314,
+                404,
+                365,
+                233,
+                233,
+                459,
+                427,
+                309,
+                259,
+                280,
+                346,
+                383,
+                276,
+                200
+              ],
+              "min": 22,
+              "count": 70,
+              "nonfinite": 0,
+              "undefined": 0,
+              "median": 334.0,
+              "p95": 525.1,
+              "max": 611.0,
+              "feasible": 70,
+              "total": 70,
+              "infeasible": []
+            },
+            "2": {
+              "sizes": [
+                190,
+                402,
+                402,
+                339,
+                402,
+                402,
+                339,
+                402,
+                402,
+                592,
+                592,
+                667,
+                377,
+                592,
+                677,
+                377,
+                499,
+                651,
+                650,
+                495,
+                681,
+                688,
+                542,
+                476,
+                698,
+                703,
+                674,
+                524,
+                345,
+                613,
+                687,
+                704,
+                674,
+                524,
+                526,
+                666,
+                684,
+                481,
+                485,
+                495,
+                681,
+                688,
+                542,
+                476,
+                611,
+                696,
+                703,
+                630,
+                524,
+                611,
+                696,
+                703,
+                674,
+                524,
+                664,
+                683,
+                608,
+                615,
+                542,
+                562,
+                562,
+                635,
+                630,
+                506,
+                562,
+                606,
+                630,
+                630,
+                615,
+                532
+              ],
+              "min": 190,
+              "count": 70,
+              "nonfinite": 0,
+              "undefined": 0,
+              "median": 599.0,
+              "p95": 700.75,
+              "max": 704.0,
+              "feasible": 70,
+              "total": 70,
+              "infeasible": []
+            }
+          },
+          "candidate_seed_groups": [
+            59,
+            44,
+            63,
+            42,
+            22,
+            26,
+            36,
+            41
+          ]
+        },
+        {
+          "name": "6l3r_E_R1",
+          "residues": 669,
+          "groups": 60,
+          "seed_regions": {
+            "1": {
+              "sizes": [
+                280,
+                382,
+                404,
+                318,
+                173,
+                314,
+                488,
+                463,
+                377,
+                241,
+                279,
+                432,
+                407,
+                330,
+                277,
+                280,
+                394,
+                532,
+                520,
+                389,
+                221,
+                421,
+                592,
+                566,
+                464,
+                207,
+                413,
+                502,
+                529,
+                411,
+                259,
+                370,
+                223,
+                290,
+                367,
+                529,
+                534,
+                402,
+                454,
+                578,
+                607,
+                485,
+                413,
+                539,
+                568,
+                439,
+                329,
+                325,
+                373,
+                350,
+                352,
+                452,
+                458,
+                267,
+                392,
+                413,
+                166,
+                166,
+                230,
+                221
+              ],
+              "min": 166,
+              "count": 60,
+              "nonfinite": 0,
+              "undefined": 0,
+              "median": 393.0,
+              "p95": 568.5,
+              "max": 607.0,
+              "feasible": 60,
+              "total": 60,
+              "infeasible": []
+            },
+            "2": {
+              "sizes": [
+                521,
+                620,
+                620,
+                569,
+                459,
+                611,
+                634,
+                632,
+                602,
+                464,
+                611,
+                634,
+                632,
+                600,
+                597,
+                616,
+                648,
+                669,
+                669,
+                639,
+                499,
+                648,
+                669,
+                669,
+                640,
+                498,
+                648,
+                669,
+                669,
+                640,
+                514,
+                636,
+                473,
+                616,
+                648,
+                669,
+                669,
+                639,
+                648,
+                669,
+                669,
+                640,
+                648,
+                669,
+                669,
+                640,
+                633,
+                633,
+                647,
+                647,
+                610,
+                647,
+                647,
+                610,
+                647,
+                647,
+                437,
+                437,
+                482,
+                482
+              ],
+              "min": 437,
+              "count": 60,
+              "nonfinite": 0,
+              "undefined": 0,
+              "median": 637.5,
+              "p95": 669.0,
+              "max": 669.0,
+              "feasible": 60,
+              "total": 60,
+              "infeasible": []
+            }
+          },
+          "candidate_seed_groups": [
+            19,
+            16,
+            53,
+            1,
+            24,
+            11,
+            42,
+            17
+          ]
+        },
+        {
+          "name": "6sup_A_R1",
+          "residues": 2128,
+          "groups": 190,
+          "seed_regions": {
+            "1": {
+              "sizes": [
+                277,
+                258,
+                328,
+                331,
+                263,
+                263,
+                290,
+                414,
+                399,
+                298,
+                628,
+                555,
+                414,
+                587,
+                556,
+                388,
+                261,
+                457,
+                450,
+                187,
+                407,
+                429,
+                381,
+                568,
+                617,
+                530,
+                402,
+                466,
+                623,
+                716,
+                675,
+                557,
+                290,
+                657,
+                736,
+                708,
+                563,
+                316,
+                290,
+                452,
+                597,
+                571,
+                460,
+                194,
+                347,
+                336,
+                526,
+                534,
+                573,
+                415,
+                471,
+                603,
+                675,
+                674,
+                607,
+                474,
+                674,
+                873,
+                497,
+                619,
+                619,
+                320,
+                498,
+                730,
+                822,
+                721,
+                580,
+                340,
+                576,
+                685,
+                626,
+                464,
+                307,
+                384,
+                402,
+                342,
+                467,
+                635,
+                677,
+                610,
+                237,
+                465,
+                683,
+                787,
+                819,
+                605,
+                588,
+                362,
+                388,
+                706,
+                842,
+                639,
+                670,
+                542,
+                279,
+                270,
+                450,
+                675,
+                703,
+                747,
+                612,
+                487,
+                447,
+                593,
+                680,
+                546,
+                379,
+                327,
+                363,
+                307,
+                298,
+                384,
+                438,
+                259,
+                419,
+                630,
+                692,
+                647,
+                544,
+                328,
+                540,
+                816,
+                910,
+                802,
+                682,
+                533,
+                293,
+                518,
+                786,
+                889,
+                559,
+                629,
+                306,
+                340,
+                589,
+                680,
+                649,
+                590,
+                526,
+                345,
+                208,
+                390,
+                518,
+                521,
+                389,
+                508,
+                582,
+                508,
+                362,
+                337,
+                469,
+                637,
+                707,
+                626,
+                534,
+                346,
+                241,
+                476,
+                678,
+                801,
+                771,
+                592,
+                435,
+                324,
+                446,
+                559,
+                522,
+                481,
+                359,
+                375,
+                358,
+                271,
+                280,
+                335,
+                294,
+                335,
+                236,
+                268,
+                377,
+                475,
+                519,
+                469,
+                316,
+                348,
+                348,
+                428,
+                503,
+                290,
+                332,
+                295
+              ],
+              "min": 187,
+              "count": 190,
+              "nonfinite": 0,
+              "undefined": 0,
+              "median": 484.0,
+              "p95": 786.55,
+              "max": 910.0,
+              "feasible": 189,
+              "total": 190,
+              "infeasible": [
+                {
+                  "seed_group": 122,
+                  "residues": 910,
+                  "reason": "seed_exceeds_budget"
+                }
+              ]
+            },
+            "2": {
+              "sizes": [
+                729,
+                626,
+                745,
+                745,
+                660,
+                660,
+                881,
+                988,
+                917,
+                714,
+                1121,
+                1033,
+                825,
+                1042,
+                997,
+                788,
+                640,
+                923,
+                856,
+                641,
+                959,
+                1041,
+                1086,
+                1282,
+                1360,
+                1126,
+                889,
+                1214,
+                1336,
+                1363,
+                1230,
+                1046,
+                841,
+                1282,
+                1244,
+                1178,
+                957,
+                762,
+                841,
+                1044,
+                1133,
+                1040,
+                843,
+                563,
+                832,
+                937,
+                1199,
+                1229,
+                1294,
+                1044,
+                1152,
+                1444,
+                1545,
+                1574,
+                1334,
+                1089,
+                1592,
+                1813,
+                1427,
+                1183,
+                1183,
+                834,
+                1380,
+                1662,
+                1490,
+                1262,
+                1058,
+                970,
+                1343,
+                1309,
+                1178,
+                949,
+                871,
+                903,
+                1013,
+                925,
+                1177,
+                1346,
+                1444,
+                1401,
+                584,
+                996,
+                1358,
+                1562,
+                1734,
+                1401,
+                1362,
+                957,
+                996,
+                1443,
+                1790,
+                1684,
+                1501,
+                1190,
+                765,
+                883,
+                1266,
+                1662,
+                1699,
+                1534,
+                1371,
+                1093,
+                1166,
+                1366,
+                1389,
+                1224,
+                923,
+                896,
+                951,
+                871,
+                796,
+                947,
+                1032,
+                552,
+                864,
+                1129,
+                1284,
+                1335,
+                1257,
+                596,
+                1004,
+                1330,
+                1511,
+                1491,
+                1439,
+                1175,
+                595,
+                1004,
+                1333,
+                1597,
+                1327,
+                1343,
+                898,
+                921,
+                1313,
+                1508,
+                1577,
+                1325,
+                1136,
+                898,
+                757,
+                1033,
+                1242,
+                1143,
+                826,
+                1015,
+                1144,
+                1190,
+                932,
+                564,
+                907,
+                1078,
+                1295,
+                1333,
+                1191,
+                948,
+                531,
+                934,
+                1183,
+                1410,
+                1471,
+                1243,
+                1019,
+                868,
+                1059,
+                1297,
+                1312,
+                1123,
+                867,
+                936,
+                828,
+                702,
+                637,
+                754,
+                807,
+                889,
+                708,
+                513,
+                770,
+                902,
+                1088,
+                1091,
+                863,
+                770,
+                770,
+                1037,
+                1106,
+                948,
+                974,
+                861
+              ],
+              "min": 513,
+              "count": 190,
+              "nonfinite": 0,
+              "undefined": 0,
+              "median": 1058.5,
+              "p95": 1575.6499999999999,
+              "max": 1813.0,
+              "feasible": 51,
+              "total": 190,
+              "infeasible": [
+                {
+                  "seed_group": 7,
+                  "residues": 988,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 8,
+                  "residues": 917,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 10,
+                  "residues": 1121,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 11,
+                  "residues": 1033,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 13,
+                  "residues": 1042,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 14,
+                  "residues": 997,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 17,
+                  "residues": 923,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 20,
+                  "residues": 959,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 21,
+                  "residues": 1041,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 22,
+                  "residues": 1086,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 23,
+                  "residues": 1282,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 24,
+                  "residues": 1360,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 25,
+                  "residues": 1126,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 27,
+                  "residues": 1214,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 28,
+                  "residues": 1336,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 29,
+                  "residues": 1363,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 30,
+                  "residues": 1230,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 31,
+                  "residues": 1046,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 33,
+                  "residues": 1282,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 34,
+                  "residues": 1244,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 35,
+                  "residues": 1178,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 36,
+                  "residues": 957,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 39,
+                  "residues": 1044,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 40,
+                  "residues": 1133,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 41,
+                  "residues": 1040,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 45,
+                  "residues": 937,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 46,
+                  "residues": 1199,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 47,
+                  "residues": 1229,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 48,
+                  "residues": 1294,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 49,
+                  "residues": 1044,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 50,
+                  "residues": 1152,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 51,
+                  "residues": 1444,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 52,
+                  "residues": 1545,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 53,
+                  "residues": 1574,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 54,
+                  "residues": 1334,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 55,
+                  "residues": 1089,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 56,
+                  "residues": 1592,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 57,
+                  "residues": 1813,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 58,
+                  "residues": 1427,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 59,
+                  "residues": 1183,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 60,
+                  "residues": 1183,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 62,
+                  "residues": 1380,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 63,
+                  "residues": 1662,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 64,
+                  "residues": 1490,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 65,
+                  "residues": 1262,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 66,
+                  "residues": 1058,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 67,
+                  "residues": 970,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 68,
+                  "residues": 1343,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 69,
+                  "residues": 1309,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 70,
+                  "residues": 1178,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 71,
+                  "residues": 949,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 73,
+                  "residues": 903,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 74,
+                  "residues": 1013,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 75,
+                  "residues": 925,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 76,
+                  "residues": 1177,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 77,
+                  "residues": 1346,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 78,
+                  "residues": 1444,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 79,
+                  "residues": 1401,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 81,
+                  "residues": 996,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 82,
+                  "residues": 1358,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 83,
+                  "residues": 1562,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 84,
+                  "residues": 1734,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 85,
+                  "residues": 1401,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 86,
+                  "residues": 1362,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 87,
+                  "residues": 957,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 88,
+                  "residues": 996,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 89,
+                  "residues": 1443,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 90,
+                  "residues": 1790,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 91,
+                  "residues": 1684,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 92,
+                  "residues": 1501,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 93,
+                  "residues": 1190,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 96,
+                  "residues": 1266,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 97,
+                  "residues": 1662,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 98,
+                  "residues": 1699,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 99,
+                  "residues": 1534,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 100,
+                  "residues": 1371,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 101,
+                  "residues": 1093,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 102,
+                  "residues": 1166,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 103,
+                  "residues": 1366,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 104,
+                  "residues": 1389,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 105,
+                  "residues": 1224,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 106,
+                  "residues": 923,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 108,
+                  "residues": 951,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 111,
+                  "residues": 947,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 112,
+                  "residues": 1032,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 115,
+                  "residues": 1129,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 116,
+                  "residues": 1284,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 117,
+                  "residues": 1335,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 118,
+                  "residues": 1257,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 120,
+                  "residues": 1004,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 121,
+                  "residues": 1330,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 122,
+                  "residues": 1511,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 123,
+                  "residues": 1491,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 124,
+                  "residues": 1439,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 125,
+                  "residues": 1175,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 127,
+                  "residues": 1004,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 128,
+                  "residues": 1333,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 129,
+                  "residues": 1597,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 130,
+                  "residues": 1327,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 131,
+                  "residues": 1343,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 132,
+                  "residues": 898,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 133,
+                  "residues": 921,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 134,
+                  "residues": 1313,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 135,
+                  "residues": 1508,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 136,
+                  "residues": 1577,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 137,
+                  "residues": 1325,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 138,
+                  "residues": 1136,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 139,
+                  "residues": 898,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 141,
+                  "residues": 1033,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 142,
+                  "residues": 1242,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 143,
+                  "residues": 1143,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 145,
+                  "residues": 1015,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 146,
+                  "residues": 1144,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 147,
+                  "residues": 1190,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 148,
+                  "residues": 932,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 150,
+                  "residues": 907,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 151,
+                  "residues": 1078,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 152,
+                  "residues": 1295,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 153,
+                  "residues": 1333,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 154,
+                  "residues": 1191,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 155,
+                  "residues": 948,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 157,
+                  "residues": 934,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 158,
+                  "residues": 1183,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 159,
+                  "residues": 1410,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 160,
+                  "residues": 1471,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 161,
+                  "residues": 1243,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 162,
+                  "residues": 1019,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 164,
+                  "residues": 1059,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 165,
+                  "residues": 1297,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 166,
+                  "residues": 1312,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 167,
+                  "residues": 1123,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 169,
+                  "residues": 936,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 179,
+                  "residues": 902,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 180,
+                  "residues": 1088,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 181,
+                  "residues": 1091,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 185,
+                  "residues": 1037,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 186,
+                  "residues": 1106,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 187,
+                  "residues": 948,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 188,
+                  "residues": 974,
+                  "reason": "seed_exceeds_budget"
+                }
+              ]
+            }
+          },
+          "candidate_seed_groups": [
+            89,
+            65,
+            63,
+            115,
+            28,
+            141,
+            92,
+            95
+          ]
+        }
+      ],
+      "environment": {
+        "hostname": "node-19",
+        "platform": "Linux-5.15.0-314.193.5.4.el9uek.x86_64-x86_64-with-glibc2.34",
+        "python": "3.11.12",
+        "torch": "2.11.0+cu128",
+        "pytorch_lightning": "2.6.5",
+        "numpy": "2.2.6",
+        "cuda_available": false,
+        "cuda_version": "12.8",
+        "cudnn_version": null,
+        "device_name": null,
+        "git_commit": null,
+        "slurm_job_id": "49466"
+      },
+      "checkpoint_sha256": "bc90c66e7539f52c9d0514aeddd96c552061150a1eef3b10c120bc3aaff08015"
+    },
+    "inventory-R2": {
+      "experiment": "halo-error",
+      "settings": {
+        "sim_ckpt": "/share/home/r15543056/MDgen/mdgen/ckpt/atlas.ckpt",
+        "data_dir": "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/arrays",
+        "split": "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/validation.csv",
+        "output": "results/issue43-t2-inventory/inventory-R2.json",
+        "pdb_id": [],
+        "replicate": 2,
+        "suffix": "_i400ps",
+        "partition_dir": "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/partitions",
+        "region_residues": 896,
+        "halo_rings": [
+          1,
+          2
+        ],
+        "regions": 8,
+        "times": [
+          0.5
+        ],
+        "seed": 0,
+        "num_frames": 4,
+        "warmup": 0,
+        "repeats": 1,
+        "inventory_only": true,
+        "seed_groups": null,
+        "selection_seed": 43002,
+        "local_spatial": true,
+        "cell_summaries": false,
+        "spatial_cell_width": 16.0,
+        "spatial_contact_radius": 16.0,
+        "core_capacity": 128,
+        "ghost_capacity": 128,
+        "group_batch_size": 4,
+        "ffn_chunk_size": 65536,
+        "model": {
+          "num_frames": 4,
+          "num_layers": 5,
+          "spatial_cell_width": 16.0,
+          "spatial_contact_radius": 16.0,
+          "core_capacity": 128,
+          "ghost_capacity": 128,
+          "cell_summaries": false,
+          "frame_interval": null,
+          "grad_checkpointing": false,
+          "ffn_chunk_size": 65536,
+          "group_batch_size": 4
+        }
+      },
+      "summary": {
+        "1": {
+          "l2": {
+            "count": 0,
+            "nonfinite": 0,
+            "undefined": 0,
+            "median": null,
+            "p95": null,
+            "max": null
+          },
+          "relative": {
+            "count": 0,
+            "nonfinite": 0,
+            "undefined": 0,
+            "median": null,
+            "p95": null,
+            "max": null
+          },
+          "by_ring": {}
+        },
+        "2": {
+          "l2": {
+            "count": 0,
+            "nonfinite": 0,
+            "undefined": 0,
+            "median": null,
+            "p95": null,
+            "max": null
+          },
+          "relative": {
+            "count": 0,
+            "nonfinite": 0,
+            "undefined": 0,
+            "median": null,
+            "p95": null,
+            "max": null
+          },
+          "by_ring": {}
+        }
+      },
+      "proteins": [
+        {
+          "name": "6sms_A_R2",
+          "residues": 724,
+          "groups": 66,
+          "seed_regions": {
+            "1": {
+              "sizes": [
+                190,
+                197,
+                259,
+                289,
+                339,
+                460,
+                279,
+                414,
+                386,
+                311,
+                311,
+                206,
+                206,
+                189,
+                218,
+                218,
+                254,
+                304,
+                351,
+                421,
+                488,
+                468,
+                459,
+                561,
+                521,
+                381,
+                327,
+                534,
+                537,
+                414,
+                404,
+                419,
+                206,
+                277,
+                245,
+                219,
+                220,
+                304,
+                351,
+                328,
+                392,
+                447,
+                446,
+                248,
+                349,
+                585,
+                547,
+                398,
+                526,
+                493,
+                426,
+                400,
+                417,
+                356,
+                264,
+                252,
+                315,
+                336,
+                273,
+                339,
+                370,
+                387,
+                326,
+                292,
+                262,
+                171
+              ],
+              "min": 171,
+              "count": 66,
+              "nonfinite": 0,
+              "undefined": 0,
+              "median": 339.0,
+              "p95": 536.25,
+              "max": 585.0,
+              "feasible": 66,
+              "total": 66,
+              "infeasible": []
+            },
+            "2": {
+              "sizes": [
+                414,
+                414,
+                488,
+                608,
+                650,
+                712,
+                650,
+                665,
+                665,
+                549,
+                549,
+                419,
+                419,
+                304,
+                351,
+                351,
+                421,
+                488,
+                492,
+                675,
+                687,
+                687,
+                713,
+                724,
+                724,
+                705,
+                650,
+                681,
+                681,
+                631,
+                564,
+                564,
+                419,
+                448,
+                448,
+                351,
+                351,
+                488,
+                492,
+                492,
+                675,
+                687,
+                687,
+                632,
+                675,
+                724,
+                724,
+                705,
+                681,
+                681,
+                631,
+                564,
+                564,
+                549,
+                448,
+                447,
+                628,
+                628,
+                628,
+                702,
+                659,
+                659,
+                609,
+                526,
+                507,
+                387
+              ],
+              "min": 304,
+              "count": 66,
+              "nonfinite": 0,
+              "undefined": 0,
+              "median": 618.5,
+              "p95": 721.25,
+              "max": 724.0,
+              "feasible": 66,
+              "total": 66,
+              "infeasible": []
+            }
+          },
+          "candidate_seed_groups": [
+            55,
+            43,
+            1,
+            31,
+            28,
+            65,
+            60,
+            54
+          ]
+        },
+        {
+          "name": "6lrd_A_R2",
+          "residues": 705,
+          "groups": 70,
+          "seed_regions": {
+            "1": {
+              "sizes": [
+                22,
+                190,
+                190,
+                146,
+                204,
+                203,
+                146,
+                196,
+                196,
+                313,
+                313,
+                336,
+                177,
+                339,
+                401,
+                177,
+                272,
+                342,
+                310,
+                248,
+                357,
+                456,
+                375,
+                292,
+                574,
+                526,
+                469,
+                332,
+                182,
+                400,
+                497,
+                611,
+                480,
+                292,
+                316,
+                418,
+                429,
+                217,
+                212,
+                280,
+                395,
+                485,
+                397,
+                292,
+                313,
+                523,
+                524,
+                445,
+                345,
+                351,
+                475,
+                587,
+                479,
+                312,
+                375,
+                410,
+                314,
+                404,
+                365,
+                233,
+                233,
+                459,
+                427,
+                309,
+                259,
+                280,
+                346,
+                383,
+                276,
+                200
+              ],
+              "min": 22,
+              "count": 70,
+              "nonfinite": 0,
+              "undefined": 0,
+              "median": 334.0,
+              "p95": 525.1,
+              "max": 611.0,
+              "feasible": 70,
+              "total": 70,
+              "infeasible": []
+            },
+            "2": {
+              "sizes": [
+                190,
+                402,
+                402,
+                339,
+                402,
+                402,
+                339,
+                402,
+                402,
+                592,
+                592,
+                667,
+                377,
+                592,
+                677,
+                377,
+                499,
+                651,
+                650,
+                495,
+                681,
+                688,
+                542,
+                476,
+                698,
+                703,
+                674,
+                524,
+                345,
+                613,
+                687,
+                704,
+                674,
+                524,
+                526,
+                666,
+                684,
+                481,
+                485,
+                495,
+                681,
+                688,
+                542,
+                476,
+                611,
+                696,
+                703,
+                630,
+                524,
+                611,
+                696,
+                703,
+                674,
+                524,
+                664,
+                683,
+                608,
+                615,
+                542,
+                562,
+                562,
+                635,
+                630,
+                506,
+                562,
+                606,
+                630,
+                630,
+                615,
+                532
+              ],
+              "min": 190,
+              "count": 70,
+              "nonfinite": 0,
+              "undefined": 0,
+              "median": 599.0,
+              "p95": 700.75,
+              "max": 704.0,
+              "feasible": 70,
+              "total": 70,
+              "infeasible": []
+            }
+          },
+          "candidate_seed_groups": [
+            59,
+            44,
+            63,
+            42,
+            22,
+            26,
+            36,
+            41
+          ]
+        },
+        {
+          "name": "6l3r_E_R2",
+          "residues": 669,
+          "groups": 60,
+          "seed_regions": {
+            "1": {
+              "sizes": [
+                280,
+                382,
+                404,
+                318,
+                173,
+                314,
+                488,
+                463,
+                377,
+                241,
+                279,
+                432,
+                407,
+                330,
+                277,
+                280,
+                394,
+                532,
+                520,
+                389,
+                221,
+                421,
+                592,
+                566,
+                464,
+                207,
+                413,
+                502,
+                529,
+                411,
+                259,
+                370,
+                223,
+                290,
+                367,
+                529,
+                534,
+                402,
+                454,
+                578,
+                607,
+                485,
+                413,
+                539,
+                568,
+                439,
+                329,
+                325,
+                373,
+                350,
+                352,
+                452,
+                458,
+                267,
+                392,
+                413,
+                166,
+                166,
+                230,
+                221
+              ],
+              "min": 166,
+              "count": 60,
+              "nonfinite": 0,
+              "undefined": 0,
+              "median": 393.0,
+              "p95": 568.5,
+              "max": 607.0,
+              "feasible": 60,
+              "total": 60,
+              "infeasible": []
+            },
+            "2": {
+              "sizes": [
+                521,
+                620,
+                620,
+                569,
+                459,
+                611,
+                634,
+                632,
+                602,
+                464,
+                611,
+                634,
+                632,
+                600,
+                597,
+                616,
+                648,
+                669,
+                669,
+                639,
+                499,
+                648,
+                669,
+                669,
+                640,
+                498,
+                648,
+                669,
+                669,
+                640,
+                514,
+                636,
+                473,
+                616,
+                648,
+                669,
+                669,
+                639,
+                648,
+                669,
+                669,
+                640,
+                648,
+                669,
+                669,
+                640,
+                633,
+                633,
+                647,
+                647,
+                610,
+                647,
+                647,
+                610,
+                647,
+                647,
+                437,
+                437,
+                482,
+                482
+              ],
+              "min": 437,
+              "count": 60,
+              "nonfinite": 0,
+              "undefined": 0,
+              "median": 637.5,
+              "p95": 669.0,
+              "max": 669.0,
+              "feasible": 60,
+              "total": 60,
+              "infeasible": []
+            }
+          },
+          "candidate_seed_groups": [
+            19,
+            16,
+            53,
+            1,
+            24,
+            11,
+            42,
+            17
+          ]
+        },
+        {
+          "name": "6sup_A_R2",
+          "residues": 2128,
+          "groups": 190,
+          "seed_regions": {
+            "1": {
+              "sizes": [
+                277,
+                258,
+                328,
+                331,
+                263,
+                263,
+                290,
+                414,
+                399,
+                298,
+                628,
+                555,
+                414,
+                587,
+                556,
+                388,
+                261,
+                457,
+                450,
+                187,
+                407,
+                429,
+                381,
+                568,
+                617,
+                530,
+                402,
+                466,
+                623,
+                716,
+                675,
+                557,
+                290,
+                657,
+                736,
+                708,
+                563,
+                316,
+                290,
+                452,
+                597,
+                571,
+                460,
+                194,
+                347,
+                336,
+                526,
+                534,
+                573,
+                415,
+                471,
+                603,
+                675,
+                674,
+                607,
+                474,
+                674,
+                873,
+                497,
+                619,
+                619,
+                320,
+                498,
+                730,
+                822,
+                721,
+                580,
+                340,
+                576,
+                685,
+                626,
+                464,
+                307,
+                384,
+                402,
+                342,
+                467,
+                635,
+                677,
+                610,
+                237,
+                465,
+                683,
+                787,
+                819,
+                605,
+                588,
+                362,
+                388,
+                706,
+                842,
+                639,
+                670,
+                542,
+                279,
+                270,
+                450,
+                675,
+                703,
+                747,
+                612,
+                487,
+                447,
+                593,
+                680,
+                546,
+                379,
+                327,
+                363,
+                307,
+                298,
+                384,
+                438,
+                259,
+                419,
+                630,
+                692,
+                647,
+                544,
+                328,
+                540,
+                816,
+                910,
+                802,
+                682,
+                533,
+                293,
+                518,
+                786,
+                889,
+                559,
+                629,
+                306,
+                340,
+                589,
+                680,
+                649,
+                590,
+                526,
+                345,
+                208,
+                390,
+                518,
+                521,
+                389,
+                508,
+                582,
+                508,
+                362,
+                337,
+                469,
+                637,
+                707,
+                626,
+                534,
+                346,
+                241,
+                476,
+                678,
+                801,
+                771,
+                592,
+                435,
+                324,
+                446,
+                559,
+                522,
+                481,
+                359,
+                375,
+                358,
+                271,
+                280,
+                335,
+                294,
+                335,
+                236,
+                268,
+                377,
+                475,
+                519,
+                469,
+                316,
+                348,
+                348,
+                428,
+                503,
+                290,
+                332,
+                295
+              ],
+              "min": 187,
+              "count": 190,
+              "nonfinite": 0,
+              "undefined": 0,
+              "median": 484.0,
+              "p95": 786.55,
+              "max": 910.0,
+              "feasible": 189,
+              "total": 190,
+              "infeasible": [
+                {
+                  "seed_group": 122,
+                  "residues": 910,
+                  "reason": "seed_exceeds_budget"
+                }
+              ]
+            },
+            "2": {
+              "sizes": [
+                729,
+                626,
+                745,
+                745,
+                660,
+                660,
+                881,
+                988,
+                917,
+                714,
+                1121,
+                1033,
+                825,
+                1042,
+                997,
+                788,
+                640,
+                923,
+                856,
+                641,
+                959,
+                1041,
+                1086,
+                1282,
+                1360,
+                1126,
+                889,
+                1214,
+                1336,
+                1363,
+                1230,
+                1046,
+                841,
+                1282,
+                1244,
+                1178,
+                957,
+                762,
+                841,
+                1044,
+                1133,
+                1040,
+                843,
+                563,
+                832,
+                937,
+                1199,
+                1229,
+                1294,
+                1044,
+                1152,
+                1444,
+                1545,
+                1574,
+                1334,
+                1089,
+                1592,
+                1813,
+                1427,
+                1183,
+                1183,
+                834,
+                1380,
+                1662,
+                1490,
+                1262,
+                1058,
+                970,
+                1343,
+                1309,
+                1178,
+                949,
+                871,
+                903,
+                1013,
+                925,
+                1177,
+                1346,
+                1444,
+                1401,
+                584,
+                996,
+                1358,
+                1562,
+                1734,
+                1401,
+                1362,
+                957,
+                996,
+                1443,
+                1790,
+                1684,
+                1501,
+                1190,
+                765,
+                883,
+                1266,
+                1662,
+                1699,
+                1534,
+                1371,
+                1093,
+                1166,
+                1366,
+                1389,
+                1224,
+                923,
+                896,
+                951,
+                871,
+                796,
+                947,
+                1032,
+                552,
+                864,
+                1129,
+                1284,
+                1335,
+                1257,
+                596,
+                1004,
+                1330,
+                1511,
+                1491,
+                1439,
+                1175,
+                595,
+                1004,
+                1333,
+                1597,
+                1327,
+                1343,
+                898,
+                921,
+                1313,
+                1508,
+                1577,
+                1325,
+                1136,
+                898,
+                757,
+                1033,
+                1242,
+                1143,
+                826,
+                1015,
+                1144,
+                1190,
+                932,
+                564,
+                907,
+                1078,
+                1295,
+                1333,
+                1191,
+                948,
+                531,
+                934,
+                1183,
+                1410,
+                1471,
+                1243,
+                1019,
+                868,
+                1059,
+                1297,
+                1312,
+                1123,
+                867,
+                936,
+                828,
+                702,
+                637,
+                754,
+                807,
+                889,
+                708,
+                513,
+                770,
+                902,
+                1088,
+                1091,
+                863,
+                770,
+                770,
+                1037,
+                1106,
+                948,
+                974,
+                861
+              ],
+              "min": 513,
+              "count": 190,
+              "nonfinite": 0,
+              "undefined": 0,
+              "median": 1058.5,
+              "p95": 1575.6499999999999,
+              "max": 1813.0,
+              "feasible": 51,
+              "total": 190,
+              "infeasible": [
+                {
+                  "seed_group": 7,
+                  "residues": 988,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 8,
+                  "residues": 917,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 10,
+                  "residues": 1121,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 11,
+                  "residues": 1033,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 13,
+                  "residues": 1042,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 14,
+                  "residues": 997,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 17,
+                  "residues": 923,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 20,
+                  "residues": 959,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 21,
+                  "residues": 1041,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 22,
+                  "residues": 1086,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 23,
+                  "residues": 1282,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 24,
+                  "residues": 1360,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 25,
+                  "residues": 1126,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 27,
+                  "residues": 1214,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 28,
+                  "residues": 1336,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 29,
+                  "residues": 1363,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 30,
+                  "residues": 1230,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 31,
+                  "residues": 1046,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 33,
+                  "residues": 1282,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 34,
+                  "residues": 1244,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 35,
+                  "residues": 1178,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 36,
+                  "residues": 957,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 39,
+                  "residues": 1044,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 40,
+                  "residues": 1133,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 41,
+                  "residues": 1040,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 45,
+                  "residues": 937,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 46,
+                  "residues": 1199,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 47,
+                  "residues": 1229,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 48,
+                  "residues": 1294,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 49,
+                  "residues": 1044,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 50,
+                  "residues": 1152,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 51,
+                  "residues": 1444,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 52,
+                  "residues": 1545,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 53,
+                  "residues": 1574,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 54,
+                  "residues": 1334,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 55,
+                  "residues": 1089,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 56,
+                  "residues": 1592,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 57,
+                  "residues": 1813,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 58,
+                  "residues": 1427,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 59,
+                  "residues": 1183,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 60,
+                  "residues": 1183,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 62,
+                  "residues": 1380,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 63,
+                  "residues": 1662,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 64,
+                  "residues": 1490,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 65,
+                  "residues": 1262,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 66,
+                  "residues": 1058,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 67,
+                  "residues": 970,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 68,
+                  "residues": 1343,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 69,
+                  "residues": 1309,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 70,
+                  "residues": 1178,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 71,
+                  "residues": 949,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 73,
+                  "residues": 903,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 74,
+                  "residues": 1013,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 75,
+                  "residues": 925,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 76,
+                  "residues": 1177,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 77,
+                  "residues": 1346,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 78,
+                  "residues": 1444,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 79,
+                  "residues": 1401,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 81,
+                  "residues": 996,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 82,
+                  "residues": 1358,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 83,
+                  "residues": 1562,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 84,
+                  "residues": 1734,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 85,
+                  "residues": 1401,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 86,
+                  "residues": 1362,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 87,
+                  "residues": 957,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 88,
+                  "residues": 996,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 89,
+                  "residues": 1443,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 90,
+                  "residues": 1790,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 91,
+                  "residues": 1684,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 92,
+                  "residues": 1501,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 93,
+                  "residues": 1190,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 96,
+                  "residues": 1266,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 97,
+                  "residues": 1662,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 98,
+                  "residues": 1699,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 99,
+                  "residues": 1534,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 100,
+                  "residues": 1371,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 101,
+                  "residues": 1093,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 102,
+                  "residues": 1166,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 103,
+                  "residues": 1366,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 104,
+                  "residues": 1389,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 105,
+                  "residues": 1224,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 106,
+                  "residues": 923,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 108,
+                  "residues": 951,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 111,
+                  "residues": 947,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 112,
+                  "residues": 1032,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 115,
+                  "residues": 1129,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 116,
+                  "residues": 1284,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 117,
+                  "residues": 1335,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 118,
+                  "residues": 1257,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 120,
+                  "residues": 1004,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 121,
+                  "residues": 1330,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 122,
+                  "residues": 1511,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 123,
+                  "residues": 1491,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 124,
+                  "residues": 1439,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 125,
+                  "residues": 1175,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 127,
+                  "residues": 1004,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 128,
+                  "residues": 1333,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 129,
+                  "residues": 1597,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 130,
+                  "residues": 1327,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 131,
+                  "residues": 1343,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 132,
+                  "residues": 898,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 133,
+                  "residues": 921,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 134,
+                  "residues": 1313,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 135,
+                  "residues": 1508,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 136,
+                  "residues": 1577,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 137,
+                  "residues": 1325,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 138,
+                  "residues": 1136,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 139,
+                  "residues": 898,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 141,
+                  "residues": 1033,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 142,
+                  "residues": 1242,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 143,
+                  "residues": 1143,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 145,
+                  "residues": 1015,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 146,
+                  "residues": 1144,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 147,
+                  "residues": 1190,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 148,
+                  "residues": 932,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 150,
+                  "residues": 907,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 151,
+                  "residues": 1078,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 152,
+                  "residues": 1295,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 153,
+                  "residues": 1333,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 154,
+                  "residues": 1191,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 155,
+                  "residues": 948,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 157,
+                  "residues": 934,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 158,
+                  "residues": 1183,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 159,
+                  "residues": 1410,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 160,
+                  "residues": 1471,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 161,
+                  "residues": 1243,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 162,
+                  "residues": 1019,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 164,
+                  "residues": 1059,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 165,
+                  "residues": 1297,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 166,
+                  "residues": 1312,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 167,
+                  "residues": 1123,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 169,
+                  "residues": 936,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 179,
+                  "residues": 902,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 180,
+                  "residues": 1088,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 181,
+                  "residues": 1091,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 185,
+                  "residues": 1037,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 186,
+                  "residues": 1106,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 187,
+                  "residues": 948,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 188,
+                  "residues": 974,
+                  "reason": "seed_exceeds_budget"
+                }
+              ]
+            }
+          },
+          "candidate_seed_groups": [
+            89,
+            65,
+            63,
+            115,
+            28,
+            141,
+            92,
+            95
+          ]
+        }
+      ],
+      "environment": {
+        "hostname": "node-19",
+        "platform": "Linux-5.15.0-314.193.5.4.el9uek.x86_64-x86_64-with-glibc2.34",
+        "python": "3.11.12",
+        "torch": "2.11.0+cu128",
+        "pytorch_lightning": "2.6.5",
+        "numpy": "2.2.6",
+        "cuda_available": false,
+        "cuda_version": "12.8",
+        "cudnn_version": null,
+        "device_name": null,
+        "git_commit": null,
+        "slurm_job_id": "49466"
+      },
+      "checkpoint_sha256": "bc90c66e7539f52c9d0514aeddd96c552061150a1eef3b10c120bc3aaff08015"
+    },
+    "inventory-R3": {
+      "experiment": "halo-error",
+      "settings": {
+        "sim_ckpt": "/share/home/r15543056/MDgen/mdgen/ckpt/atlas.ckpt",
+        "data_dir": "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/arrays",
+        "split": "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/validation.csv",
+        "output": "results/issue43-t2-inventory/inventory-R3.json",
+        "pdb_id": [],
+        "replicate": 3,
+        "suffix": "_i400ps",
+        "partition_dir": "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/partitions",
+        "region_residues": 896,
+        "halo_rings": [
+          1,
+          2
+        ],
+        "regions": 8,
+        "times": [
+          0.5
+        ],
+        "seed": 0,
+        "num_frames": 4,
+        "warmup": 0,
+        "repeats": 1,
+        "inventory_only": true,
+        "seed_groups": null,
+        "selection_seed": 43002,
+        "local_spatial": true,
+        "cell_summaries": false,
+        "spatial_cell_width": 16.0,
+        "spatial_contact_radius": 16.0,
+        "core_capacity": 128,
+        "ghost_capacity": 128,
+        "group_batch_size": 4,
+        "ffn_chunk_size": 65536,
+        "model": {
+          "num_frames": 4,
+          "num_layers": 5,
+          "spatial_cell_width": 16.0,
+          "spatial_contact_radius": 16.0,
+          "core_capacity": 128,
+          "ghost_capacity": 128,
+          "cell_summaries": false,
+          "frame_interval": null,
+          "grad_checkpointing": false,
+          "ffn_chunk_size": 65536,
+          "group_batch_size": 4
+        }
+      },
+      "summary": {
+        "1": {
+          "l2": {
+            "count": 0,
+            "nonfinite": 0,
+            "undefined": 0,
+            "median": null,
+            "p95": null,
+            "max": null
+          },
+          "relative": {
+            "count": 0,
+            "nonfinite": 0,
+            "undefined": 0,
+            "median": null,
+            "p95": null,
+            "max": null
+          },
+          "by_ring": {}
+        },
+        "2": {
+          "l2": {
+            "count": 0,
+            "nonfinite": 0,
+            "undefined": 0,
+            "median": null,
+            "p95": null,
+            "max": null
+          },
+          "relative": {
+            "count": 0,
+            "nonfinite": 0,
+            "undefined": 0,
+            "median": null,
+            "p95": null,
+            "max": null
+          },
+          "by_ring": {}
+        }
+      },
+      "proteins": [
+        {
+          "name": "6sms_A_R3",
+          "residues": 724,
+          "groups": 66,
+          "seed_regions": {
+            "1": {
+              "sizes": [
+                190,
+                197,
+                259,
+                289,
+                339,
+                460,
+                279,
+                414,
+                386,
+                311,
+                311,
+                206,
+                206,
+                189,
+                218,
+                218,
+                254,
+                304,
+                351,
+                421,
+                488,
+                468,
+                459,
+                561,
+                521,
+                381,
+                327,
+                534,
+                537,
+                414,
+                404,
+                419,
+                206,
+                277,
+                245,
+                219,
+                220,
+                304,
+                351,
+                328,
+                392,
+                447,
+                446,
+                248,
+                349,
+                585,
+                547,
+                398,
+                526,
+                493,
+                426,
+                400,
+                417,
+                356,
+                264,
+                252,
+                315,
+                336,
+                273,
+                339,
+                370,
+                387,
+                326,
+                292,
+                262,
+                171
+              ],
+              "min": 171,
+              "count": 66,
+              "nonfinite": 0,
+              "undefined": 0,
+              "median": 339.0,
+              "p95": 536.25,
+              "max": 585.0,
+              "feasible": 66,
+              "total": 66,
+              "infeasible": []
+            },
+            "2": {
+              "sizes": [
+                414,
+                414,
+                488,
+                608,
+                650,
+                712,
+                650,
+                665,
+                665,
+                549,
+                549,
+                419,
+                419,
+                304,
+                351,
+                351,
+                421,
+                488,
+                492,
+                675,
+                687,
+                687,
+                713,
+                724,
+                724,
+                705,
+                650,
+                681,
+                681,
+                631,
+                564,
+                564,
+                419,
+                448,
+                448,
+                351,
+                351,
+                488,
+                492,
+                492,
+                675,
+                687,
+                687,
+                632,
+                675,
+                724,
+                724,
+                705,
+                681,
+                681,
+                631,
+                564,
+                564,
+                549,
+                448,
+                447,
+                628,
+                628,
+                628,
+                702,
+                659,
+                659,
+                609,
+                526,
+                507,
+                387
+              ],
+              "min": 304,
+              "count": 66,
+              "nonfinite": 0,
+              "undefined": 0,
+              "median": 618.5,
+              "p95": 721.25,
+              "max": 724.0,
+              "feasible": 66,
+              "total": 66,
+              "infeasible": []
+            }
+          },
+          "candidate_seed_groups": [
+            55,
+            43,
+            1,
+            31,
+            28,
+            65,
+            60,
+            54
+          ]
+        },
+        {
+          "name": "6lrd_A_R3",
+          "residues": 705,
+          "groups": 70,
+          "seed_regions": {
+            "1": {
+              "sizes": [
+                22,
+                190,
+                190,
+                146,
+                204,
+                203,
+                146,
+                196,
+                196,
+                313,
+                313,
+                336,
+                177,
+                339,
+                401,
+                177,
+                272,
+                342,
+                310,
+                248,
+                357,
+                456,
+                375,
+                292,
+                574,
+                526,
+                469,
+                332,
+                182,
+                400,
+                497,
+                611,
+                480,
+                292,
+                316,
+                418,
+                429,
+                217,
+                212,
+                280,
+                395,
+                485,
+                397,
+                292,
+                313,
+                523,
+                524,
+                445,
+                345,
+                351,
+                475,
+                587,
+                479,
+                312,
+                375,
+                410,
+                314,
+                404,
+                365,
+                233,
+                233,
+                459,
+                427,
+                309,
+                259,
+                280,
+                346,
+                383,
+                276,
+                200
+              ],
+              "min": 22,
+              "count": 70,
+              "nonfinite": 0,
+              "undefined": 0,
+              "median": 334.0,
+              "p95": 525.1,
+              "max": 611.0,
+              "feasible": 70,
+              "total": 70,
+              "infeasible": []
+            },
+            "2": {
+              "sizes": [
+                190,
+                402,
+                402,
+                339,
+                402,
+                402,
+                339,
+                402,
+                402,
+                592,
+                592,
+                667,
+                377,
+                592,
+                677,
+                377,
+                499,
+                651,
+                650,
+                495,
+                681,
+                688,
+                542,
+                476,
+                698,
+                703,
+                674,
+                524,
+                345,
+                613,
+                687,
+                704,
+                674,
+                524,
+                526,
+                666,
+                684,
+                481,
+                485,
+                495,
+                681,
+                688,
+                542,
+                476,
+                611,
+                696,
+                703,
+                630,
+                524,
+                611,
+                696,
+                703,
+                674,
+                524,
+                664,
+                683,
+                608,
+                615,
+                542,
+                562,
+                562,
+                635,
+                630,
+                506,
+                562,
+                606,
+                630,
+                630,
+                615,
+                532
+              ],
+              "min": 190,
+              "count": 70,
+              "nonfinite": 0,
+              "undefined": 0,
+              "median": 599.0,
+              "p95": 700.75,
+              "max": 704.0,
+              "feasible": 70,
+              "total": 70,
+              "infeasible": []
+            }
+          },
+          "candidate_seed_groups": [
+            59,
+            44,
+            63,
+            42,
+            22,
+            26,
+            36,
+            41
+          ]
+        },
+        {
+          "name": "6l3r_E_R3",
+          "residues": 669,
+          "groups": 60,
+          "seed_regions": {
+            "1": {
+              "sizes": [
+                280,
+                382,
+                404,
+                318,
+                173,
+                314,
+                488,
+                463,
+                377,
+                241,
+                279,
+                432,
+                407,
+                330,
+                277,
+                280,
+                394,
+                532,
+                520,
+                389,
+                221,
+                421,
+                592,
+                566,
+                464,
+                207,
+                413,
+                502,
+                529,
+                411,
+                259,
+                370,
+                223,
+                290,
+                367,
+                529,
+                534,
+                402,
+                454,
+                578,
+                607,
+                485,
+                413,
+                539,
+                568,
+                439,
+                329,
+                325,
+                373,
+                350,
+                352,
+                452,
+                458,
+                267,
+                392,
+                413,
+                166,
+                166,
+                230,
+                221
+              ],
+              "min": 166,
+              "count": 60,
+              "nonfinite": 0,
+              "undefined": 0,
+              "median": 393.0,
+              "p95": 568.5,
+              "max": 607.0,
+              "feasible": 60,
+              "total": 60,
+              "infeasible": []
+            },
+            "2": {
+              "sizes": [
+                521,
+                620,
+                620,
+                569,
+                459,
+                611,
+                634,
+                632,
+                602,
+                464,
+                611,
+                634,
+                632,
+                600,
+                597,
+                616,
+                648,
+                669,
+                669,
+                639,
+                499,
+                648,
+                669,
+                669,
+                640,
+                498,
+                648,
+                669,
+                669,
+                640,
+                514,
+                636,
+                473,
+                616,
+                648,
+                669,
+                669,
+                639,
+                648,
+                669,
+                669,
+                640,
+                648,
+                669,
+                669,
+                640,
+                633,
+                633,
+                647,
+                647,
+                610,
+                647,
+                647,
+                610,
+                647,
+                647,
+                437,
+                437,
+                482,
+                482
+              ],
+              "min": 437,
+              "count": 60,
+              "nonfinite": 0,
+              "undefined": 0,
+              "median": 637.5,
+              "p95": 669.0,
+              "max": 669.0,
+              "feasible": 60,
+              "total": 60,
+              "infeasible": []
+            }
+          },
+          "candidate_seed_groups": [
+            19,
+            16,
+            53,
+            1,
+            24,
+            11,
+            42,
+            17
+          ]
+        },
+        {
+          "name": "6sup_A_R3",
+          "residues": 2128,
+          "groups": 190,
+          "seed_regions": {
+            "1": {
+              "sizes": [
+                277,
+                258,
+                328,
+                331,
+                263,
+                263,
+                290,
+                414,
+                399,
+                298,
+                628,
+                555,
+                414,
+                587,
+                556,
+                388,
+                261,
+                457,
+                450,
+                187,
+                407,
+                429,
+                381,
+                568,
+                617,
+                530,
+                402,
+                466,
+                623,
+                716,
+                675,
+                557,
+                290,
+                657,
+                736,
+                708,
+                563,
+                316,
+                290,
+                452,
+                597,
+                571,
+                460,
+                194,
+                347,
+                336,
+                526,
+                534,
+                573,
+                415,
+                471,
+                603,
+                675,
+                674,
+                607,
+                474,
+                674,
+                873,
+                497,
+                619,
+                619,
+                320,
+                498,
+                730,
+                822,
+                721,
+                580,
+                340,
+                576,
+                685,
+                626,
+                464,
+                307,
+                384,
+                402,
+                342,
+                467,
+                635,
+                677,
+                610,
+                237,
+                465,
+                683,
+                787,
+                819,
+                605,
+                588,
+                362,
+                388,
+                706,
+                842,
+                639,
+                670,
+                542,
+                279,
+                270,
+                450,
+                675,
+                703,
+                747,
+                612,
+                487,
+                447,
+                593,
+                680,
+                546,
+                379,
+                327,
+                363,
+                307,
+                298,
+                384,
+                438,
+                259,
+                419,
+                630,
+                692,
+                647,
+                544,
+                328,
+                540,
+                816,
+                910,
+                802,
+                682,
+                533,
+                293,
+                518,
+                786,
+                889,
+                559,
+                629,
+                306,
+                340,
+                589,
+                680,
+                649,
+                590,
+                526,
+                345,
+                208,
+                390,
+                518,
+                521,
+                389,
+                508,
+                582,
+                508,
+                362,
+                337,
+                469,
+                637,
+                707,
+                626,
+                534,
+                346,
+                241,
+                476,
+                678,
+                801,
+                771,
+                592,
+                435,
+                324,
+                446,
+                559,
+                522,
+                481,
+                359,
+                375,
+                358,
+                271,
+                280,
+                335,
+                294,
+                335,
+                236,
+                268,
+                377,
+                475,
+                519,
+                469,
+                316,
+                348,
+                348,
+                428,
+                503,
+                290,
+                332,
+                295
+              ],
+              "min": 187,
+              "count": 190,
+              "nonfinite": 0,
+              "undefined": 0,
+              "median": 484.0,
+              "p95": 786.55,
+              "max": 910.0,
+              "feasible": 189,
+              "total": 190,
+              "infeasible": [
+                {
+                  "seed_group": 122,
+                  "residues": 910,
+                  "reason": "seed_exceeds_budget"
+                }
+              ]
+            },
+            "2": {
+              "sizes": [
+                729,
+                626,
+                745,
+                745,
+                660,
+                660,
+                881,
+                988,
+                917,
+                714,
+                1121,
+                1033,
+                825,
+                1042,
+                997,
+                788,
+                640,
+                923,
+                856,
+                641,
+                959,
+                1041,
+                1086,
+                1282,
+                1360,
+                1126,
+                889,
+                1214,
+                1336,
+                1363,
+                1230,
+                1046,
+                841,
+                1282,
+                1244,
+                1178,
+                957,
+                762,
+                841,
+                1044,
+                1133,
+                1040,
+                843,
+                563,
+                832,
+                937,
+                1199,
+                1229,
+                1294,
+                1044,
+                1152,
+                1444,
+                1545,
+                1574,
+                1334,
+                1089,
+                1592,
+                1813,
+                1427,
+                1183,
+                1183,
+                834,
+                1380,
+                1662,
+                1490,
+                1262,
+                1058,
+                970,
+                1343,
+                1309,
+                1178,
+                949,
+                871,
+                903,
+                1013,
+                925,
+                1177,
+                1346,
+                1444,
+                1401,
+                584,
+                996,
+                1358,
+                1562,
+                1734,
+                1401,
+                1362,
+                957,
+                996,
+                1443,
+                1790,
+                1684,
+                1501,
+                1190,
+                765,
+                883,
+                1266,
+                1662,
+                1699,
+                1534,
+                1371,
+                1093,
+                1166,
+                1366,
+                1389,
+                1224,
+                923,
+                896,
+                951,
+                871,
+                796,
+                947,
+                1032,
+                552,
+                864,
+                1129,
+                1284,
+                1335,
+                1257,
+                596,
+                1004,
+                1330,
+                1511,
+                1491,
+                1439,
+                1175,
+                595,
+                1004,
+                1333,
+                1597,
+                1327,
+                1343,
+                898,
+                921,
+                1313,
+                1508,
+                1577,
+                1325,
+                1136,
+                898,
+                757,
+                1033,
+                1242,
+                1143,
+                826,
+                1015,
+                1144,
+                1190,
+                932,
+                564,
+                907,
+                1078,
+                1295,
+                1333,
+                1191,
+                948,
+                531,
+                934,
+                1183,
+                1410,
+                1471,
+                1243,
+                1019,
+                868,
+                1059,
+                1297,
+                1312,
+                1123,
+                867,
+                936,
+                828,
+                702,
+                637,
+                754,
+                807,
+                889,
+                708,
+                513,
+                770,
+                902,
+                1088,
+                1091,
+                863,
+                770,
+                770,
+                1037,
+                1106,
+                948,
+                974,
+                861
+              ],
+              "min": 513,
+              "count": 190,
+              "nonfinite": 0,
+              "undefined": 0,
+              "median": 1058.5,
+              "p95": 1575.6499999999999,
+              "max": 1813.0,
+              "feasible": 51,
+              "total": 190,
+              "infeasible": [
+                {
+                  "seed_group": 7,
+                  "residues": 988,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 8,
+                  "residues": 917,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 10,
+                  "residues": 1121,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 11,
+                  "residues": 1033,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 13,
+                  "residues": 1042,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 14,
+                  "residues": 997,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 17,
+                  "residues": 923,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 20,
+                  "residues": 959,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 21,
+                  "residues": 1041,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 22,
+                  "residues": 1086,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 23,
+                  "residues": 1282,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 24,
+                  "residues": 1360,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 25,
+                  "residues": 1126,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 27,
+                  "residues": 1214,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 28,
+                  "residues": 1336,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 29,
+                  "residues": 1363,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 30,
+                  "residues": 1230,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 31,
+                  "residues": 1046,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 33,
+                  "residues": 1282,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 34,
+                  "residues": 1244,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 35,
+                  "residues": 1178,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 36,
+                  "residues": 957,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 39,
+                  "residues": 1044,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 40,
+                  "residues": 1133,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 41,
+                  "residues": 1040,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 45,
+                  "residues": 937,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 46,
+                  "residues": 1199,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 47,
+                  "residues": 1229,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 48,
+                  "residues": 1294,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 49,
+                  "residues": 1044,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 50,
+                  "residues": 1152,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 51,
+                  "residues": 1444,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 52,
+                  "residues": 1545,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 53,
+                  "residues": 1574,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 54,
+                  "residues": 1334,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 55,
+                  "residues": 1089,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 56,
+                  "residues": 1592,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 57,
+                  "residues": 1813,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 58,
+                  "residues": 1427,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 59,
+                  "residues": 1183,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 60,
+                  "residues": 1183,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 62,
+                  "residues": 1380,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 63,
+                  "residues": 1662,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 64,
+                  "residues": 1490,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 65,
+                  "residues": 1262,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 66,
+                  "residues": 1058,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 67,
+                  "residues": 970,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 68,
+                  "residues": 1343,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 69,
+                  "residues": 1309,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 70,
+                  "residues": 1178,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 71,
+                  "residues": 949,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 73,
+                  "residues": 903,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 74,
+                  "residues": 1013,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 75,
+                  "residues": 925,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 76,
+                  "residues": 1177,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 77,
+                  "residues": 1346,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 78,
+                  "residues": 1444,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 79,
+                  "residues": 1401,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 81,
+                  "residues": 996,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 82,
+                  "residues": 1358,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 83,
+                  "residues": 1562,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 84,
+                  "residues": 1734,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 85,
+                  "residues": 1401,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 86,
+                  "residues": 1362,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 87,
+                  "residues": 957,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 88,
+                  "residues": 996,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 89,
+                  "residues": 1443,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 90,
+                  "residues": 1790,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 91,
+                  "residues": 1684,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 92,
+                  "residues": 1501,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 93,
+                  "residues": 1190,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 96,
+                  "residues": 1266,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 97,
+                  "residues": 1662,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 98,
+                  "residues": 1699,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 99,
+                  "residues": 1534,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 100,
+                  "residues": 1371,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 101,
+                  "residues": 1093,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 102,
+                  "residues": 1166,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 103,
+                  "residues": 1366,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 104,
+                  "residues": 1389,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 105,
+                  "residues": 1224,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 106,
+                  "residues": 923,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 108,
+                  "residues": 951,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 111,
+                  "residues": 947,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 112,
+                  "residues": 1032,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 115,
+                  "residues": 1129,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 116,
+                  "residues": 1284,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 117,
+                  "residues": 1335,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 118,
+                  "residues": 1257,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 120,
+                  "residues": 1004,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 121,
+                  "residues": 1330,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 122,
+                  "residues": 1511,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 123,
+                  "residues": 1491,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 124,
+                  "residues": 1439,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 125,
+                  "residues": 1175,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 127,
+                  "residues": 1004,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 128,
+                  "residues": 1333,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 129,
+                  "residues": 1597,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 130,
+                  "residues": 1327,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 131,
+                  "residues": 1343,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 132,
+                  "residues": 898,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 133,
+                  "residues": 921,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 134,
+                  "residues": 1313,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 135,
+                  "residues": 1508,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 136,
+                  "residues": 1577,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 137,
+                  "residues": 1325,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 138,
+                  "residues": 1136,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 139,
+                  "residues": 898,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 141,
+                  "residues": 1033,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 142,
+                  "residues": 1242,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 143,
+                  "residues": 1143,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 145,
+                  "residues": 1015,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 146,
+                  "residues": 1144,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 147,
+                  "residues": 1190,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 148,
+                  "residues": 932,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 150,
+                  "residues": 907,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 151,
+                  "residues": 1078,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 152,
+                  "residues": 1295,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 153,
+                  "residues": 1333,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 154,
+                  "residues": 1191,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 155,
+                  "residues": 948,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 157,
+                  "residues": 934,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 158,
+                  "residues": 1183,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 159,
+                  "residues": 1410,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 160,
+                  "residues": 1471,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 161,
+                  "residues": 1243,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 162,
+                  "residues": 1019,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 164,
+                  "residues": 1059,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 165,
+                  "residues": 1297,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 166,
+                  "residues": 1312,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 167,
+                  "residues": 1123,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 169,
+                  "residues": 936,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 179,
+                  "residues": 902,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 180,
+                  "residues": 1088,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 181,
+                  "residues": 1091,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 185,
+                  "residues": 1037,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 186,
+                  "residues": 1106,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 187,
+                  "residues": 948,
+                  "reason": "seed_exceeds_budget"
+                },
+                {
+                  "seed_group": 188,
+                  "residues": 974,
+                  "reason": "seed_exceeds_budget"
+                }
+              ]
+            }
+          },
+          "candidate_seed_groups": [
+            89,
+            65,
+            63,
+            115,
+            28,
+            141,
+            92,
+            95
+          ]
+        }
+      ],
+      "environment": {
+        "hostname": "node-19",
+        "platform": "Linux-5.15.0-314.193.5.4.el9uek.x86_64-x86_64-with-glibc2.34",
+        "python": "3.11.12",
+        "torch": "2.11.0+cu128",
+        "pytorch_lightning": "2.6.5",
+        "numpy": "2.2.6",
+        "cuda_available": false,
+        "cuda_version": "12.8",
+        "cudnn_version": null,
+        "device_name": null,
+        "git_commit": null,
+        "slurm_job_id": "49466"
+      },
+      "checkpoint_sha256": "bc90c66e7539f52c9d0514aeddd96c552061150a1eef3b10c120bc3aaff08015"
+    }
+  }
+}

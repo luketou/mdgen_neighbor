@@ -1,0 +1,299 @@
+{
+  "job_id": 49469,
+  "run_id": "issue43-t2-forward4-20261023T143328Z-58f60a5",
+  "source_commit": "58f60a5",
+  "frames": 4,
+  "batch_size": 1,
+  "device": "NVIDIA L40S",
+  "warmup": 1,
+  "measured_repeats": 3,
+  "cli_cases_completed": 24,
+  "cases_without_feasible_regions": [
+    "6sup_A-R1-paired",
+    "6sup_A-R2-paired",
+    "6sup_A-R3-paired"
+  ],
+  "region_paths": [
+    {
+      "case": "6sms_A-R1-paired",
+      "protein": "6sms_A_R1",
+      "halo": 1,
+      "residues": 724,
+      "truncated": false
+    },
+    {
+      "case": "6sms_A-R1-paired",
+      "protein": "6sms_A_R1",
+      "halo": 2,
+      "residues": 724,
+      "truncated": false
+    },
+    {
+      "case": "6sms_A-R1-halo1",
+      "protein": "6sms_A_R1",
+      "halo": 1,
+      "residues": 724,
+      "truncated": false
+    },
+    {
+      "case": "6lrd_A-R1-paired",
+      "protein": "6lrd_A_R1",
+      "halo": 1,
+      "residues": 705,
+      "truncated": false
+    },
+    {
+      "case": "6lrd_A-R1-paired",
+      "protein": "6lrd_A_R1",
+      "halo": 2,
+      "residues": 705,
+      "truncated": false
+    },
+    {
+      "case": "6lrd_A-R1-halo1",
+      "protein": "6lrd_A_R1",
+      "halo": 1,
+      "residues": 705,
+      "truncated": false
+    },
+    {
+      "case": "6l3r_E-R1-paired",
+      "protein": "6l3r_E_R1",
+      "halo": 1,
+      "residues": 669,
+      "truncated": false
+    },
+    {
+      "case": "6l3r_E-R1-paired",
+      "protein": "6l3r_E_R1",
+      "halo": 2,
+      "residues": 669,
+      "truncated": false
+    },
+    {
+      "case": "6l3r_E-R1-halo1",
+      "protein": "6l3r_E_R1",
+      "halo": 1,
+      "residues": 669,
+      "truncated": false
+    },
+    {
+      "case": "6sup_A-R1-halo1",
+      "protein": "6sup_A_R1",
+      "halo": 1,
+      "residues": 866,
+      "truncated": true
+    },
+    {
+      "case": "6sup_A-R1-halo1",
+      "protein": "6sup_A_R1",
+      "halo": 1,
+      "residues": 726,
+      "truncated": true
+    },
+    {
+      "case": "6sup_A-R1-halo1",
+      "protein": "6sup_A_R1",
+      "halo": 1,
+      "residues": 841,
+      "truncated": true
+    },
+    {
+      "case": "6sup_A-R1-halo1",
+      "protein": "6sup_A_R1",
+      "halo": 1,
+      "residues": 819,
+      "truncated": true
+    },
+    {
+      "case": "6sms_A-R2-paired",
+      "protein": "6sms_A_R2",
+      "halo": 1,
+      "residues": 724,
+      "truncated": false
+    },
+    {
+      "case": "6sms_A-R2-paired",
+      "protein": "6sms_A_R2",
+      "halo": 2,
+      "residues": 724,
+      "truncated": false
+    },
+    {
+      "case": "6sms_A-R2-halo1",
+      "protein": "6sms_A_R2",
+      "halo": 1,
+      "residues": 724,
+      "truncated": false
+    },
+    {
+      "case": "6lrd_A-R2-paired",
+      "protein": "6lrd_A_R2",
+      "halo": 1,
+      "residues": 705,
+      "truncated": false
+    },
+    {
+      "case": "6lrd_A-R2-paired",
+      "protein": "6lrd_A_R2",
+      "halo": 2,
+      "residues": 705,
+      "truncated": false
+    },
+    {
+      "case": "6lrd_A-R2-halo1",
+      "protein": "6lrd_A_R2",
+      "halo": 1,
+      "residues": 705,
+      "truncated": false
+    },
+    {
+      "case": "6l3r_E-R2-paired",
+      "protein": "6l3r_E_R2",
+      "halo": 1,
+      "residues": 669,
+      "truncated": false
+    },
+    {
+      "case": "6l3r_E-R2-paired",
+      "protein": "6l3r_E_R2",
+      "halo": 2,
+      "residues": 669,
+      "truncated": false
+    },
+    {
+      "case": "6l3r_E-R2-halo1",
+      "protein": "6l3r_E_R2",
+      "halo": 1,
+      "residues": 669,
+      "truncated": false
+    },
+    {
+      "case": "6sup_A-R2-halo1",
+      "protein": "6sup_A_R2",
+      "halo": 1,
+      "residues": 866,
+      "truncated": true
+    },
+    {
+      "case": "6sup_A-R2-halo1",
+      "protein": "6sup_A_R2",
+      "halo": 1,
+      "residues": 726,
+      "truncated": true
+    },
+    {
+      "case": "6sup_A-R2-halo1",
+      "protein": "6sup_A_R2",
+      "halo": 1,
+      "residues": 841,
+      "truncated": true
+    },
+    {
+      "case": "6sup_A-R2-halo1",
+      "protein": "6sup_A_R2",
+      "halo": 1,
+      "residues": 819,
+      "truncated": true
+    },
+    {
+      "case": "6sms_A-R3-paired",
+      "protein": "6sms_A_R3",
+      "halo": 1,
+      "residues": 724,
+      "truncated": false
+    },
+    {
+      "case": "6sms_A-R3-paired",
+      "protein": "6sms_A_R3",
+      "halo": 2,
+      "residues": 724,
+      "truncated": false
+    },
+    {
+      "case": "6sms_A-R3-halo1",
+      "protein": "6sms_A_R3",
+      "halo": 1,
+      "residues": 724,
+      "truncated": false
+    },
+    {
+      "case": "6lrd_A-R3-paired",
+      "protein": "6lrd_A_R3",
+      "halo": 1,
+      "residues": 705,
+      "truncated": false
+    },
+    {
+      "case": "6lrd_A-R3-paired",
+      "protein": "6lrd_A_R3",
+      "halo": 2,
+      "residues": 705,
+      "truncated": false
+    },
+    {
+      "case": "6lrd_A-R3-halo1",
+      "protein": "6lrd_A_R3",
+      "halo": 1,
+      "residues": 705,
+      "truncated": false
+    },
+    {
+      "case": "6l3r_E-R3-paired",
+      "protein": "6l3r_E_R3",
+      "halo": 1,
+      "residues": 669,
+      "truncated": false
+    },
+    {
+      "case": "6l3r_E-R3-paired",
+      "protein": "6l3r_E_R3",
+      "halo": 2,
+      "residues": 669,
+      "truncated": false
+    },
+    {
+      "case": "6l3r_E-R3-halo1",
+      "protein": "6l3r_E_R3",
+      "halo": 1,
+      "residues": 669,
+      "truncated": false
+    },
+    {
+      "case": "6sup_A-R3-halo1",
+      "protein": "6sup_A_R3",
+      "halo": 1,
+      "residues": 866,
+      "truncated": true
+    },
+    {
+      "case": "6sup_A-R3-halo1",
+      "protein": "6sup_A_R3",
+      "halo": 1,
+      "residues": 726,
+      "truncated": true
+    },
+    {
+      "case": "6sup_A-R3-halo1",
+      "protein": "6sup_A_R3",
+      "halo": 1,
+      "residues": 841,
+      "truncated": true
+    },
+    {
+      "case": "6sup_A-R3-halo1",
+      "protein": "6sup_A_R3",
+      "halo": 1,
+      "residues": 819,
+      "truncated": true
+    }
+  ],
+  "truncated_region_paths": 12,
+  "full_coverage_region_paths": 27,
+  "finite_outputs_for_measured_paths": true,
+  "forward_errors_evaluated": false,
+  "frames250_evaluated": false,
+  "backward_evaluated": false,
+  "raw_summary": "results/halo_error_49469/summary.json",
+  "manifest": "results/halo_error_49469/manifest.json"
+}

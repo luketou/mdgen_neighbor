@@ -408,10 +408,12 @@ class NewMDGenWrapper(Wrapper):
             model=self.model,
             x1=prep['latents'],
             aatype1=batch['seqres'] if self.args.design else None,
-            mask=prep['loss_mask'],
-            model_kwargs=prep['model_kwargs']
+            mask=batch.get('probe_loss_mask', prep['loss_mask']),
+            model_kwargs=prep['model_kwargs'],
+            noise=batch.get('probe_noise'),
         )
         self.log('model_dur', time.time() - start)
+        self.probe_nonfinite_counts = out_dict.get('probe_nonfinite_counts')
         loss = out_dict['loss']
         self.log('loss', loss)
 

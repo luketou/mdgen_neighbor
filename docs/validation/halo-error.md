@@ -27,4 +27,20 @@ L40S 上用 `job/submit_halo_error.sh`（見 `job/README.md`）。實測結果�
 
 ## 判讀
 
-只報告結果、不設硬門檻。結論應寫明 1 圈 halo 是否足夠（例如第 0 圈的相對誤差中位數／最大值，與 2 圈相比是否明顯下降），或建議加深。CPU pytest（`tests/test_halo_error.py`）以隨機小模型確認：halo 覆蓋整個蛋白時誤差為 0、沒有 halo 時邊界誤差大於 0；ATLAS checkpoint 的數值只能在 GPU 上量測。
+原實驗只作描述性報告；新工作若需要硬門檻，須先確認自己的比較契約，不追溯更改舊結論。ATLAS checkpoint 的數值只能在 GPU 上量測。
+
+## 容量先導與完整報告
+
+載入 checkpoint 時一律關閉 gradient checkpointing、dropout 設為 0；非 `--inventory_only` 的模型量測以 `fp32-reference` 精度（matmul `highest`、TF32 關閉）執行。`--num_frames` 明確覆寫 checkpoint 的視窗長度；`--warmup`／`--repeats` 控制同輸入 forward 的同步時間與 GPU peak allocated／reserved 量測。在一般成對誤差模式中，region 的記憶體包含仍存活的完整蛋白 reference，不能當成獨立 region forward 的記憶體或直接宣稱省量。
+
+`--inventory_only` 不實例化模型，只在 CPU Compute Job 讀 checkpoint 組態、分區與第零幀座標，列出每個 halo 設定全部種子 group 的最小 region 大小、分位數及不可行原因。
+
+`--capacity_only` 分別量測並釋放完整蛋白與 region 輸出；完整蛋白 OOM 時仍繼續 region 路徑。此模式只報容量、時間與有限性，不產生誤差分布，也不保留 reference；一般比較模式則需要完整蛋白 reference 成功。OOM 路徑的 peak 值及失敗原因留在該路徑紀錄。
+
+`--seed_groups` 指定候選 group ID；或使用 `--selection_seed` 產生 CPU `torch.randperm`，取前 `--regions` 個。不可行與重複候選都不補抽；固定候選全部不可行時仍寫報告。未使用這兩個選項則保留原本的隨機 seed 行為。
+
+`proteins[].coverage` 保存候選可行／跳過／重複／去重數及 loss 殘基聯集覆蓋率；`seed_regions` 保存全部 group 的可行率。`observations` 保存逐 region／t／halo／殘基的原始 L2、參考範數、有效分量數與 RMS 差異；`strata` 按 t、halo、邊界圈數及實際截斷狀態分層，保留 median、p95、max。蛋白及 replica 由每個 protein entry 的名稱區別。
+
+零／近零參考（參考 RMS 不超過 `1e-6`）與無 supervision 的相對誤差為 `null`；`strata` 分別計數，不當成非有限模型輸出。`summary.relative.undefined` 計 undefined 分母，`nonfinite` 計模型 NaN／Inf。正式判定應使用分層結果及已確認的門檻。
+
+本次先導的核准範圍見 [比較提案](43-contract/proposal.md) 與 [門檻設定](43-contract/approved-forward.json)。設定 `MDGEN_ISSUE43_FRAMES`、`MDGEN_ISSUE43_DATA` 後，既有 launcher 透過 `scripts/issue43_pilot.py` 依固定次序呼叫本 CLI，保存每個 case 的參數、原始 JSON、log 與失敗狀態。`summary.json` 只省略逐殘基 observations；原始輸出 SHA-256 及路徑保留在 `manifest.json`。

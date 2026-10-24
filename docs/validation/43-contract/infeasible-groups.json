@@ -1,0 +1,2425 @@
+{
+  "source": "../43-49466/results/issue43-t2-inventory/summary.json",
+  "budget": 896,
+  "note": "all seed groups of every protein/replica; candidate_seed_groups is the fixed prefix-8 order (torch randperm seed 43002)",
+  "proteins": {
+    "6sms_A_R1": {
+      "residues": 724,
+      "groups": 66,
+      "candidate_seed_groups": [
+        55,
+        43,
+        1,
+        31,
+        28,
+        65,
+        60,
+        54
+      ],
+      "halo": {
+        "1": {
+          "feasible": 66,
+          "total": 66,
+          "infeasible": []
+        },
+        "2": {
+          "feasible": 66,
+          "total": 66,
+          "infeasible": []
+        }
+      }
+    },
+    "6lrd_A_R1": {
+      "residues": 705,
+      "groups": 70,
+      "candidate_seed_groups": [
+        59,
+        44,
+        63,
+        42,
+        22,
+        26,
+        36,
+        41
+      ],
+      "halo": {
+        "1": {
+          "feasible": 70,
+          "total": 70,
+          "infeasible": []
+        },
+        "2": {
+          "feasible": 70,
+          "total": 70,
+          "infeasible": []
+        }
+      }
+    },
+    "6l3r_E_R1": {
+      "residues": 669,
+      "groups": 60,
+      "candidate_seed_groups": [
+        19,
+        16,
+        53,
+        1,
+        24,
+        11,
+        42,
+        17
+      ],
+      "halo": {
+        "1": {
+          "feasible": 60,
+          "total": 60,
+          "infeasible": []
+        },
+        "2": {
+          "feasible": 60,
+          "total": 60,
+          "infeasible": []
+        }
+      }
+    },
+    "6sup_A_R1": {
+      "residues": 2128,
+      "groups": 190,
+      "candidate_seed_groups": [
+        89,
+        65,
+        63,
+        115,
+        28,
+        141,
+        92,
+        95
+      ],
+      "halo": {
+        "1": {
+          "feasible": 189,
+          "total": 190,
+          "infeasible": [
+            {
+              "seed_group": 122,
+              "residues": 910,
+              "reason": "seed_exceeds_budget"
+            }
+          ]
+        },
+        "2": {
+          "feasible": 51,
+          "total": 190,
+          "infeasible": [
+            {
+              "seed_group": 7,
+              "residues": 988,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 8,
+              "residues": 917,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 10,
+              "residues": 1121,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 11,
+              "residues": 1033,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 13,
+              "residues": 1042,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 14,
+              "residues": 997,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 17,
+              "residues": 923,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 20,
+              "residues": 959,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 21,
+              "residues": 1041,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 22,
+              "residues": 1086,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 23,
+              "residues": 1282,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 24,
+              "residues": 1360,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 25,
+              "residues": 1126,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 27,
+              "residues": 1214,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 28,
+              "residues": 1336,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 29,
+              "residues": 1363,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 30,
+              "residues": 1230,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 31,
+              "residues": 1046,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 33,
+              "residues": 1282,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 34,
+              "residues": 1244,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 35,
+              "residues": 1178,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 36,
+              "residues": 957,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 39,
+              "residues": 1044,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 40,
+              "residues": 1133,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 41,
+              "residues": 1040,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 45,
+              "residues": 937,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 46,
+              "residues": 1199,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 47,
+              "residues": 1229,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 48,
+              "residues": 1294,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 49,
+              "residues": 1044,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 50,
+              "residues": 1152,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 51,
+              "residues": 1444,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 52,
+              "residues": 1545,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 53,
+              "residues": 1574,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 54,
+              "residues": 1334,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 55,
+              "residues": 1089,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 56,
+              "residues": 1592,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 57,
+              "residues": 1813,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 58,
+              "residues": 1427,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 59,
+              "residues": 1183,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 60,
+              "residues": 1183,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 62,
+              "residues": 1380,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 63,
+              "residues": 1662,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 64,
+              "residues": 1490,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 65,
+              "residues": 1262,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 66,
+              "residues": 1058,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 67,
+              "residues": 970,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 68,
+              "residues": 1343,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 69,
+              "residues": 1309,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 70,
+              "residues": 1178,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 71,
+              "residues": 949,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 73,
+              "residues": 903,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 74,
+              "residues": 1013,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 75,
+              "residues": 925,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 76,
+              "residues": 1177,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 77,
+              "residues": 1346,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 78,
+              "residues": 1444,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 79,
+              "residues": 1401,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 81,
+              "residues": 996,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 82,
+              "residues": 1358,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 83,
+              "residues": 1562,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 84,
+              "residues": 1734,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 85,
+              "residues": 1401,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 86,
+              "residues": 1362,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 87,
+              "residues": 957,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 88,
+              "residues": 996,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 89,
+              "residues": 1443,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 90,
+              "residues": 1790,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 91,
+              "residues": 1684,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 92,
+              "residues": 1501,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 93,
+              "residues": 1190,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 96,
+              "residues": 1266,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 97,
+              "residues": 1662,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 98,
+              "residues": 1699,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 99,
+              "residues": 1534,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 100,
+              "residues": 1371,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 101,
+              "residues": 1093,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 102,
+              "residues": 1166,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 103,
+              "residues": 1366,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 104,
+              "residues": 1389,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 105,
+              "residues": 1224,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 106,
+              "residues": 923,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 108,
+              "residues": 951,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 111,
+              "residues": 947,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 112,
+              "residues": 1032,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 115,
+              "residues": 1129,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 116,
+              "residues": 1284,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 117,
+              "residues": 1335,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 118,
+              "residues": 1257,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 120,
+              "residues": 1004,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 121,
+              "residues": 1330,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 122,
+              "residues": 1511,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 123,
+              "residues": 1491,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 124,
+              "residues": 1439,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 125,
+              "residues": 1175,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 127,
+              "residues": 1004,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 128,
+              "residues": 1333,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 129,
+              "residues": 1597,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 130,
+              "residues": 1327,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 131,
+              "residues": 1343,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 132,
+              "residues": 898,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 133,
+              "residues": 921,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 134,
+              "residues": 1313,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 135,
+              "residues": 1508,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 136,
+              "residues": 1577,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 137,
+              "residues": 1325,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 138,
+              "residues": 1136,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 139,
+              "residues": 898,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 141,
+              "residues": 1033,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 142,
+              "residues": 1242,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 143,
+              "residues": 1143,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 145,
+              "residues": 1015,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 146,
+              "residues": 1144,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 147,
+              "residues": 1190,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 148,
+              "residues": 932,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 150,
+              "residues": 907,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 151,
+              "residues": 1078,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 152,
+              "residues": 1295,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 153,
+              "residues": 1333,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 154,
+              "residues": 1191,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 155,
+              "residues": 948,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 157,
+              "residues": 934,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 158,
+              "residues": 1183,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 159,
+              "residues": 1410,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 160,
+              "residues": 1471,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 161,
+              "residues": 1243,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 162,
+              "residues": 1019,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 164,
+              "residues": 1059,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 165,
+              "residues": 1297,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 166,
+              "residues": 1312,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 167,
+              "residues": 1123,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 169,
+              "residues": 936,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 179,
+              "residues": 902,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 180,
+              "residues": 1088,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 181,
+              "residues": 1091,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 185,
+              "residues": 1037,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 186,
+              "residues": 1106,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 187,
+              "residues": 948,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 188,
+              "residues": 974,
+              "reason": "seed_exceeds_budget"
+            }
+          ]
+        }
+      }
+    },
+    "6sms_A_R2": {
+      "residues": 724,
+      "groups": 66,
+      "candidate_seed_groups": [
+        55,
+        43,
+        1,
+        31,
+        28,
+        65,
+        60,
+        54
+      ],
+      "halo": {
+        "1": {
+          "feasible": 66,
+          "total": 66,
+          "infeasible": []
+        },
+        "2": {
+          "feasible": 66,
+          "total": 66,
+          "infeasible": []
+        }
+      }
+    },
+    "6lrd_A_R2": {
+      "residues": 705,
+      "groups": 70,
+      "candidate_seed_groups": [
+        59,
+        44,
+        63,
+        42,
+        22,
+        26,
+        36,
+        41
+      ],
+      "halo": {
+        "1": {
+          "feasible": 70,
+          "total": 70,
+          "infeasible": []
+        },
+        "2": {
+          "feasible": 70,
+          "total": 70,
+          "infeasible": []
+        }
+      }
+    },
+    "6l3r_E_R2": {
+      "residues": 669,
+      "groups": 60,
+      "candidate_seed_groups": [
+        19,
+        16,
+        53,
+        1,
+        24,
+        11,
+        42,
+        17
+      ],
+      "halo": {
+        "1": {
+          "feasible": 60,
+          "total": 60,
+          "infeasible": []
+        },
+        "2": {
+          "feasible": 60,
+          "total": 60,
+          "infeasible": []
+        }
+      }
+    },
+    "6sup_A_R2": {
+      "residues": 2128,
+      "groups": 190,
+      "candidate_seed_groups": [
+        89,
+        65,
+        63,
+        115,
+        28,
+        141,
+        92,
+        95
+      ],
+      "halo": {
+        "1": {
+          "feasible": 189,
+          "total": 190,
+          "infeasible": [
+            {
+              "seed_group": 122,
+              "residues": 910,
+              "reason": "seed_exceeds_budget"
+            }
+          ]
+        },
+        "2": {
+          "feasible": 51,
+          "total": 190,
+          "infeasible": [
+            {
+              "seed_group": 7,
+              "residues": 988,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 8,
+              "residues": 917,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 10,
+              "residues": 1121,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 11,
+              "residues": 1033,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 13,
+              "residues": 1042,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 14,
+              "residues": 997,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 17,
+              "residues": 923,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 20,
+              "residues": 959,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 21,
+              "residues": 1041,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 22,
+              "residues": 1086,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 23,
+              "residues": 1282,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 24,
+              "residues": 1360,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 25,
+              "residues": 1126,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 27,
+              "residues": 1214,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 28,
+              "residues": 1336,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 29,
+              "residues": 1363,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 30,
+              "residues": 1230,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 31,
+              "residues": 1046,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 33,
+              "residues": 1282,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 34,
+              "residues": 1244,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 35,
+              "residues": 1178,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 36,
+              "residues": 957,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 39,
+              "residues": 1044,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 40,
+              "residues": 1133,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 41,
+              "residues": 1040,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 45,
+              "residues": 937,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 46,
+              "residues": 1199,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 47,
+              "residues": 1229,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 48,
+              "residues": 1294,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 49,
+              "residues": 1044,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 50,
+              "residues": 1152,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 51,
+              "residues": 1444,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 52,
+              "residues": 1545,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 53,
+              "residues": 1574,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 54,
+              "residues": 1334,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 55,
+              "residues": 1089,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 56,
+              "residues": 1592,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 57,
+              "residues": 1813,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 58,
+              "residues": 1427,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 59,
+              "residues": 1183,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 60,
+              "residues": 1183,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 62,
+              "residues": 1380,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 63,
+              "residues": 1662,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 64,
+              "residues": 1490,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 65,
+              "residues": 1262,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 66,
+              "residues": 1058,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 67,
+              "residues": 970,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 68,
+              "residues": 1343,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 69,
+              "residues": 1309,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 70,
+              "residues": 1178,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 71,
+              "residues": 949,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 73,
+              "residues": 903,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 74,
+              "residues": 1013,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 75,
+              "residues": 925,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 76,
+              "residues": 1177,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 77,
+              "residues": 1346,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 78,
+              "residues": 1444,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 79,
+              "residues": 1401,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 81,
+              "residues": 996,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 82,
+              "residues": 1358,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 83,
+              "residues": 1562,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 84,
+              "residues": 1734,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 85,
+              "residues": 1401,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 86,
+              "residues": 1362,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 87,
+              "residues": 957,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 88,
+              "residues": 996,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 89,
+              "residues": 1443,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 90,
+              "residues": 1790,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 91,
+              "residues": 1684,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 92,
+              "residues": 1501,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 93,
+              "residues": 1190,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 96,
+              "residues": 1266,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 97,
+              "residues": 1662,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 98,
+              "residues": 1699,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 99,
+              "residues": 1534,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 100,
+              "residues": 1371,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 101,
+              "residues": 1093,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 102,
+              "residues": 1166,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 103,
+              "residues": 1366,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 104,
+              "residues": 1389,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 105,
+              "residues": 1224,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 106,
+              "residues": 923,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 108,
+              "residues": 951,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 111,
+              "residues": 947,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 112,
+              "residues": 1032,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 115,
+              "residues": 1129,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 116,
+              "residues": 1284,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 117,
+              "residues": 1335,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 118,
+              "residues": 1257,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 120,
+              "residues": 1004,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 121,
+              "residues": 1330,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 122,
+              "residues": 1511,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 123,
+              "residues": 1491,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 124,
+              "residues": 1439,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 125,
+              "residues": 1175,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 127,
+              "residues": 1004,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 128,
+              "residues": 1333,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 129,
+              "residues": 1597,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 130,
+              "residues": 1327,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 131,
+              "residues": 1343,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 132,
+              "residues": 898,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 133,
+              "residues": 921,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 134,
+              "residues": 1313,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 135,
+              "residues": 1508,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 136,
+              "residues": 1577,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 137,
+              "residues": 1325,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 138,
+              "residues": 1136,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 139,
+              "residues": 898,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 141,
+              "residues": 1033,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 142,
+              "residues": 1242,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 143,
+              "residues": 1143,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 145,
+              "residues": 1015,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 146,
+              "residues": 1144,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 147,
+              "residues": 1190,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 148,
+              "residues": 932,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 150,
+              "residues": 907,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 151,
+              "residues": 1078,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 152,
+              "residues": 1295,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 153,
+              "residues": 1333,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 154,
+              "residues": 1191,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 155,
+              "residues": 948,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 157,
+              "residues": 934,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 158,
+              "residues": 1183,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 159,
+              "residues": 1410,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 160,
+              "residues": 1471,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 161,
+              "residues": 1243,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 162,
+              "residues": 1019,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 164,
+              "residues": 1059,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 165,
+              "residues": 1297,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 166,
+              "residues": 1312,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 167,
+              "residues": 1123,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 169,
+              "residues": 936,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 179,
+              "residues": 902,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 180,
+              "residues": 1088,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 181,
+              "residues": 1091,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 185,
+              "residues": 1037,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 186,
+              "residues": 1106,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 187,
+              "residues": 948,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 188,
+              "residues": 974,
+              "reason": "seed_exceeds_budget"
+            }
+          ]
+        }
+      }
+    },
+    "6sms_A_R3": {
+      "residues": 724,
+      "groups": 66,
+      "candidate_seed_groups": [
+        55,
+        43,
+        1,
+        31,
+        28,
+        65,
+        60,
+        54
+      ],
+      "halo": {
+        "1": {
+          "feasible": 66,
+          "total": 66,
+          "infeasible": []
+        },
+        "2": {
+          "feasible": 66,
+          "total": 66,
+          "infeasible": []
+        }
+      }
+    },
+    "6lrd_A_R3": {
+      "residues": 705,
+      "groups": 70,
+      "candidate_seed_groups": [
+        59,
+        44,
+        63,
+        42,
+        22,
+        26,
+        36,
+        41
+      ],
+      "halo": {
+        "1": {
+          "feasible": 70,
+          "total": 70,
+          "infeasible": []
+        },
+        "2": {
+          "feasible": 70,
+          "total": 70,
+          "infeasible": []
+        }
+      }
+    },
+    "6l3r_E_R3": {
+      "residues": 669,
+      "groups": 60,
+      "candidate_seed_groups": [
+        19,
+        16,
+        53,
+        1,
+        24,
+        11,
+        42,
+        17
+      ],
+      "halo": {
+        "1": {
+          "feasible": 60,
+          "total": 60,
+          "infeasible": []
+        },
+        "2": {
+          "feasible": 60,
+          "total": 60,
+          "infeasible": []
+        }
+      }
+    },
+    "6sup_A_R3": {
+      "residues": 2128,
+      "groups": 190,
+      "candidate_seed_groups": [
+        89,
+        65,
+        63,
+        115,
+        28,
+        141,
+        92,
+        95
+      ],
+      "halo": {
+        "1": {
+          "feasible": 189,
+          "total": 190,
+          "infeasible": [
+            {
+              "seed_group": 122,
+              "residues": 910,
+              "reason": "seed_exceeds_budget"
+            }
+          ]
+        },
+        "2": {
+          "feasible": 51,
+          "total": 190,
+          "infeasible": [
+            {
+              "seed_group": 7,
+              "residues": 988,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 8,
+              "residues": 917,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 10,
+              "residues": 1121,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 11,
+              "residues": 1033,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 13,
+              "residues": 1042,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 14,
+              "residues": 997,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 17,
+              "residues": 923,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 20,
+              "residues": 959,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 21,
+              "residues": 1041,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 22,
+              "residues": 1086,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 23,
+              "residues": 1282,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 24,
+              "residues": 1360,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 25,
+              "residues": 1126,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 27,
+              "residues": 1214,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 28,
+              "residues": 1336,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 29,
+              "residues": 1363,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 30,
+              "residues": 1230,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 31,
+              "residues": 1046,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 33,
+              "residues": 1282,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 34,
+              "residues": 1244,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 35,
+              "residues": 1178,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 36,
+              "residues": 957,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 39,
+              "residues": 1044,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 40,
+              "residues": 1133,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 41,
+              "residues": 1040,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 45,
+              "residues": 937,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 46,
+              "residues": 1199,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 47,
+              "residues": 1229,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 48,
+              "residues": 1294,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 49,
+              "residues": 1044,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 50,
+              "residues": 1152,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 51,
+              "residues": 1444,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 52,
+              "residues": 1545,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 53,
+              "residues": 1574,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 54,
+              "residues": 1334,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 55,
+              "residues": 1089,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 56,
+              "residues": 1592,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 57,
+              "residues": 1813,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 58,
+              "residues": 1427,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 59,
+              "residues": 1183,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 60,
+              "residues": 1183,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 62,
+              "residues": 1380,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 63,
+              "residues": 1662,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 64,
+              "residues": 1490,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 65,
+              "residues": 1262,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 66,
+              "residues": 1058,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 67,
+              "residues": 970,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 68,
+              "residues": 1343,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 69,
+              "residues": 1309,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 70,
+              "residues": 1178,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 71,
+              "residues": 949,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 73,
+              "residues": 903,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 74,
+              "residues": 1013,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 75,
+              "residues": 925,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 76,
+              "residues": 1177,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 77,
+              "residues": 1346,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 78,
+              "residues": 1444,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 79,
+              "residues": 1401,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 81,
+              "residues": 996,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 82,
+              "residues": 1358,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 83,
+              "residues": 1562,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 84,
+              "residues": 1734,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 85,
+              "residues": 1401,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 86,
+              "residues": 1362,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 87,
+              "residues": 957,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 88,
+              "residues": 996,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 89,
+              "residues": 1443,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 90,
+              "residues": 1790,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 91,
+              "residues": 1684,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 92,
+              "residues": 1501,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 93,
+              "residues": 1190,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 96,
+              "residues": 1266,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 97,
+              "residues": 1662,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 98,
+              "residues": 1699,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 99,
+              "residues": 1534,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 100,
+              "residues": 1371,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 101,
+              "residues": 1093,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 102,
+              "residues": 1166,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 103,
+              "residues": 1366,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 104,
+              "residues": 1389,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 105,
+              "residues": 1224,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 106,
+              "residues": 923,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 108,
+              "residues": 951,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 111,
+              "residues": 947,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 112,
+              "residues": 1032,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 115,
+              "residues": 1129,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 116,
+              "residues": 1284,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 117,
+              "residues": 1335,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 118,
+              "residues": 1257,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 120,
+              "residues": 1004,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 121,
+              "residues": 1330,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 122,
+              "residues": 1511,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 123,
+              "residues": 1491,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 124,
+              "residues": 1439,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 125,
+              "residues": 1175,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 127,
+              "residues": 1004,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 128,
+              "residues": 1333,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 129,
+              "residues": 1597,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 130,
+              "residues": 1327,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 131,
+              "residues": 1343,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 132,
+              "residues": 898,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 133,
+              "residues": 921,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 134,
+              "residues": 1313,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 135,
+              "residues": 1508,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 136,
+              "residues": 1577,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 137,
+              "residues": 1325,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 138,
+              "residues": 1136,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 139,
+              "residues": 898,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 141,
+              "residues": 1033,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 142,
+              "residues": 1242,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 143,
+              "residues": 1143,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 145,
+              "residues": 1015,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 146,
+              "residues": 1144,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 147,
+              "residues": 1190,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 148,
+              "residues": 932,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 150,
+              "residues": 907,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 151,
+              "residues": 1078,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 152,
+              "residues": 1295,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 153,
+              "residues": 1333,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 154,
+              "residues": 1191,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 155,
+              "residues": 948,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 157,
+              "residues": 934,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 158,
+              "residues": 1183,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 159,
+              "residues": 1410,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 160,
+              "residues": 1471,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 161,
+              "residues": 1243,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 162,
+              "residues": 1019,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 164,
+              "residues": 1059,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 165,
+              "residues": 1297,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 166,
+              "residues": 1312,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 167,
+              "residues": 1123,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 169,
+              "residues": 936,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 179,
+              "residues": 902,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 180,
+              "residues": 1088,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 181,
+              "residues": 1091,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 185,
+              "residues": 1037,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 186,
+              "residues": 1106,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 187,
+              "residues": 948,
+              "reason": "seed_exceeds_budget"
+            },
+            {
+              "seed_group": 188,
+              "residues": 974,
+              "reason": "seed_exceeds_budget"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

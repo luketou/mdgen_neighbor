@@ -1,0 +1,2803 @@
+{
+  "mode": "sweep",
+  "frames": null,
+  "reports": {
+    "6sup_A-R1-full-f64": {
+      "probe": "train-step",
+      "seed": 0,
+      "configs": [
+        "fp32-reference",
+        "fp32-reference",
+        "fp32-reference",
+        "fp32-reference"
+      ],
+      "batch": {
+        "names": [
+          "6sup_A_R1"
+        ],
+        "batch_size": 1,
+        "frame_starts": [
+          0
+        ],
+        "shapes": {
+          "torsions": [
+            64,
+            2128,
+            7,
+            2
+          ],
+          "torsion_mask": [
+            2128,
+            7
+          ],
+          "trans": [
+            64,
+            2128,
+            3
+          ],
+          "rots": [
+            64,
+            2128,
+            3,
+            3
+          ],
+          "seqres": [
+            2128
+          ],
+          "mask": [
+            2128
+          ],
+          "chain_id": [
+            2128
+          ],
+          "residue_index": [
+            2128
+          ]
+        },
+        "source": "results/training_region_probe_49513/6sup_A.csv[0]"
+      },
+      "model_args": {
+        "ckpt": null,
+        "validate": false,
+        "num_workers": 4,
+        "train_seed": null,
+        "model_dir": "results/training_region_probe_49513/workdir/6sup_A-R1-full-f64",
+        "deterministic": true,
+        "benchmark": false,
+        "epochs": 100,
+        "overfit": false,
+        "overfit_peptide": null,
+        "overfit_frame": true,
+        "train_batches": null,
+        "val_batches": null,
+        "val_repeat": 1,
+        "inference_batches": 0,
+        "batch_size": 1,
+        "val_freq": null,
+        "val_epoch_freq": 1,
+        "no_validate": false,
+        "designability_freq": 1,
+        "print_freq": 100,
+        "ckpt_freq": 1,
+        "wandb": false,
+        "run_name": "default",
+        "accumulate_grad": 1,
+        "grad_clip": 1.0,
+        "check_grad": false,
+        "grad_checkpointing": true,
+        "adamW": false,
+        "ema": false,
+        "ema_decay": 0.999,
+        "lr": 0.0001,
+        "train_split": "results/training_region_probe_49513/6sup_A.csv",
+        "val_split": "results/training_region_probe_49513/6sup_A.csv",
+        "data_dir": "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/arrays",
+        "num_frames": 64,
+        "crop": 2128,
+        "suffix": "_i400ps",
+        "atlas": true,
+        "replicates": [
+          1
+        ],
+        "val_replicates": null,
+        "copy_frames": false,
+        "no_pad": false,
+        "short_md": false,
+        "training_region": false,
+        "region_residues": 896,
+        "halo_rings": 1,
+        "partition_dir": "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/partitions",
+        "design_key_frames": false,
+        "no_aa_emb": false,
+        "no_torsion": false,
+        "no_design_torsion": false,
+        "supervise_no_torsions": false,
+        "supervise_all_torsions": false,
+        "no_offsets": false,
+        "no_frames": false,
+        "hyena": false,
+        "no_rope": false,
+        "local_spatial": true,
+        "cell_summaries": false,
+        "spatial_cell_width": 16.0,
+        "spatial_contact_radius": 16.0,
+        "core_capacity": 128,
+        "ghost_capacity": 128,
+        "group_batch_size": 4,
+        "ffn_chunk_size": 65536,
+        "dropout": 0.0,
+        "scale_factor": 1.0,
+        "interleave_ipa": false,
+        "prepend_ipa": true,
+        "oracle": false,
+        "num_layers": 5,
+        "embed_dim": 384,
+        "mha_heads": 16,
+        "ipa_heads": 4,
+        "ipa_head_dim": 32,
+        "ipa_qk": 8,
+        "ipa_v": 8,
+        "time_multiplier": 100.0,
+        "abs_pos_emb": false,
+        "abs_time_emb": false,
+        "path_type": "GVP",
+        "prediction": "velocity",
+        "sampling_method": "dopri5",
+        "alpha_max": 8,
+        "discrete_loss_weight": 0.5,
+        "dirichlet_flow_temp": 1.0,
+        "allow_nan_cfactor": false,
+        "tps_condition": false,
+        "design": false,
+        "design_from_traj": false,
+        "sim_condition": true,
+        "inpainting": false,
+        "dynamic_mpnn": false,
+        "mpnn": false,
+        "frame_interval": null,
+        "cond_interval": null,
+        "sim_ckpt": "/share/home/r15543056/MDgen/mdgen/ckpt/atlas.ckpt",
+        "probe_time": 0.5,
+        "region_seed_group": null,
+        "spatial_attention_backend": "sdpa",
+        "use_sdpa": true
+      },
+      "environment": {
+        "hostname": "node-201",
+        "platform": "Linux-5.14.0-570.62.1.0.1.el9_6.x86_64-x86_64-with-glibc2.34",
+        "python": "3.11.12",
+        "torch": "2.11.0+cu128",
+        "pytorch_lightning": "2.6.5",
+        "numpy": "2.2.6",
+        "cuda_available": true,
+        "cuda_version": "12.8",
+        "cudnn_version": 91900,
+        "device_name": "NVIDIA L40S",
+        "git_commit": null,
+        "slurm_job_id": "49513"
+      },
+      "runs": [
+        {
+          "precision_config": "fp32-reference",
+          "initial_parameter_norm": 392.3189839223072,
+          "precision_state": {
+            "precision_config": "fp32-reference",
+            "lightning_precision": "32-true",
+            "device_type": "cuda",
+            "autocast_enabled": false,
+            "autocast_dtype": null,
+            "parameter_dtypes": [
+              "torch.float32"
+            ],
+            "float32_matmul_precision": "highest",
+            "cuda_matmul_allow_tf32": false,
+            "cudnn_allow_tf32": false
+          },
+          "batch_shapes": {
+            "frame_start": [
+              1
+            ],
+            "torsions": [
+              1,
+              64,
+              2128,
+              7,
+              2
+            ],
+            "torsion_mask": [
+              1,
+              2128,
+              7
+            ],
+            "trans": [
+              1,
+              64,
+              2128,
+              3
+            ],
+            "rots": [
+              1,
+              64,
+              2128,
+              3,
+              3
+            ],
+            "seqres": [
+              1,
+              2128
+            ],
+            "mask": [
+              1,
+              2128
+            ],
+            "chain_id": [
+              1,
+              2128
+            ],
+            "residue_index": [
+              1,
+              2128
+            ]
+          },
+          "missing_gradients": [
+            "ipa_layers.0.cell_summaries.gate",
+            "ipa_layers.0.cell_summaries.summary_attention.in_proj_weight",
+            "ipa_layers.0.cell_summaries.summary_attention.in_proj_bias",
+            "ipa_layers.0.cell_summaries.summary_attention.out_proj.weight",
+            "ipa_layers.0.cell_summaries.summary_attention.out_proj.bias",
+            "ipa_layers.0.cell_summaries.summary_norm.weight",
+            "ipa_layers.0.cell_summaries.summary_norm.bias",
+            "ipa_layers.0.cell_summaries.inject.weight",
+            "ipa_layers.0.cell_summaries.inject.bias",
+            "ipa_layers.1.cell_summaries.gate",
+            "ipa_layers.1.cell_summaries.summary_attention.in_proj_weight",
+            "ipa_layers.1.cell_summaries.summary_attention.in_proj_bias",
+            "ipa_layers.1.cell_summaries.summary_attention.out_proj.weight",
+            "ipa_layers.1.cell_summaries.summary_attention.out_proj.bias",
+            "ipa_layers.1.cell_summaries.summary_norm.weight",
+            "ipa_layers.1.cell_summaries.summary_norm.bias",
+            "ipa_layers.1.cell_summaries.inject.weight",
+            "ipa_layers.1.cell_summaries.inject.bias",
+            "ipa_layers.2.cell_summaries.gate",
+            "ipa_layers.2.cell_summaries.summary_attention.in_proj_weight",
+            "ipa_layers.2.cell_summaries.summary_attention.in_proj_bias",
+            "ipa_layers.2.cell_summaries.summary_attention.out_proj.weight",
+            "ipa_layers.2.cell_summaries.summary_attention.out_proj.bias",
+            "ipa_layers.2.cell_summaries.summary_norm.weight",
+            "ipa_layers.2.cell_summaries.summary_norm.bias",
+            "ipa_layers.2.cell_summaries.inject.weight",
+            "ipa_layers.2.cell_summaries.inject.bias",
+            "ipa_layers.3.cell_summaries.gate",
+            "ipa_layers.3.cell_summaries.summary_attention.in_proj_weight",
+            "ipa_layers.3.cell_summaries.summary_attention.in_proj_bias",
+            "ipa_layers.3.cell_summaries.summary_attention.out_proj.weight",
+            "ipa_layers.3.cell_summaries.summary_attention.out_proj.bias",
+            "ipa_layers.3.cell_summaries.summary_norm.weight",
+            "ipa_layers.3.cell_summaries.summary_norm.bias",
+            "ipa_layers.3.cell_summaries.inject.weight",
+            "ipa_layers.3.cell_summaries.inject.bias",
+            "ipa_layers.4.cell_summaries.gate",
+            "ipa_layers.4.cell_summaries.summary_attention.in_proj_weight",
+            "ipa_layers.4.cell_summaries.summary_attention.in_proj_bias",
+            "ipa_layers.4.cell_summaries.summary_attention.out_proj.weight",
+            "ipa_layers.4.cell_summaries.summary_attention.out_proj.bias",
+            "ipa_layers.4.cell_summaries.summary_norm.weight",
+            "ipa_layers.4.cell_summaries.summary_norm.bias",
+            "ipa_layers.4.cell_summaries.inject.weight",
+            "ipa_layers.4.cell_summaries.inject.bias",
+            "layers.0.cell_summaries.gate",
+            "layers.0.cell_summaries.summary_attention.in_proj_weight",
+            "layers.0.cell_summaries.summary_attention.in_proj_bias",
+            "layers.0.cell_summaries.summary_attention.out_proj.weight",
+            "layers.0.cell_summaries.summary_attention.out_proj.bias",
+            "layers.0.cell_summaries.summary_norm.weight",
+            "layers.0.cell_summaries.summary_norm.bias",
+            "layers.0.cell_summaries.inject.weight",
+            "layers.0.cell_summaries.inject.bias",
+            "layers.1.cell_summaries.gate",
+            "layers.1.cell_summaries.summary_attention.in_proj_weight",
+            "layers.1.cell_summaries.summary_attention.in_proj_bias",
+            "layers.1.cell_summaries.summary_attention.out_proj.weight",
+            "layers.1.cell_summaries.summary_attention.out_proj.bias",
+            "layers.1.cell_summaries.summary_norm.weight",
+            "layers.1.cell_summaries.summary_norm.bias",
+            "layers.1.cell_summaries.inject.weight",
+            "layers.1.cell_summaries.inject.bias",
+            "layers.2.cell_summaries.gate",
+            "layers.2.cell_summaries.summary_attention.in_proj_weight",
+            "layers.2.cell_summaries.summary_attention.in_proj_bias",
+            "layers.2.cell_summaries.summary_attention.out_proj.weight",
+            "layers.2.cell_summaries.summary_attention.out_proj.bias",
+            "layers.2.cell_summaries.summary_norm.weight",
+            "layers.2.cell_summaries.summary_norm.bias",
+            "layers.2.cell_summaries.inject.weight",
+            "layers.2.cell_summaries.inject.bias",
+            "layers.3.cell_summaries.gate",
+            "layers.3.cell_summaries.summary_attention.in_proj_weight",
+            "layers.3.cell_summaries.summary_attention.in_proj_bias",
+            "layers.3.cell_summaries.summary_attention.out_proj.weight",
+            "layers.3.cell_summaries.summary_attention.out_proj.bias",
+            "layers.3.cell_summaries.summary_norm.weight",
+            "layers.3.cell_summaries.summary_norm.bias",
+            "layers.3.cell_summaries.inject.weight",
+            "layers.3.cell_summaries.inject.bias",
+            "layers.4.cell_summaries.gate",
+            "layers.4.cell_summaries.summary_attention.in_proj_weight",
+            "layers.4.cell_summaries.summary_attention.in_proj_bias",
+            "layers.4.cell_summaries.summary_attention.out_proj.weight",
+            "layers.4.cell_summaries.summary_attention.out_proj.bias",
+            "layers.4.cell_summaries.summary_norm.weight",
+            "layers.4.cell_summaries.summary_norm.bias",
+            "layers.4.cell_summaries.inject.weight",
+            "layers.4.cell_summaries.inject.bias"
+          ],
+          "optimizer": {
+            "class": "Adam",
+            "lr": 0.0001,
+            "betas": [
+              0.9,
+              0.999
+            ],
+            "eps": 1e-08,
+            "weight_decay": 0,
+            "amsgrad": false,
+            "maximize": false,
+            "foreach": null,
+            "capturable": false,
+            "differentiable": false,
+            "fused": null,
+            "decoupled_weight_decay": false
+          },
+          "pre_clip_norm": 0.19049732835970468,
+          "step_time_s": 8.47969038500014,
+          "peak_memory_allocated_bytes": 34668175872,
+          "peak_memory_reserved_bytes": 35565600768,
+          "loss": 0.2163095623254776,
+          "loss_finite": true,
+          "training_time": 0.5,
+          "parameters_nonfinite_after_step": 0,
+          "post_clip_norm": 0.19049732835970468,
+          "clipping_coefficient": 1.0,
+          "grad_checkpointing": true,
+          "gradient_nonfinite": 0,
+          "gradients": {
+            "latent_to_emb": {
+              "numel": 8448,
+              "norm": 0.016655888227956214,
+              "max_abs": 0.002647404558956623,
+              "nonfinite": 0
+            },
+            "cond_to_emb": {
+              "numel": 8448,
+              "norm": 0.005807076942168296,
+              "max_abs": 0.0018058842979371548,
+              "nonfinite": 0
+            },
+            "mask_to_emb": {
+              "numel": 768,
+              "norm": 0.005710320112138566,
+              "max_abs": 0.0018361223628744483,
+              "nonfinite": 0
+            },
+            "aatype_to_emb": {
+              "numel": 8064,
+              "norm": 0.0003458187347243808,
+              "max_abs": 4.659000114770606e-05,
+              "nonfinite": 0
+            },
+            "ipa_layers.0.adaLN_modulation": {
+              "numel": 887040,
+              "norm": 0.007204768682786174,
+              "max_abs": 0.0027911996003240347,
+              "nonfinite": 0
+            },
+            "ipa_layers.0.ipa_norm": {
+              "numel": 768,
+              "norm": 0.0003064209931385951,
+              "max_abs": 4.352835094323382e-05,
+              "nonfinite": 0
+            },
+            "ipa_layers.0.ipa": {
+              "numel": 357412,
+              "norm": 0.00991824491386616,
+              "max_abs": 0.0008010005112737417,
+              "nonfinite": 0
+            },
+            "ipa_layers.0.mha_l": {
+              "numel": 592128,
+              "norm": 0.002166631827295599,
+              "max_abs": 0.00011048669693991542,
+              "nonfinite": 0
+            },
+            "ipa_layers.0.fc1": {
+              "numel": 591360,
+              "norm": 0.0012672012222133759,
+              "max_abs": 5.751689604949206e-05,
+              "nonfinite": 0
+            },
+            "ipa_layers.0.fc2": {
+              "numel": 590208,
+              "norm": 0.0017990427128647447,
+              "max_abs": 0.0001625874574529007,
+              "nonfinite": 0
+            },
+            "ipa_layers.1.adaLN_modulation": {
+              "numel": 887040,
+              "norm": 0.004653412711677889,
+              "max_abs": 0.0005036111688241363,
+              "nonfinite": 0
+            },
+            "ipa_layers.1.ipa_norm": {
+              "numel": 768,
+              "norm": 0.002803381990455204,
+              "max_abs": 0.0026518148370087147,
+              "nonfinite": 0
+            },
+            "ipa_layers.1.ipa": {
+              "numel": 357412,
+              "norm": 0.007062648727254297,
+              "max_abs": 0.001117716426961124,
+              "nonfinite": 0
+            },
+            "ipa_layers.1.mha_l": {
+              "numel": 592128,
+              "norm": 0.0005811888780827652,
+              "max_abs": 2.7301266527501866e-05,
+              "nonfinite": 0
+            },
+            "ipa_layers.1.fc1": {
+              "numel": 591360,
+              "norm": 0.0015797251756116402,
+              "max_abs": 4.650889241020195e-05,
+              "nonfinite": 0
+            },
+            "ipa_layers.1.fc2": {
+              "numel": 590208,
+              "norm": 0.001610454653004457,
+              "max_abs": 0.00010595079220365733,
+              "nonfinite": 0
+            },
+            "ipa_layers.2.adaLN_modulation": {
+              "numel": 887040,
+              "norm": 0.006590467999798927,
+              "max_abs": 0.000643914972897619,
+              "nonfinite": 0
+            },
+            "ipa_layers.2.ipa_norm": {
+              "numel": 768,
+              "norm": 0.0036772880218701406,
+              "max_abs": 0.0032084397971630096,
+              "nonfinite": 0
+            },
+            "ipa_layers.2.ipa": {
+              "numel": 357412,
+              "norm": 0.02136030323563423,
+              "max_abs": 0.004426170140504837,
+              "nonfinite": 0
+            },
+            "ipa_layers.2.mha_l": {
+              "numel": 592128,
+              "norm": 0.0015100795341798736,
+              "max_abs": 5.589815918938257e-05,
+              "nonfinite": 0
+            },
+            "ipa_layers.2.fc1": {
+              "numel": 591360,
+              "norm": 0.0023016025586554832,
+              "max_abs": 7.126452692318708e-05,
+              "nonfinite": 0
+            },
+            "ipa_layers.2.fc2": {
+              "numel": 590208,
+              "norm": 0.0022913740884595757,
+              "max_abs": 0.00010291897342540324,
+              "nonfinite": 0
+            },
+            "ipa_layers.3.adaLN_modulation": {
+              "numel": 887040,
+              "norm": 0.0111517599523448,
+              "max_abs": 0.0014471523463726044,
+              "nonfinite": 0
+            },
+            "ipa_layers.3.ipa_norm": {
+              "numel": 768,
+              "norm": 0.004300090264473702,
+              "max_abs": 0.003095288062468171,
+              "nonfinite": 0
+            },
+            "ipa_layers.3.ipa": {
+              "numel": 357412,
+              "norm": 0.02014055660470109,
+              "max_abs": 0.0030495375394821167,
+              "nonfinite": 0
+            },
+            "ipa_layers.3.mha_l": {
+              "numel": 592128,
+              "norm": 0.0018260118599482812,
+              "max_abs": 9.024126484291628e-05,
+              "nonfinite": 0
+            },
+            "ipa_layers.3.fc1": {
+              "numel": 591360,
+              "norm": 0.0031283965818486503,
+              "max_abs": 0.00016159287770278752,
+              "nonfinite": 0
+            },
+            "ipa_layers.3.fc2": {
+              "numel": 590208,
+              "norm": 0.002966568704957872,
+              "max_abs": 0.00016584261902607977,
+              "nonfinite": 0
+            },
+            "ipa_layers.4.adaLN_modulation": {
+              "numel": 887040,
+              "norm": 0.038512027920955864,
+              "max_abs": 0.017036236822605133,
+              "nonfinite": 0
+            },
+            "ipa_layers.4.ipa_norm": {
+              "numel": 768,
+              "norm": 0.008185690466193466,
+              "max_abs": 0.006485843565315008,
+              "nonfinite": 0
+            },
+            "ipa_layers.4.ipa": {
+              "numel": 357412,
+              "norm": 0.05111054044437183,
+              "max_abs": 0.0114615298807621,
+              "nonfinite": 0
+            },
+            "ipa_layers.4.mha_l": {
+              "numel": 592128,
+              "norm": 0.008165038227648356,
+              "max_abs": 0.001183409825898707,
+              "nonfinite": 0
+            },
+            "ipa_layers.4.fc1": {
+              "numel": 591360,
+              "norm": 0.0032432702933094704,
+              "max_abs": 0.000175423949258402,
+              "nonfinite": 0
+            },
+            "ipa_layers.4.fc2": {
+              "numel": 590208,
+              "norm": 0.002579190851149489,
+              "max_abs": 0.0004939835635013878,
+              "nonfinite": 0
+            },
+            "layers.0.adaLN_modulation": {
+              "numel": 1330560,
+              "norm": 0.08741817274935536,
+              "max_abs": 0.02136923559010029,
+              "nonfinite": 0
+            },
+            "layers.0.mha_t": {
+              "numel": 592128,
+              "norm": 0.019164833686330412,
+              "max_abs": 0.0013159032678231597,
+              "nonfinite": 0
+            },
+            "layers.0.mha_l": {
+              "numel": 592128,
+              "norm": 0.0320515056720556,
+              "max_abs": 0.0030333134345710278,
+              "nonfinite": 0
+            },
+            "layers.0.fc1": {
+              "numel": 591360,
+              "norm": 0.014104596488696533,
+              "max_abs": 0.0006231879815459251,
+              "nonfinite": 0
+            },
+            "layers.0.fc2": {
+              "numel": 590208,
+              "norm": 0.01397113750838054,
+              "max_abs": 0.0005912826163694263,
+              "nonfinite": 0
+            },
+            "layers.1.adaLN_modulation": {
+              "numel": 1330560,
+              "norm": 0.055849715221816094,
+              "max_abs": 0.014157707802951336,
+              "nonfinite": 0
+            },
+            "layers.1.mha_t": {
+              "numel": 592128,
+              "norm": 0.014939180083581067,
+              "max_abs": 0.0011238057631999254,
+              "nonfinite": 0
+            },
+            "layers.1.mha_l": {
+              "numel": 592128,
+              "norm": 0.027243142501197578,
+              "max_abs": 0.0028548897244036198,
+              "nonfinite": 0
+            },
+            "layers.1.fc1": {
+              "numel": 591360,
+              "norm": 0.016549326440702047,
+              "max_abs": 0.0013125945115461946,
+              "nonfinite": 0
+            },
+            "layers.1.fc2": {
+              "numel": 590208,
+              "norm": 0.013972083556804403,
+              "max_abs": 0.000547461851965636,
+              "nonfinite": 0
+            },
+            "layers.2.adaLN_modulation": {
+              "numel": 1330560,
+              "norm": 0.027955576758766337,
+              "max_abs": 0.005782974883913994,
+              "nonfinite": 0
+            },
+            "layers.2.mha_t": {
+              "numel": 592128,
+              "norm": 0.012053931824319603,
+              "max_abs": 0.0005494813667610288,
+              "nonfinite": 0
+            },
+            "layers.2.mha_l": {
+              "numel": 592128,
+              "norm": 0.010789588953098417,
+              "max_abs": 0.0006372558418661356,
+              "nonfinite": 0
+            },
+            "layers.2.fc1": {
+              "numel": 591360,
+              "norm": 0.014515576870511058,
+              "max_abs": 0.001413147896528244,
+              "nonfinite": 0
+            },
+            "layers.2.fc2": {
+              "numel": 590208,
+              "norm": 0.009877677885334233,
+              "max_abs": 0.0003482741885818541,
+              "nonfinite": 0
+            },
+            "layers.3.adaLN_modulation": {
+              "numel": 1330560,
+              "norm": 0.03026504594716389,
+              "max_abs": 0.015476883389055729,
+              "nonfinite": 0
+            },
+            "layers.3.mha_t": {
+              "numel": 592128,
+              "norm": 0.01159050413074482,
+              "max_abs": 0.00040818064007908106,
+              "nonfinite": 0
+            },
+            "layers.3.mha_l": {
+              "numel": 592128,
+              "norm": 0.006370415436918571,
+              "max_abs": 0.00028427381766960025,
+              "nonfinite": 0
+            },
+            "layers.3.fc1": {
+              "numel": 591360,
+              "norm": 0.013711575236508972,
+              "max_abs": 0.0012618103064596653,
+              "nonfinite": 0
+            },
+            "layers.3.fc2": {
+              "numel": 590208,
+              "norm": 0.007198120442888352,
+              "max_abs": 0.00030738519853912294,
+              "nonfinite": 0
+            },
+            "layers.4.adaLN_modulation": {
+              "numel": 1330560,
+              "norm": 0.033638417436707486,
+              "max_abs": 0.009358447045087814,
+              "nonfinite": 0
+            },
+            "layers.4.mha_t": {
+              "numel": 592128,
+              "norm": 0.010449292256907355,
+              "max_abs": 0.0005950339836999774,
+              "nonfinite": 0
+            },
+            "layers.4.mha_l": {
+              "numel": 592128,
+              "norm": 0.00840959058416381,
+              "max_abs": 0.0004943673848174512,
+              "nonfinite": 0
+            },
+            "layers.4.fc1": {
+              "numel": 591360,
+              "norm": 0.011143622739160287,
+              "max_abs": 0.0010253451764583588,
+              "nonfinite": 0
+            },
+            "layers.4.fc2": {
+              "numel": 590208,
+              "norm": 0.014556275195040887,
+              "max_abs": 0.0023471093736588955,
+              "nonfinite": 0
+            },
+            "emb_to_latent": {
+              "numel": 303765,
+              "norm": 0.07274738138794931,
+              "max_abs": 0.014646267518401146,
+              "nonfinite": 0
+            },
+            "t_embedder": {
+              "numel": 246528,
+              "norm": 0.08216831426726531,
+              "max_abs": 0.012767131440341473,
+              "nonfinite": 0
+            }
+          }
+        },
+        {
+          "precision_config": "fp32-reference",
+          "initial_parameter_norm": 392.3189839223072,
+          "precision_state": {
+            "precision_config": "fp32-reference",
+            "lightning_precision": "32-true",
+            "device_type": "cuda",
+            "autocast_enabled": false,
+            "autocast_dtype": null,
+            "parameter_dtypes": [
+              "torch.float32"
+            ],
+            "float32_matmul_precision": "highest",
+            "cuda_matmul_allow_tf32": false,
+            "cudnn_allow_tf32": false
+          },
+          "batch_shapes": {
+            "frame_start": [
+              1
+            ],
+            "torsions": [
+              1,
+              64,
+              2128,
+              7,
+              2
+            ],
+            "torsion_mask": [
+              1,
+              2128,
+              7
+            ],
+            "trans": [
+              1,
+              64,
+              2128,
+              3
+            ],
+            "rots": [
+              1,
+              64,
+              2128,
+              3,
+              3
+            ],
+            "seqres": [
+              1,
+              2128
+            ],
+            "mask": [
+              1,
+              2128
+            ],
+            "chain_id": [
+              1,
+              2128
+            ],
+            "residue_index": [
+              1,
+              2128
+            ]
+          },
+          "missing_gradients": [
+            "ipa_layers.0.cell_summaries.gate",
+            "ipa_layers.0.cell_summaries.summary_attention.in_proj_weight",
+            "ipa_layers.0.cell_summaries.summary_attention.in_proj_bias",
+            "ipa_layers.0.cell_summaries.summary_attention.out_proj.weight",
+            "ipa_layers.0.cell_summaries.summary_attention.out_proj.bias",
+            "ipa_layers.0.cell_summaries.summary_norm.weight",
+            "ipa_layers.0.cell_summaries.summary_norm.bias",
+            "ipa_layers.0.cell_summaries.inject.weight",
+            "ipa_layers.0.cell_summaries.inject.bias",
+            "ipa_layers.1.cell_summaries.gate",
+            "ipa_layers.1.cell_summaries.summary_attention.in_proj_weight",
+            "ipa_layers.1.cell_summaries.summary_attention.in_proj_bias",
+            "ipa_layers.1.cell_summaries.summary_attention.out_proj.weight",
+            "ipa_layers.1.cell_summaries.summary_attention.out_proj.bias",
+            "ipa_layers.1.cell_summaries.summary_norm.weight",
+            "ipa_layers.1.cell_summaries.summary_norm.bias",
+            "ipa_layers.1.cell_summaries.inject.weight",
+            "ipa_layers.1.cell_summaries.inject.bias",
+            "ipa_layers.2.cell_summaries.gate",
+            "ipa_layers.2.cell_summaries.summary_attention.in_proj_weight",
+            "ipa_layers.2.cell_summaries.summary_attention.in_proj_bias",
+            "ipa_layers.2.cell_summaries.summary_attention.out_proj.weight",
+            "ipa_layers.2.cell_summaries.summary_attention.out_proj.bias",
+            "ipa_layers.2.cell_summaries.summary_norm.weight",
+            "ipa_layers.2.cell_summaries.summary_norm.bias",
+            "ipa_layers.2.cell_summaries.inject.weight",
+            "ipa_layers.2.cell_summaries.inject.bias",
+            "ipa_layers.3.cell_summaries.gate",
+            "ipa_layers.3.cell_summaries.summary_attention.in_proj_weight",
+            "ipa_layers.3.cell_summaries.summary_attention.in_proj_bias",
+            "ipa_layers.3.cell_summaries.summary_attention.out_proj.weight",
+            "ipa_layers.3.cell_summaries.summary_attention.out_proj.bias",
+            "ipa_layers.3.cell_summaries.summary_norm.weight",
+            "ipa_layers.3.cell_summaries.summary_norm.bias",
+            "ipa_layers.3.cell_summaries.inject.weight",
+            "ipa_layers.3.cell_summaries.inject.bias",
+            "ipa_layers.4.cell_summaries.gate",
+            "ipa_layers.4.cell_summaries.summary_attention.in_proj_weight",
+            "ipa_layers.4.cell_summaries.summary_attention.in_proj_bias",
+            "ipa_layers.4.cell_summaries.summary_attention.out_proj.weight",
+            "ipa_layers.4.cell_summaries.summary_attention.out_proj.bias",
+            "ipa_layers.4.cell_summaries.summary_norm.weight",
+            "ipa_layers.4.cell_summaries.summary_norm.bias",
+            "ipa_layers.4.cell_summaries.inject.weight",
+            "ipa_layers.4.cell_summaries.inject.bias",
+            "layers.0.cell_summaries.gate",
+            "layers.0.cell_summaries.summary_attention.in_proj_weight",
+            "layers.0.cell_summaries.summary_attention.in_proj_bias",
+            "layers.0.cell_summaries.summary_attention.out_proj.weight",
+            "layers.0.cell_summaries.summary_attention.out_proj.bias",
+            "layers.0.cell_summaries.summary_norm.weight",
+            "layers.0.cell_summaries.summary_norm.bias",
+            "layers.0.cell_summaries.inject.weight",
+            "layers.0.cell_summaries.inject.bias",
+            "layers.1.cell_summaries.gate",
+            "layers.1.cell_summaries.summary_attention.in_proj_weight",
+            "layers.1.cell_summaries.summary_attention.in_proj_bias",
+            "layers.1.cell_summaries.summary_attention.out_proj.weight",
+            "layers.1.cell_summaries.summary_attention.out_proj.bias",
+            "layers.1.cell_summaries.summary_norm.weight",
+            "layers.1.cell_summaries.summary_norm.bias",
+            "layers.1.cell_summaries.inject.weight",
+            "layers.1.cell_summaries.inject.bias",
+            "layers.2.cell_summaries.gate",
+            "layers.2.cell_summaries.summary_attention.in_proj_weight",
+            "layers.2.cell_summaries.summary_attention.in_proj_bias",
+            "layers.2.cell_summaries.summary_attention.out_proj.weight",
+            "layers.2.cell_summaries.summary_attention.out_proj.bias",
+            "layers.2.cell_summaries.summary_norm.weight",
+            "layers.2.cell_summaries.summary_norm.bias",
+            "layers.2.cell_summaries.inject.weight",
+            "layers.2.cell_summaries.inject.bias",
+            "layers.3.cell_summaries.gate",
+            "layers.3.cell_summaries.summary_attention.in_proj_weight",
+            "layers.3.cell_summaries.summary_attention.in_proj_bias",
+            "layers.3.cell_summaries.summary_attention.out_proj.weight",
+            "layers.3.cell_summaries.summary_attention.out_proj.bias",
+            "layers.3.cell_summaries.summary_norm.weight",
+            "layers.3.cell_summaries.summary_norm.bias",
+            "layers.3.cell_summaries.inject.weight",
+            "layers.3.cell_summaries.inject.bias",
+            "layers.4.cell_summaries.gate",
+            "layers.4.cell_summaries.summary_attention.in_proj_weight",
+            "layers.4.cell_summaries.summary_attention.in_proj_bias",
+            "layers.4.cell_summaries.summary_attention.out_proj.weight",
+            "layers.4.cell_summaries.summary_attention.out_proj.bias",
+            "layers.4.cell_summaries.summary_norm.weight",
+            "layers.4.cell_summaries.summary_norm.bias",
+            "layers.4.cell_summaries.inject.weight",
+            "layers.4.cell_summaries.inject.bias"
+          ],
+          "optimizer": {
+            "class": "Adam",
+            "lr": 0.0001,
+            "betas": [
+              0.9,
+              0.999
+            ],
+            "eps": 1e-08,
+            "weight_decay": 0,
+            "amsgrad": false,
+            "maximize": false,
+            "foreach": null,
+            "capturable": false,
+            "differentiable": false,
+            "fused": null,
+            "decoupled_weight_decay": false
+          },
+          "pre_clip_norm": 0.19049732835970468,
+          "step_time_s": 8.319683442001406,
+          "peak_memory_allocated_bytes": 34668175872,
+          "peak_memory_reserved_bytes": 35565600768,
+          "loss": 0.2163095623254776,
+          "loss_finite": true,
+          "training_time": 0.5,
+          "parameters_nonfinite_after_step": 0,
+          "post_clip_norm": 0.19049732835970468,
+          "clipping_coefficient": 1.0,
+          "grad_checkpointing": true,
+          "gradient_nonfinite": 0,
+          "gradients": {
+            "latent_to_emb": {
+              "numel": 8448,
+              "norm": 0.016655888227956214,
+              "max_abs": 0.002647404558956623,
+              "nonfinite": 0
+            },
+            "cond_to_emb": {
+              "numel": 8448,
+              "norm": 0.005807076942168296,
+              "max_abs": 0.0018058842979371548,
+              "nonfinite": 0
+            },
+            "mask_to_emb": {
+              "numel": 768,
+              "norm": 0.005710320112138566,
+              "max_abs": 0.0018361223628744483,
+              "nonfinite": 0
+            },
+            "aatype_to_emb": {
+              "numel": 8064,
+              "norm": 0.0003458187347243808,
+              "max_abs": 4.659000114770606e-05,
+              "nonfinite": 0
+            },
+            "ipa_layers.0.adaLN_modulation": {
+              "numel": 887040,
+              "norm": 0.007204768682786174,
+              "max_abs": 0.0027911996003240347,
+              "nonfinite": 0
+            },
+            "ipa_layers.0.ipa_norm": {
+              "numel": 768,
+              "norm": 0.0003064209931385951,
+              "max_abs": 4.352835094323382e-05,
+              "nonfinite": 0
+            },
+            "ipa_layers.0.ipa": {
+              "numel": 357412,
+              "norm": 0.00991824491386616,
+              "max_abs": 0.0008010005112737417,
+              "nonfinite": 0
+            },
+            "ipa_layers.0.mha_l": {
+              "numel": 592128,
+              "norm": 0.002166631827295599,
+              "max_abs": 0.00011048669693991542,
+              "nonfinite": 0
+            },
+            "ipa_layers.0.fc1": {
+              "numel": 591360,
+              "norm": 0.0012672012222133759,
+              "max_abs": 5.751689604949206e-05,
+              "nonfinite": 0
+            },
+            "ipa_layers.0.fc2": {
+              "numel": 590208,
+              "norm": 0.0017990427128647447,
+              "max_abs": 0.0001625874574529007,
+              "nonfinite": 0
+            },
+            "ipa_layers.1.adaLN_modulation": {
+              "numel": 887040,
+              "norm": 0.004653412711677889,
+              "max_abs": 0.0005036111688241363,
+              "nonfinite": 0
+            },
+            "ipa_layers.1.ipa_norm": {
+              "numel": 768,
+              "norm": 0.002803381990455204,
+              "max_abs": 0.0026518148370087147,
+              "nonfinite": 0
+            },
+            "ipa_layers.1.ipa": {
+              "numel": 357412,
+              "norm": 0.007062648727254297,
+              "max_abs": 0.001117716426961124,
+              "nonfinite": 0
+            },
+            "ipa_layers.1.mha_l": {
+              "numel": 592128,
+              "norm": 0.0005811888780827652,
+              "max_abs": 2.7301266527501866e-05,
+              "nonfinite": 0
+            },
+            "ipa_layers.1.fc1": {
+              "numel": 591360,
+              "norm": 0.0015797251756116402,
+              "max_abs": 4.650889241020195e-05,
+              "nonfinite": 0
+            },
+            "ipa_layers.1.fc2": {
+              "numel": 590208,
+              "norm": 0.001610454653004457,
+              "max_abs": 0.00010595079220365733,
+              "nonfinite": 0
+            },
+            "ipa_layers.2.adaLN_modulation": {
+              "numel": 887040,
+              "norm": 0.006590467999798927,
+              "max_abs": 0.000643914972897619,
+              "nonfinite": 0
+            },
+            "ipa_layers.2.ipa_norm": {
+              "numel": 768,
+              "norm": 0.0036772880218701406,
+              "max_abs": 0.0032084397971630096,
+              "nonfinite": 0
+            },
+            "ipa_layers.2.ipa": {
+              "numel": 357412,
+              "norm": 0.02136030323563423,
+              "max_abs": 0.004426170140504837,
+              "nonfinite": 0
+            },
+            "ipa_layers.2.mha_l": {
+              "numel": 592128,
+              "norm": 0.0015100795341798736,
+              "max_abs": 5.589815918938257e-05,
+              "nonfinite": 0
+            },
+            "ipa_layers.2.fc1": {
+              "numel": 591360,
+              "norm": 0.0023016025586554832,
+              "max_abs": 7.126452692318708e-05,
+              "nonfinite": 0
+            },
+            "ipa_layers.2.fc2": {
+              "numel": 590208,
+              "norm": 0.0022913740884595757,
+              "max_abs": 0.00010291897342540324,
+              "nonfinite": 0
+            },
+            "ipa_layers.3.adaLN_modulation": {
+              "numel": 887040,
+              "norm": 0.0111517599523448,
+              "max_abs": 0.0014471523463726044,
+              "nonfinite": 0
+            },
+            "ipa_layers.3.ipa_norm": {
+              "numel": 768,
+              "norm": 0.004300090264473702,
+              "max_abs": 0.003095288062468171,
+              "nonfinite": 0
+            },
+            "ipa_layers.3.ipa": {
+              "numel": 357412,
+              "norm": 0.02014055660470109,
+              "max_abs": 0.0030495375394821167,
+              "nonfinite": 0
+            },
+            "ipa_layers.3.mha_l": {
+              "numel": 592128,
+              "norm": 0.0018260118599482812,
+              "max_abs": 9.024126484291628e-05,
+              "nonfinite": 0
+            },
+            "ipa_layers.3.fc1": {
+              "numel": 591360,
+              "norm": 0.0031283965818486503,
+              "max_abs": 0.00016159287770278752,
+              "nonfinite": 0
+            },
+            "ipa_layers.3.fc2": {
+              "numel": 590208,
+              "norm": 0.002966568704957872,
+              "max_abs": 0.00016584261902607977,
+              "nonfinite": 0
+            },
+            "ipa_layers.4.adaLN_modulation": {
+              "numel": 887040,
+              "norm": 0.038512027920955864,
+              "max_abs": 0.017036236822605133,
+              "nonfinite": 0
+            },
+            "ipa_layers.4.ipa_norm": {
+              "numel": 768,
+              "norm": 0.008185690466193466,
+              "max_abs": 0.006485843565315008,
+              "nonfinite": 0
+            },
+            "ipa_layers.4.ipa": {
+              "numel": 357412,
+              "norm": 0.05111054044437183,
+              "max_abs": 0.0114615298807621,
+              "nonfinite": 0
+            },
+            "ipa_layers.4.mha_l": {
+              "numel": 592128,
+              "norm": 0.008165038227648356,
+              "max_abs": 0.001183409825898707,
+              "nonfinite": 0
+            },
+            "ipa_layers.4.fc1": {
+              "numel": 591360,
+              "norm": 0.0032432702933094704,
+              "max_abs": 0.000175423949258402,
+              "nonfinite": 0
+            },
+            "ipa_layers.4.fc2": {
+              "numel": 590208,
+              "norm": 0.002579190851149489,
+              "max_abs": 0.0004939835635013878,
+              "nonfinite": 0
+            },
+            "layers.0.adaLN_modulation": {
+              "numel": 1330560,
+              "norm": 0.08741817274935536,
+              "max_abs": 0.02136923559010029,
+              "nonfinite": 0
+            },
+            "layers.0.mha_t": {
+              "numel": 592128,
+              "norm": 0.019164833686330412,
+              "max_abs": 0.0013159032678231597,
+              "nonfinite": 0
+            },
+            "layers.0.mha_l": {
+              "numel": 592128,
+              "norm": 0.0320515056720556,
+              "max_abs": 0.0030333134345710278,
+              "nonfinite": 0
+            },
+            "layers.0.fc1": {
+              "numel": 591360,
+              "norm": 0.014104596488696533,
+              "max_abs": 0.0006231879815459251,
+              "nonfinite": 0
+            },
+            "layers.0.fc2": {
+              "numel": 590208,
+              "norm": 0.01397113750838054,
+              "max_abs": 0.0005912826163694263,
+              "nonfinite": 0
+            },
+            "layers.1.adaLN_modulation": {
+              "numel": 1330560,
+              "norm": 0.055849715221816094,
+              "max_abs": 0.014157707802951336,
+              "nonfinite": 0
+            },
+            "layers.1.mha_t": {
+              "numel": 592128,
+              "norm": 0.014939180083581067,
+              "max_abs": 0.0011238057631999254,
+              "nonfinite": 0
+            },
+            "layers.1.mha_l": {
+              "numel": 592128,
+              "norm": 0.027243142501197578,
+              "max_abs": 0.0028548897244036198,
+              "nonfinite": 0
+            },
+            "layers.1.fc1": {
+              "numel": 591360,
+              "norm": 0.016549326440702047,
+              "max_abs": 0.0013125945115461946,
+              "nonfinite": 0
+            },
+            "layers.1.fc2": {
+              "numel": 590208,
+              "norm": 0.013972083556804403,
+              "max_abs": 0.000547461851965636,
+              "nonfinite": 0
+            },
+            "layers.2.adaLN_modulation": {
+              "numel": 1330560,
+              "norm": 0.027955576758766337,
+              "max_abs": 0.005782974883913994,
+              "nonfinite": 0
+            },
+            "layers.2.mha_t": {
+              "numel": 592128,
+              "norm": 0.012053931824319603,
+              "max_abs": 0.0005494813667610288,
+              "nonfinite": 0
+            },
+            "layers.2.mha_l": {
+              "numel": 592128,
+              "norm": 0.010789588953098417,
+              "max_abs": 0.0006372558418661356,
+              "nonfinite": 0
+            },
+            "layers.2.fc1": {
+              "numel": 591360,
+              "norm": 0.014515576870511058,
+              "max_abs": 0.001413147896528244,
+              "nonfinite": 0
+            },
+            "layers.2.fc2": {
+              "numel": 590208,
+              "norm": 0.009877677885334233,
+              "max_abs": 0.0003482741885818541,
+              "nonfinite": 0
+            },
+            "layers.3.adaLN_modulation": {
+              "numel": 1330560,
+              "norm": 0.03026504594716389,
+              "max_abs": 0.015476883389055729,
+              "nonfinite": 0
+            },
+            "layers.3.mha_t": {
+              "numel": 592128,
+              "norm": 0.01159050413074482,
+              "max_abs": 0.00040818064007908106,
+              "nonfinite": 0
+            },
+            "layers.3.mha_l": {
+              "numel": 592128,
+              "norm": 0.006370415436918571,
+              "max_abs": 0.00028427381766960025,
+              "nonfinite": 0
+            },
+            "layers.3.fc1": {
+              "numel": 591360,
+              "norm": 0.013711575236508972,
+              "max_abs": 0.0012618103064596653,
+              "nonfinite": 0
+            },
+            "layers.3.fc2": {
+              "numel": 590208,
+              "norm": 0.007198120442888352,
+              "max_abs": 0.00030738519853912294,
+              "nonfinite": 0
+            },
+            "layers.4.adaLN_modulation": {
+              "numel": 1330560,
+              "norm": 0.033638417436707486,
+              "max_abs": 0.009358447045087814,
+              "nonfinite": 0
+            },
+            "layers.4.mha_t": {
+              "numel": 592128,
+              "norm": 0.010449292256907355,
+              "max_abs": 0.0005950339836999774,
+              "nonfinite": 0
+            },
+            "layers.4.mha_l": {
+              "numel": 592128,
+              "norm": 0.00840959058416381,
+              "max_abs": 0.0004943673848174512,
+              "nonfinite": 0
+            },
+            "layers.4.fc1": {
+              "numel": 591360,
+              "norm": 0.011143622739160287,
+              "max_abs": 0.0010253451764583588,
+              "nonfinite": 0
+            },
+            "layers.4.fc2": {
+              "numel": 590208,
+              "norm": 0.014556275195040887,
+              "max_abs": 0.0023471093736588955,
+              "nonfinite": 0
+            },
+            "emb_to_latent": {
+              "numel": 303765,
+              "norm": 0.07274738138794931,
+              "max_abs": 0.014646267518401146,
+              "nonfinite": 0
+            },
+            "t_embedder": {
+              "numel": 246528,
+              "norm": 0.08216831426726531,
+              "max_abs": 0.012767131440341473,
+              "nonfinite": 0
+            }
+          }
+        },
+        {
+          "precision_config": "fp32-reference",
+          "initial_parameter_norm": 392.3189839223072,
+          "precision_state": {
+            "precision_config": "fp32-reference",
+            "lightning_precision": "32-true",
+            "device_type": "cuda",
+            "autocast_enabled": false,
+            "autocast_dtype": null,
+            "parameter_dtypes": [
+              "torch.float32"
+            ],
+            "float32_matmul_precision": "highest",
+            "cuda_matmul_allow_tf32": false,
+            "cudnn_allow_tf32": false
+          },
+          "batch_shapes": {
+            "frame_start": [
+              1
+            ],
+            "torsions": [
+              1,
+              64,
+              2128,
+              7,
+              2
+            ],
+            "torsion_mask": [
+              1,
+              2128,
+              7
+            ],
+            "trans": [
+              1,
+              64,
+              2128,
+              3
+            ],
+            "rots": [
+              1,
+              64,
+              2128,
+              3,
+              3
+            ],
+            "seqres": [
+              1,
+              2128
+            ],
+            "mask": [
+              1,
+              2128
+            ],
+            "chain_id": [
+              1,
+              2128
+            ],
+            "residue_index": [
+              1,
+              2128
+            ]
+          },
+          "missing_gradients": [
+            "ipa_layers.0.cell_summaries.gate",
+            "ipa_layers.0.cell_summaries.summary_attention.in_proj_weight",
+            "ipa_layers.0.cell_summaries.summary_attention.in_proj_bias",
+            "ipa_layers.0.cell_summaries.summary_attention.out_proj.weight",
+            "ipa_layers.0.cell_summaries.summary_attention.out_proj.bias",
+            "ipa_layers.0.cell_summaries.summary_norm.weight",
+            "ipa_layers.0.cell_summaries.summary_norm.bias",
+            "ipa_layers.0.cell_summaries.inject.weight",
+            "ipa_layers.0.cell_summaries.inject.bias",
+            "ipa_layers.1.cell_summaries.gate",
+            "ipa_layers.1.cell_summaries.summary_attention.in_proj_weight",
+            "ipa_layers.1.cell_summaries.summary_attention.in_proj_bias",
+            "ipa_layers.1.cell_summaries.summary_attention.out_proj.weight",
+            "ipa_layers.1.cell_summaries.summary_attention.out_proj.bias",
+            "ipa_layers.1.cell_summaries.summary_norm.weight",
+            "ipa_layers.1.cell_summaries.summary_norm.bias",
+            "ipa_layers.1.cell_summaries.inject.weight",
+            "ipa_layers.1.cell_summaries.inject.bias",
+            "ipa_layers.2.cell_summaries.gate",
+            "ipa_layers.2.cell_summaries.summary_attention.in_proj_weight",
+            "ipa_layers.2.cell_summaries.summary_attention.in_proj_bias",
+            "ipa_layers.2.cell_summaries.summary_attention.out_proj.weight",
+            "ipa_layers.2.cell_summaries.summary_attention.out_proj.bias",
+            "ipa_layers.2.cell_summaries.summary_norm.weight",
+            "ipa_layers.2.cell_summaries.summary_norm.bias",
+            "ipa_layers.2.cell_summaries.inject.weight",
+            "ipa_layers.2.cell_summaries.inject.bias",
+            "ipa_layers.3.cell_summaries.gate",
+            "ipa_layers.3.cell_summaries.summary_attention.in_proj_weight",
+            "ipa_layers.3.cell_summaries.summary_attention.in_proj_bias",
+            "ipa_layers.3.cell_summaries.summary_attention.out_proj.weight",
+            "ipa_layers.3.cell_summaries.summary_attention.out_proj.bias",
+            "ipa_layers.3.cell_summaries.summary_norm.weight",
+            "ipa_layers.3.cell_summaries.summary_norm.bias",
+            "ipa_layers.3.cell_summaries.inject.weight",
+            "ipa_layers.3.cell_summaries.inject.bias",
+            "ipa_layers.4.cell_summaries.gate",
+            "ipa_layers.4.cell_summaries.summary_attention.in_proj_weight",
+            "ipa_layers.4.cell_summaries.summary_attention.in_proj_bias",
+            "ipa_layers.4.cell_summaries.summary_attention.out_proj.weight",
+            "ipa_layers.4.cell_summaries.summary_attention.out_proj.bias",
+            "ipa_layers.4.cell_summaries.summary_norm.weight",
+            "ipa_layers.4.cell_summaries.summary_norm.bias",
+            "ipa_layers.4.cell_summaries.inject.weight",
+            "ipa_layers.4.cell_summaries.inject.bias",
+            "layers.0.cell_summaries.gate",
+            "layers.0.cell_summaries.summary_attention.in_proj_weight",
+            "layers.0.cell_summaries.summary_attention.in_proj_bias",
+            "layers.0.cell_summaries.summary_attention.out_proj.weight",
+            "layers.0.cell_summaries.summary_attention.out_proj.bias",
+            "layers.0.cell_summaries.summary_norm.weight",
+            "layers.0.cell_summaries.summary_norm.bias",
+            "layers.0.cell_summaries.inject.weight",
+            "layers.0.cell_summaries.inject.bias",
+            "layers.1.cell_summaries.gate",
+            "layers.1.cell_summaries.summary_attention.in_proj_weight",
+            "layers.1.cell_summaries.summary_attention.in_proj_bias",
+            "layers.1.cell_summaries.summary_attention.out_proj.weight",
+            "layers.1.cell_summaries.summary_attention.out_proj.bias",
+            "layers.1.cell_summaries.summary_norm.weight",
+            "layers.1.cell_summaries.summary_norm.bias",
+            "layers.1.cell_summaries.inject.weight",
+            "layers.1.cell_summaries.inject.bias",
+            "layers.2.cell_summaries.gate",
+            "layers.2.cell_summaries.summary_attention.in_proj_weight",
+            "layers.2.cell_summaries.summary_attention.in_proj_bias",
+            "layers.2.cell_summaries.summary_attention.out_proj.weight",
+            "layers.2.cell_summaries.summary_attention.out_proj.bias",
+            "layers.2.cell_summaries.summary_norm.weight",
+            "layers.2.cell_summaries.summary_norm.bias",
+            "layers.2.cell_summaries.inject.weight",
+            "layers.2.cell_summaries.inject.bias",
+            "layers.3.cell_summaries.gate",
+            "layers.3.cell_summaries.summary_attention.in_proj_weight",
+            "layers.3.cell_summaries.summary_attention.in_proj_bias",
+            "layers.3.cell_summaries.summary_attention.out_proj.weight",
+            "layers.3.cell_summaries.summary_attention.out_proj.bias",
+            "layers.3.cell_summaries.summary_norm.weight",
+            "layers.3.cell_summaries.summary_norm.bias",
+            "layers.3.cell_summaries.inject.weight",
+            "layers.3.cell_summaries.inject.bias",
+            "layers.4.cell_summaries.gate",
+            "layers.4.cell_summaries.summary_attention.in_proj_weight",
+            "layers.4.cell_summaries.summary_attention.in_proj_bias",
+            "layers.4.cell_summaries.summary_attention.out_proj.weight",
+            "layers.4.cell_summaries.summary_attention.out_proj.bias",
+            "layers.4.cell_summaries.summary_norm.weight",
+            "layers.4.cell_summaries.summary_norm.bias",
+            "layers.4.cell_summaries.inject.weight",
+            "layers.4.cell_summaries.inject.bias"
+          ],
+          "optimizer": {
+            "class": "Adam",
+            "lr": 0.0001,
+            "betas": [
+              0.9,
+              0.999
+            ],
+            "eps": 1e-08,
+            "weight_decay": 0,
+            "amsgrad": false,
+            "maximize": false,
+            "foreach": null,
+            "capturable": false,
+            "differentiable": false,
+            "fused": null,
+            "decoupled_weight_decay": false
+          },
+          "pre_clip_norm": 0.19049732835970468,
+          "step_time_s": 8.01591239800473,
+          "peak_memory_allocated_bytes": 34668242432,
+          "peak_memory_reserved_bytes": 35565600768,
+          "loss": 0.2163095623254776,
+          "loss_finite": true,
+          "training_time": 0.5,
+          "parameters_nonfinite_after_step": 0,
+          "post_clip_norm": 0.19049732835970468,
+          "clipping_coefficient": 1.0,
+          "grad_checkpointing": true,
+          "gradient_nonfinite": 0,
+          "gradients": {
+            "latent_to_emb": {
+              "numel": 8448,
+              "norm": 0.016655888227956214,
+              "max_abs": 0.002647404558956623,
+              "nonfinite": 0
+            },
+            "cond_to_emb": {
+              "numel": 8448,
+              "norm": 0.005807076942168296,
+              "max_abs": 0.0018058842979371548,
+              "nonfinite": 0
+            },
+            "mask_to_emb": {
+              "numel": 768,
+              "norm": 0.005710320112138566,
+              "max_abs": 0.0018361223628744483,
+              "nonfinite": 0
+            },
+            "aatype_to_emb": {
+              "numel": 8064,
+              "norm": 0.0003458187347243808,
+              "max_abs": 4.659000114770606e-05,
+              "nonfinite": 0
+            },
+            "ipa_layers.0.adaLN_modulation": {
+              "numel": 887040,
+              "norm": 0.007204768682786174,
+              "max_abs": 0.0027911996003240347,
+              "nonfinite": 0
+            },
+            "ipa_layers.0.ipa_norm": {
+              "numel": 768,
+              "norm": 0.0003064209931385951,
+              "max_abs": 4.352835094323382e-05,
+              "nonfinite": 0
+            },
+            "ipa_layers.0.ipa": {
+              "numel": 357412,
+              "norm": 0.00991824491386616,
+              "max_abs": 0.0008010005112737417,
+              "nonfinite": 0
+            },
+            "ipa_layers.0.mha_l": {
+              "numel": 592128,
+              "norm": 0.002166631827295599,
+              "max_abs": 0.00011048669693991542,
+              "nonfinite": 0
+            },
+            "ipa_layers.0.fc1": {
+              "numel": 591360,
+              "norm": 0.0012672012222133759,
+              "max_abs": 5.751689604949206e-05,
+              "nonfinite": 0
+            },
+            "ipa_layers.0.fc2": {
+              "numel": 590208,
+              "norm": 0.0017990427128647447,
+              "max_abs": 0.0001625874574529007,
+              "nonfinite": 0
+            },
+            "ipa_layers.1.adaLN_modulation": {
+              "numel": 887040,
+              "norm": 0.004653412711677889,
+              "max_abs": 0.0005036111688241363,
+              "nonfinite": 0
+            },
+            "ipa_layers.1.ipa_norm": {
+              "numel": 768,
+              "norm": 0.002803381990455204,
+              "max_abs": 0.0026518148370087147,
+              "nonfinite": 0
+            },
+            "ipa_layers.1.ipa": {
+              "numel": 357412,
+              "norm": 0.007062648727254297,
+              "max_abs": 0.001117716426961124,
+              "nonfinite": 0
+            },
+            "ipa_layers.1.mha_l": {
+              "numel": 592128,
+              "norm": 0.0005811888780827652,
+              "max_abs": 2.7301266527501866e-05,
+              "nonfinite": 0
+            },
+            "ipa_layers.1.fc1": {
+              "numel": 591360,
+              "norm": 0.0015797251756116402,
+              "max_abs": 4.650889241020195e-05,
+              "nonfinite": 0
+            },
+            "ipa_layers.1.fc2": {
+              "numel": 590208,
+              "norm": 0.001610454653004457,
+              "max_abs": 0.00010595079220365733,
+              "nonfinite": 0
+            },
+            "ipa_layers.2.adaLN_modulation": {
+              "numel": 887040,
+              "norm": 0.006590467999798927,
+              "max_abs": 0.000643914972897619,
+              "nonfinite": 0
+            },
+            "ipa_layers.2.ipa_norm": {
+              "numel": 768,
+              "norm": 0.0036772880218701406,
+              "max_abs": 0.0032084397971630096,
+              "nonfinite": 0
+            },
+            "ipa_layers.2.ipa": {
+              "numel": 357412,
+              "norm": 0.02136030323563423,
+              "max_abs": 0.004426170140504837,
+              "nonfinite": 0
+            },
+            "ipa_layers.2.mha_l": {
+              "numel": 592128,
+              "norm": 0.0015100795341798736,
+              "max_abs": 5.589815918938257e-05,
+              "nonfinite": 0
+            },
+            "ipa_layers.2.fc1": {
+              "numel": 591360,
+              "norm": 0.0023016025586554832,
+              "max_abs": 7.126452692318708e-05,
+              "nonfinite": 0
+            },
+            "ipa_layers.2.fc2": {
+              "numel": 590208,
+              "norm": 0.0022913740884595757,
+              "max_abs": 0.00010291897342540324,
+              "nonfinite": 0
+            },
+            "ipa_layers.3.adaLN_modulation": {
+              "numel": 887040,
+              "norm": 0.0111517599523448,
+              "max_abs": 0.0014471523463726044,
+              "nonfinite": 0
+            },
+            "ipa_layers.3.ipa_norm": {
+              "numel": 768,
+              "norm": 0.004300090264473702,
+              "max_abs": 0.003095288062468171,
+              "nonfinite": 0
+            },
+            "ipa_layers.3.ipa": {
+              "numel": 357412,
+              "norm": 0.02014055660470109,
+              "max_abs": 0.0030495375394821167,
+              "nonfinite": 0
+            },
+            "ipa_layers.3.mha_l": {
+              "numel": 592128,
+              "norm": 0.0018260118599482812,
+              "max_abs": 9.024126484291628e-05,
+              "nonfinite": 0
+            },
+            "ipa_layers.3.fc1": {
+              "numel": 591360,
+              "norm": 0.0031283965818486503,
+              "max_abs": 0.00016159287770278752,
+              "nonfinite": 0
+            },
+            "ipa_layers.3.fc2": {
+              "numel": 590208,
+              "norm": 0.002966568704957872,
+              "max_abs": 0.00016584261902607977,
+              "nonfinite": 0
+            },
+            "ipa_layers.4.adaLN_modulation": {
+              "numel": 887040,
+              "norm": 0.038512027920955864,
+              "max_abs": 0.017036236822605133,
+              "nonfinite": 0
+            },
+            "ipa_layers.4.ipa_norm": {
+              "numel": 768,
+              "norm": 0.008185690466193466,
+              "max_abs": 0.006485843565315008,
+              "nonfinite": 0
+            },
+            "ipa_layers.4.ipa": {
+              "numel": 357412,
+              "norm": 0.05111054044437183,
+              "max_abs": 0.0114615298807621,
+              "nonfinite": 0
+            },
+            "ipa_layers.4.mha_l": {
+              "numel": 592128,
+              "norm": 0.008165038227648356,
+              "max_abs": 0.001183409825898707,
+              "nonfinite": 0
+            },
+            "ipa_layers.4.fc1": {
+              "numel": 591360,
+              "norm": 0.0032432702933094704,
+              "max_abs": 0.000175423949258402,
+              "nonfinite": 0
+            },
+            "ipa_layers.4.fc2": {
+              "numel": 590208,
+              "norm": 0.002579190851149489,
+              "max_abs": 0.0004939835635013878,
+              "nonfinite": 0
+            },
+            "layers.0.adaLN_modulation": {
+              "numel": 1330560,
+              "norm": 0.08741817274935536,
+              "max_abs": 0.02136923559010029,
+              "nonfinite": 0
+            },
+            "layers.0.mha_t": {
+              "numel": 592128,
+              "norm": 0.019164833686330412,
+              "max_abs": 0.0013159032678231597,
+              "nonfinite": 0
+            },
+            "layers.0.mha_l": {
+              "numel": 592128,
+              "norm": 0.0320515056720556,
+              "max_abs": 0.0030333134345710278,
+              "nonfinite": 0
+            },
+            "layers.0.fc1": {
+              "numel": 591360,
+              "norm": 0.014104596488696533,
+              "max_abs": 0.0006231879815459251,
+              "nonfinite": 0
+            },
+            "layers.0.fc2": {
+              "numel": 590208,
+              "norm": 0.01397113750838054,
+              "max_abs": 0.0005912826163694263,
+              "nonfinite": 0
+            },
+            "layers.1.adaLN_modulation": {
+              "numel": 1330560,
+              "norm": 0.055849715221816094,
+              "max_abs": 0.014157707802951336,
+              "nonfinite": 0
+            },
+            "layers.1.mha_t": {
+              "numel": 592128,
+              "norm": 0.014939180083581067,
+              "max_abs": 0.0011238057631999254,
+              "nonfinite": 0
+            },
+            "layers.1.mha_l": {
+              "numel": 592128,
+              "norm": 0.027243142501197578,
+              "max_abs": 0.0028548897244036198,
+              "nonfinite": 0
+            },
+            "layers.1.fc1": {
+              "numel": 591360,
+              "norm": 0.016549326440702047,
+              "max_abs": 0.0013125945115461946,
+              "nonfinite": 0
+            },
+            "layers.1.fc2": {
+              "numel": 590208,
+              "norm": 0.013972083556804403,
+              "max_abs": 0.000547461851965636,
+              "nonfinite": 0
+            },
+            "layers.2.adaLN_modulation": {
+              "numel": 1330560,
+              "norm": 0.027955576758766337,
+              "max_abs": 0.005782974883913994,
+              "nonfinite": 0
+            },
+            "layers.2.mha_t": {
+              "numel": 592128,
+              "norm": 0.012053931824319603,
+              "max_abs": 0.0005494813667610288,
+              "nonfinite": 0
+            },
+            "layers.2.mha_l": {
+              "numel": 592128,
+              "norm": 0.010789588953098417,
+              "max_abs": 0.0006372558418661356,
+              "nonfinite": 0
+            },
+            "layers.2.fc1": {
+              "numel": 591360,
+              "norm": 0.014515576870511058,
+              "max_abs": 0.001413147896528244,
+              "nonfinite": 0
+            },
+            "layers.2.fc2": {
+              "numel": 590208,
+              "norm": 0.009877677885334233,
+              "max_abs": 0.0003482741885818541,
+              "nonfinite": 0
+            },
+            "layers.3.adaLN_modulation": {
+              "numel": 1330560,
+              "norm": 0.03026504594716389,
+              "max_abs": 0.015476883389055729,
+              "nonfinite": 0
+            },
+            "layers.3.mha_t": {
+              "numel": 592128,
+              "norm": 0.01159050413074482,
+              "max_abs": 0.00040818064007908106,
+              "nonfinite": 0
+            },
+            "layers.3.mha_l": {
+              "numel": 592128,
+              "norm": 0.006370415436918571,
+              "max_abs": 0.00028427381766960025,
+              "nonfinite": 0
+            },
+            "layers.3.fc1": {
+              "numel": 591360,
+              "norm": 0.013711575236508972,
+              "max_abs": 0.0012618103064596653,
+              "nonfinite": 0
+            },
+            "layers.3.fc2": {
+              "numel": 590208,
+              "norm": 0.007198120442888352,
+              "max_abs": 0.00030738519853912294,
+              "nonfinite": 0
+            },
+            "layers.4.adaLN_modulation": {
+              "numel": 1330560,
+              "norm": 0.033638417436707486,
+              "max_abs": 0.009358447045087814,
+              "nonfinite": 0
+            },
+            "layers.4.mha_t": {
+              "numel": 592128,
+              "norm": 0.010449292256907355,
+              "max_abs": 0.0005950339836999774,
+              "nonfinite": 0
+            },
+            "layers.4.mha_l": {
+              "numel": 592128,
+              "norm": 0.00840959058416381,
+              "max_abs": 0.0004943673848174512,
+              "nonfinite": 0
+            },
+            "layers.4.fc1": {
+              "numel": 591360,
+              "norm": 0.011143622739160287,
+              "max_abs": 0.0010253451764583588,
+              "nonfinite": 0
+            },
+            "layers.4.fc2": {
+              "numel": 590208,
+              "norm": 0.014556275195040887,
+              "max_abs": 0.0023471093736588955,
+              "nonfinite": 0
+            },
+            "emb_to_latent": {
+              "numel": 303765,
+              "norm": 0.07274738138794931,
+              "max_abs": 0.014646267518401146,
+              "nonfinite": 0
+            },
+            "t_embedder": {
+              "numel": 246528,
+              "norm": 0.08216831426726531,
+              "max_abs": 0.012767131440341473,
+              "nonfinite": 0
+            }
+          }
+        },
+        {
+          "precision_config": "fp32-reference",
+          "initial_parameter_norm": 392.3189839223072,
+          "precision_state": {
+            "precision_config": "fp32-reference",
+            "lightning_precision": "32-true",
+            "device_type": "cuda",
+            "autocast_enabled": false,
+            "autocast_dtype": null,
+            "parameter_dtypes": [
+              "torch.float32"
+            ],
+            "float32_matmul_precision": "highest",
+            "cuda_matmul_allow_tf32": false,
+            "cudnn_allow_tf32": false
+          },
+          "batch_shapes": {
+            "frame_start": [
+              1
+            ],
+            "torsions": [
+              1,
+              64,
+              2128,
+              7,
+              2
+            ],
+            "torsion_mask": [
+              1,
+              2128,
+              7
+            ],
+            "trans": [
+              1,
+              64,
+              2128,
+              3
+            ],
+            "rots": [
+              1,
+              64,
+              2128,
+              3,
+              3
+            ],
+            "seqres": [
+              1,
+              2128
+            ],
+            "mask": [
+              1,
+              2128
+            ],
+            "chain_id": [
+              1,
+              2128
+            ],
+            "residue_index": [
+              1,
+              2128
+            ]
+          },
+          "missing_gradients": [
+            "ipa_layers.0.cell_summaries.gate",
+            "ipa_layers.0.cell_summaries.summary_attention.in_proj_weight",
+            "ipa_layers.0.cell_summaries.summary_attention.in_proj_bias",
+            "ipa_layers.0.cell_summaries.summary_attention.out_proj.weight",
+            "ipa_layers.0.cell_summaries.summary_attention.out_proj.bias",
+            "ipa_layers.0.cell_summaries.summary_norm.weight",
+            "ipa_layers.0.cell_summaries.summary_norm.bias",
+            "ipa_layers.0.cell_summaries.inject.weight",
+            "ipa_layers.0.cell_summaries.inject.bias",
+            "ipa_layers.1.cell_summaries.gate",
+            "ipa_layers.1.cell_summaries.summary_attention.in_proj_weight",
+            "ipa_layers.1.cell_summaries.summary_attention.in_proj_bias",
+            "ipa_layers.1.cell_summaries.summary_attention.out_proj.weight",
+            "ipa_layers.1.cell_summaries.summary_attention.out_proj.bias",
+            "ipa_layers.1.cell_summaries.summary_norm.weight",
+            "ipa_layers.1.cell_summaries.summary_norm.bias",
+            "ipa_layers.1.cell_summaries.inject.weight",
+            "ipa_layers.1.cell_summaries.inject.bias",
+            "ipa_layers.2.cell_summaries.gate",
+            "ipa_layers.2.cell_summaries.summary_attention.in_proj_weight",
+            "ipa_layers.2.cell_summaries.summary_attention.in_proj_bias",
+            "ipa_layers.2.cell_summaries.summary_attention.out_proj.weight",
+            "ipa_layers.2.cell_summaries.summary_attention.out_proj.bias",
+            "ipa_layers.2.cell_summaries.summary_norm.weight",
+            "ipa_layers.2.cell_summaries.summary_norm.bias",
+            "ipa_layers.2.cell_summaries.inject.weight",
+            "ipa_layers.2.cell_summaries.inject.bias",
+            "ipa_layers.3.cell_summaries.gate",
+            "ipa_layers.3.cell_summaries.summary_attention.in_proj_weight",
+            "ipa_layers.3.cell_summaries.summary_attention.in_proj_bias",
+            "ipa_layers.3.cell_summaries.summary_attention.out_proj.weight",
+            "ipa_layers.3.cell_summaries.summary_attention.out_proj.bias",
+            "ipa_layers.3.cell_summaries.summary_norm.weight",
+            "ipa_layers.3.cell_summaries.summary_norm.bias",
+            "ipa_layers.3.cell_summaries.inject.weight",
+            "ipa_layers.3.cell_summaries.inject.bias",
+            "ipa_layers.4.cell_summaries.gate",
+            "ipa_layers.4.cell_summaries.summary_attention.in_proj_weight",
+            "ipa_layers.4.cell_summaries.summary_attention.in_proj_bias",
+            "ipa_layers.4.cell_summaries.summary_attention.out_proj.weight",
+            "ipa_layers.4.cell_summaries.summary_attention.out_proj.bias",
+            "ipa_layers.4.cell_summaries.summary_norm.weight",
+            "ipa_layers.4.cell_summaries.summary_norm.bias",
+            "ipa_layers.4.cell_summaries.inject.weight",
+            "ipa_layers.4.cell_summaries.inject.bias",
+            "layers.0.cell_summaries.gate",
+            "layers.0.cell_summaries.summary_attention.in_proj_weight",
+            "layers.0.cell_summaries.summary_attention.in_proj_bias",
+            "layers.0.cell_summaries.summary_attention.out_proj.weight",
+            "layers.0.cell_summaries.summary_attention.out_proj.bias",
+            "layers.0.cell_summaries.summary_norm.weight",
+            "layers.0.cell_summaries.summary_norm.bias",
+            "layers.0.cell_summaries.inject.weight",
+            "layers.0.cell_summaries.inject.bias",
+            "layers.1.cell_summaries.gate",
+            "layers.1.cell_summaries.summary_attention.in_proj_weight",
+            "layers.1.cell_summaries.summary_attention.in_proj_bias",
+            "layers.1.cell_summaries.summary_attention.out_proj.weight",
+            "layers.1.cell_summaries.summary_attention.out_proj.bias",
+            "layers.1.cell_summaries.summary_norm.weight",
+            "layers.1.cell_summaries.summary_norm.bias",
+            "layers.1.cell_summaries.inject.weight",
+            "layers.1.cell_summaries.inject.bias",
+            "layers.2.cell_summaries.gate",
+            "layers.2.cell_summaries.summary_attention.in_proj_weight",
+            "layers.2.cell_summaries.summary_attention.in_proj_bias",
+            "layers.2.cell_summaries.summary_attention.out_proj.weight",
+            "layers.2.cell_summaries.summary_attention.out_proj.bias",
+            "layers.2.cell_summaries.summary_norm.weight",
+            "layers.2.cell_summaries.summary_norm.bias",
+            "layers.2.cell_summaries.inject.weight",
+            "layers.2.cell_summaries.inject.bias",
+            "layers.3.cell_summaries.gate",
+            "layers.3.cell_summaries.summary_attention.in_proj_weight",
+            "layers.3.cell_summaries.summary_attention.in_proj_bias",
+            "layers.3.cell_summaries.summary_attention.out_proj.weight",
+            "layers.3.cell_summaries.summary_attention.out_proj.bias",
+            "layers.3.cell_summaries.summary_norm.weight",
+            "layers.3.cell_summaries.summary_norm.bias",
+            "layers.3.cell_summaries.inject.weight",
+            "layers.3.cell_summaries.inject.bias",
+            "layers.4.cell_summaries.gate",
+            "layers.4.cell_summaries.summary_attention.in_proj_weight",
+            "layers.4.cell_summaries.summary_attention.in_proj_bias",
+            "layers.4.cell_summaries.summary_attention.out_proj.weight",
+            "layers.4.cell_summaries.summary_attention.out_proj.bias",
+            "layers.4.cell_summaries.summary_norm.weight",
+            "layers.4.cell_summaries.summary_norm.bias",
+            "layers.4.cell_summaries.inject.weight",
+            "layers.4.cell_summaries.inject.bias"
+          ],
+          "optimizer": {
+            "class": "Adam",
+            "lr": 0.0001,
+            "betas": [
+              0.9,
+              0.999
+            ],
+            "eps": 1e-08,
+            "weight_decay": 0,
+            "amsgrad": false,
+            "maximize": false,
+            "foreach": null,
+            "capturable": false,
+            "differentiable": false,
+            "fused": null,
+            "decoupled_weight_decay": false
+          },
+          "pre_clip_norm": 0.19049732835970468,
+          "step_time_s": 7.962952515001234,
+          "peak_memory_allocated_bytes": 34668308992,
+          "peak_memory_reserved_bytes": 35567697920,
+          "loss": 0.2163095623254776,
+          "loss_finite": true,
+          "training_time": 0.5,
+          "parameters_nonfinite_after_step": 0,
+          "post_clip_norm": 0.19049732835970468,
+          "clipping_coefficient": 1.0,
+          "grad_checkpointing": true,
+          "gradient_nonfinite": 0,
+          "gradients": {
+            "latent_to_emb": {
+              "numel": 8448,
+              "norm": 0.016655888227956214,
+              "max_abs": 0.002647404558956623,
+              "nonfinite": 0
+            },
+            "cond_to_emb": {
+              "numel": 8448,
+              "norm": 0.005807076942168296,
+              "max_abs": 0.0018058842979371548,
+              "nonfinite": 0
+            },
+            "mask_to_emb": {
+              "numel": 768,
+              "norm": 0.005710320112138566,
+              "max_abs": 0.0018361223628744483,
+              "nonfinite": 0
+            },
+            "aatype_to_emb": {
+              "numel": 8064,
+              "norm": 0.0003458187347243808,
+              "max_abs": 4.659000114770606e-05,
+              "nonfinite": 0
+            },
+            "ipa_layers.0.adaLN_modulation": {
+              "numel": 887040,
+              "norm": 0.007204768682786174,
+              "max_abs": 0.0027911996003240347,
+              "nonfinite": 0
+            },
+            "ipa_layers.0.ipa_norm": {
+              "numel": 768,
+              "norm": 0.0003064209931385951,
+              "max_abs": 4.352835094323382e-05,
+              "nonfinite": 0
+            },
+            "ipa_layers.0.ipa": {
+              "numel": 357412,
+              "norm": 0.00991824491386616,
+              "max_abs": 0.0008010005112737417,
+              "nonfinite": 0
+            },
+            "ipa_layers.0.mha_l": {
+              "numel": 592128,
+              "norm": 0.002166631827295599,
+              "max_abs": 0.00011048669693991542,
+              "nonfinite": 0
+            },
+            "ipa_layers.0.fc1": {
+              "numel": 591360,
+              "norm": 0.0012672012222133759,
+              "max_abs": 5.751689604949206e-05,
+              "nonfinite": 0
+            },
+            "ipa_layers.0.fc2": {
+              "numel": 590208,
+              "norm": 0.0017990427128647447,
+              "max_abs": 0.0001625874574529007,
+              "nonfinite": 0
+            },
+            "ipa_layers.1.adaLN_modulation": {
+              "numel": 887040,
+              "norm": 0.004653412711677889,
+              "max_abs": 0.0005036111688241363,
+              "nonfinite": 0
+            },
+            "ipa_layers.1.ipa_norm": {
+              "numel": 768,
+              "norm": 0.002803381990455204,
+              "max_abs": 0.0026518148370087147,
+              "nonfinite": 0
+            },
+            "ipa_layers.1.ipa": {
+              "numel": 357412,
+              "norm": 0.007062648727254297,
+              "max_abs": 0.001117716426961124,
+              "nonfinite": 0
+            },
+            "ipa_layers.1.mha_l": {
+              "numel": 592128,
+              "norm": 0.0005811888780827652,
+              "max_abs": 2.7301266527501866e-05,
+              "nonfinite": 0
+            },
+            "ipa_layers.1.fc1": {
+              "numel": 591360,
+              "norm": 0.0015797251756116402,
+              "max_abs": 4.650889241020195e-05,
+              "nonfinite": 0
+            },
+            "ipa_layers.1.fc2": {
+              "numel": 590208,
+              "norm": 0.001610454653004457,
+              "max_abs": 0.00010595079220365733,
+              "nonfinite": 0
+            },
+            "ipa_layers.2.adaLN_modulation": {
+              "numel": 887040,
+              "norm": 0.006590467999798927,
+              "max_abs": 0.000643914972897619,
+              "nonfinite": 0
+            },
+            "ipa_layers.2.ipa_norm": {
+              "numel": 768,
+              "norm": 0.0036772880218701406,
+              "max_abs": 0.0032084397971630096,
+              "nonfinite": 0
+            },
+            "ipa_layers.2.ipa": {
+              "numel": 357412,
+              "norm": 0.02136030323563423,
+              "max_abs": 0.004426170140504837,
+              "nonfinite": 0
+            },
+            "ipa_layers.2.mha_l": {
+              "numel": 592128,
+              "norm": 0.0015100795341798736,
+              "max_abs": 5.589815918938257e-05,
+              "nonfinite": 0
+            },
+            "ipa_layers.2.fc1": {
+              "numel": 591360,
+              "norm": 0.0023016025586554832,
+              "max_abs": 7.126452692318708e-05,
+              "nonfinite": 0
+            },
+            "ipa_layers.2.fc2": {
+              "numel": 590208,
+              "norm": 0.0022913740884595757,
+              "max_abs": 0.00010291897342540324,
+              "nonfinite": 0
+            },
+            "ipa_layers.3.adaLN_modulation": {
+              "numel": 887040,
+              "norm": 0.0111517599523448,
+              "max_abs": 0.0014471523463726044,
+              "nonfinite": 0
+            },
+            "ipa_layers.3.ipa_norm": {
+              "numel": 768,
+              "norm": 0.004300090264473702,
+              "max_abs": 0.003095288062468171,
+              "nonfinite": 0
+            },
+            "ipa_layers.3.ipa": {
+              "numel": 357412,
+              "norm": 0.02014055660470109,
+              "max_abs": 0.0030495375394821167,
+              "nonfinite": 0
+            },
+            "ipa_layers.3.mha_l": {
+              "numel": 592128,
+              "norm": 0.0018260118599482812,
+              "max_abs": 9.024126484291628e-05,
+              "nonfinite": 0
+            },
+            "ipa_layers.3.fc1": {
+              "numel": 591360,
+              "norm": 0.0031283965818486503,
+              "max_abs": 0.00016159287770278752,
+              "nonfinite": 0
+            },
+            "ipa_layers.3.fc2": {
+              "numel": 590208,
+              "norm": 0.002966568704957872,
+              "max_abs": 0.00016584261902607977,
+              "nonfinite": 0
+            },
+            "ipa_layers.4.adaLN_modulation": {
+              "numel": 887040,
+              "norm": 0.038512027920955864,
+              "max_abs": 0.017036236822605133,
+              "nonfinite": 0
+            },
+            "ipa_layers.4.ipa_norm": {
+              "numel": 768,
+              "norm": 0.008185690466193466,
+              "max_abs": 0.006485843565315008,
+              "nonfinite": 0
+            },
+            "ipa_layers.4.ipa": {
+              "numel": 357412,
+              "norm": 0.05111054044437183,
+              "max_abs": 0.0114615298807621,
+              "nonfinite": 0
+            },
+            "ipa_layers.4.mha_l": {
+              "numel": 592128,
+              "norm": 0.008165038227648356,
+              "max_abs": 0.001183409825898707,
+              "nonfinite": 0
+            },
+            "ipa_layers.4.fc1": {
+              "numel": 591360,
+              "norm": 0.0032432702933094704,
+              "max_abs": 0.000175423949258402,
+              "nonfinite": 0
+            },
+            "ipa_layers.4.fc2": {
+              "numel": 590208,
+              "norm": 0.002579190851149489,
+              "max_abs": 0.0004939835635013878,
+              "nonfinite": 0
+            },
+            "layers.0.adaLN_modulation": {
+              "numel": 1330560,
+              "norm": 0.08741817274935536,
+              "max_abs": 0.02136923559010029,
+              "nonfinite": 0
+            },
+            "layers.0.mha_t": {
+              "numel": 592128,
+              "norm": 0.019164833686330412,
+              "max_abs": 0.0013159032678231597,
+              "nonfinite": 0
+            },
+            "layers.0.mha_l": {
+              "numel": 592128,
+              "norm": 0.0320515056720556,
+              "max_abs": 0.0030333134345710278,
+              "nonfinite": 0
+            },
+            "layers.0.fc1": {
+              "numel": 591360,
+              "norm": 0.014104596488696533,
+              "max_abs": 0.0006231879815459251,
+              "nonfinite": 0
+            },
+            "layers.0.fc2": {
+              "numel": 590208,
+              "norm": 0.01397113750838054,
+              "max_abs": 0.0005912826163694263,
+              "nonfinite": 0
+            },
+            "layers.1.adaLN_modulation": {
+              "numel": 1330560,
+              "norm": 0.055849715221816094,
+              "max_abs": 0.014157707802951336,
+              "nonfinite": 0
+            },
+            "layers.1.mha_t": {
+              "numel": 592128,
+              "norm": 0.014939180083581067,
+              "max_abs": 0.0011238057631999254,
+              "nonfinite": 0
+            },
+            "layers.1.mha_l": {
+              "numel": 592128,
+              "norm": 0.027243142501197578,
+              "max_abs": 0.0028548897244036198,
+              "nonfinite": 0
+            },
+            "layers.1.fc1": {
+              "numel": 591360,
+              "norm": 0.016549326440702047,
+              "max_abs": 0.0013125945115461946,
+              "nonfinite": 0
+            },
+            "layers.1.fc2": {
+              "numel": 590208,
+              "norm": 0.013972083556804403,
+              "max_abs": 0.000547461851965636,
+              "nonfinite": 0
+            },
+            "layers.2.adaLN_modulation": {
+              "numel": 1330560,
+              "norm": 0.027955576758766337,
+              "max_abs": 0.005782974883913994,
+              "nonfinite": 0
+            },
+            "layers.2.mha_t": {
+              "numel": 592128,
+              "norm": 0.012053931824319603,
+              "max_abs": 0.0005494813667610288,
+              "nonfinite": 0
+            },
+            "layers.2.mha_l": {
+              "numel": 592128,
+              "norm": 0.010789588953098417,
+              "max_abs": 0.0006372558418661356,
+              "nonfinite": 0
+            },
+            "layers.2.fc1": {
+              "numel": 591360,
+              "norm": 0.014515576870511058,
+              "max_abs": 0.001413147896528244,
+              "nonfinite": 0
+            },
+            "layers.2.fc2": {
+              "numel": 590208,
+              "norm": 0.009877677885334233,
+              "max_abs": 0.0003482741885818541,
+              "nonfinite": 0
+            },
+            "layers.3.adaLN_modulation": {
+              "numel": 1330560,
+              "norm": 0.03026504594716389,
+              "max_abs": 0.015476883389055729,
+              "nonfinite": 0
+            },
+            "layers.3.mha_t": {
+              "numel": 592128,
+              "norm": 0.01159050413074482,
+              "max_abs": 0.00040818064007908106,
+              "nonfinite": 0
+            },
+            "layers.3.mha_l": {
+              "numel": 592128,
+              "norm": 0.006370415436918571,
+              "max_abs": 0.00028427381766960025,
+              "nonfinite": 0
+            },
+            "layers.3.fc1": {
+              "numel": 591360,
+              "norm": 0.013711575236508972,
+              "max_abs": 0.0012618103064596653,
+              "nonfinite": 0
+            },
+            "layers.3.fc2": {
+              "numel": 590208,
+              "norm": 0.007198120442888352,
+              "max_abs": 0.00030738519853912294,
+              "nonfinite": 0
+            },
+            "layers.4.adaLN_modulation": {
+              "numel": 1330560,
+              "norm": 0.033638417436707486,
+              "max_abs": 0.009358447045087814,
+              "nonfinite": 0
+            },
+            "layers.4.mha_t": {
+              "numel": 592128,
+              "norm": 0.010449292256907355,
+              "max_abs": 0.0005950339836999774,
+              "nonfinite": 0
+            },
+            "layers.4.mha_l": {
+              "numel": 592128,
+              "norm": 0.00840959058416381,
+              "max_abs": 0.0004943673848174512,
+              "nonfinite": 0
+            },
+            "layers.4.fc1": {
+              "numel": 591360,
+              "norm": 0.011143622739160287,
+              "max_abs": 0.0010253451764583588,
+              "nonfinite": 0
+            },
+            "layers.4.fc2": {
+              "numel": 590208,
+              "norm": 0.014556275195040887,
+              "max_abs": 0.0023471093736588955,
+              "nonfinite": 0
+            },
+            "emb_to_latent": {
+              "numel": 303765,
+              "norm": 0.07274738138794931,
+              "max_abs": 0.014646267518401146,
+              "nonfinite": 0
+            },
+            "t_embedder": {
+              "numel": 246528,
+              "norm": 0.08216831426726531,
+              "max_abs": 0.012767131440341473,
+              "nonfinite": 0
+            }
+          }
+        }
+      ],
+      "comparisons": [
+        {
+          "reference": "fp32-reference",
+          "candidate": "fp32-reference",
+          "gradient_cosine": {
+            "latent_to_emb": 0.9999999999999992,
+            "cond_to_emb": 1.0,
+            "mask_to_emb": 1.0,
+            "aatype_to_emb": 0.9999999999999976,
+            "ipa_layers.0.adaLN_modulation": 1.0,
+            "ipa_layers.0.ipa_norm": 1.0,
+            "ipa_layers.0.ipa": 0.9999999999999879,
+            "ipa_layers.0.mha_l": 0.9999999999999816,
+            "ipa_layers.0.fc1": 0.9999999999999356,
+            "ipa_layers.0.fc2": 0.9999999999999598,
+            "ipa_layers.1.adaLN_modulation": 0.9999999999999999,
+            "ipa_layers.1.ipa_norm": 0.9999999999999989,
+            "ipa_layers.1.ipa": 1.0,
+            "ipa_layers.1.mha_l": 0.9999999999999583,
+            "ipa_layers.1.fc1": 0.9999999999999319,
+            "ipa_layers.1.fc2": 0.9999999999999417,
+            "ipa_layers.2.adaLN_modulation": 0.999999999999992,
+            "ipa_layers.2.ipa_norm": 1.0,
+            "ipa_layers.2.ipa": 0.9999999999999947,
+            "ipa_layers.2.mha_l": 0.9999999999999644,
+            "ipa_layers.2.fc1": 0.9999999999999333,
+            "ipa_layers.2.fc2": 0.9999999999999317,
+            "ipa_layers.3.adaLN_modulation": 1.0,
+            "ipa_layers.3.ipa_norm": 0.9999999999999997,
+            "ipa_layers.3.ipa": 0.999999999999986,
+            "ipa_layers.3.mha_l": 0.99999999999997,
+            "ipa_layers.3.fc1": 0.9999999999999276,
+            "ipa_layers.3.fc2": 0.9999999999999352,
+            "ipa_layers.4.adaLN_modulation": 1.0,
+            "ipa_layers.4.ipa_norm": 0.999999999999999,
+            "ipa_layers.4.ipa": 0.9999999999999952,
+            "ipa_layers.4.mha_l": 0.9999999999999802,
+            "ipa_layers.4.fc1": 0.9999999999999515,
+            "ipa_layers.4.fc2": 0.9999999999999626,
+            "layers.0.adaLN_modulation": 1.0,
+            "layers.0.mha_t": 0.9999999999999631,
+            "layers.0.mha_l": 0.9999999999999806,
+            "layers.0.fc1": 0.9999999999999467,
+            "layers.0.fc2": 0.9999999999999546,
+            "layers.1.adaLN_modulation": 1.0,
+            "layers.1.mha_t": 0.9999999999999397,
+            "layers.1.mha_l": 0.999999999999964,
+            "layers.1.fc1": 0.9999999999999432,
+            "layers.1.fc2": 0.9999999999999527,
+            "layers.2.adaLN_modulation": 1.0,
+            "layers.2.mha_t": 0.9999999999999345,
+            "layers.2.mha_l": 0.9999999999999498,
+            "layers.2.fc1": 0.9999999999999636,
+            "layers.2.fc2": 0.9999999999999434,
+            "layers.3.adaLN_modulation": 1.0,
+            "layers.3.mha_t": 0.99999999999994,
+            "layers.3.mha_l": 0.9999999999999635,
+            "layers.3.fc1": 0.9999999999999643,
+            "layers.3.fc2": 0.9999999999999588,
+            "layers.4.adaLN_modulation": 1.0,
+            "layers.4.mha_t": 0.9999999999999567,
+            "layers.4.mha_l": 0.9999999999999684,
+            "layers.4.fc1": 0.9999999999999607,
+            "layers.4.fc2": 0.999999999999978,
+            "emb_to_latent": 1.0,
+            "t_embedder": 1.0
+          },
+          "max_abs_difference": {
+            "latent_to_emb": 0.0,
+            "cond_to_emb": 0.0,
+            "mask_to_emb": 0.0,
+            "aatype_to_emb": 0.0,
+            "ipa_layers.0.adaLN_modulation": 0.0,
+            "ipa_layers.0.ipa_norm": 0.0,
+            "ipa_layers.0.ipa": 0.0,
+            "ipa_layers.0.mha_l": 0.0,
+            "ipa_layers.0.fc1": 0.0,
+            "ipa_layers.0.fc2": 0.0,
+            "ipa_layers.1.adaLN_modulation": 0.0,
+            "ipa_layers.1.ipa_norm": 0.0,
+            "ipa_layers.1.ipa": 0.0,
+            "ipa_layers.1.mha_l": 0.0,
+            "ipa_layers.1.fc1": 0.0,
+            "ipa_layers.1.fc2": 0.0,
+            "ipa_layers.2.adaLN_modulation": 0.0,
+            "ipa_layers.2.ipa_norm": 0.0,
+            "ipa_layers.2.ipa": 0.0,
+            "ipa_layers.2.mha_l": 0.0,
+            "ipa_layers.2.fc1": 0.0,
+            "ipa_layers.2.fc2": 0.0,
+            "ipa_layers.3.adaLN_modulation": 0.0,
+            "ipa_layers.3.ipa_norm": 0.0,
+            "ipa_layers.3.ipa": 0.0,
+            "ipa_layers.3.mha_l": 0.0,
+            "ipa_layers.3.fc1": 0.0,
+            "ipa_layers.3.fc2": 0.0,
+            "ipa_layers.4.adaLN_modulation": 0.0,
+            "ipa_layers.4.ipa_norm": 0.0,
+            "ipa_layers.4.ipa": 0.0,
+            "ipa_layers.4.mha_l": 0.0,
+            "ipa_layers.4.fc1": 0.0,
+            "ipa_layers.4.fc2": 0.0,
+            "layers.0.adaLN_modulation": 0.0,
+            "layers.0.mha_t": 0.0,
+            "layers.0.mha_l": 0.0,
+            "layers.0.fc1": 0.0,
+            "layers.0.fc2": 0.0,
+            "layers.1.adaLN_modulation": 0.0,
+            "layers.1.mha_t": 0.0,
+            "layers.1.mha_l": 0.0,
+            "layers.1.fc1": 0.0,
+            "layers.1.fc2": 0.0,
+            "layers.2.adaLN_modulation": 0.0,
+            "layers.2.mha_t": 0.0,
+            "layers.2.mha_l": 0.0,
+            "layers.2.fc1": 0.0,
+            "layers.2.fc2": 0.0,
+            "layers.3.adaLN_modulation": 0.0,
+            "layers.3.mha_t": 0.0,
+            "layers.3.mha_l": 0.0,
+            "layers.3.fc1": 0.0,
+            "layers.3.fc2": 0.0,
+            "layers.4.adaLN_modulation": 0.0,
+            "layers.4.mha_t": 0.0,
+            "layers.4.mha_l": 0.0,
+            "layers.4.fc1": 0.0,
+            "layers.4.fc2": 0.0,
+            "emb_to_latent": 0.0,
+            "t_embedder": 0.0
+          },
+          "min_gradient_cosine": 0.9999999999999276,
+          "min_gradient_cosine_group": "ipa_layers.3.fc1",
+          "cosine_threshold": 0.99,
+          "all_groups_pass": true,
+          "step_time_speedup": 1.0192323354745625
+        },
+        {
+          "reference": "fp32-reference",
+          "candidate": "fp32-reference",
+          "gradient_cosine": {
+            "latent_to_emb": 0.9999999999999992,
+            "cond_to_emb": 1.0,
+            "mask_to_emb": 1.0,
+            "aatype_to_emb": 0.9999999999999976,
+            "ipa_layers.0.adaLN_modulation": 1.0,
+            "ipa_layers.0.ipa_norm": 1.0,
+            "ipa_layers.0.ipa": 0.9999999999999879,
+            "ipa_layers.0.mha_l": 0.9999999999999816,
+            "ipa_layers.0.fc1": 0.9999999999999356,
+            "ipa_layers.0.fc2": 0.9999999999999598,
+            "ipa_layers.1.adaLN_modulation": 0.9999999999999999,
+            "ipa_layers.1.ipa_norm": 0.9999999999999989,
+            "ipa_layers.1.ipa": 1.0,
+            "ipa_layers.1.mha_l": 0.9999999999999583,
+            "ipa_layers.1.fc1": 0.9999999999999319,
+            "ipa_layers.1.fc2": 0.9999999999999417,
+            "ipa_layers.2.adaLN_modulation": 0.999999999999992,
+            "ipa_layers.2.ipa_norm": 1.0,
+            "ipa_layers.2.ipa": 0.9999999999999947,
+            "ipa_layers.2.mha_l": 0.9999999999999644,
+            "ipa_layers.2.fc1": 0.9999999999999333,
+            "ipa_layers.2.fc2": 0.9999999999999317,
+            "ipa_layers.3.adaLN_modulation": 1.0,
+            "ipa_layers.3.ipa_norm": 0.9999999999999997,
+            "ipa_layers.3.ipa": 0.999999999999986,
+            "ipa_layers.3.mha_l": 0.99999999999997,
+            "ipa_layers.3.fc1": 0.9999999999999276,
+            "ipa_layers.3.fc2": 0.9999999999999352,
+            "ipa_layers.4.adaLN_modulation": 1.0,
+            "ipa_layers.4.ipa_norm": 0.999999999999999,
+            "ipa_layers.4.ipa": 0.9999999999999952,
+            "ipa_layers.4.mha_l": 0.9999999999999802,
+            "ipa_layers.4.fc1": 0.9999999999999515,
+            "ipa_layers.4.fc2": 0.9999999999999626,
+            "layers.0.adaLN_modulation": 1.0,
+            "layers.0.mha_t": 0.9999999999999631,
+            "layers.0.mha_l": 0.9999999999999806,
+            "layers.0.fc1": 0.9999999999999467,
+            "layers.0.fc2": 0.9999999999999546,
+            "layers.1.adaLN_modulation": 1.0,
+            "layers.1.mha_t": 0.9999999999999397,
+            "layers.1.mha_l": 0.999999999999964,
+            "layers.1.fc1": 0.9999999999999432,
+            "layers.1.fc2": 0.9999999999999527,
+            "layers.2.adaLN_modulation": 1.0,
+            "layers.2.mha_t": 0.9999999999999345,
+            "layers.2.mha_l": 0.9999999999999498,
+            "layers.2.fc1": 0.9999999999999636,
+            "layers.2.fc2": 0.9999999999999434,
+            "layers.3.adaLN_modulation": 1.0,
+            "layers.3.mha_t": 0.99999999999994,
+            "layers.3.mha_l": 0.9999999999999635,
+            "layers.3.fc1": 0.9999999999999643,
+            "layers.3.fc2": 0.9999999999999588,
+            "layers.4.adaLN_modulation": 1.0,
+            "layers.4.mha_t": 0.9999999999999567,
+            "layers.4.mha_l": 0.9999999999999684,
+            "layers.4.fc1": 0.9999999999999607,
+            "layers.4.fc2": 0.999999999999978,
+            "emb_to_latent": 1.0,
+            "t_embedder": 1.0
+          },
+          "max_abs_difference": {
+            "latent_to_emb": 0.0,
+            "cond_to_emb": 0.0,
+            "mask_to_emb": 0.0,
+            "aatype_to_emb": 0.0,
+            "ipa_layers.0.adaLN_modulation": 0.0,
+            "ipa_layers.0.ipa_norm": 0.0,
+            "ipa_layers.0.ipa": 0.0,
+            "ipa_layers.0.mha_l": 0.0,
+            "ipa_layers.0.fc1": 0.0,
+            "ipa_layers.0.fc2": 0.0,
+            "ipa_layers.1.adaLN_modulation": 0.0,
+            "ipa_layers.1.ipa_norm": 0.0,
+            "ipa_layers.1.ipa": 0.0,
+            "ipa_layers.1.mha_l": 0.0,
+            "ipa_layers.1.fc1": 0.0,
+            "ipa_layers.1.fc2": 0.0,
+            "ipa_layers.2.adaLN_modulation": 0.0,
+            "ipa_layers.2.ipa_norm": 0.0,
+            "ipa_layers.2.ipa": 0.0,
+            "ipa_layers.2.mha_l": 0.0,
+            "ipa_layers.2.fc1": 0.0,
+            "ipa_layers.2.fc2": 0.0,
+            "ipa_layers.3.adaLN_modulation": 0.0,
+            "ipa_layers.3.ipa_norm": 0.0,
+            "ipa_layers.3.ipa": 0.0,
+            "ipa_layers.3.mha_l": 0.0,
+            "ipa_layers.3.fc1": 0.0,
+            "ipa_layers.3.fc2": 0.0,
+            "ipa_layers.4.adaLN_modulation": 0.0,
+            "ipa_layers.4.ipa_norm": 0.0,
+            "ipa_layers.4.ipa": 0.0,
+            "ipa_layers.4.mha_l": 0.0,
+            "ipa_layers.4.fc1": 0.0,
+            "ipa_layers.4.fc2": 0.0,
+            "layers.0.adaLN_modulation": 0.0,
+            "layers.0.mha_t": 0.0,
+            "layers.0.mha_l": 0.0,
+            "layers.0.fc1": 0.0,
+            "layers.0.fc2": 0.0,
+            "layers.1.adaLN_modulation": 0.0,
+            "layers.1.mha_t": 0.0,
+            "layers.1.mha_l": 0.0,
+            "layers.1.fc1": 0.0,
+            "layers.1.fc2": 0.0,
+            "layers.2.adaLN_modulation": 0.0,
+            "layers.2.mha_t": 0.0,
+            "layers.2.mha_l": 0.0,
+            "layers.2.fc1": 0.0,
+            "layers.2.fc2": 0.0,
+            "layers.3.adaLN_modulation": 0.0,
+            "layers.3.mha_t": 0.0,
+            "layers.3.mha_l": 0.0,
+            "layers.3.fc1": 0.0,
+            "layers.3.fc2": 0.0,
+            "layers.4.adaLN_modulation": 0.0,
+            "layers.4.mha_t": 0.0,
+            "layers.4.mha_l": 0.0,
+            "layers.4.fc1": 0.0,
+            "layers.4.fc2": 0.0,
+            "emb_to_latent": 0.0,
+            "t_embedder": 0.0
+          },
+          "min_gradient_cosine": 0.9999999999999276,
+          "min_gradient_cosine_group": "ipa_layers.3.fc1",
+          "cosine_threshold": 0.99,
+          "all_groups_pass": true,
+          "step_time_speedup": 1.0578571675896622
+        },
+        {
+          "reference": "fp32-reference",
+          "candidate": "fp32-reference",
+          "gradient_cosine": {
+            "latent_to_emb": 0.9999999999999992,
+            "cond_to_emb": 1.0,
+            "mask_to_emb": 1.0,
+            "aatype_to_emb": 0.9999999999999976,
+            "ipa_layers.0.adaLN_modulation": 1.0,
+            "ipa_layers.0.ipa_norm": 1.0,
+            "ipa_layers.0.ipa": 0.9999999999999879,
+            "ipa_layers.0.mha_l": 0.9999999999999816,
+            "ipa_layers.0.fc1": 0.9999999999999356,
+            "ipa_layers.0.fc2": 0.9999999999999598,
+            "ipa_layers.1.adaLN_modulation": 0.9999999999999999,
+            "ipa_layers.1.ipa_norm": 0.9999999999999989,
+            "ipa_layers.1.ipa": 1.0,
+            "ipa_layers.1.mha_l": 0.9999999999999583,
+            "ipa_layers.1.fc1": 0.9999999999999319,
+            "ipa_layers.1.fc2": 0.9999999999999417,
+            "ipa_layers.2.adaLN_modulation": 0.999999999999992,
+            "ipa_layers.2.ipa_norm": 1.0,
+            "ipa_layers.2.ipa": 0.9999999999999947,
+            "ipa_layers.2.mha_l": 0.9999999999999644,
+            "ipa_layers.2.fc1": 0.9999999999999333,
+            "ipa_layers.2.fc2": 0.9999999999999317,
+            "ipa_layers.3.adaLN_modulation": 1.0,
+            "ipa_layers.3.ipa_norm": 0.9999999999999997,
+            "ipa_layers.3.ipa": 0.999999999999986,
+            "ipa_layers.3.mha_l": 0.99999999999997,
+            "ipa_layers.3.fc1": 0.9999999999999276,
+            "ipa_layers.3.fc2": 0.9999999999999352,
+            "ipa_layers.4.adaLN_modulation": 1.0,
+            "ipa_layers.4.ipa_norm": 0.999999999999999,
+            "ipa_layers.4.ipa": 0.9999999999999952,
+            "ipa_layers.4.mha_l": 0.9999999999999802,
+            "ipa_layers.4.fc1": 0.9999999999999515,
+            "ipa_layers.4.fc2": 0.9999999999999626,
+            "layers.0.adaLN_modulation": 1.0,
+            "layers.0.mha_t": 0.9999999999999631,
+            "layers.0.mha_l": 0.9999999999999806,
+            "layers.0.fc1": 0.9999999999999467,
+            "layers.0.fc2": 0.9999999999999546,
+            "layers.1.adaLN_modulation": 1.0,
+            "layers.1.mha_t": 0.9999999999999397,
+            "layers.1.mha_l": 0.999999999999964,
+            "layers.1.fc1": 0.9999999999999432,
+            "layers.1.fc2": 0.9999999999999527,
+            "layers.2.adaLN_modulation": 1.0,
+            "layers.2.mha_t": 0.9999999999999345,
+            "layers.2.mha_l": 0.9999999999999498,
+            "layers.2.fc1": 0.9999999999999636,
+            "layers.2.fc2": 0.9999999999999434,
+            "layers.3.adaLN_modulation": 1.0,
+            "layers.3.mha_t": 0.99999999999994,
+            "layers.3.mha_l": 0.9999999999999635,
+            "layers.3.fc1": 0.9999999999999643,
+            "layers.3.fc2": 0.9999999999999588,
+            "layers.4.adaLN_modulation": 1.0,
+            "layers.4.mha_t": 0.9999999999999567,
+            "layers.4.mha_l": 0.9999999999999684,
+            "layers.4.fc1": 0.9999999999999607,
+            "layers.4.fc2": 0.999999999999978,
+            "emb_to_latent": 1.0,
+            "t_embedder": 1.0
+          },
+          "max_abs_difference": {
+            "latent_to_emb": 0.0,
+            "cond_to_emb": 0.0,
+            "mask_to_emb": 0.0,
+            "aatype_to_emb": 0.0,
+            "ipa_layers.0.adaLN_modulation": 0.0,
+            "ipa_layers.0.ipa_norm": 0.0,
+            "ipa_layers.0.ipa": 0.0,
+            "ipa_layers.0.mha_l": 0.0,
+            "ipa_layers.0.fc1": 0.0,
+            "ipa_layers.0.fc2": 0.0,
+            "ipa_layers.1.adaLN_modulation": 0.0,
+            "ipa_layers.1.ipa_norm": 0.0,
+            "ipa_layers.1.ipa": 0.0,
+            "ipa_layers.1.mha_l": 0.0,
+            "ipa_layers.1.fc1": 0.0,
+            "ipa_layers.1.fc2": 0.0,
+            "ipa_layers.2.adaLN_modulation": 0.0,
+            "ipa_layers.2.ipa_norm": 0.0,
+            "ipa_layers.2.ipa": 0.0,
+            "ipa_layers.2.mha_l": 0.0,
+            "ipa_layers.2.fc1": 0.0,
+            "ipa_layers.2.fc2": 0.0,
+            "ipa_layers.3.adaLN_modulation": 0.0,
+            "ipa_layers.3.ipa_norm": 0.0,
+            "ipa_layers.3.ipa": 0.0,
+            "ipa_layers.3.mha_l": 0.0,
+            "ipa_layers.3.fc1": 0.0,
+            "ipa_layers.3.fc2": 0.0,
+            "ipa_layers.4.adaLN_modulation": 0.0,
+            "ipa_layers.4.ipa_norm": 0.0,
+            "ipa_layers.4.ipa": 0.0,
+            "ipa_layers.4.mha_l": 0.0,
+            "ipa_layers.4.fc1": 0.0,
+            "ipa_layers.4.fc2": 0.0,
+            "layers.0.adaLN_modulation": 0.0,
+            "layers.0.mha_t": 0.0,
+            "layers.0.mha_l": 0.0,
+            "layers.0.fc1": 0.0,
+            "layers.0.fc2": 0.0,
+            "layers.1.adaLN_modulation": 0.0,
+            "layers.1.mha_t": 0.0,
+            "layers.1.mha_l": 0.0,
+            "layers.1.fc1": 0.0,
+            "layers.1.fc2": 0.0,
+            "layers.2.adaLN_modulation": 0.0,
+            "layers.2.mha_t": 0.0,
+            "layers.2.mha_l": 0.0,
+            "layers.2.fc1": 0.0,
+            "layers.2.fc2": 0.0,
+            "layers.3.adaLN_modulation": 0.0,
+            "layers.3.mha_t": 0.0,
+            "layers.3.mha_l": 0.0,
+            "layers.3.fc1": 0.0,
+            "layers.3.fc2": 0.0,
+            "layers.4.adaLN_modulation": 0.0,
+            "layers.4.mha_t": 0.0,
+            "layers.4.mha_l": 0.0,
+            "layers.4.fc1": 0.0,
+            "layers.4.fc2": 0.0,
+            "emb_to_latent": 0.0,
+            "t_embedder": 0.0
+          },
+          "min_gradient_cosine": 0.9999999999999276,
+          "min_gradient_cosine_group": "ipa_layers.3.fc1",
+          "cosine_threshold": 0.99,
+          "all_groups_pass": true,
+          "step_time_speedup": 1.0648927478878512
+        }
+      ],
+      "checkpoint": {
+        "path": "/share/home/r15543056/MDgen/mdgen/ckpt/atlas.ckpt",
+        "sha256": "bc90c66e7539f52c9d0514aeddd96c552061150a1eef3b10c120bc3aaff08015",
+        "optimizer_state": "fresh"
+      }
+    }
+  }
+}

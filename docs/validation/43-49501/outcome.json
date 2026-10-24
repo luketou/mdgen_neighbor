@@ -1,0 +1,2859 @@
+{
+  "job_id": 49501,
+  "frames": 250,
+  "source_commit": "9c64271",
+  "run_id": "issue43-t2-train4-20261023T153411Z-9c64271",
+  "driver_finished": true,
+  "counts": {
+    "failed": 2,
+    "completed": 30,
+    "infeasible_seed": 21,
+    "duplicate": 126,
+    "not_run_budget": 28
+  },
+  "cases": [
+    {
+      "id": "6sup_A-R1-full",
+      "protein": "6sup_A",
+      "replica": 1,
+      "setting": "full",
+      "status": "failed",
+      "returncode": 1,
+      "elapsed_s": 31.464441361000354,
+      "failure_class": "oom",
+      "failure_phase": "backward",
+      "log": "results/training_region_probe_49501/6sup_A-R1-full.log",
+      "oom_tried_allocate_mib": 230.0,
+      "gpu_total_gib": 44.39,
+      "torch_allocated_gib": 43.0
+    },
+    {
+      "id": "6sup_A-R1-halo1-group89",
+      "protein": "6sup_A",
+      "replica": 1,
+      "setting": "halo1",
+      "seed_group": 89,
+      "status": "completed",
+      "region_residues": 866,
+      "truncated": true,
+      "elapsed_s": 42.386932376000914,
+      "losses": [
+        0.17445416748523712,
+        0.17445416748523712,
+        0.17445416748523712,
+        0.17445416748523712
+      ],
+      "all_losses_finite": true,
+      "gradient_nonfinite": 0,
+      "parameters_nonfinite_after_step": 0,
+      "peak_allocated_bytes": 25712023552,
+      "peak_reserved_bytes": 28366077952,
+      "median_step_time_s": 4.628215894997993,
+      "batch_shape_trans": [
+        1,
+        250,
+        896,
+        3
+      ]
+    },
+    {
+      "id": "6sup_A-R1-halo1-group65",
+      "protein": "6sup_A",
+      "replica": 1,
+      "setting": "halo1",
+      "seed_group": 65,
+      "status": "completed",
+      "region_residues": 726,
+      "truncated": true,
+      "elapsed_s": 45.219349352999416,
+      "losses": [
+        0.18005435168743134,
+        0.18005435168743134,
+        0.18005435168743134,
+        0.18005435168743134
+      ],
+      "all_losses_finite": true,
+      "gradient_nonfinite": 0,
+      "parameters_nonfinite_after_step": 0,
+      "peak_allocated_bytes": 25628050432,
+      "peak_reserved_bytes": 28158459904,
+      "median_step_time_s": 4.604913591996592,
+      "batch_shape_trans": [
+        1,
+        250,
+        896,
+        3
+      ]
+    },
+    {
+      "id": "6sup_A-R1-halo1-group63",
+      "protein": "6sup_A",
+      "replica": 1,
+      "setting": "halo1",
+      "seed_group": 63,
+      "status": "completed",
+      "region_residues": 841,
+      "truncated": true,
+      "elapsed_s": 46.268199575002654,
+      "losses": [
+        0.19241932034492493,
+        0.19241932034492493,
+        0.19241932034492493,
+        0.19241932034492493
+      ],
+      "all_losses_finite": true,
+      "gradient_nonfinite": 0,
+      "parameters_nonfinite_after_step": 0,
+      "peak_allocated_bytes": 26658646528,
+      "peak_reserved_bytes": 29894901760,
+      "median_step_time_s": 4.9771179700037464,
+      "batch_shape_trans": [
+        1,
+        250,
+        896,
+        3
+      ]
+    },
+    {
+      "id": "6sup_A-R1-halo1-group115",
+      "protein": "6sup_A",
+      "replica": 1,
+      "setting": "halo1",
+      "seed_group": 115,
+      "status": "completed",
+      "region_residues": 819,
+      "truncated": true,
+      "elapsed_s": 46.41985206199752,
+      "losses": [
+        0.18272536993026733,
+        0.18272536993026733,
+        0.18272536993026733,
+        0.18272536993026733
+      ],
+      "all_losses_finite": true,
+      "gradient_nonfinite": 0,
+      "parameters_nonfinite_after_step": 0,
+      "peak_allocated_bytes": 26756362240,
+      "peak_reserved_bytes": 28529655808,
+      "median_step_time_s": 5.004395019997901,
+      "batch_shape_trans": [
+        1,
+        250,
+        896,
+        3
+      ]
+    },
+    {
+      "id": "6sup_A-R1-halo1-group28",
+      "protein": "6sup_A",
+      "replica": 1,
+      "setting": "halo1",
+      "seed_group": 28,
+      "status": "completed",
+      "region_residues": 881,
+      "truncated": true,
+      "elapsed_s": 46.64478589600185,
+      "losses": [
+        0.19650021195411682,
+        0.19650021195411682,
+        0.19650021195411682,
+        0.19650021195411682
+      ],
+      "all_losses_finite": true,
+      "gradient_nonfinite": 0,
+      "parameters_nonfinite_after_step": 0,
+      "peak_allocated_bytes": 26927366656,
+      "peak_reserved_bytes": 28313649152,
+      "median_step_time_s": 5.082800317999499,
+      "batch_shape_trans": [
+        1,
+        250,
+        896,
+        3
+      ]
+    },
+    {
+      "id": "6sup_A-R1-halo1-group141",
+      "protein": "6sup_A",
+      "replica": 1,
+      "setting": "halo1",
+      "seed_group": 141,
+      "status": "completed",
+      "region_residues": 865,
+      "truncated": true,
+      "elapsed_s": 46.99940394499572,
+      "losses": [
+        0.1917898803949356,
+        0.1917898803949356,
+        0.1917898803949356,
+        0.1917898803949356
+      ],
+      "all_losses_finite": true,
+      "gradient_nonfinite": 0,
+      "parameters_nonfinite_after_step": 0,
+      "peak_allocated_bytes": 26650242560,
+      "peak_reserved_bytes": 28410118144,
+      "median_step_time_s": 4.988460090004082,
+      "batch_shape_trans": [
+        1,
+        250,
+        896,
+        3
+      ]
+    },
+    {
+      "id": "6sup_A-R1-halo1-group92",
+      "protein": "6sup_A",
+      "replica": 1,
+      "setting": "halo1",
+      "seed_group": 92,
+      "status": "completed",
+      "region_residues": 871,
+      "truncated": true,
+      "elapsed_s": 46.69812598499993,
+      "losses": [
+        0.198519766330719,
+        0.198519766330719,
+        0.198519766330719,
+        0.198519766330719
+      ],
+      "all_losses_finite": true,
+      "gradient_nonfinite": 0,
+      "parameters_nonfinite_after_step": 0,
+      "peak_allocated_bytes": 28165523968,
+      "peak_reserved_bytes": 30834425856,
+      "median_step_time_s": 5.497809450993373,
+      "batch_shape_trans": [
+        1,
+        250,
+        896,
+        3
+      ]
+    },
+    {
+      "id": "6sup_A-R1-halo1-group95",
+      "protein": "6sup_A",
+      "replica": 1,
+      "setting": "halo1",
+      "seed_group": 95,
+      "status": "completed",
+      "region_residues": 883,
+      "truncated": true,
+      "elapsed_s": 52.566134225002315,
+      "losses": [
+        0.19236715137958527,
+        0.19236715137958527,
+        0.19236715137958527,
+        0.19236715137958527
+      ],
+      "all_losses_finite": true,
+      "gradient_nonfinite": 0,
+      "parameters_nonfinite_after_step": 0,
+      "peak_allocated_bytes": 27547830784,
+      "peak_reserved_bytes": 28777119744,
+      "median_step_time_s": 5.247226891995524,
+      "batch_shape_trans": [
+        1,
+        250,
+        896,
+        3
+      ]
+    },
+    {
+      "id": "6sup_A-R1-halo2-group89",
+      "protein": "6sup_A",
+      "replica": 1,
+      "setting": "halo2",
+      "seed_group": 89,
+      "status": "infeasible_seed"
+    },
+    {
+      "id": "6sup_A-R1-halo2-group65",
+      "protein": "6sup_A",
+      "replica": 1,
+      "setting": "halo2",
+      "seed_group": 65,
+      "status": "infeasible_seed"
+    },
+    {
+      "id": "6sup_A-R1-halo2-group63",
+      "protein": "6sup_A",
+      "replica": 1,
+      "setting": "halo2",
+      "seed_group": 63,
+      "status": "infeasible_seed"
+    },
+    {
+      "id": "6sup_A-R1-halo2-group115",
+      "protein": "6sup_A",
+      "replica": 1,
+      "setting": "halo2",
+      "seed_group": 115,
+      "status": "infeasible_seed"
+    },
+    {
+      "id": "6sup_A-R1-halo2-group28",
+      "protein": "6sup_A",
+      "replica": 1,
+      "setting": "halo2",
+      "seed_group": 28,
+      "status": "infeasible_seed"
+    },
+    {
+      "id": "6sup_A-R1-halo2-group141",
+      "protein": "6sup_A",
+      "replica": 1,
+      "setting": "halo2",
+      "seed_group": 141,
+      "status": "infeasible_seed"
+    },
+    {
+      "id": "6sup_A-R1-halo2-group92",
+      "protein": "6sup_A",
+      "replica": 1,
+      "setting": "halo2",
+      "seed_group": 92,
+      "status": "infeasible_seed"
+    },
+    {
+      "id": "6sup_A-R1-halo2-group95",
+      "protein": "6sup_A",
+      "replica": 1,
+      "setting": "halo2",
+      "seed_group": 95,
+      "status": "completed",
+      "region_residues": 883,
+      "truncated": true,
+      "elapsed_s": 47.895616124995286,
+      "losses": [
+        0.2670142650604248,
+        0.2670142650604248,
+        0.2670142650604248,
+        0.2670142650604248
+      ],
+      "all_losses_finite": true,
+      "gradient_nonfinite": 0,
+      "parameters_nonfinite_after_step": 0,
+      "peak_allocated_bytes": 27547830784,
+      "peak_reserved_bytes": 28777119744,
+      "median_step_time_s": 5.24369981700147,
+      "batch_shape_trans": [
+        1,
+        250,
+        896,
+        3
+      ]
+    },
+    {
+      "id": "6sms_A-R1-full",
+      "protein": "6sms_A",
+      "replica": 1,
+      "setting": "full",
+      "status": "completed",
+      "elapsed_s": 56.60943258800398,
+      "losses": [
+        0.20789921283721924,
+        0.20789921283721924,
+        0.20789921283721924,
+        0.20789921283721924
+      ],
+      "all_losses_finite": true,
+      "gradient_nonfinite": 0,
+      "parameters_nonfinite_after_step": 0,
+      "peak_allocated_bytes": 32339164672,
+      "peak_reserved_bytes": 34550579200,
+      "median_step_time_s": 7.562411933002295,
+      "batch_shape_trans": [
+        1,
+        250,
+        724,
+        3
+      ]
+    },
+    {
+      "id": "6sms_A-R1-coverage_control-group55",
+      "protein": "6sms_A",
+      "replica": 1,
+      "setting": "coverage_control",
+      "seed_group": 55,
+      "status": "completed",
+      "elapsed_s": 52.30586719600251,
+      "losses": [
+        0.2089330404996872,
+        0.2089330404996872,
+        0.208933025598526
+      ],
+      "all_losses_finite": true,
+      "gradient_nonfinite": 0,
+      "parameters_nonfinite_after_step": 0,
+      "peak_allocated_bytes": 35852324352,
+      "peak_reserved_bytes": 38805700608,
+      "median_step_time_s": 7.758312110003317,
+      "batch_shape_trans": [
+        1,
+        250,
+        724,
+        3
+      ]
+    },
+    {
+      "id": "6sms_A-R1-halo1-group55",
+      "protein": "6sms_A",
+      "replica": 1,
+      "setting": "halo1",
+      "seed_group": 55,
+      "status": "completed",
+      "region_residues": 724,
+      "truncated": false,
+      "elapsed_s": 60.61863315200026,
+      "losses": [
+        0.20723754167556763,
+        0.20723754167556763,
+        0.20723754167556763,
+        0.20723754167556763
+      ],
+      "all_losses_finite": true,
+      "gradient_nonfinite": 0,
+      "parameters_nonfinite_after_step": 0,
+      "peak_allocated_bytes": 35816863744,
+      "peak_reserved_bytes": 38902169600,
+      "median_step_time_s": 8.047689660001197,
+      "batch_shape_trans": [
+        1,
+        250,
+        896,
+        3
+      ]
+    },
+    {
+      "id": "6sms_A-R1-halo1-group43",
+      "protein": "6sms_A",
+      "replica": 1,
+      "setting": "halo1",
+      "seed_group": 43,
+      "status": "duplicate",
+      "region_residues": 724,
+      "truncated": false
+    },
+    {
+      "id": "6sms_A-R1-halo1-group1",
+      "protein": "6sms_A",
+      "replica": 1,
+      "setting": "halo1",
+      "seed_group": 1,
+      "status": "duplicate",
+      "region_residues": 724,
+      "truncated": false
+    },
+    {
+      "id": "6sms_A-R1-halo1-group31",
+      "protein": "6sms_A",
+      "replica": 1,
+      "setting": "halo1",
+      "seed_group": 31,
+      "status": "duplicate",
+      "region_residues": 724,
+      "truncated": false
+    },
+    {
+      "id": "6sms_A-R1-halo1-group28",
+      "protein": "6sms_A",
+      "replica": 1,
+      "setting": "halo1",
+      "seed_group": 28,
+      "status": "duplicate",
+      "region_residues": 724,
+      "truncated": false
+    },
+    {
+      "id": "6sms_A-R1-halo1-group65",
+      "protein": "6sms_A",
+      "replica": 1,
+      "setting": "halo1",
+      "seed_group": 65,
+      "status": "duplicate",
+      "region_residues": 724,
+      "truncated": false
+    },
+    {
+      "id": "6sms_A-R1-halo1-group60",
+      "protein": "6sms_A",
+      "replica": 1,
+      "setting": "halo1",
+      "seed_group": 60,
+      "status": "duplicate",
+      "region_residues": 724,
+      "truncated": false
+    },
+    {
+      "id": "6sms_A-R1-halo1-group54",
+      "protein": "6sms_A",
+      "replica": 1,
+      "setting": "halo1",
+      "seed_group": 54,
+      "status": "duplicate",
+      "region_residues": 724,
+      "truncated": false
+    },
+    {
+      "id": "6sms_A-R1-halo2-group55",
+      "protein": "6sms_A",
+      "replica": 1,
+      "setting": "halo2",
+      "seed_group": 55,
+      "status": "completed",
+      "region_residues": 724,
+      "truncated": false,
+      "elapsed_s": 64.69714835700142,
+      "losses": [
+        0.20723754167556763,
+        0.20723754167556763,
+        0.20723754167556763,
+        0.20723754167556763
+      ],
+      "all_losses_finite": true,
+      "gradient_nonfinite": 0,
+      "parameters_nonfinite_after_step": 0,
+      "peak_allocated_bytes": 35816863744,
+      "peak_reserved_bytes": 38902169600,
+      "median_step_time_s": 8.050222817000758,
+      "batch_shape_trans": [
+        1,
+        250,
+        896,
+        3
+      ]
+    },
+    {
+      "id": "6sms_A-R1-halo2-group43",
+      "protein": "6sms_A",
+      "replica": 1,
+      "setting": "halo2",
+      "seed_group": 43,
+      "status": "duplicate",
+      "region_residues": 724,
+      "truncated": false
+    },
+    {
+      "id": "6sms_A-R1-halo2-group1",
+      "protein": "6sms_A",
+      "replica": 1,
+      "setting": "halo2",
+      "seed_group": 1,
+      "status": "duplicate",
+      "region_residues": 724,
+      "truncated": false
+    },
+    {
+      "id": "6sms_A-R1-halo2-group31",
+      "protein": "6sms_A",
+      "replica": 1,
+      "setting": "halo2",
+      "seed_group": 31,
+      "status": "duplicate",
+      "region_residues": 724,
+      "truncated": false
+    },
+    {
+      "id": "6sms_A-R1-halo2-group28",
+      "protein": "6sms_A",
+      "replica": 1,
+      "setting": "halo2",
+      "seed_group": 28,
+      "status": "duplicate",
+      "region_residues": 724,
+      "truncated": false
+    },
+    {
+      "id": "6sms_A-R1-halo2-group65",
+      "protein": "6sms_A",
+      "replica": 1,
+      "setting": "halo2",
+      "seed_group": 65,
+      "status": "duplicate",
+      "region_residues": 724,
+      "truncated": false
+    },
+    {
+      "id": "6sms_A-R1-halo2-group60",
+      "protein": "6sms_A",
+      "replica": 1,
+      "setting": "halo2",
+      "seed_group": 60,
+      "status": "duplicate",
+      "region_residues": 724,
+      "truncated": false
+    },
+    {
+      "id": "6sms_A-R1-halo2-group54",
+      "protein": "6sms_A",
+      "replica": 1,
+      "setting": "halo2",
+      "seed_group": 54,
+      "status": "duplicate",
+      "region_residues": 724,
+      "truncated": false
+    },
+    {
+      "id": "6lrd_A-R1-full",
+      "protein": "6lrd_A",
+      "replica": 1,
+      "setting": "full",
+      "status": "completed",
+      "elapsed_s": 61.122228360996814,
+      "losses": [
+        0.206984743475914,
+        0.206984743475914,
+        0.206984743475914,
+        0.206984743475914
+      ],
+      "all_losses_finite": true,
+      "gradient_nonfinite": 0,
+      "parameters_nonfinite_after_step": 0,
+      "peak_allocated_bytes": 32239585280,
+      "peak_reserved_bytes": 34605105152,
+      "median_step_time_s": 7.53781831300148,
+      "batch_shape_trans": [
+        1,
+        250,
+        705,
+        3
+      ]
+    },
+    {
+      "id": "6lrd_A-R1-coverage_control-group59",
+      "protein": "6lrd_A",
+      "replica": 1,
+      "setting": "coverage_control",
+      "seed_group": 59,
+      "status": "completed",
+      "elapsed_s": 55.408178853998834,
+      "losses": [
+        0.20842009782791138,
+        0.20842009782791138,
+        0.20842009782791138
+      ],
+      "all_losses_finite": true,
+      "gradient_nonfinite": 0,
+      "parameters_nonfinite_after_step": 0,
+      "peak_allocated_bytes": 36136729088,
+      "peak_reserved_bytes": 39057358848,
+      "median_step_time_s": 7.740028396001435,
+      "batch_shape_trans": [
+        1,
+        250,
+        705,
+        3
+      ]
+    },
+    {
+      "id": "6lrd_A-R1-halo1-group59",
+      "protein": "6lrd_A",
+      "replica": 1,
+      "setting": "halo1",
+      "seed_group": 59,
+      "status": "completed",
+      "region_residues": 705,
+      "truncated": false,
+      "elapsed_s": 59.2664771330019,
+      "losses": [
+        0.2074458748102188,
+        0.2074458748102188,
+        0.2074458748102188,
+        0.2074458748102188
+      ],
+      "all_losses_finite": true,
+      "gradient_nonfinite": 0,
+      "parameters_nonfinite_after_step": 0,
+      "peak_allocated_bytes": 36104460288,
+      "peak_reserved_bytes": 38728105984,
+      "median_step_time_s": 8.10506750800414,
+      "batch_shape_trans": [
+        1,
+        250,
+        896,
+        3
+      ]
+    },
+    {
+      "id": "6lrd_A-R1-halo1-group44",
+      "protein": "6lrd_A",
+      "replica": 1,
+      "setting": "halo1",
+      "seed_group": 44,
+      "status": "duplicate",
+      "region_residues": 705,
+      "truncated": false
+    },
+    {
+      "id": "6lrd_A-R1-halo1-group63",
+      "protein": "6lrd_A",
+      "replica": 1,
+      "setting": "halo1",
+      "seed_group": 63,
+      "status": "duplicate",
+      "region_residues": 705,
+      "truncated": false
+    },
+    {
+      "id": "6lrd_A-R1-halo1-group42",
+      "protein": "6lrd_A",
+      "replica": 1,
+      "setting": "halo1",
+      "seed_group": 42,
+      "status": "duplicate",
+      "region_residues": 705,
+      "truncated": false
+    },
+    {
+      "id": "6lrd_A-R1-halo1-group22",
+      "protein": "6lrd_A",
+      "replica": 1,
+      "setting": "halo1",
+      "seed_group": 22,
+      "status": "duplicate",
+      "region_residues": 705,
+      "truncated": false
+    },
+    {
+      "id": "6lrd_A-R1-halo1-group26",
+      "protein": "6lrd_A",
+      "replica": 1,
+      "setting": "halo1",
+      "seed_group": 26,
+      "status": "duplicate",
+      "region_residues": 705,
+      "truncated": false
+    },
+    {
+      "id": "6lrd_A-R1-halo1-group36",
+      "protein": "6lrd_A",
+      "replica": 1,
+      "setting": "halo1",
+      "seed_group": 36,
+      "status": "duplicate",
+      "region_residues": 705,
+      "truncated": false
+    },
+    {
+      "id": "6lrd_A-R1-halo1-group41",
+      "protein": "6lrd_A",
+      "replica": 1,
+      "setting": "halo1",
+      "seed_group": 41,
+      "status": "duplicate",
+      "region_residues": 705,
+      "truncated": false
+    },
+    {
+      "id": "6lrd_A-R1-halo2-group59",
+      "protein": "6lrd_A",
+      "replica": 1,
+      "setting": "halo2",
+      "seed_group": 59,
+      "status": "completed",
+      "region_residues": 705,
+      "truncated": false,
+      "elapsed_s": 62.67167991899623,
+      "losses": [
+        0.2074458748102188,
+        0.2074458748102188,
+        0.2074458748102188,
+        0.2074458748102188
+      ],
+      "all_losses_finite": true,
+      "gradient_nonfinite": 0,
+      "parameters_nonfinite_after_step": 0,
+      "peak_allocated_bytes": 36104460288,
+      "peak_reserved_bytes": 38728105984,
+      "median_step_time_s": 8.107399644999532,
+      "batch_shape_trans": [
+        1,
+        250,
+        896,
+        3
+      ]
+    },
+    {
+      "id": "6lrd_A-R1-halo2-group44",
+      "protein": "6lrd_A",
+      "replica": 1,
+      "setting": "halo2",
+      "seed_group": 44,
+      "status": "duplicate",
+      "region_residues": 705,
+      "truncated": false
+    },
+    {
+      "id": "6lrd_A-R1-halo2-group63",
+      "protein": "6lrd_A",
+      "replica": 1,
+      "setting": "halo2",
+      "seed_group": 63,
+      "status": "duplicate",
+      "region_residues": 705,
+      "truncated": false
+    },
+    {
+      "id": "6lrd_A-R1-halo2-group42",
+      "protein": "6lrd_A",
+      "replica": 1,
+      "setting": "halo2",
+      "seed_group": 42,
+      "status": "duplicate",
+      "region_residues": 705,
+      "truncated": false
+    },
+    {
+      "id": "6lrd_A-R1-halo2-group22",
+      "protein": "6lrd_A",
+      "replica": 1,
+      "setting": "halo2",
+      "seed_group": 22,
+      "status": "duplicate",
+      "region_residues": 705,
+      "truncated": false
+    },
+    {
+      "id": "6lrd_A-R1-halo2-group26",
+      "protein": "6lrd_A",
+      "replica": 1,
+      "setting": "halo2",
+      "seed_group": 26,
+      "status": "duplicate",
+      "region_residues": 705,
+      "truncated": false
+    },
+    {
+      "id": "6lrd_A-R1-halo2-group36",
+      "protein": "6lrd_A",
+      "replica": 1,
+      "setting": "halo2",
+      "seed_group": 36,
+      "status": "duplicate",
+      "region_residues": 705,
+      "truncated": false
+    },
+    {
+      "id": "6lrd_A-R1-halo2-group41",
+      "protein": "6lrd_A",
+      "replica": 1,
+      "setting": "halo2",
+      "seed_group": 41,
+      "status": "duplicate",
+      "region_residues": 705,
+      "truncated": false
+    },
+    {
+      "id": "6l3r_E-R1-full",
+      "protein": "6l3r_E",
+      "replica": 1,
+      "setting": "full",
+      "status": "completed",
+      "elapsed_s": 58.364054566998675,
+      "losses": [
+        0.17754481732845306,
+        0.17754481732845306,
+        0.17754481732845306,
+        0.17754481732845306
+      ],
+      "all_losses_finite": true,
+      "gradient_nonfinite": 0,
+      "parameters_nonfinite_after_step": 0,
+      "peak_allocated_bytes": 30298754048,
+      "peak_reserved_bytes": 31901876224,
+      "median_step_time_s": 7.041406295000343,
+      "batch_shape_trans": [
+        1,
+        250,
+        669,
+        3
+      ]
+    },
+    {
+      "id": "6l3r_E-R1-coverage_control-group19",
+      "protein": "6l3r_E",
+      "replica": 1,
+      "setting": "coverage_control",
+      "seed_group": 19,
+      "status": "completed",
+      "elapsed_s": 48.4342876649971,
+      "losses": [
+        0.177825465798378,
+        0.177825465798378,
+        0.177825465798378
+      ],
+      "all_losses_finite": true,
+      "gradient_nonfinite": 0,
+      "parameters_nonfinite_after_step": 0,
+      "peak_allocated_bytes": 34937388032,
+      "peak_reserved_bytes": 37901828096,
+      "median_step_time_s": 7.269921876002627,
+      "batch_shape_trans": [
+        1,
+        250,
+        669,
+        3
+      ]
+    },
+    {
+      "id": "6l3r_E-R1-halo1-group19",
+      "protein": "6l3r_E",
+      "replica": 1,
+      "setting": "halo1",
+      "seed_group": 19,
+      "status": "completed",
+      "region_residues": 669,
+      "truncated": false,
+      "elapsed_s": 60.167516977999185,
+      "losses": [
+        0.17778658866882324,
+        0.17778658866882324,
+        0.17778658866882324,
+        0.17778658866882324
+      ],
+      "all_losses_finite": true,
+      "gradient_nonfinite": 0,
+      "parameters_nonfinite_after_step": 0,
+      "peak_allocated_bytes": 34898335744,
+      "peak_reserved_bytes": 36488347648,
+      "median_step_time_s": 7.690087825998489,
+      "batch_shape_trans": [
+        1,
+        250,
+        896,
+        3
+      ]
+    },
+    {
+      "id": "6l3r_E-R1-halo1-group16",
+      "protein": "6l3r_E",
+      "replica": 1,
+      "setting": "halo1",
+      "seed_group": 16,
+      "status": "duplicate",
+      "region_residues": 669,
+      "truncated": false
+    },
+    {
+      "id": "6l3r_E-R1-halo1-group53",
+      "protein": "6l3r_E",
+      "replica": 1,
+      "setting": "halo1",
+      "seed_group": 53,
+      "status": "duplicate",
+      "region_residues": 669,
+      "truncated": false
+    },
+    {
+      "id": "6l3r_E-R1-halo1-group1",
+      "protein": "6l3r_E",
+      "replica": 1,
+      "setting": "halo1",
+      "seed_group": 1,
+      "status": "duplicate",
+      "region_residues": 669,
+      "truncated": false
+    },
+    {
+      "id": "6l3r_E-R1-halo1-group24",
+      "protein": "6l3r_E",
+      "replica": 1,
+      "setting": "halo1",
+      "seed_group": 24,
+      "status": "duplicate",
+      "region_residues": 669,
+      "truncated": false
+    },
+    {
+      "id": "6l3r_E-R1-halo1-group11",
+      "protein": "6l3r_E",
+      "replica": 1,
+      "setting": "halo1",
+      "seed_group": 11,
+      "status": "duplicate",
+      "region_residues": 669,
+      "truncated": false
+    },
+    {
+      "id": "6l3r_E-R1-halo1-group42",
+      "protein": "6l3r_E",
+      "replica": 1,
+      "setting": "halo1",
+      "seed_group": 42,
+      "status": "duplicate",
+      "region_residues": 669,
+      "truncated": false
+    },
+    {
+      "id": "6l3r_E-R1-halo1-group17",
+      "protein": "6l3r_E",
+      "replica": 1,
+      "setting": "halo1",
+      "seed_group": 17,
+      "status": "duplicate",
+      "region_residues": 669,
+      "truncated": false
+    },
+    {
+      "id": "6l3r_E-R1-halo2-group19",
+      "protein": "6l3r_E",
+      "replica": 1,
+      "setting": "halo2",
+      "seed_group": 19,
+      "status": "completed",
+      "region_residues": 669,
+      "truncated": false,
+      "elapsed_s": 59.576851754995005,
+      "losses": [
+        0.17778658866882324,
+        0.17778658866882324,
+        0.17778658866882324,
+        0.17778658866882324
+      ],
+      "all_losses_finite": true,
+      "gradient_nonfinite": 0,
+      "parameters_nonfinite_after_step": 0,
+      "peak_allocated_bytes": 34898335744,
+      "peak_reserved_bytes": 36488347648,
+      "median_step_time_s": 7.6867076300040935,
+      "batch_shape_trans": [
+        1,
+        250,
+        896,
+        3
+      ]
+    },
+    {
+      "id": "6l3r_E-R1-halo2-group16",
+      "protein": "6l3r_E",
+      "replica": 1,
+      "setting": "halo2",
+      "seed_group": 16,
+      "status": "duplicate",
+      "region_residues": 669,
+      "truncated": false
+    },
+    {
+      "id": "6l3r_E-R1-halo2-group53",
+      "protein": "6l3r_E",
+      "replica": 1,
+      "setting": "halo2",
+      "seed_group": 53,
+      "status": "duplicate",
+      "region_residues": 669,
+      "truncated": false
+    },
+    {
+      "id": "6l3r_E-R1-halo2-group1",
+      "protein": "6l3r_E",
+      "replica": 1,
+      "setting": "halo2",
+      "seed_group": 1,
+      "status": "duplicate",
+      "region_residues": 669,
+      "truncated": false
+    },
+    {
+      "id": "6l3r_E-R1-halo2-group24",
+      "protein": "6l3r_E",
+      "replica": 1,
+      "setting": "halo2",
+      "seed_group": 24,
+      "status": "duplicate",
+      "region_residues": 669,
+      "truncated": false
+    },
+    {
+      "id": "6l3r_E-R1-halo2-group11",
+      "protein": "6l3r_E",
+      "replica": 1,
+      "setting": "halo2",
+      "seed_group": 11,
+      "status": "duplicate",
+      "region_residues": 669,
+      "truncated": false
+    },
+    {
+      "id": "6l3r_E-R1-halo2-group42",
+      "protein": "6l3r_E",
+      "replica": 1,
+      "setting": "halo2",
+      "seed_group": 42,
+      "status": "duplicate",
+      "region_residues": 669,
+      "truncated": false
+    },
+    {
+      "id": "6l3r_E-R1-halo2-group17",
+      "protein": "6l3r_E",
+      "replica": 1,
+      "setting": "halo2",
+      "seed_group": 17,
+      "status": "duplicate",
+      "region_residues": 669,
+      "truncated": false
+    },
+    {
+      "id": "6sup_A-R2-full",
+      "protein": "6sup_A",
+      "replica": 2,
+      "setting": "full",
+      "status": "failed",
+      "returncode": 1,
+      "elapsed_s": 29.21167041499575,
+      "failure_class": "oom",
+      "failure_phase": "backward",
+      "log": "results/training_region_probe_49501/6sup_A-R2-full.log",
+      "oom_tried_allocate_mib": 230.0,
+      "gpu_total_gib": 44.39,
+      "torch_allocated_gib": 43.0
+    },
+    {
+      "id": "6sup_A-R2-halo1-group89",
+      "protein": "6sup_A",
+      "replica": 2,
+      "setting": "halo1",
+      "seed_group": 89,
+      "status": "completed",
+      "region_residues": 866,
+      "truncated": true,
+      "elapsed_s": 45.99288513200008,
+      "losses": [
+        0.16067811846733093,
+        0.16067811846733093,
+        0.16067811846733093,
+        0.16067811846733093
+      ],
+      "all_losses_finite": true,
+      "gradient_nonfinite": 0,
+      "parameters_nonfinite_after_step": 0,
+      "peak_allocated_bytes": 25712023552,
+      "peak_reserved_bytes": 28366077952,
+      "median_step_time_s": 4.639925994000805,
+      "batch_shape_trans": [
+        1,
+        250,
+        896,
+        3
+      ]
+    },
+    {
+      "id": "6sup_A-R2-halo1-group65",
+      "protein": "6sup_A",
+      "replica": 2,
+      "setting": "halo1",
+      "seed_group": 65,
+      "status": "completed",
+      "region_residues": 726,
+      "truncated": true,
+      "elapsed_s": 46.67167028100084,
+      "losses": [
+        0.17366576194763184,
+        0.17366576194763184,
+        0.17366576194763184,
+        0.17366576194763184
+      ],
+      "all_losses_finite": true,
+      "gradient_nonfinite": 0,
+      "parameters_nonfinite_after_step": 0,
+      "peak_allocated_bytes": 25628050432,
+      "peak_reserved_bytes": 28158459904,
+      "median_step_time_s": 4.625118087002193,
+      "batch_shape_trans": [
+        1,
+        250,
+        896,
+        3
+      ]
+    },
+    {
+      "id": "6sup_A-R2-halo1-group63",
+      "protein": "6sup_A",
+      "replica": 2,
+      "setting": "halo1",
+      "seed_group": 63,
+      "status": "completed",
+      "region_residues": 841,
+      "truncated": true,
+      "elapsed_s": 46.79561002200353,
+      "losses": [
+        0.18989969789981842,
+        0.18989969789981842,
+        0.18989969789981842,
+        0.18989969789981842
+      ],
+      "all_losses_finite": true,
+      "gradient_nonfinite": 0,
+      "parameters_nonfinite_after_step": 0,
+      "peak_allocated_bytes": 26658646528,
+      "peak_reserved_bytes": 29894901760,
+      "median_step_time_s": 4.987162897996313,
+      "batch_shape_trans": [
+        1,
+        250,
+        896,
+        3
+      ]
+    },
+    {
+      "id": "6sup_A-R2-halo1-group115",
+      "protein": "6sup_A",
+      "replica": 2,
+      "setting": "halo1",
+      "seed_group": 115,
+      "status": "completed",
+      "region_residues": 819,
+      "truncated": true,
+      "elapsed_s": 48.14840399500099,
+      "losses": [
+        0.1827145367860794,
+        0.1827145367860794,
+        0.1827145367860794,
+        0.1827145367860794
+      ],
+      "all_losses_finite": true,
+      "gradient_nonfinite": 0,
+      "parameters_nonfinite_after_step": 0,
+      "peak_allocated_bytes": 26756362240,
+      "peak_reserved_bytes": 28529655808,
+      "median_step_time_s": 4.982606276003935,
+      "batch_shape_trans": [
+        1,
+        250,
+        896,
+        3
+      ]
+    },
+    {
+      "id": "6sup_A-R2-halo1-group28",
+      "protein": "6sup_A",
+      "replica": 2,
+      "setting": "halo1",
+      "seed_group": 28,
+      "status": "completed",
+      "region_residues": 881,
+      "truncated": true,
+      "elapsed_s": 48.171664717003296,
+      "losses": [
+        0.20067919790744781,
+        0.20067919790744781,
+        0.20067919790744781,
+        0.20067919790744781
+      ],
+      "all_losses_finite": true,
+      "gradient_nonfinite": 0,
+      "parameters_nonfinite_after_step": 0,
+      "peak_allocated_bytes": 26927366656,
+      "peak_reserved_bytes": 28313649152,
+      "median_step_time_s": 5.0804259209980955,
+      "batch_shape_trans": [
+        1,
+        250,
+        896,
+        3
+      ]
+    },
+    {
+      "id": "6sup_A-R2-halo1-group141",
+      "protein": "6sup_A",
+      "replica": 2,
+      "setting": "halo1",
+      "seed_group": 141,
+      "status": "completed",
+      "region_residues": 865,
+      "truncated": true,
+      "elapsed_s": 46.845486281003105,
+      "losses": [
+        0.202972412109375,
+        0.202972412109375,
+        0.202972412109375,
+        0.202972412109375
+      ],
+      "all_losses_finite": true,
+      "gradient_nonfinite": 0,
+      "parameters_nonfinite_after_step": 0,
+      "peak_allocated_bytes": 26650242560,
+      "peak_reserved_bytes": 28410118144,
+      "median_step_time_s": 4.977718797999842,
+      "batch_shape_trans": [
+        1,
+        250,
+        896,
+        3
+      ]
+    },
+    {
+      "id": "6sup_A-R2-halo1-group92",
+      "protein": "6sup_A",
+      "replica": 2,
+      "setting": "halo1",
+      "seed_group": 92,
+      "status": "completed",
+      "region_residues": 871,
+      "truncated": true,
+      "elapsed_s": 48.195714907000365,
+      "losses": [
+        0.20053169131278992,
+        0.20053169131278992,
+        0.20053169131278992,
+        0.20053169131278992
+      ],
+      "all_losses_finite": true,
+      "gradient_nonfinite": 0,
+      "parameters_nonfinite_after_step": 0,
+      "peak_allocated_bytes": 28165523968,
+      "peak_reserved_bytes": 30834425856,
+      "median_step_time_s": 5.487742915000126,
+      "batch_shape_trans": [
+        1,
+        250,
+        896,
+        3
+      ]
+    },
+    {
+      "id": "6sup_A-R2-halo1-group95",
+      "protein": "6sup_A",
+      "replica": 2,
+      "setting": "halo1",
+      "seed_group": 95,
+      "status": "completed",
+      "region_residues": 883,
+      "truncated": true,
+      "elapsed_s": 48.1511705840021,
+      "losses": [
+        0.18625931441783905,
+        0.18625931441783905,
+        0.18625931441783905,
+        0.18625931441783905
+      ],
+      "all_losses_finite": true,
+      "gradient_nonfinite": 0,
+      "parameters_nonfinite_after_step": 0,
+      "peak_allocated_bytes": 27547830784,
+      "peak_reserved_bytes": 28777119744,
+      "median_step_time_s": 5.255231010996795,
+      "batch_shape_trans": [
+        1,
+        250,
+        896,
+        3
+      ]
+    },
+    {
+      "id": "6sup_A-R2-halo2-group89",
+      "protein": "6sup_A",
+      "replica": 2,
+      "setting": "halo2",
+      "seed_group": 89,
+      "status": "infeasible_seed"
+    },
+    {
+      "id": "6sup_A-R2-halo2-group65",
+      "protein": "6sup_A",
+      "replica": 2,
+      "setting": "halo2",
+      "seed_group": 65,
+      "status": "infeasible_seed"
+    },
+    {
+      "id": "6sup_A-R2-halo2-group63",
+      "protein": "6sup_A",
+      "replica": 2,
+      "setting": "halo2",
+      "seed_group": 63,
+      "status": "infeasible_seed"
+    },
+    {
+      "id": "6sup_A-R2-halo2-group115",
+      "protein": "6sup_A",
+      "replica": 2,
+      "setting": "halo2",
+      "seed_group": 115,
+      "status": "infeasible_seed"
+    },
+    {
+      "id": "6sup_A-R2-halo2-group28",
+      "protein": "6sup_A",
+      "replica": 2,
+      "setting": "halo2",
+      "seed_group": 28,
+      "status": "infeasible_seed"
+    },
+    {
+      "id": "6sup_A-R2-halo2-group141",
+      "protein": "6sup_A",
+      "replica": 2,
+      "setting": "halo2",
+      "seed_group": 141,
+      "status": "infeasible_seed"
+    },
+    {
+      "id": "6sup_A-R2-halo2-group92",
+      "protein": "6sup_A",
+      "replica": 2,
+      "setting": "halo2",
+      "seed_group": 92,
+      "status": "infeasible_seed"
+    },
+    {
+      "id": "6sup_A-R2-halo2-group95",
+      "protein": "6sup_A",
+      "replica": 2,
+      "setting": "halo2",
+      "seed_group": 95,
+      "status": "completed",
+      "region_residues": 883,
+      "truncated": true,
+      "elapsed_s": 49.65368518300238,
+      "losses": [
+        0.22461925446987152,
+        0.22461925446987152,
+        0.22461925446987152,
+        0.22461925446987152
+      ],
+      "all_losses_finite": true,
+      "gradient_nonfinite": 0,
+      "parameters_nonfinite_after_step": 0,
+      "peak_allocated_bytes": 27547830784,
+      "peak_reserved_bytes": 28777119744,
+      "median_step_time_s": 5.2500820649947855,
+      "batch_shape_trans": [
+        1,
+        250,
+        896,
+        3
+      ]
+    },
+    {
+      "id": "6sms_A-R2-full",
+      "protein": "6sms_A",
+      "replica": 2,
+      "setting": "full",
+      "status": "not_run_budget"
+    },
+    {
+      "id": "6sms_A-R2-halo1-group55",
+      "protein": "6sms_A",
+      "replica": 2,
+      "setting": "halo1",
+      "seed_group": 55,
+      "status": "not_run_budget",
+      "region_residues": 724,
+      "truncated": false
+    },
+    {
+      "id": "6sms_A-R2-halo1-group43",
+      "protein": "6sms_A",
+      "replica": 2,
+      "setting": "halo1",
+      "seed_group": 43,
+      "status": "duplicate",
+      "region_residues": 724,
+      "truncated": false
+    },
+    {
+      "id": "6sms_A-R2-halo1-group1",
+      "protein": "6sms_A",
+      "replica": 2,
+      "setting": "halo1",
+      "seed_group": 1,
+      "status": "duplicate",
+      "region_residues": 724,
+      "truncated": false
+    },
+    {
+      "id": "6sms_A-R2-halo1-group31",
+      "protein": "6sms_A",
+      "replica": 2,
+      "setting": "halo1",
+      "seed_group": 31,
+      "status": "duplicate",
+      "region_residues": 724,
+      "truncated": false
+    },
+    {
+      "id": "6sms_A-R2-halo1-group28",
+      "protein": "6sms_A",
+      "replica": 2,
+      "setting": "halo1",
+      "seed_group": 28,
+      "status": "duplicate",
+      "region_residues": 724,
+      "truncated": false
+    },
+    {
+      "id": "6sms_A-R2-halo1-group65",
+      "protein": "6sms_A",
+      "replica": 2,
+      "setting": "halo1",
+      "seed_group": 65,
+      "status": "duplicate",
+      "region_residues": 724,
+      "truncated": false
+    },
+    {
+      "id": "6sms_A-R2-halo1-group60",
+      "protein": "6sms_A",
+      "replica": 2,
+      "setting": "halo1",
+      "seed_group": 60,
+      "status": "duplicate",
+      "region_residues": 724,
+      "truncated": false
+    },
+    {
+      "id": "6sms_A-R2-halo1-group54",
+      "protein": "6sms_A",
+      "replica": 2,
+      "setting": "halo1",
+      "seed_group": 54,
+      "status": "duplicate",
+      "region_residues": 724,
+      "truncated": false
+    },
+    {
+      "id": "6sms_A-R2-halo2-group55",
+      "protein": "6sms_A",
+      "replica": 2,
+      "setting": "halo2",
+      "seed_group": 55,
+      "status": "not_run_budget",
+      "region_residues": 724,
+      "truncated": false
+    },
+    {
+      "id": "6sms_A-R2-halo2-group43",
+      "protein": "6sms_A",
+      "replica": 2,
+      "setting": "halo2",
+      "seed_group": 43,
+      "status": "duplicate",
+      "region_residues": 724,
+      "truncated": false
+    },
+    {
+      "id": "6sms_A-R2-halo2-group1",
+      "protein": "6sms_A",
+      "replica": 2,
+      "setting": "halo2",
+      "seed_group": 1,
+      "status": "duplicate",
+      "region_residues": 724,
+      "truncated": false
+    },
+    {
+      "id": "6sms_A-R2-halo2-group31",
+      "protein": "6sms_A",
+      "replica": 2,
+      "setting": "halo2",
+      "seed_group": 31,
+      "status": "duplicate",
+      "region_residues": 724,
+      "truncated": false
+    },
+    {
+      "id": "6sms_A-R2-halo2-group28",
+      "protein": "6sms_A",
+      "replica": 2,
+      "setting": "halo2",
+      "seed_group": 28,
+      "status": "duplicate",
+      "region_residues": 724,
+      "truncated": false
+    },
+    {
+      "id": "6sms_A-R2-halo2-group65",
+      "protein": "6sms_A",
+      "replica": 2,
+      "setting": "halo2",
+      "seed_group": 65,
+      "status": "duplicate",
+      "region_residues": 724,
+      "truncated": false
+    },
+    {
+      "id": "6sms_A-R2-halo2-group60",
+      "protein": "6sms_A",
+      "replica": 2,
+      "setting": "halo2",
+      "seed_group": 60,
+      "status": "duplicate",
+      "region_residues": 724,
+      "truncated": false
+    },
+    {
+      "id": "6sms_A-R2-halo2-group54",
+      "protein": "6sms_A",
+      "replica": 2,
+      "setting": "halo2",
+      "seed_group": 54,
+      "status": "duplicate",
+      "region_residues": 724,
+      "truncated": false
+    },
+    {
+      "id": "6lrd_A-R2-full",
+      "protein": "6lrd_A",
+      "replica": 2,
+      "setting": "full",
+      "status": "not_run_budget"
+    },
+    {
+      "id": "6lrd_A-R2-halo1-group59",
+      "protein": "6lrd_A",
+      "replica": 2,
+      "setting": "halo1",
+      "seed_group": 59,
+      "status": "not_run_budget",
+      "region_residues": 705,
+      "truncated": false
+    },
+    {
+      "id": "6lrd_A-R2-halo1-group44",
+      "protein": "6lrd_A",
+      "replica": 2,
+      "setting": "halo1",
+      "seed_group": 44,
+      "status": "duplicate",
+      "region_residues": 705,
+      "truncated": false
+    },
+    {
+      "id": "6lrd_A-R2-halo1-group63",
+      "protein": "6lrd_A",
+      "replica": 2,
+      "setting": "halo1",
+      "seed_group": 63,
+      "status": "duplicate",
+      "region_residues": 705,
+      "truncated": false
+    },
+    {
+      "id": "6lrd_A-R2-halo1-group42",
+      "protein": "6lrd_A",
+      "replica": 2,
+      "setting": "halo1",
+      "seed_group": 42,
+      "status": "duplicate",
+      "region_residues": 705,
+      "truncated": false
+    },
+    {
+      "id": "6lrd_A-R2-halo1-group22",
+      "protein": "6lrd_A",
+      "replica": 2,
+      "setting": "halo1",
+      "seed_group": 22,
+      "status": "duplicate",
+      "region_residues": 705,
+      "truncated": false
+    },
+    {
+      "id": "6lrd_A-R2-halo1-group26",
+      "protein": "6lrd_A",
+      "replica": 2,
+      "setting": "halo1",
+      "seed_group": 26,
+      "status": "duplicate",
+      "region_residues": 705,
+      "truncated": false
+    },
+    {
+      "id": "6lrd_A-R2-halo1-group36",
+      "protein": "6lrd_A",
+      "replica": 2,
+      "setting": "halo1",
+      "seed_group": 36,
+      "status": "duplicate",
+      "region_residues": 705,
+      "truncated": false
+    },
+    {
+      "id": "6lrd_A-R2-halo1-group41",
+      "protein": "6lrd_A",
+      "replica": 2,
+      "setting": "halo1",
+      "seed_group": 41,
+      "status": "duplicate",
+      "region_residues": 705,
+      "truncated": false
+    },
+    {
+      "id": "6lrd_A-R2-halo2-group59",
+      "protein": "6lrd_A",
+      "replica": 2,
+      "setting": "halo2",
+      "seed_group": 59,
+      "status": "not_run_budget",
+      "region_residues": 705,
+      "truncated": false
+    },
+    {
+      "id": "6lrd_A-R2-halo2-group44",
+      "protein": "6lrd_A",
+      "replica": 2,
+      "setting": "halo2",
+      "seed_group": 44,
+      "status": "duplicate",
+      "region_residues": 705,
+      "truncated": false
+    },
+    {
+      "id": "6lrd_A-R2-halo2-group63",
+      "protein": "6lrd_A",
+      "replica": 2,
+      "setting": "halo2",
+      "seed_group": 63,
+      "status": "duplicate",
+      "region_residues": 705,
+      "truncated": false
+    },
+    {
+      "id": "6lrd_A-R2-halo2-group42",
+      "protein": "6lrd_A",
+      "replica": 2,
+      "setting": "halo2",
+      "seed_group": 42,
+      "status": "duplicate",
+      "region_residues": 705,
+      "truncated": false
+    },
+    {
+      "id": "6lrd_A-R2-halo2-group22",
+      "protein": "6lrd_A",
+      "replica": 2,
+      "setting": "halo2",
+      "seed_group": 22,
+      "status": "duplicate",
+      "region_residues": 705,
+      "truncated": false
+    },
+    {
+      "id": "6lrd_A-R2-halo2-group26",
+      "protein": "6lrd_A",
+      "replica": 2,
+      "setting": "halo2",
+      "seed_group": 26,
+      "status": "duplicate",
+      "region_residues": 705,
+      "truncated": false
+    },
+    {
+      "id": "6lrd_A-R2-halo2-group36",
+      "protein": "6lrd_A",
+      "replica": 2,
+      "setting": "halo2",
+      "seed_group": 36,
+      "status": "duplicate",
+      "region_residues": 705,
+      "truncated": false
+    },
+    {
+      "id": "6lrd_A-R2-halo2-group41",
+      "protein": "6lrd_A",
+      "replica": 2,
+      "setting": "halo2",
+      "seed_group": 41,
+      "status": "duplicate",
+      "region_residues": 705,
+      "truncated": false
+    },
+    {
+      "id": "6l3r_E-R2-full",
+      "protein": "6l3r_E",
+      "replica": 2,
+      "setting": "full",
+      "status": "not_run_budget"
+    },
+    {
+      "id": "6l3r_E-R2-halo1-group19",
+      "protein": "6l3r_E",
+      "replica": 2,
+      "setting": "halo1",
+      "seed_group": 19,
+      "status": "not_run_budget",
+      "region_residues": 669,
+      "truncated": false
+    },
+    {
+      "id": "6l3r_E-R2-halo1-group16",
+      "protein": "6l3r_E",
+      "replica": 2,
+      "setting": "halo1",
+      "seed_group": 16,
+      "status": "duplicate",
+      "region_residues": 669,
+      "truncated": false
+    },
+    {
+      "id": "6l3r_E-R2-halo1-group53",
+      "protein": "6l3r_E",
+      "replica": 2,
+      "setting": "halo1",
+      "seed_group": 53,
+      "status": "duplicate",
+      "region_residues": 669,
+      "truncated": false
+    },
+    {
+      "id": "6l3r_E-R2-halo1-group1",
+      "protein": "6l3r_E",
+      "replica": 2,
+      "setting": "halo1",
+      "seed_group": 1,
+      "status": "duplicate",
+      "region_residues": 669,
+      "truncated": false
+    },
+    {
+      "id": "6l3r_E-R2-halo1-group24",
+      "protein": "6l3r_E",
+      "replica": 2,
+      "setting": "halo1",
+      "seed_group": 24,
+      "status": "duplicate",
+      "region_residues": 669,
+      "truncated": false
+    },
+    {
+      "id": "6l3r_E-R2-halo1-group11",
+      "protein": "6l3r_E",
+      "replica": 2,
+      "setting": "halo1",
+      "seed_group": 11,
+      "status": "duplicate",
+      "region_residues": 669,
+      "truncated": false
+    },
+    {
+      "id": "6l3r_E-R2-halo1-group42",
+      "protein": "6l3r_E",
+      "replica": 2,
+      "setting": "halo1",
+      "seed_group": 42,
+      "status": "duplicate",
+      "region_residues": 669,
+      "truncated": false
+    },
+    {
+      "id": "6l3r_E-R2-halo1-group17",
+      "protein": "6l3r_E",
+      "replica": 2,
+      "setting": "halo1",
+      "seed_group": 17,
+      "status": "duplicate",
+      "region_residues": 669,
+      "truncated": false
+    },
+    {
+      "id": "6l3r_E-R2-halo2-group19",
+      "protein": "6l3r_E",
+      "replica": 2,
+      "setting": "halo2",
+      "seed_group": 19,
+      "status": "not_run_budget",
+      "region_residues": 669,
+      "truncated": false
+    },
+    {
+      "id": "6l3r_E-R2-halo2-group16",
+      "protein": "6l3r_E",
+      "replica": 2,
+      "setting": "halo2",
+      "seed_group": 16,
+      "status": "duplicate",
+      "region_residues": 669,
+      "truncated": false
+    },
+    {
+      "id": "6l3r_E-R2-halo2-group53",
+      "protein": "6l3r_E",
+      "replica": 2,
+      "setting": "halo2",
+      "seed_group": 53,
+      "status": "duplicate",
+      "region_residues": 669,
+      "truncated": false
+    },
+    {
+      "id": "6l3r_E-R2-halo2-group1",
+      "protein": "6l3r_E",
+      "replica": 2,
+      "setting": "halo2",
+      "seed_group": 1,
+      "status": "duplicate",
+      "region_residues": 669,
+      "truncated": false
+    },
+    {
+      "id": "6l3r_E-R2-halo2-group24",
+      "protein": "6l3r_E",
+      "replica": 2,
+      "setting": "halo2",
+      "seed_group": 24,
+      "status": "duplicate",
+      "region_residues": 669,
+      "truncated": false
+    },
+    {
+      "id": "6l3r_E-R2-halo2-group11",
+      "protein": "6l3r_E",
+      "replica": 2,
+      "setting": "halo2",
+      "seed_group": 11,
+      "status": "duplicate",
+      "region_residues": 669,
+      "truncated": false
+    },
+    {
+      "id": "6l3r_E-R2-halo2-group42",
+      "protein": "6l3r_E",
+      "replica": 2,
+      "setting": "halo2",
+      "seed_group": 42,
+      "status": "duplicate",
+      "region_residues": 669,
+      "truncated": false
+    },
+    {
+      "id": "6l3r_E-R2-halo2-group17",
+      "protein": "6l3r_E",
+      "replica": 2,
+      "setting": "halo2",
+      "seed_group": 17,
+      "status": "duplicate",
+      "region_residues": 669,
+      "truncated": false
+    },
+    {
+      "id": "6sup_A-R3-full",
+      "protein": "6sup_A",
+      "replica": 3,
+      "setting": "full",
+      "status": "not_run_budget"
+    },
+    {
+      "id": "6sup_A-R3-halo1-group89",
+      "protein": "6sup_A",
+      "replica": 3,
+      "setting": "halo1",
+      "seed_group": 89,
+      "status": "not_run_budget",
+      "region_residues": 866,
+      "truncated": true
+    },
+    {
+      "id": "6sup_A-R3-halo1-group65",
+      "protein": "6sup_A",
+      "replica": 3,
+      "setting": "halo1",
+      "seed_group": 65,
+      "status": "not_run_budget",
+      "region_residues": 726,
+      "truncated": true
+    },
+    {
+      "id": "6sup_A-R3-halo1-group63",
+      "protein": "6sup_A",
+      "replica": 3,
+      "setting": "halo1",
+      "seed_group": 63,
+      "status": "not_run_budget",
+      "region_residues": 841,
+      "truncated": true
+    },
+    {
+      "id": "6sup_A-R3-halo1-group115",
+      "protein": "6sup_A",
+      "replica": 3,
+      "setting": "halo1",
+      "seed_group": 115,
+      "status": "not_run_budget",
+      "region_residues": 819,
+      "truncated": true
+    },
+    {
+      "id": "6sup_A-R3-halo1-group28",
+      "protein": "6sup_A",
+      "replica": 3,
+      "setting": "halo1",
+      "seed_group": 28,
+      "status": "not_run_budget",
+      "region_residues": 881,
+      "truncated": true
+    },
+    {
+      "id": "6sup_A-R3-halo1-group141",
+      "protein": "6sup_A",
+      "replica": 3,
+      "setting": "halo1",
+      "seed_group": 141,
+      "status": "not_run_budget",
+      "region_residues": 865,
+      "truncated": true
+    },
+    {
+      "id": "6sup_A-R3-halo1-group92",
+      "protein": "6sup_A",
+      "replica": 3,
+      "setting": "halo1",
+      "seed_group": 92,
+      "status": "not_run_budget",
+      "region_residues": 871,
+      "truncated": true
+    },
+    {
+      "id": "6sup_A-R3-halo1-group95",
+      "protein": "6sup_A",
+      "replica": 3,
+      "setting": "halo1",
+      "seed_group": 95,
+      "status": "not_run_budget",
+      "region_residues": 883,
+      "truncated": true
+    },
+    {
+      "id": "6sup_A-R3-halo2-group89",
+      "protein": "6sup_A",
+      "replica": 3,
+      "setting": "halo2",
+      "seed_group": 89,
+      "status": "infeasible_seed"
+    },
+    {
+      "id": "6sup_A-R3-halo2-group65",
+      "protein": "6sup_A",
+      "replica": 3,
+      "setting": "halo2",
+      "seed_group": 65,
+      "status": "infeasible_seed"
+    },
+    {
+      "id": "6sup_A-R3-halo2-group63",
+      "protein": "6sup_A",
+      "replica": 3,
+      "setting": "halo2",
+      "seed_group": 63,
+      "status": "infeasible_seed"
+    },
+    {
+      "id": "6sup_A-R3-halo2-group115",
+      "protein": "6sup_A",
+      "replica": 3,
+      "setting": "halo2",
+      "seed_group": 115,
+      "status": "infeasible_seed"
+    },
+    {
+      "id": "6sup_A-R3-halo2-group28",
+      "protein": "6sup_A",
+      "replica": 3,
+      "setting": "halo2",
+      "seed_group": 28,
+      "status": "infeasible_seed"
+    },
+    {
+      "id": "6sup_A-R3-halo2-group141",
+      "protein": "6sup_A",
+      "replica": 3,
+      "setting": "halo2",
+      "seed_group": 141,
+      "status": "infeasible_seed"
+    },
+    {
+      "id": "6sup_A-R3-halo2-group92",
+      "protein": "6sup_A",
+      "replica": 3,
+      "setting": "halo2",
+      "seed_group": 92,
+      "status": "infeasible_seed"
+    },
+    {
+      "id": "6sup_A-R3-halo2-group95",
+      "protein": "6sup_A",
+      "replica": 3,
+      "setting": "halo2",
+      "seed_group": 95,
+      "status": "not_run_budget",
+      "region_residues": 883,
+      "truncated": true
+    },
+    {
+      "id": "6sms_A-R3-full",
+      "protein": "6sms_A",
+      "replica": 3,
+      "setting": "full",
+      "status": "not_run_budget"
+    },
+    {
+      "id": "6sms_A-R3-halo1-group55",
+      "protein": "6sms_A",
+      "replica": 3,
+      "setting": "halo1",
+      "seed_group": 55,
+      "status": "not_run_budget",
+      "region_residues": 724,
+      "truncated": false
+    },
+    {
+      "id": "6sms_A-R3-halo1-group43",
+      "protein": "6sms_A",
+      "replica": 3,
+      "setting": "halo1",
+      "seed_group": 43,
+      "status": "duplicate",
+      "region_residues": 724,
+      "truncated": false
+    },
+    {
+      "id": "6sms_A-R3-halo1-group1",
+      "protein": "6sms_A",
+      "replica": 3,
+      "setting": "halo1",
+      "seed_group": 1,
+      "status": "duplicate",
+      "region_residues": 724,
+      "truncated": false
+    },
+    {
+      "id": "6sms_A-R3-halo1-group31",
+      "protein": "6sms_A",
+      "replica": 3,
+      "setting": "halo1",
+      "seed_group": 31,
+      "status": "duplicate",
+      "region_residues": 724,
+      "truncated": false
+    },
+    {
+      "id": "6sms_A-R3-halo1-group28",
+      "protein": "6sms_A",
+      "replica": 3,
+      "setting": "halo1",
+      "seed_group": 28,
+      "status": "duplicate",
+      "region_residues": 724,
+      "truncated": false
+    },
+    {
+      "id": "6sms_A-R3-halo1-group65",
+      "protein": "6sms_A",
+      "replica": 3,
+      "setting": "halo1",
+      "seed_group": 65,
+      "status": "duplicate",
+      "region_residues": 724,
+      "truncated": false
+    },
+    {
+      "id": "6sms_A-R3-halo1-group60",
+      "protein": "6sms_A",
+      "replica": 3,
+      "setting": "halo1",
+      "seed_group": 60,
+      "status": "duplicate",
+      "region_residues": 724,
+      "truncated": false
+    },
+    {
+      "id": "6sms_A-R3-halo1-group54",
+      "protein": "6sms_A",
+      "replica": 3,
+      "setting": "halo1",
+      "seed_group": 54,
+      "status": "duplicate",
+      "region_residues": 724,
+      "truncated": false
+    },
+    {
+      "id": "6sms_A-R3-halo2-group55",
+      "protein": "6sms_A",
+      "replica": 3,
+      "setting": "halo2",
+      "seed_group": 55,
+      "status": "not_run_budget",
+      "region_residues": 724,
+      "truncated": false
+    },
+    {
+      "id": "6sms_A-R3-halo2-group43",
+      "protein": "6sms_A",
+      "replica": 3,
+      "setting": "halo2",
+      "seed_group": 43,
+      "status": "duplicate",
+      "region_residues": 724,
+      "truncated": false
+    },
+    {
+      "id": "6sms_A-R3-halo2-group1",
+      "protein": "6sms_A",
+      "replica": 3,
+      "setting": "halo2",
+      "seed_group": 1,
+      "status": "duplicate",
+      "region_residues": 724,
+      "truncated": false
+    },
+    {
+      "id": "6sms_A-R3-halo2-group31",
+      "protein": "6sms_A",
+      "replica": 3,
+      "setting": "halo2",
+      "seed_group": 31,
+      "status": "duplicate",
+      "region_residues": 724,
+      "truncated": false
+    },
+    {
+      "id": "6sms_A-R3-halo2-group28",
+      "protein": "6sms_A",
+      "replica": 3,
+      "setting": "halo2",
+      "seed_group": 28,
+      "status": "duplicate",
+      "region_residues": 724,
+      "truncated": false
+    },
+    {
+      "id": "6sms_A-R3-halo2-group65",
+      "protein": "6sms_A",
+      "replica": 3,
+      "setting": "halo2",
+      "seed_group": 65,
+      "status": "duplicate",
+      "region_residues": 724,
+      "truncated": false
+    },
+    {
+      "id": "6sms_A-R3-halo2-group60",
+      "protein": "6sms_A",
+      "replica": 3,
+      "setting": "halo2",
+      "seed_group": 60,
+      "status": "duplicate",
+      "region_residues": 724,
+      "truncated": false
+    },
+    {
+      "id": "6sms_A-R3-halo2-group54",
+      "protein": "6sms_A",
+      "replica": 3,
+      "setting": "halo2",
+      "seed_group": 54,
+      "status": "duplicate",
+      "region_residues": 724,
+      "truncated": false
+    },
+    {
+      "id": "6lrd_A-R3-full",
+      "protein": "6lrd_A",
+      "replica": 3,
+      "setting": "full",
+      "status": "not_run_budget"
+    },
+    {
+      "id": "6lrd_A-R3-halo1-group59",
+      "protein": "6lrd_A",
+      "replica": 3,
+      "setting": "halo1",
+      "seed_group": 59,
+      "status": "not_run_budget",
+      "region_residues": 705,
+      "truncated": false
+    },
+    {
+      "id": "6lrd_A-R3-halo1-group44",
+      "protein": "6lrd_A",
+      "replica": 3,
+      "setting": "halo1",
+      "seed_group": 44,
+      "status": "duplicate",
+      "region_residues": 705,
+      "truncated": false
+    },
+    {
+      "id": "6lrd_A-R3-halo1-group63",
+      "protein": "6lrd_A",
+      "replica": 3,
+      "setting": "halo1",
+      "seed_group": 63,
+      "status": "duplicate",
+      "region_residues": 705,
+      "truncated": false
+    },
+    {
+      "id": "6lrd_A-R3-halo1-group42",
+      "protein": "6lrd_A",
+      "replica": 3,
+      "setting": "halo1",
+      "seed_group": 42,
+      "status": "duplicate",
+      "region_residues": 705,
+      "truncated": false
+    },
+    {
+      "id": "6lrd_A-R3-halo1-group22",
+      "protein": "6lrd_A",
+      "replica": 3,
+      "setting": "halo1",
+      "seed_group": 22,
+      "status": "duplicate",
+      "region_residues": 705,
+      "truncated": false
+    },
+    {
+      "id": "6lrd_A-R3-halo1-group26",
+      "protein": "6lrd_A",
+      "replica": 3,
+      "setting": "halo1",
+      "seed_group": 26,
+      "status": "duplicate",
+      "region_residues": 705,
+      "truncated": false
+    },
+    {
+      "id": "6lrd_A-R3-halo1-group36",
+      "protein": "6lrd_A",
+      "replica": 3,
+      "setting": "halo1",
+      "seed_group": 36,
+      "status": "duplicate",
+      "region_residues": 705,
+      "truncated": false
+    },
+    {
+      "id": "6lrd_A-R3-halo1-group41",
+      "protein": "6lrd_A",
+      "replica": 3,
+      "setting": "halo1",
+      "seed_group": 41,
+      "status": "duplicate",
+      "region_residues": 705,
+      "truncated": false
+    },
+    {
+      "id": "6lrd_A-R3-halo2-group59",
+      "protein": "6lrd_A",
+      "replica": 3,
+      "setting": "halo2",
+      "seed_group": 59,
+      "status": "not_run_budget",
+      "region_residues": 705,
+      "truncated": false
+    },
+    {
+      "id": "6lrd_A-R3-halo2-group44",
+      "protein": "6lrd_A",
+      "replica": 3,
+      "setting": "halo2",
+      "seed_group": 44,
+      "status": "duplicate",
+      "region_residues": 705,
+      "truncated": false
+    },
+    {
+      "id": "6lrd_A-R3-halo2-group63",
+      "protein": "6lrd_A",
+      "replica": 3,
+      "setting": "halo2",
+      "seed_group": 63,
+      "status": "duplicate",
+      "region_residues": 705,
+      "truncated": false
+    },
+    {
+      "id": "6lrd_A-R3-halo2-group42",
+      "protein": "6lrd_A",
+      "replica": 3,
+      "setting": "halo2",
+      "seed_group": 42,
+      "status": "duplicate",
+      "region_residues": 705,
+      "truncated": false
+    },
+    {
+      "id": "6lrd_A-R3-halo2-group22",
+      "protein": "6lrd_A",
+      "replica": 3,
+      "setting": "halo2",
+      "seed_group": 22,
+      "status": "duplicate",
+      "region_residues": 705,
+      "truncated": false
+    },
+    {
+      "id": "6lrd_A-R3-halo2-group26",
+      "protein": "6lrd_A",
+      "replica": 3,
+      "setting": "halo2",
+      "seed_group": 26,
+      "status": "duplicate",
+      "region_residues": 705,
+      "truncated": false
+    },
+    {
+      "id": "6lrd_A-R3-halo2-group36",
+      "protein": "6lrd_A",
+      "replica": 3,
+      "setting": "halo2",
+      "seed_group": 36,
+      "status": "duplicate",
+      "region_residues": 705,
+      "truncated": false
+    },
+    {
+      "id": "6lrd_A-R3-halo2-group41",
+      "protein": "6lrd_A",
+      "replica": 3,
+      "setting": "halo2",
+      "seed_group": 41,
+      "status": "duplicate",
+      "region_residues": 705,
+      "truncated": false
+    },
+    {
+      "id": "6l3r_E-R3-full",
+      "protein": "6l3r_E",
+      "replica": 3,
+      "setting": "full",
+      "status": "not_run_budget"
+    },
+    {
+      "id": "6l3r_E-R3-halo1-group19",
+      "protein": "6l3r_E",
+      "replica": 3,
+      "setting": "halo1",
+      "seed_group": 19,
+      "status": "not_run_budget",
+      "region_residues": 669,
+      "truncated": false
+    },
+    {
+      "id": "6l3r_E-R3-halo1-group16",
+      "protein": "6l3r_E",
+      "replica": 3,
+      "setting": "halo1",
+      "seed_group": 16,
+      "status": "duplicate",
+      "region_residues": 669,
+      "truncated": false
+    },
+    {
+      "id": "6l3r_E-R3-halo1-group53",
+      "protein": "6l3r_E",
+      "replica": 3,
+      "setting": "halo1",
+      "seed_group": 53,
+      "status": "duplicate",
+      "region_residues": 669,
+      "truncated": false
+    },
+    {
+      "id": "6l3r_E-R3-halo1-group1",
+      "protein": "6l3r_E",
+      "replica": 3,
+      "setting": "halo1",
+      "seed_group": 1,
+      "status": "duplicate",
+      "region_residues": 669,
+      "truncated": false
+    },
+    {
+      "id": "6l3r_E-R3-halo1-group24",
+      "protein": "6l3r_E",
+      "replica": 3,
+      "setting": "halo1",
+      "seed_group": 24,
+      "status": "duplicate",
+      "region_residues": 669,
+      "truncated": false
+    },
+    {
+      "id": "6l3r_E-R3-halo1-group11",
+      "protein": "6l3r_E",
+      "replica": 3,
+      "setting": "halo1",
+      "seed_group": 11,
+      "status": "duplicate",
+      "region_residues": 669,
+      "truncated": false
+    },
+    {
+      "id": "6l3r_E-R3-halo1-group42",
+      "protein": "6l3r_E",
+      "replica": 3,
+      "setting": "halo1",
+      "seed_group": 42,
+      "status": "duplicate",
+      "region_residues": 669,
+      "truncated": false
+    },
+    {
+      "id": "6l3r_E-R3-halo1-group17",
+      "protein": "6l3r_E",
+      "replica": 3,
+      "setting": "halo1",
+      "seed_group": 17,
+      "status": "duplicate",
+      "region_residues": 669,
+      "truncated": false
+    },
+    {
+      "id": "6l3r_E-R3-halo2-group19",
+      "protein": "6l3r_E",
+      "replica": 3,
+      "setting": "halo2",
+      "seed_group": 19,
+      "status": "not_run_budget",
+      "region_residues": 669,
+      "truncated": false
+    },
+    {
+      "id": "6l3r_E-R3-halo2-group16",
+      "protein": "6l3r_E",
+      "replica": 3,
+      "setting": "halo2",
+      "seed_group": 16,
+      "status": "duplicate",
+      "region_residues": 669,
+      "truncated": false
+    },
+    {
+      "id": "6l3r_E-R3-halo2-group53",
+      "protein": "6l3r_E",
+      "replica": 3,
+      "setting": "halo2",
+      "seed_group": 53,
+      "status": "duplicate",
+      "region_residues": 669,
+      "truncated": false
+    },
+    {
+      "id": "6l3r_E-R3-halo2-group1",
+      "protein": "6l3r_E",
+      "replica": 3,
+      "setting": "halo2",
+      "seed_group": 1,
+      "status": "duplicate",
+      "region_residues": 669,
+      "truncated": false
+    },
+    {
+      "id": "6l3r_E-R3-halo2-group24",
+      "protein": "6l3r_E",
+      "replica": 3,
+      "setting": "halo2",
+      "seed_group": 24,
+      "status": "duplicate",
+      "region_residues": 669,
+      "truncated": false
+    },
+    {
+      "id": "6l3r_E-R3-halo2-group11",
+      "protein": "6l3r_E",
+      "replica": 3,
+      "setting": "halo2",
+      "seed_group": 11,
+      "status": "duplicate",
+      "region_residues": 669,
+      "truncated": false
+    },
+    {
+      "id": "6l3r_E-R3-halo2-group42",
+      "protein": "6l3r_E",
+      "replica": 3,
+      "setting": "halo2",
+      "seed_group": 42,
+      "status": "duplicate",
+      "region_residues": 669,
+      "truncated": false
+    },
+    {
+      "id": "6l3r_E-R3-halo2-group17",
+      "protein": "6l3r_E",
+      "replica": 3,
+      "setting": "halo2",
+      "seed_group": 17,
+      "status": "duplicate",
+      "region_residues": 669,
+      "truncated": false
+    }
+  ],
+  "controls": [
+    {
+      "case": "6sms_A-R1-coverage_control-group55",
+      "alignment": {
+        "full_noise_sha256": "b3839113da2228cc4205e76e6f205b7a7ab6cb3b63e82f8d76e5785a436c4876",
+        "region_noise_sha256": "b3839113da2228cc4205e76e6f205b7a7ab6cb3b63e82f8d76e5785a436c4876",
+        "full_mask_sha256": "eae457012f4136b433e673b528d1f5872b5fa0af5e90d0be454bc4a602530ede",
+        "region_mask_sha256": "eae457012f4136b433e673b528d1f5872b5fa0af5e90d0be454bc4a602530ede",
+        "full_denominator": 3027840.0,
+        "region_denominator": 3027840.0,
+        "residues": 724,
+        "region_width": 896,
+        "frame_start": 0,
+        "name": "6sms_A_R1"
+      },
+      "comparisons": [
+        {
+          "kind": "same_path_repeat",
+          "loss": {
+            "reference": 0.2089330404996872,
+            "candidate": 0.2089330404996872,
+            "absolute_difference": 0.0
+          },
+          "gradients": {
+            "groups": 61,
+            "max_difference_rms": 0.0,
+            "max_relative_difference": 0.0,
+            "min_nonzero_reference_rms": 3.7137538397064334e-07,
+            "exact_zero_reference_groups": [],
+            "nonfinite": 0
+          },
+          "updates": {
+            "groups": 71,
+            "max_difference_rms": 0.0,
+            "max_relative_difference": 0.0,
+            "min_nonzero_reference_rms": 5.616274367520773e-05,
+            "exact_zero_reference_groups": [
+              "ipa_layers.0.cell_summaries",
+              "ipa_layers.1.cell_summaries",
+              "ipa_layers.2.cell_summaries",
+              "ipa_layers.3.cell_summaries",
+              "ipa_layers.4.cell_summaries",
+              "layers.0.cell_summaries",
+              "layers.1.cell_summaries",
+              "layers.2.cell_summaries",
+              "layers.3.cell_summaries",
+              "layers.4.cell_summaries"
+            ],
+            "nonfinite": 0
+          }
+        },
+        {
+          "kind": "full_coverage",
+          "loss": {
+            "reference": 0.2089330404996872,
+            "candidate": 0.208933025598526,
+            "absolute_difference": 1.4901161193847656e-08
+          },
+          "gradients": {
+            "groups": 61,
+            "max_difference_rms": 1.1423929117679734e-09,
+            "max_relative_difference": 1.830876423125773e-05,
+            "min_nonzero_reference_rms": 3.7137538397064334e-07,
+            "exact_zero_reference_groups": [],
+            "nonfinite": 0
+          },
+          "updates": {
+            "groups": 71,
+            "max_difference_rms": 4.103846912180573e-08,
+            "max_relative_difference": 0.00045524211631578363,
+            "min_nonzero_reference_rms": 5.616274367520773e-05,
+            "exact_zero_reference_groups": [
+              "ipa_layers.0.cell_summaries",
+              "ipa_layers.1.cell_summaries",
+              "ipa_layers.2.cell_summaries",
+              "ipa_layers.3.cell_summaries",
+              "ipa_layers.4.cell_summaries",
+              "layers.0.cell_summaries",
+              "layers.1.cell_summaries",
+              "layers.2.cell_summaries",
+              "layers.3.cell_summaries",
+              "layers.4.cell_summaries"
+            ],
+            "nonfinite": 0
+          }
+        }
+      ],
+      "thresholds_applied": false
+    },
+    {
+      "case": "6lrd_A-R1-coverage_control-group59",
+      "alignment": {
+        "full_noise_sha256": "a4e25064282129dcf7ba3be99cf7d083c23b004a38f34f6619f8e27e7c6cdcf2",
+        "region_noise_sha256": "a4e25064282129dcf7ba3be99cf7d083c23b004a38f34f6619f8e27e7c6cdcf2",
+        "full_mask_sha256": "d50c4357b44726a7380503c967cf68b96eec81bb9c4060d7b786dc611eaa9b68",
+        "region_mask_sha256": "d50c4357b44726a7380503c967cf68b96eec81bb9c4060d7b786dc611eaa9b68",
+        "full_denominator": 2873211.0,
+        "region_denominator": 2873211.0,
+        "residues": 705,
+        "region_width": 896,
+        "frame_start": 0,
+        "name": "6lrd_A_R1"
+      },
+      "comparisons": [
+        {
+          "kind": "same_path_repeat",
+          "loss": {
+            "reference": 0.20842009782791138,
+            "candidate": 0.20842009782791138,
+            "absolute_difference": 0.0
+          },
+          "gradients": {
+            "groups": 61,
+            "max_difference_rms": 0.0,
+            "max_relative_difference": 0.0,
+            "min_nonzero_reference_rms": 5.855445006247277e-07,
+            "exact_zero_reference_groups": [],
+            "nonfinite": 0
+          },
+          "updates": {
+            "groups": 71,
+            "max_difference_rms": 0.0,
+            "max_relative_difference": 0.0,
+            "min_nonzero_reference_rms": 5.854850004586273e-05,
+            "exact_zero_reference_groups": [
+              "ipa_layers.0.cell_summaries",
+              "ipa_layers.1.cell_summaries",
+              "ipa_layers.2.cell_summaries",
+              "ipa_layers.3.cell_summaries",
+              "ipa_layers.4.cell_summaries",
+              "layers.0.cell_summaries",
+              "layers.1.cell_summaries",
+              "layers.2.cell_summaries",
+              "layers.3.cell_summaries",
+              "layers.4.cell_summaries"
+            ],
+            "nonfinite": 0
+          }
+        },
+        {
+          "kind": "full_coverage",
+          "loss": {
+            "reference": 0.20842009782791138,
+            "candidate": 0.20842009782791138,
+            "absolute_difference": 0.0
+          },
+          "gradients": {
+            "groups": 61,
+            "max_difference_rms": 1.706180355425291e-09,
+            "max_relative_difference": 1.7588081284218595e-05,
+            "min_nonzero_reference_rms": 5.855445006247277e-07,
+            "exact_zero_reference_groups": [],
+            "nonfinite": 0
+          },
+          "updates": {
+            "groups": 71,
+            "max_difference_rms": 1.5058707749436767e-07,
+            "max_relative_difference": 0.0015233179807189509,
+            "min_nonzero_reference_rms": 5.854850004586273e-05,
+            "exact_zero_reference_groups": [
+              "ipa_layers.0.cell_summaries",
+              "ipa_layers.1.cell_summaries",
+              "ipa_layers.2.cell_summaries",
+              "ipa_layers.3.cell_summaries",
+              "ipa_layers.4.cell_summaries",
+              "layers.0.cell_summaries",
+              "layers.1.cell_summaries",
+              "layers.2.cell_summaries",
+              "layers.3.cell_summaries",
+              "layers.4.cell_summaries"
+            ],
+            "nonfinite": 0
+          }
+        }
+      ],
+      "thresholds_applied": false
+    },
+    {
+      "case": "6l3r_E-R1-coverage_control-group19",
+      "alignment": {
+        "full_noise_sha256": "6e17da1180c3d38deb16a7471950f1963c12ea28508233318580ccf74da1fb88",
+        "region_noise_sha256": "6e17da1180c3d38deb16a7471950f1963c12ea28508233318580ccf74da1fb88",
+        "full_mask_sha256": "235c03a76819a97b8b3bae979586dfb344946a6991d8d7f96b13de2d934914ba",
+        "region_mask_sha256": "235c03a76819a97b8b3bae979586dfb344946a6991d8d7f96b13de2d934914ba",
+        "full_denominator": 2801499.0,
+        "region_denominator": 2801499.0,
+        "residues": 669,
+        "region_width": 896,
+        "frame_start": 0,
+        "name": "6l3r_E_R1"
+      },
+      "comparisons": [
+        {
+          "kind": "same_path_repeat",
+          "loss": {
+            "reference": 0.177825465798378,
+            "candidate": 0.177825465798378,
+            "absolute_difference": 0.0
+          },
+          "gradients": {
+            "groups": 61,
+            "max_difference_rms": 0.0,
+            "max_relative_difference": 0.0,
+            "min_nonzero_reference_rms": 4.0210389916521255e-07,
+            "exact_zero_reference_groups": [],
+            "nonfinite": 0
+          },
+          "updates": {
+            "groups": 71,
+            "max_difference_rms": 0.0,
+            "max_relative_difference": 0.0,
+            "min_nonzero_reference_rms": 5.539607939043536e-05,
+            "exact_zero_reference_groups": [
+              "ipa_layers.0.cell_summaries",
+              "ipa_layers.1.cell_summaries",
+              "ipa_layers.2.cell_summaries",
+              "ipa_layers.3.cell_summaries",
+              "ipa_layers.4.cell_summaries",
+              "layers.0.cell_summaries",
+              "layers.1.cell_summaries",
+              "layers.2.cell_summaries",
+              "layers.3.cell_summaries",
+              "layers.4.cell_summaries"
+            ],
+            "nonfinite": 0
+          }
+        },
+        {
+          "kind": "full_coverage",
+          "loss": {
+            "reference": 0.177825465798378,
+            "candidate": 0.177825465798378,
+            "absolute_difference": 0.0
+          },
+          "gradients": {
+            "groups": 61,
+            "max_difference_rms": 5.646736713532662e-10,
+            "max_relative_difference": 1.4689356859836114e-05,
+            "min_nonzero_reference_rms": 4.0210389916521255e-07,
+            "exact_zero_reference_groups": [],
+            "nonfinite": 0
+          },
+          "updates": {
+            "groups": 71,
+            "max_difference_rms": 5.653006655208086e-08,
+            "max_relative_difference": 0.0006279339536278336,
+            "min_nonzero_reference_rms": 5.539607939043536e-05,
+            "exact_zero_reference_groups": [
+              "ipa_layers.0.cell_summaries",
+              "ipa_layers.1.cell_summaries",
+              "ipa_layers.2.cell_summaries",
+              "ipa_layers.3.cell_summaries",
+              "ipa_layers.4.cell_summaries",
+              "layers.0.cell_summaries",
+              "layers.1.cell_summaries",
+              "layers.2.cell_summaries",
+              "layers.3.cell_summaries",
+              "layers.4.cell_summaries"
+            ],
+            "nonfinite": 0
+          }
+        }
+      ],
+      "thresholds_applied": false
+    }
+  ],
+  "scientific_training_approximation_pass": null,
+  "notes": [
+    "capacity runs have different supervision; losses must not be used for full/region approximation comparisons",
+    "controls have no applied numerical acceptance thresholds",
+    "first train config is warmup; three remaining configs measured; controls are three different aligned views, not timing replicates",
+    "6sup_A full-protein 250-frame training step failed with CUDA OOM in backward (gradient checkpoint recomputation) on R1 and R2; R3 not run within job time budget",
+    "not_run_budget cases were never started; they are neither passes nor failures"
+  ]
+}

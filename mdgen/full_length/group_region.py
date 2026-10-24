@@ -52,8 +52,18 @@ def _residues(partition, groups):
     return torch.unique(torch.cat([partition.groups[g].indices.cpu() for g in groups]))
 
 
+# Issue #43 fixed its candidate seed groups with this permutation seed.
+CANDIDATE_SELECTION_SEED = 43002
+
+
+def candidate_seed_groups(groups, count, selection_seed=CANDIDATE_SELECTION_SEED):
+    """First `count` group ids of a seeded permutation: candidates fixed before any error is seen."""
+    generator = torch.Generator().manual_seed(selection_seed)
+    return torch.randperm(groups, generator=generator)[:count].tolist()
+
+
 def sample_region_groups(partition, ca_coordinates, *, region_residues, halo_rings=1,
-                         generator=None):
+                         generator=None, seed_group=None):
     """Grow loss groups around a random seed group until the next would exceed the budget.
 
     Groups are added by distance between core C-alpha centres (ties by index);
@@ -68,7 +78,10 @@ def sample_region_groups(partition, ca_coordinates, *, region_residues, halo_rin
         raise ValueError(f'ca_coordinates must have shape [{partition.residue_mask.numel()}, 3] '
                          'for this full-protein partition')
     centres = torch.stack([ca[g.core_indices.cpu()].mean(0) for g in partition.groups])
-    seed = int(torch.randint(len(partition.groups), (), generator=generator))
+    seed = (int(torch.randint(len(partition.groups), (), generator=generator))
+            if seed_group is None else int(seed_group))
+    if not 0 <= seed < len(partition.groups):
+        raise ValueError(f'seed group {seed} outside partition with {len(partition.groups)} groups')
     distance = (centres - centres[seed]).norm(dim=-1)
     order = sorted(range(len(partition.groups)), key=lambda g: (float(distance[g]), g))
 

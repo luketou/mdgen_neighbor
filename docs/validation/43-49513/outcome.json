@@ -1,0 +1,180 @@
+{
+  "job_id": 49513,
+  "frames": null,
+  "source_commit": "02edb1f",
+  "run_id": "issue43-t2-sweepA-20261023T170924Z-02edb1f",
+  "driver_finished": true,
+  "counts": {
+    "completed": 1,
+    "failed": 4,
+    "skipped_by_rule": 1
+  },
+  "cases": [
+    {
+      "id": "6sup_A-R1-full-f64",
+      "protein": "6sup_A",
+      "replica": 1,
+      "setting": "full",
+      "status": "completed",
+      "frames": 64,
+      "memory": {
+        "group_batch_size": 4,
+        "ffn_chunk_size": 65536,
+        "expandable_segments": false
+      },
+      "elapsed_s": 65.43974056099978,
+      "losses": [
+        0.2163095623254776,
+        0.2163095623254776,
+        0.2163095623254776,
+        0.2163095623254776
+      ],
+      "all_losses_finite": true,
+      "gradient_nonfinite": 0,
+      "parameters_nonfinite_after_step": 0,
+      "peak_allocated_bytes": 34668308992,
+      "peak_reserved_bytes": 35567697920,
+      "median_step_time_s": 8.01591239800473,
+      "batch_shape_trans": [
+        1,
+        64,
+        2128,
+        3
+      ]
+    },
+    {
+      "id": "6sup_A-R1-full-f96",
+      "protein": "6sup_A",
+      "replica": 1,
+      "setting": "full",
+      "status": "failed",
+      "frames": 96,
+      "memory": {
+        "group_batch_size": 4,
+        "ffn_chunk_size": 65536,
+        "expandable_segments": false
+      },
+      "returncode": 1,
+      "elapsed_s": 28.501827950996812,
+      "failure_class": "oom",
+      "failure_phase": "backward",
+      "log": "results/training_region_probe_49513/6sup_A-R1-full-f96.log",
+      "oom_tried_allocate": "1.17 GiB",
+      "gpu_total_gib": 44.39,
+      "torch_allocated_gib": 40.24,
+      "reserved_unallocated": "2.57 GiB"
+    },
+    {
+      "id": "6sup_A-R1-full-f128",
+      "protein": "6sup_A",
+      "replica": 1,
+      "setting": "full",
+      "status": "skipped_by_rule",
+      "frames": 128,
+      "memory": {
+        "group_batch_size": 4,
+        "ffn_chunk_size": 65536,
+        "expandable_segments": false
+      },
+      "reason": "more_frames_than_oom_step"
+    },
+    {
+      "id": "6sup_A-R1-full-f250-gbs1-ffn65536",
+      "protein": "6sup_A",
+      "replica": 1,
+      "setting": "full",
+      "status": "failed",
+      "frames": 250,
+      "memory": {
+        "group_batch_size": 1,
+        "ffn_chunk_size": 65536,
+        "expandable_segments": false
+      },
+      "returncode": 1,
+      "elapsed_s": 28.460750924998138,
+      "failure_class": "oom",
+      "failure_phase": "backward",
+      "log": "results/training_region_probe_49513/6sup_A-R1-full-f250-gbs1-ffn65536.log",
+      "oom_tried_allocate": "44.00 MiB",
+      "gpu_total_gib": 44.39,
+      "torch_allocated_gib": 42.68,
+      "reserved_unallocated": "1.02 GiB"
+    },
+    {
+      "id": "6sup_A-R1-full-f250-gbs1-ffn8192",
+      "protein": "6sup_A",
+      "replica": 1,
+      "setting": "full",
+      "status": "failed",
+      "frames": 250,
+      "memory": {
+        "group_batch_size": 1,
+        "ffn_chunk_size": 8192,
+        "expandable_segments": false
+      },
+      "returncode": 1,
+      "elapsed_s": 28.514829184998234,
+      "failure_class": "oom",
+      "failure_phase": "backward",
+      "log": "results/training_region_probe_49513/6sup_A-R1-full-f250-gbs1-ffn8192.log",
+      "oom_tried_allocate": "44.00 MiB",
+      "gpu_total_gib": 44.39,
+      "torch_allocated_gib": 42.68,
+      "reserved_unallocated": "1.02 GiB"
+    },
+    {
+      "id": "6sup_A-R1-full-f250-gbs1-ffn8192-expandable",
+      "protein": "6sup_A",
+      "replica": 1,
+      "setting": "full",
+      "status": "failed",
+      "frames": 250,
+      "memory": {
+        "group_batch_size": 1,
+        "ffn_chunk_size": 8192,
+        "expandable_segments": true
+      },
+      "returncode": 1,
+      "elapsed_s": 31.71578408399364,
+      "failure_class": "oom",
+      "failure_phase": "backward",
+      "log": "results/training_region_probe_49513/6sup_A-R1-full-f250-gbs1-ffn8192-expandable.log",
+      "oom_tried_allocate": "56.00 MiB",
+      "gpu_total_gib": 44.39,
+      "torch_allocated_gib": 43.45,
+      "reserved_unallocated": "255.22 MiB"
+    }
+  ],
+  "controls": [],
+  "mode": "sweep",
+  "scientific_training_approximation_pass": null,
+  "notes": [
+    "full-protein capacity only; no full/region comparison in this job",
+    "sweep rules: larger frames skipped after an OOM with the same memory settings; further memory settings skipped once a frame count fits",
+    "first config is warmup; three remaining configs measured",
+    "memory variants at 250 frames change batching/allocation only; all three still OOM in backward"
+  ],
+  "recorded_settings": {
+    "source": "results/training_region_probe_49513/summary.json reports.6sup_A-R1-full-f64",
+    "noise_seed": 0,
+    "training_time": [
+      0.5
+    ],
+    "batch_size": 1,
+    "grad_checkpointing": true,
+    "precision_state": {
+      "precision_config": "fp32-reference",
+      "lightning_precision": "32-true",
+      "device_type": "cuda",
+      "autocast_enabled": false,
+      "autocast_dtype": null,
+      "parameter_dtypes": [
+        "torch.float32"
+      ],
+      "float32_matmul_precision": "highest",
+      "cuda_matmul_allow_tf32": false,
+      "cudnn_allow_tf32": false
+    },
+    "checkpoint_sha256": "bc90c66e7539f52c9d0514aeddd96c552061150a1eef3b10c120bc3aaff08015"
+  }
+}
