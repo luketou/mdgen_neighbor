@@ -45,6 +45,23 @@ def test_ci_checkout_ignores_unchanged_legacy_whitespace(tmp_path):
     assert result.returncode == 0, result.stdout + result.stderr
 
 
+@pytest.mark.parametrize('bad', [False, True])
+def test_untracked_files_are_checked_before_commit(tmp_path, bad):
+    # commit 前跑檢查時，新檔仍是 untracked；git diff --check 看不到它們。
+    root = repository(tmp_path)
+    (root / 'clean.txt').write_text('clean\n')
+    git(root, 'add', '.')
+    git(root, 'commit', '-qm', 'Clean commit')
+    (root / 'ignored.log').write_text('ignored space \n')
+    (root / '.git' / 'info' / 'exclude').write_text('ignored.log\n')
+    (root / 'untracked.log').write_text('trailing space \n' if bad else 'clean\n')
+    result = check(root)
+    assert (result.returncode != 0) == bad, result.stdout + result.stderr
+    assert 'ignored.log' not in result.stdout
+    if bad:
+        assert 'untracked.log:1: trailing whitespace' in result.stdout
+
+
 @pytest.mark.parametrize('location', ['worktree', 'index', 'commit'])
 def test_new_whitespace_is_rejected_at_each_git_boundary(tmp_path, location):
     root = repository(tmp_path)
@@ -79,6 +96,28 @@ def test_pr_merge_checks_changes_against_base_parent(tmp_path, bad):
     assert (result.returncode != 0) == bad, result.stdout + result.stderr
     if bad:
         assert 'feature.txt:1: trailing whitespace' in result.stdout
+
+
+@pytest.mark.parametrize('bad', [False, True])
+def test_local_branch_checks_every_commit_since_main(tmp_path, bad):
+    # CI 比對 PR merge 與 base；本機也要涵蓋整條分支，不只最新 commit。
+    origin = repository(tmp_path)
+    clone = tmp_path / 'local'
+    git(origin, 'clone', '-q', origin.as_uri(), str(clone))
+    git(clone, 'config', 'user.name', 'Regression fixture')
+    git(clone, 'config', 'user.email', 'fixture@example.invalid')
+    git(clone, 'checkout', '-qb', 'feature')
+    (clone / 'early.txt').write_text('early line \n' if bad else 'early line\n')
+    git(clone, 'add', '.')
+    git(clone, 'commit', '-qm', 'Early branch commit')
+    (clone / 'late.txt').write_text('clean\n')
+    git(clone, 'add', '.')
+    git(clone, 'commit', '-qm', 'Latest clean commit')
+    result = check(clone)
+    assert (result.returncode != 0) == bad, result.stdout + result.stderr
+    assert 'legacy.txt' not in result.stdout
+    if bad:
+        assert 'early.txt:1: trailing whitespace' in result.stdout
 
 
 def test_depth_one_checkout_reports_missing_parent_without_legacy_noise(tmp_path):
