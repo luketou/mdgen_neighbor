@@ -1,0 +1,86 @@
+# captured 2026-10-24T10:10:47Z on bug as r15543056
+# Ticket 5 formal run issue43-t5-formal-20261024T045815Z-f2a135d reads --data-root /share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b and --checkpoint /share/home/r15543056/MDgen/mdgen/ckpt/atlas.ckpt
+
+## 儲存空間
+$ df -h /share/home/r15543056
+Filesystem         Size  Used Avail Use% Mounted on
+skuld:/share/home  360G  257G  104G  72% /share/home
+
+## smoke Job 49597（--raw-tensors all）的原始張量
+$ grep -h -- '--shard-id s-2313d4853c7e17f9c07f' /share/home/r15543056/MDgen/hpc_runs/issue43-t5-formal-20261024T045815Z-f2a135d/job_history
+49597 issue43-t5-formal-20261024T045815Z-f2a135d:issue43-t5-formal:045821 job/submit_training_region_probe.sh --paired-shard --shard-id s-2313d4853c7e17f9c07f --raw-tensors all --data-root /share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b --checkpoint /share/home/r15543056/MDgen/mdgen/ckpt/atlas.ckpt
+
+$ ls -l /share/home/r15543056/MDgen/hpc_runs/issue43-t5-formal-20261024T045815Z-f2a135d/results/paired/s-2313d4853c7e17f9c07f/51418e21d4e04bb2ad1ebd69f184382e/c-a4fa67d141575ac49bd5/probe/*.pt
+-rw-r--r-- 1 r15543056 users 302930791 Oct 24 12:59 /share/home/r15543056/MDgen/hpc_runs/issue43-t5-formal-20261024T045815Z-f2a135d/results/paired/s-2313d4853c7e17f9c07f/51418e21d4e04bb2ad1ebd69f184382e/c-a4fa67d141575ac49bd5/probe/0-candidate.pt
+-rw-r--r-- 1 r15543056 users 302922817 Oct 24 12:59 /share/home/r15543056/MDgen/hpc_runs/issue43-t5-formal-20261024T045815Z-f2a135d/results/paired/s-2313d4853c7e17f9c07f/51418e21d4e04bb2ad1ebd69f184382e/c-a4fa67d141575ac49bd5/probe/0-full.pt
+-rw-r--r-- 1 r15543056 users 302930791 Oct 24 12:59 /share/home/r15543056/MDgen/hpc_runs/issue43-t5-formal-20261024T045815Z-f2a135d/results/paired/s-2313d4853c7e17f9c07f/51418e21d4e04bb2ad1ebd69f184382e/c-a4fa67d141575ac49bd5/probe/1-candidate.pt
+-rw-r--r-- 1 r15543056 users 302922817 Oct 24 12:59 /share/home/r15543056/MDgen/hpc_runs/issue43-t5-formal-20261024T045815Z-f2a135d/results/paired/s-2313d4853c7e17f9c07f/51418e21d4e04bb2ad1ebd69f184382e/c-a4fa67d141575ac49bd5/probe/1-full.pt
+-rw-r--r-- 1 r15543056 users 302930791 Oct 24 12:59 /share/home/r15543056/MDgen/hpc_runs/issue43-t5-formal-20261024T045815Z-f2a135d/results/paired/s-2313d4853c7e17f9c07f/51418e21d4e04bb2ad1ebd69f184382e/c-a4fa67d141575ac49bd5/probe/2-candidate.pt
+-rw-r--r-- 1 r15543056 users 302922817 Oct 24 12:59 /share/home/r15543056/MDgen/hpc_runs/issue43-t5-formal-20261024T045815Z-f2a135d/results/paired/s-2313d4853c7e17f9c07f/51418e21d4e04bb2ad1ebd69f184382e/c-a4fa67d141575ac49bd5/probe/2-full.pt
+-rw-r--r-- 1 r15543056 users 302930791 Oct 24 12:59 /share/home/r15543056/MDgen/hpc_runs/issue43-t5-formal-20261024T045815Z-f2a135d/results/paired/s-2313d4853c7e17f9c07f/51418e21d4e04bb2ad1ebd69f184382e/c-a4fa67d141575ac49bd5/probe/3-candidate.pt
+-rw-r--r-- 1 r15543056 users 302922817 Oct 24 12:59 /share/home/r15543056/MDgen/hpc_runs/issue43-t5-formal-20261024T045815Z-f2a135d/results/paired/s-2313d4853c7e17f9c07f/51418e21d4e04bb2ad1ebd69f184382e/c-a4fa67d141575ac49bd5/probe/3-full.pt
+
+$ du -sh --apparent-size /share/home/r15543056/MDgen/hpc_runs/issue43-t5-formal-20261024T045815Z-f2a135d/results/paired/s-2313d4853c7e17f9c07f/51418e21d4e04bb2ad1ebd69f184382e/c-a4fa67d141575ac49bd5/probe
+2.3G	/share/home/r15543056/MDgen/hpc_runs/issue43-t5-formal-20261024T045815Z-f2a135d/results/paired/s-2313d4853c7e17f9c07f/51418e21d4e04bb2ad1ebd69f184382e/c-a4fa67d141575ac49bd5/probe
+
+$ du -sb --apparent-size /share/home/r15543056/MDgen/hpc_runs/issue43-t5-formal-20261024T045815Z-f2a135d/results/paired/s-2313d4853c7e17f9c07f/51418e21d4e04bb2ad1ebd69f184382e/c-a4fa67d141575ac49bd5/probe
+2423638209	/share/home/r15543056/MDgen/hpc_runs/issue43-t5-formal-20261024T045815Z-f2a135d/results/paired/s-2313d4853c7e17f9c07f/51418e21d4e04bb2ad1ebd69f184382e/c-a4fa67d141575ac49bd5/probe
+
+## 正式 run 讀取的資料與 checkpoint（sha256）
+$ cd /share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b && find . -type f | sort | xargs sha256sum
+c430a0426b9aac94f219e4b2f29bd084238c3f1790561ef3830fca894f578c14  ./arrays/6l3r_E_R1_i400ps_chain.npz
+a6c39195cf8ecd671d165457d308dde0c5721e5baefc451b4776bd2facde32fd  ./arrays/6l3r_E_R1_i400ps.npy
+c430a0426b9aac94f219e4b2f29bd084238c3f1790561ef3830fca894f578c14  ./arrays/6l3r_E_R2_i400ps_chain.npz
+b3308b4275814e9f8e3f395f655822983c05658cf80dd98ddf4b2d4035f274d8  ./arrays/6l3r_E_R2_i400ps.npy
+c430a0426b9aac94f219e4b2f29bd084238c3f1790561ef3830fca894f578c14  ./arrays/6l3r_E_R3_i400ps_chain.npz
+54eca1aca548928438d3d3599e8e68c0013fc7473126609be05920cd147870dc  ./arrays/6l3r_E_R3_i400ps.npy
+8f995cac5be92542db11a5f4624c4ac410a77f4f814bd0c4695fd2b2404474c1  ./arrays/6lrd_A_R1_i400ps_chain.npz
+da0f69041eac0683ddc6846f415673272b211c8184fbb738a985e9ac25ab93c2  ./arrays/6lrd_A_R1_i400ps.npy
+8f995cac5be92542db11a5f4624c4ac410a77f4f814bd0c4695fd2b2404474c1  ./arrays/6lrd_A_R2_i400ps_chain.npz
+30ef542afa7a4bc625425c9510cb1e3645fe391a214319f4711400641442e133  ./arrays/6lrd_A_R2_i400ps.npy
+8f995cac5be92542db11a5f4624c4ac410a77f4f814bd0c4695fd2b2404474c1  ./arrays/6lrd_A_R3_i400ps_chain.npz
+9c3f4834275a713026eb37789b71ca64bffbfad7214fc8960a3c8e2160e460ae  ./arrays/6lrd_A_R3_i400ps.npy
+45fba7cdb4b663d23ea2566f0d4872ea89aa8c69c83c7074bcf278309b494c2c  ./arrays/6sms_A_R1_i400ps_chain.npz
+d9b29e68b417ec84430663c8ec2bafa39b1af8517afa8c556a540566385dd2d9  ./arrays/6sms_A_R1_i400ps.npy
+45fba7cdb4b663d23ea2566f0d4872ea89aa8c69c83c7074bcf278309b494c2c  ./arrays/6sms_A_R2_i400ps_chain.npz
+b6944c32751c022a667b8edcde3658b8a32c6b9d77c811640c26fc5ee3dd5cbc  ./arrays/6sms_A_R2_i400ps.npy
+45fba7cdb4b663d23ea2566f0d4872ea89aa8c69c83c7074bcf278309b494c2c  ./arrays/6sms_A_R3_i400ps_chain.npz
+b6741ba399f88128ec6349d9f84aef7feb990159dd6b6c3be6a4226314a00996  ./arrays/6sms_A_R3_i400ps.npy
+6baf00e0a37ff091bef3e304e19aea30a52bea5173741329c94ee30cb31d1c7d  ./arrays/6sup_A_R1_i400ps_chain.npz
+4e9a9fe631de6b06a6ef929f2c2a85ed8d9a068fe2f3ac8cb062eac4bc93a2f2  ./arrays/6sup_A_R1_i400ps.npy
+6baf00e0a37ff091bef3e304e19aea30a52bea5173741329c94ee30cb31d1c7d  ./arrays/6sup_A_R2_i400ps_chain.npz
+9a00008e6f5621f3e473e5c8db521b4569a3449676e9a1d4ab959066576ad4e8  ./arrays/6sup_A_R2_i400ps.npy
+6baf00e0a37ff091bef3e304e19aea30a52bea5173741329c94ee30cb31d1c7d  ./arrays/6sup_A_R3_i400ps_chain.npz
+ed11c2e72f416917908f7faad02d7a3aadda74cb59435afd5833d412a266ddb4  ./arrays/6sup_A_R3_i400ps.npy
+e90628734d0b057d35d86aab460b01893647c25aa97ea272c84971d036afb6bb  ./checkpoint_metadata.json
+c1dd0eeff0907a36978a901cc9b9e9f4d5eb761bf32446765f8d84633acd4807  ./partitions/6l3r_E_R1_i400ps_drift.json
+46d5f14a44c5ccbcbae4ae0f4accbfe114303cf1957cf78b9ae498f81957873e  ./partitions/6l3r_E_R1_i400ps_partition.npz
+b6170eaf30fa71a445ef16a75f8145a85545a4fb9b8807f21dd3c9e0d9babcbe  ./partitions/6l3r_E_R2_i400ps_drift.json
+46d5f14a44c5ccbcbae4ae0f4accbfe114303cf1957cf78b9ae498f81957873e  ./partitions/6l3r_E_R2_i400ps_partition.npz
+b25b1f8d5f7e0c00b9ebba054c561e3ddf8b2ca72b91cca30f711d39a6f4faea  ./partitions/6l3r_E_R3_i400ps_drift.json
+46d5f14a44c5ccbcbae4ae0f4accbfe114303cf1957cf78b9ae498f81957873e  ./partitions/6l3r_E_R3_i400ps_partition.npz
+f04073bac7d898fccdffd6440acb76dee0d68586cbba290e708cebd12b6859ad  ./partitions/6lrd_A_R1_i400ps_drift.json
+f06dcece93b3a9dbb8cace36a1bb9ef09dea1c33a4fe4b4e0f0cecb02e46c851  ./partitions/6lrd_A_R1_i400ps_partition.npz
+56bebcb92ef1f33a6e2576593de670bbde2c3443686ecd83ccbc4e4de9e5818f  ./partitions/6lrd_A_R2_i400ps_drift.json
+f06dcece93b3a9dbb8cace36a1bb9ef09dea1c33a4fe4b4e0f0cecb02e46c851  ./partitions/6lrd_A_R2_i400ps_partition.npz
+1ad8baa15eadb8bddc51eb114287f6431ebb5b56897369781cebfed01179ce29  ./partitions/6lrd_A_R3_i400ps_drift.json
+f06dcece93b3a9dbb8cace36a1bb9ef09dea1c33a4fe4b4e0f0cecb02e46c851  ./partitions/6lrd_A_R3_i400ps_partition.npz
+d88f3dd2418572204a9385de6693fd143895a670ec97606d9085649766802559  ./partitions/6sms_A_R1_i400ps_drift.json
+30a271b2a799dd11f78b1cf85af444e5b3a7590acd400d22a4b2e774c6df9bca  ./partitions/6sms_A_R1_i400ps_partition.npz
+baff81ca836b9493d8ce5b64613a92d7ca1b68df7735c1325a1356c908c3c854  ./partitions/6sms_A_R2_i400ps_drift.json
+30a271b2a799dd11f78b1cf85af444e5b3a7590acd400d22a4b2e774c6df9bca  ./partitions/6sms_A_R2_i400ps_partition.npz
+2118da9888c73b86d516a85d0553cb2f7c2bd3e1de4df89c6a9cc1596b523fc8  ./partitions/6sms_A_R3_i400ps_drift.json
+30a271b2a799dd11f78b1cf85af444e5b3a7590acd400d22a4b2e774c6df9bca  ./partitions/6sms_A_R3_i400ps_partition.npz
+ebe70ef6bff6de54fd8a08f4ad9c58cb6435ee5d5fb8d5f062d5d70d4807c661  ./partitions/6sup_A_R1_i400ps_drift.json
+6df5d741edd949688b2c31fd04df5d75fca6fdc8868e9efe1cf4c8e05dda1997  ./partitions/6sup_A_R1_i400ps_partition.npz
+0acfe5e2f2baff6a03b39ef9758cc08a61a279ea0fa97a3267e547ce2643bf83  ./partitions/6sup_A_R2_i400ps_drift.json
+6df5d741edd949688b2c31fd04df5d75fca6fdc8868e9efe1cf4c8e05dda1997  ./partitions/6sup_A_R2_i400ps_partition.npz
+aecd248d4f69654c2342aa2505cbb2120d51c1c885476e1da2fe2374f3eabd42  ./partitions/6sup_A_R3_i400ps_drift.json
+6df5d741edd949688b2c31fd04df5d75fca6fdc8868e9efe1cf4c8e05dda1997  ./partitions/6sup_A_R3_i400ps_partition.npz
+782becaafcdf2108ef915d2ad4322a9bb70ff4bbbbcf437b9721269c864d1a3f  ./partitions/summary.json
+6ffe3768d6d70980f736686bbe78976d176d1f7a90d09c37bedcf44b75ff0809  ./summary.json
+757c0754d1e7551f7c348ba6d7ae0740ba74161ba980ec5abe32e714c9d87a83  ./validation.csv
+
+$ sha256sum /share/home/r15543056/MDgen/mdgen/ckpt/atlas.ckpt
+bc90c66e7539f52c9d0514aeddd96c552061150a1eef3b10c120bc3aaff08015  /share/home/r15543056/MDgen/mdgen/ckpt/atlas.ckpt
+

@@ -218,3 +218,103 @@ def test_matrix_run_omitting_raw_tensors_saves_none(tmp_path, monkeypatch):
     monkeypatch.setattr('mdgen.train_step_matrix.run_shard', run)
     main(['run', '--shard-id', manifest['shards'][0]['shard_id'], '--output-root', str(tmp_path),
           '--data-root', str(tmp_path), '--checkpoint', 'checkpoint'])
+
+
+@pytest.mark.parametrize('progress', ['side', 'failure', 'absent', 'malformed'])
+def test_timeout_preserves_exit_and_last_stage(monkeypatch, tmp_path, progress):
+    from pathlib import Path
+    import mdgen.train_step_matrix as matrix
+    manifest = make_manifest()
+    checkpoint = tmp_path / 'checkpoint'
+    checkpoint.write_bytes(b'checkpoint')
+    class Approved:
+        def hexdigest(self):
+            return json.loads((matrix.CONTRACT_DIR / 'frozen-contract-v1.1.json').read_text())['fixed_settings']['checkpoint_sha256']
+    monkeypatch.setattr(matrix.hashlib, 'file_digest', lambda *args: Approved())
+    monkeypatch.setattr(matrix, 'case_command', lambda case, root, ckpt, output, raw: [str(output)])
+    def timeout(command, **kwargs):
+        output = Path(command[0])
+        if progress == 'side':
+            output.with_suffix('').mkdir()
+            (output.with_suffix('') / '0-full.json').write_text('{}')
+        elif progress == 'failure':
+            (output.parent / 'failure.json').write_text(json.dumps({
+                'failure_category': 'program_error', 'stage': 'backward', 'side': 'candidate', 'iteration': 0}))
+        elif progress == 'malformed':
+            (output.parent / 'failure.json').write_text('{')
+        raise subprocess.TimeoutExpired(command, 1)
+    monkeypatch.setattr(subprocess, 'run', timeout)
+    path = run_shard(manifest, manifest['shards'][0]['shard_id'], tmp_path, tmp_path, checkpoint)
+    record = json.loads(path.read_text())['cases'][0]
+    evidence = json.loads((Path(record['artifact_dir']) / 'failure.json').read_text())
+    assert record['failure_category'] == evidence['failure_category'] == 'timeout'
+    assert record['exit_code'] == evidence['exit_code'] == -9
+    expected = {'side': 'completed_step', 'failure': 'backward'}.get(progress, 'unknown')
+    assert record['stage'] == evidence['stage'] == expected
+    assert record['stage_reason']
+    if progress == 'side':
+        assert record['side'] == 'full' and record['iteration'] == 0
+
+
+@pytest.mark.parametrize('message,expected', [
+    ('slurmstepd: JOB 123 CANCELLED DUE TO TIME LIMIT', 'timeout'),
+    ('CUDA out of memory', 'missing_shard'),
+    ('', 'missing_shard')])
+def test_missing_shard_requires_scheduler_timeout_evidence(tmp_path, message, expected):
+    manifest = make_manifest()
+    shard = manifest['shards'][0]
+    stderr = tmp_path / 'job.err'
+    stderr.write_text(message)
+    report = aggregate(manifest, [], scheduler_logs={shard['shard_id']: stderr})
+    record = next(c for g in report['strata'] for c in g['cases'] if c['case_id'] == shard['case_ids'][0])
+    assert record['failure_category'] == expected
+    assert record['status'] == 'missing'
+    if expected == 'timeout':
+        assert record['evidence']['stderr_log'] == str(stderr)
+        assert 'DUE TO TIME LIMIT' in record['evidence']['scheduler_message']
+    other = manifest['shards'][1]['case_ids'][0]
+    assert next(c for g in report['strata'] for c in g['cases'] if c['case_id'] == other)['failure_category'] == 'missing_shard'
+
+
+@pytest.mark.parametrize('field,value', [
+    ('loss_finite', False), ('gradient_nonfinite', 1),
+    ('parameters_nonfinite_after_step', 1), ('nonfinite_counts', {'model_output': 1})])
+def test_shared_run_finiteness(field, value):
+    from mdgen.train_step_control import run_is_finite
+    run = dict(loss_finite=True, gradient_nonfinite=0, parameters_nonfinite_after_step=0,
+               nonfinite_counts={'model_output': 0})
+    assert run_is_finite(run)
+    run[field] = value
+    assert not run_is_finite(run)
+
+
+def test_scheduler_log_does_not_override_existing_result(tmp_path):
+    manifest = make_manifest()
+    shard = manifest['shards'][0]
+    stderr = tmp_path / 'job.err'
+    stderr.write_text('DUE TO TIME LIMIT')
+    record = dict(case_id=shard['case_ids'][0], status='failed', failure_category='oom')
+    result = dict(manifest_id=manifest['manifest_id'], shard_id=shard['shard_id'], cases=[record])
+    report = aggregate(manifest, [result], scheduler_logs={shard['shard_id']: stderr})
+    assert next(c for g in report['strata'] for c in g['cases'] if c['case_id'] == record['case_id']) == record
+
+
+def test_unreadable_scheduler_log_keeps_missing_shard(tmp_path):
+    manifest = make_manifest()
+    shard = manifest['shards'][0]
+    report = aggregate(manifest, [], scheduler_logs={shard['shard_id']: tmp_path / 'absent'})
+    assert next(c for g in report['strata'] for c in g['cases']
+                if c['case_id'] == shard['case_ids'][0])['failure_category'] == 'missing_shard'
+
+
+def test_scheduler_log_cli_reaches_aggregator(tmp_path, monkeypatch):
+    import mdgen.train_step_matrix as matrix
+    manifest = tmp_path / 'manifest.json'
+    manifest.write_text(json.dumps(make_manifest()))
+    def aggregate_with_log(manifest, results, *, scheduler_logs):
+        assert scheduler_logs == {'shard': '/tmp/job.err'}
+        assert results == []
+        return {'status': '未完成'}
+    monkeypatch.setattr(matrix, 'aggregate', aggregate_with_log)
+    matrix.main(['aggregate', '--manifest', str(manifest), '--output', str(tmp_path / 'report.json'),
+                 '--scheduler-log', 'shard=/tmp/job.err'])

@@ -403,12 +403,12 @@ def test_halo_change_keeps_loss_group_and_mask(monkeypatch):
 
 
 def test_paired_nonfinite_fails_even_when_truncated(monkeypatch):
-    from mdgen.train_step_control import compare_paired_runs
+    from mdgen.train_step_control import compare_paired_runs, PairedRun
     run = dict(loss=1., loss_finite=True, gradient_nonfinite=0,
                parameters_nonfinite_after_step=0, missing_gradients=[],
                initial_state_sha256='same', optimizer_initial_state='fresh_empty', optimizer={})
     a, b = {'group': torch.ones(3)}, {'group': torch.tensor([float('nan'), 1., 1.])}
-    comparison = compare_paired_runs(run, run, a, b, a, a, control=False)
+    comparison = compare_paired_runs(PairedRun(run, a, a), PairedRun(run, b, a), control=False)
     assert comparison['status'] == 'failed' and comparison['control_passed'] is None
     assert comparison['gradients']['group']['nonfinite'] == 1
     json.dumps(comparison, allow_nan=False)
@@ -432,14 +432,14 @@ def test_paired_oom_evidence_keeps_full_backward_stage(monkeypatch, tmp_path):
 
 
 def test_paired_control_enforces_relative_option_b_and_near_zero_policy():
-    from mdgen.train_step_control import compare_paired_runs
+    from mdgen.train_step_control import compare_paired_runs, PairedRun
     run = dict(loss=1., loss_finite=True, gradient_nonfinite=0,
                parameters_nonfinite_after_step=0, missing_gradients=[],
                initial_state_sha256='same', optimizer_initial_state='fresh_empty', optimizer={})
     gradient = {'active': torch.full((4,), 1e-5), 'zero': torch.zeros(4)}
     changed = {**gradient, 'active': gradient['active'] * 1.001}
     update = {'active': torch.full((4,), 1e-3), 'zero': torch.zeros(4)}
-    comparison = compare_paired_runs(run, run, gradient, changed, update, update, control=True)
+    comparison = compare_paired_runs(PairedRun(run, gradient, update), PairedRun(run, changed, update), control=True)
     assert comparison['status'] == 'failed'
     assert comparison['gradients']['active']['difference_rms'] < 1e-7
     assert comparison['gradients']['active']['relative_difference'] > 5e-4

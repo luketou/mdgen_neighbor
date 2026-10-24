@@ -10,6 +10,8 @@ import subprocess
 import sys
 import uuid
 
+from .train_step_control import run_is_finite
+
 CONTRACT_DIR = Path(__file__).resolve().parents[1] / 'docs/validation/43-contract'
 STRATA = ('protein', 'replica', 'frames', 't', 'noise_seed', 'halo', 'coverage', 'control_type', 'paired_common_subset', 'boundary_ring')
 
@@ -188,8 +190,7 @@ def run_shard(manifest, shard_id, output_root, data_root, checkpoint, timeout=18
                 raise ValueError('actual paired case differs from frozen manifest')
             record['status'] = report['status']
             if record['status'] == 'failed':
-                nonfinite = any(not run['loss_finite'] or run['gradient_nonfinite']
-                    or run['parameters_nonfinite_after_step'] or any(run.get('nonfinite_counts', {}).values())
+                nonfinite = any(not run_is_finite(run)
                     for measurement in report['measurements']
                     for run in (measurement['full'], measurement['candidate']))
                 record['failure_category'] = 'nonfinite' if nonfinite else 'control_failure'
@@ -199,6 +200,14 @@ def run_shard(manifest, shard_id, output_root, data_root, checkpoint, timeout=18
                 category = result.get('preflight', {}).get('failure_category', category)
             record.update(failure_category=category, error=str(error)[-16000:])
             evidence = child / 'failure.json'
+            if isinstance(error, subprocess.TimeoutExpired):
+                progress = timeout_progress(child)
+                record.update(exit_code=-9, **progress)
+                timeout_evidence = {'failure_category': 'timeout', 'exit_code': -9,
+                                    'error': str(error), **progress}
+                # 保留 probe 原有證據，再補上父程序觀察到的逾時。
+                with evidence.open('w') as stream:
+                    json.dump(timeout_evidence, stream, indent=2, ensure_ascii=False)
             if evidence.exists():
                 record['evidence'] = json.loads(evidence.read_text())
                 record['failure_category'] = record['evidence']['failure_category']
@@ -211,7 +220,35 @@ def run_shard(manifest, shard_id, output_root, data_root, checkpoint, timeout=18
     return directory / 'shard.json'
 
 
-def aggregate(manifest, results):
+def timeout_progress(child):
+    """只描述已落盤的最後進度；不推測逾時時正在執行的階段。"""
+    failure = child / 'failure.json'
+    reason = 'no persisted probe stage or completed side report'
+    if failure.exists():
+        try:
+            evidence = json.loads(failure.read_text())
+            if evidence.get('stage'):
+                return {**{key: evidence[key] for key in ('stage', 'side', 'iteration') if key in evidence},
+                        'probe_evidence': evidence, 'stage_reason': 'persisted probe failure.json'}
+        except (ValueError, OSError):
+            reason = 'unreadable probe failure.json; no completed side report'
+    reports = []
+    for path in (child / 'probe').glob('*-*.json'):
+        iteration, _, side = path.stem.partition('-')
+        if iteration.isdigit() and side in ('full', 'candidate'):
+            try:
+                json.loads(path.read_text())
+            except (ValueError, OSError):
+                continue
+            reports.append((int(iteration), side == 'candidate', side, path))
+    if reports:
+        iteration, _, side, path = max(reports)
+        return {'stage': 'completed_step', 'iteration': iteration, 'side': side,
+                'stage_reason': f'last completed side report: {path}; active stage unavailable'}
+    return {'stage': 'unknown', 'stage_reason': reason}
+
+
+def aggregate(manifest, results, *, scheduler_logs=None):
     """不補缺口、不跨蛋白判定；重跑保留並要求明確選取，避免挑最好結果。"""
     validate_manifest(manifest)
     expected = {s['shard_id']: s for s in manifest['shards']}
@@ -231,6 +268,20 @@ def aggregate(manifest, results):
             if record['case_id'] not in allowed or record['case_id'] in records:
                 raise ValueError('unexpected or duplicate case result')
             records[record['case_id']] = record
+    scheduler_evidence = {}
+    for shard_id, path in (scheduler_logs or {}).items():
+        if shard_id not in expected:
+            raise ValueError('scheduler log references unknown shard')
+        try:
+            lines = Path(path).read_text().splitlines()
+        except OSError:
+            continue
+        messages = [line for line in lines if 'DUE TO TIME LIMIT' in line]
+        if shard_id not in seen_shards and messages:
+            for identity in expected[shard_id]['case_ids']:
+                scheduler_evidence[identity] = {'case_id': identity, 'status': 'missing',
+                    'failure_category': 'timeout', 'evidence': {
+                        'stderr_log': str(path), 'scheduler_message': '\n'.join(messages)}}
     strata = {}
     for case in manifest['cases']:
         key = tuple(case[k] for k in STRATA)
@@ -243,8 +294,8 @@ def aggregate(manifest, results):
                       'duplicate_of': case.get('duplicate_of'), 'evidence': case.get('evidence')}
             group['counts']['duplicate' if case['plan_status'] == 'duplicate' else 'skipped'] += 1
         else:
-            record = records.get(case['case_id'], {'case_id': case['case_id'], 'status': 'missing',
-                                                   'failure_category': 'missing_shard'})
+            record = records.get(case['case_id'], scheduler_evidence.get(case['case_id'],
+                {'case_id': case['case_id'], 'status': 'missing', 'failure_category': 'missing_shard'}))
             group['counts']['attempted'] += record['status'] != 'missing'
             group['counts']['feasible'] += record['status'] in ('passed', 'descriptive', 'no_supervision')
             group['counts']['no_supervision'] += record['status'] == 'no_supervision'
@@ -267,7 +318,7 @@ def aggregate(manifest, results):
                 continue
             identity = tuple(alignment['loss_group_ids'])
             if identity in unique:
-                # 長蛋白候選若也重複，保留原始量測但不當獨立 region。
+                # 長蛋白候選若也重複，保留原始量測但不當獨立 Training region。
                 record = {**record, 'deduplicated': True, 'duplicate_of': unique[identity]}
                 group['counts']['duplicate'] += 1
             else:
@@ -368,6 +419,8 @@ def main(argv=None):
     merge.add_argument('--manifest', required=True)
     merge.add_argument('--results', nargs='*', default=[])
     merge.add_argument('--output', required=True)
+    merge.add_argument('--scheduler-log', action='append', default=[], metavar='SHARD_ID=STDERR_PATH',
+                       help='缺片時查核該分片的 Slurm stderr；可重複指定')
     args = parser.parse_args(argv)
     if args.action == 'manifest':
         write_json(args.output, make_manifest(args.cases_per_shard))
@@ -381,7 +434,8 @@ def main(argv=None):
                 raise SystemExit(1)
         else:
             write_json(args.output, aggregate(manifest,
-                [json.loads(Path(path).read_text()) for path in args.results]))
+                [json.loads(Path(path).read_text()) for path in args.results],
+                scheduler_logs=dict(entry.split('=', 1) for entry in args.scheduler_log)))
 
 
 if __name__ == '__main__':

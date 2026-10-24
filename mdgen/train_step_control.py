@@ -1,5 +1,6 @@
 """同一 supervision 的成對訓練與完整涵蓋控制，沿用官方 training-step probe。"""
 import copy
+from dataclasses import dataclass
 
 import numpy as np
 import torch
@@ -138,7 +139,7 @@ def check_denominators(full_mask, region_mask):
 
 
 def prepare_paired_items(args, full, seed, *, synthetic, use_sdpa):
-    """從同一完整輸入選取 region，保留幾何、noise 與有效監督分量。"""
+    """從同一完整輸入選取 Training region，保留幾何、noise 與有效監督分量。"""
     from .wrapper import NewMDGenWrapper
     from .full_length.partition import PartitionParams, build_spatial_partition
     from .full_length.group_region import region_subpartition
@@ -193,12 +194,26 @@ def prepare_paired_items(args, full, seed, *, synthetic, use_sdpa):
             {**region, 'probe_noise': region_noise, 'probe_loss_mask': region_mask}, alignment)
 
 
-def compare_paired_runs(a, b, ga, gb, ua, ub, *, control):
+@dataclass
+class PairedRun:
+    report: dict
+    gradients: dict
+    updates: dict
+
+
+def run_is_finite(report):
+    """比較與失敗分類共用同一份單步有限性條件。"""
+    return bool(report['loss_finite'] and not report['gradient_nonfinite']
+                and not report['parameters_nonfinite_after_step']
+                and not any(report.get('nonfinite_counts', {}).values()))
+
+
+def compare_paired_runs(reference, candidate, *, control):
     """選項 B 只判定控制；截斷差異只描述，非有限值仍失敗。"""
-    gradients, updates = vector_comparison(ga, gb), vector_comparison(ua, ub)
-    finite = all(run['loss_finite'] and not run['gradient_nonfinite']
-                 and not run['parameters_nonfinite_after_step']
-                 and not any(run.get('nonfinite_counts', {}).values()) for run in (a, b))
+    a, b = reference.report, candidate.report
+    gradients = vector_comparison(reference.gradients, candidate.gradients)
+    updates = vector_comparison(reference.updates, candidate.updates)
+    finite = all(run_is_finite(run) for run in (a, b))
     missing = [set(run['missing_gradients']) for run in (a, b)]
     unexpected_missing = sorted({n for names in missing for n in names if '.cell_summaries.' not in n})
     finite = finite and not unexpected_missing and missing[0] == missing[1]
@@ -287,7 +302,7 @@ def run_paired_region(args, items, seed, *, synthetic, warmup=1, repeats=3,
                     json.dump(result, stream, indent=2, allow_nan=False)
             outputs.append((result, grad, update))
         a, b = outputs
-        comparison = compare_paired_runs(a[0], b[0], a[1], b[1], a[2], b[2], control=control)
+        comparison = compare_paired_runs(PairedRun(*a), PairedRun(*b), control=control)
         report['measurements'].append({'iteration': iteration, 'warmup': iteration < warmup,
             'full': a[0], 'candidate': b[0], 'comparison': comparison})
     statuses = [m['comparison']['status'] for m in report['measurements']]

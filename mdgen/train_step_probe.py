@@ -387,7 +387,7 @@ def parse_probe_args(argv):
     parser.add_argument('--time', type=float, default=None, help='fixed transport time for capacity probes')
     parser.add_argument('--seed_group', type=int, default=None,
                         help='explicit Training region candidate group')
-    parser.add_argument('--paired_region', action='store_true', help='同一 supervision 的完整蛋白／截斷 region 比較')
+    parser.add_argument('--paired_region', action='store_true', help='同一 supervision 的完整蛋白／截斷 Training region 比較')
     parser.add_argument('--raw-tensors', choices=('all', 'none'), default='none')
     parser.add_argument('--warmup', type=int, default=1)
     parser.add_argument('--repeats', type=int, default=3)

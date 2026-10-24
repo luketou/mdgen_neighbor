@@ -1,0 +1,25 @@
+{
+  "command": "MDGEN_CPU_VENV=/home/luketou/.local/share/mdgen/venvs/cpu-py311 bash scripts/check.sh",
+  "exit_code": 0,
+  "python": "3.11.17",
+  "torch": "2.11.0+cpu",
+  "device": "cpu",
+  "pytest": {
+    "passed": 305,
+    "failed": 0,
+    "skipped": 2,
+    "deselected": 14
+  },
+  "sdpa": {
+    "passed": 6,
+    "failed": 0,
+    "source": "review-20261024-sdpa.json"
+  },
+  "log": "review-20261024-check.log",
+  "test_first": {
+    "timeout_and_scheduler_red": "review-20261024-red.log",
+    "named_structure_and_finiteness_red": "review-20261024-red-api.log"
+  },
+  "gpu_jobs_submitted": 0,
+  "commit_or_push": false
+}
