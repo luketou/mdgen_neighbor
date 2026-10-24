@@ -32,7 +32,7 @@ CPU 環境與 `scripts/check.sh` 都在 WSL 執行：Windows 的 `python` 沒有
 CI 使用相同的 `bash scripts/bootstrap_cpu.sh` 與 `bash scripts/check.sh`。檢查依序執行：
 
 1. Python 版本、tracked text 的 LF 行尾與 [agent 導航](../../AGENTS.md) 中的本地 Markdown 連結。
-2. 透過 `scripts/check_git_whitespace.sh` 檢查工作目錄、index 及最新 commit 相對第一個 parent 的新增空白問題；PR merge checkout 以 base parent 為比較起點。
+2. 透過 `scripts/check_git_whitespace.sh` 檢查工作目錄、index、未被忽略的 untracked 檔案及已 commit 變更的新增空白問題：PR merge checkout 以 base parent 為比較起點；本機分支從與 `origin/main`（可用 `MDGEN_CHECK_BASE` 改）的 merge-base 起涵蓋整條分支，與 CI 檢查相同範圍；找不到 base 時只檢查最新 commit。
 3. 關閉 CUDA 裝置可見性；GPU preflight 標記 skipped，再以 `pytest tests -m "not gpu and not checkpoint" -q` 執行 CPU 測試，包含 training probe。資源標記定義見 [README 的 Testing](../../README.md#testing)；GPU／checkpoint 測試改由 [Compute Node 測試入口](../../job/README.md#pytest-測試分類) 執行。
 4. 獨立 CPU SDPA equivalence check；每次報告寫入 `results/sdpa/check-*/` 的獨立目錄，保留先前結果，支援重複執行。
 
