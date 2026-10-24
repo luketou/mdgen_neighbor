@@ -1,0 +1,61 @@
+# captured 2026-10-24T08:30:57Z on bug as r15543056
+
+$ df -h /share/home/r15543056
+Filesystem         Size  Used Avail Use% Mounted on
+skuld:/share/home  360G  257G  104G  72% /share/home
+
+$ scontrol show config | grep -E 'PriorityType|SchedulerType'
+PriorityType            = priority/basic
+SchedulerType           = sched/backfill
+
+$ scontrol show partition l40s | grep -E 'PartitionName|AllowAccounts|Nodes='
+PartitionName=l40s
+   AllowGroups=ALL AllowAccounts=l40s AllowQos=ALL
+   AllocNodes=ALL Default=YES QoS=N/A
+   MaxNodes=UNLIMITED MaxTime=7-00:00:00 MinNodes=0 LLN=NO MaxCPUsPerNode=UNLIMITED
+   Nodes=node-201
+   State=UP TotalCPUs=16 TotalNodes=1 SelectTypeParameters=NONE
+
+$ scontrol show partition llm | grep -E 'PartitionName|AllowAccounts|Nodes='
+PartitionName=llm
+   AllowGroups=ALL AllowAccounts=llm AllowQos=ALL
+   AllocNodes=ALL Default=NO QoS=N/A
+   MaxNodes=UNLIMITED MaxTime=7-00:00:00 MinNodes=0 LLN=NO MaxCPUsPerNode=UNLIMITED
+   Nodes=node-181
+   State=UP TotalCPUs=16 TotalNodes=1 SelectTypeParameters=NONE
+
+$ sinfo -N -n node-201,node-181 -o '%N %P %G'
+NODELIST PARTITION GRES
+node-181 llm gpu:l40s:2
+node-201 l40s* gpu:l40s:2
+
+$ grep -h -- '--shard-id s-2313d4853c7e17f9c07f' /share/home/r15543056/MDgen/hpc_runs/issue43-t5-formal-20261024T045815Z-f2a135d/job_history
+49597 issue43-t5-formal-20261024T045815Z-f2a135d:issue43-t5-formal:045821 job/submit_training_region_probe.sh --paired-shard --shard-id s-2313d4853c7e17f9c07f --raw-tensors all --data-root /share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b --checkpoint /share/home/r15543056/MDgen/mdgen/ckpt/atlas.ckpt
+
+$ ls -l /share/home/r15543056/MDgen/hpc_runs/issue43-t5-formal-20261024T045815Z-f2a135d/results/paired/s-2313d4853c7e17f9c07f/51418e21d4e04bb2ad1ebd69f184382e/c-a4fa67d141575ac49bd5/probe/*.pt
+-rw-r--r-- 1 r15543056 users 302930791 Oct 24 12:59 /share/home/r15543056/MDgen/hpc_runs/issue43-t5-formal-20261024T045815Z-f2a135d/results/paired/s-2313d4853c7e17f9c07f/51418e21d4e04bb2ad1ebd69f184382e/c-a4fa67d141575ac49bd5/probe/0-candidate.pt
+-rw-r--r-- 1 r15543056 users 302922817 Oct 24 12:59 /share/home/r15543056/MDgen/hpc_runs/issue43-t5-formal-20261024T045815Z-f2a135d/results/paired/s-2313d4853c7e17f9c07f/51418e21d4e04bb2ad1ebd69f184382e/c-a4fa67d141575ac49bd5/probe/0-full.pt
+-rw-r--r-- 1 r15543056 users 302930791 Oct 24 12:59 /share/home/r15543056/MDgen/hpc_runs/issue43-t5-formal-20261024T045815Z-f2a135d/results/paired/s-2313d4853c7e17f9c07f/51418e21d4e04bb2ad1ebd69f184382e/c-a4fa67d141575ac49bd5/probe/1-candidate.pt
+-rw-r--r-- 1 r15543056 users 302922817 Oct 24 12:59 /share/home/r15543056/MDgen/hpc_runs/issue43-t5-formal-20261024T045815Z-f2a135d/results/paired/s-2313d4853c7e17f9c07f/51418e21d4e04bb2ad1ebd69f184382e/c-a4fa67d141575ac49bd5/probe/1-full.pt
+-rw-r--r-- 1 r15543056 users 302930791 Oct 24 12:59 /share/home/r15543056/MDgen/hpc_runs/issue43-t5-formal-20261024T045815Z-f2a135d/results/paired/s-2313d4853c7e17f9c07f/51418e21d4e04bb2ad1ebd69f184382e/c-a4fa67d141575ac49bd5/probe/2-candidate.pt
+-rw-r--r-- 1 r15543056 users 302922817 Oct 24 12:59 /share/home/r15543056/MDgen/hpc_runs/issue43-t5-formal-20261024T045815Z-f2a135d/results/paired/s-2313d4853c7e17f9c07f/51418e21d4e04bb2ad1ebd69f184382e/c-a4fa67d141575ac49bd5/probe/2-full.pt
+-rw-r--r-- 1 r15543056 users 302930791 Oct 24 12:59 /share/home/r15543056/MDgen/hpc_runs/issue43-t5-formal-20261024T045815Z-f2a135d/results/paired/s-2313d4853c7e17f9c07f/51418e21d4e04bb2ad1ebd69f184382e/c-a4fa67d141575ac49bd5/probe/3-candidate.pt
+-rw-r--r-- 1 r15543056 users 302922817 Oct 24 12:59 /share/home/r15543056/MDgen/hpc_runs/issue43-t5-formal-20261024T045815Z-f2a135d/results/paired/s-2313d4853c7e17f9c07f/51418e21d4e04bb2ad1ebd69f184382e/c-a4fa67d141575ac49bd5/probe/3-full.pt
+
+$ du -sh --apparent-size /share/home/r15543056/MDgen/hpc_runs/issue43-t5-formal-20261024T045815Z-f2a135d/results/paired/s-2313d4853c7e17f9c07f/51418e21d4e04bb2ad1ebd69f184382e/c-a4fa67d141575ac49bd5/probe
+2.3G	/share/home/r15543056/MDgen/hpc_runs/issue43-t5-formal-20261024T045815Z-f2a135d/results/paired/s-2313d4853c7e17f9c07f/51418e21d4e04bb2ad1ebd69f184382e/c-a4fa67d141575ac49bd5/probe
+
+
+# 以下為 2026-10-24 約 05:05Z 在本 session 擷取的 squeue 輸出（轉錄）。
+# 這些 job 之後已用 scontrol update 改到 l40s 分區，無法再現場重現。
+$ squeue -j 49601,49603 -o '%i %P %T %R'
+JOBID PARTITION STATE NODELIST(REASON)
+49601 llm PENDING (Job's account not permitted to use this partition (llm allows llm not users))
+49603 llm PENDING (Job's account not permitted to use this partition (llm allows llm not users))
+
+# 同一時段對 llm 分區的 sbatch --test-only（未建立 job）回報可以啟動：
+$ sbatch --test-only -p llm -A llm --gres=gpu:1 --mem=16G -c 2 -t 01:00:00 t43.sh
+sbatch: Job 49596 to start at 2026-10-24T12:58:06 using 2 processors on nodes node-181 in partition llm
+
+# scontrol update Priority= 的回覆（同一時段，job 49601 起各筆相同）：
+Changes to job priority are not persistent, change nice instead for job 49601
