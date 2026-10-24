@@ -20,6 +20,8 @@
 
 [儲存預估](storage-estimate.json)記錄審查提供的下限估算，並非 GPU 或檔案實測：預設每 case 原始張量至少 2.04 GiB，全部 1,620 個可執行 case 至少約 3.2 TiB；尚未計入序列化額外成本、JSON／log 與重跑。完整矩陣提交前應核對共享儲存配額，需節省磁碟時在下列 launcher 指令加上 `--raw-tensors none`。
 
+正式執行採使用者 2026-10-24 確認的存法：`/share/home` 只剩約 107 GB，全部保存放不下；因此所有分片以 `--raw-tensors none` 執行，只有 [代表 case 清單](raw-tensor-cases.json) 的 16 個 case 以 `all` 保存原始張量（約 32 GB）。代表 case 涵蓋三個基準的 250／4 幀完整涵蓋、`6sup_A` 的 64／4 幀截斷、halo 1／2、同路徑控制與 t 0.25／0.75。
+
 ## 分片與 JSON schema
 
 `python -m mdgen.train_step_matrix manifest --output NEW.json --cases-per-shard 1` 產生完整矩陣，ID 由 case 欄位／分片 case ID 清單的 SHA-256 決定，不依執行順序或結果變動。調整粒度不改 case ID；每個分片可作為一個獨立 Job。矩陣包含 R1–R3、所有核准的 t／noise seed／幀層、halo 與兩類控制。
