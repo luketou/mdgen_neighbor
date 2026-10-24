@@ -36,12 +36,12 @@ progress = 'side'
 >       evidence = json.loads((Path(record['artifact_dir']) / 'failure.json').read_text())
                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-tests/test_train_step_matrix.py:250: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_train_step_matrix.py:250:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 /home/luketou/.local/share/uv/python/cpython-3.11.17-linux-x86_64-gnu/lib/python3.11/pathlib.py:1058: in read_text
     with self.open(mode='r', encoding=encoding, errors=errors) as f:
          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 self = PosixPath('/tmp/pytest-of-luketou/pytest-65/test_timeout_preserves_exit_an0/s-4aac8d8764b31ee7df2f/08e1368102d9455fb5972e78d65e3338/c-0e515692778586dca5dc/failure.json')
 mode = 'r', buffering = -1, encoding = 'locale', errors = None, newline = None
@@ -95,7 +95,7 @@ progress = 'failure'
         evidence = json.loads((Path(record['artifact_dir']) / 'failure.json').read_text())
 >       assert record['failure_category'] == evidence['failure_category'] == 'timeout'
 E       AssertionError: assert 'program_error' == 'timeout'
-E         
+E
 E         - timeout
 E         + program_error
 
@@ -136,12 +136,12 @@ progress = 'absent'
 >       evidence = json.loads((Path(record['artifact_dir']) / 'failure.json').read_text())
                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-tests/test_train_step_matrix.py:250: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_train_step_matrix.py:250:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 /home/luketou/.local/share/uv/python/cpython-3.11.17-linux-x86_64-gnu/lib/python3.11/pathlib.py:1058: in read_text
     with self.open(mode='r', encoding=encoding, errors=errors) as f:
          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 self = PosixPath('/tmp/pytest-of-luketou/pytest-65/test_timeout_preserves_exit_an2/s-4aac8d8764b31ee7df2f/33fb0cd69aac4994a63fca34f893df18/c-0e515692778586dca5dc/failure.json')
 mode = 'r', buffering = -1, encoding = 'locale', errors = None, newline = None
@@ -214,8 +214,8 @@ progress = 'malformed'
 >       path = run_shard(manifest, manifest['shards'][0]['shard_id'], tmp_path, tmp_path, checkpoint)
                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-tests/test_train_step_matrix.py:248: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_train_step_matrix.py:248:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 mdgen/train_step_matrix.py:203: in run_shard
     record['evidence'] = json.loads(evidence.read_text())
                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -225,7 +225,7 @@ mdgen/train_step_matrix.py:203: in run_shard
 /home/luketou/.local/share/uv/python/cpython-3.11.17-linux-x86_64-gnu/lib/python3.11/json/decoder.py:337: in decode
     obj, end = self.raw_decode(s, idx=_w(s, 0).end())
                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 self = <json.decoder.JSONDecoder object at 0x7a5055cbc890>, s = '{', idx = 0
 
@@ -233,10 +233,10 @@ self = <json.decoder.JSONDecoder object at 0x7a5055cbc890>, s = '{', idx = 0
         """Decode a JSON document from ``s`` (a ``str`` beginning with
         a JSON document) and return a 2-tuple of the Python
         representation and the index in ``s`` where the document ended.
-    
+
         This can be used to decode a JSON document from a string that may
         have extraneous data at the end.
-    
+
         """
         try:
 >           obj, end = self.scan_once(s, idx)
