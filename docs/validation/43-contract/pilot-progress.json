@@ -1,5 +1,5 @@
 {
-  "status": "contract_v1_1_frozen",
+  "status": "contract_v1_frozen",
   "ticket2_complete": true,
   "jobs": [
     {
@@ -82,8 +82,5 @@
     "remaining_gpu_jobs": 1,
     "note": "CPU checks ran in local WSL instead of the approved CPU job; the remaining GPU job was reserved for resubmission and is unused"
   },
-  "frozen_contract": "frozen-contract-v1.1.json",
-  "superseded_contracts": [
-    "frozen-contract-v1.json"
-  ]
+  "frozen_contract": "frozen-contract-v1.json"
 }
