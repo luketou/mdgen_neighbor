@@ -1,0 +1,26 @@
+{
+  "command": "MDGEN_CPU_VENV=/home/luketou/.local/share/mdgen/venvs/cpu-py311 bash scripts/check.sh",
+  "python": "3.11.17",
+  "torch": "2.11.0+cpu",
+  "device": "cpu",
+  "exit_code": 0,
+  "pytest": {
+    "passed": 271,
+    "failed": 0,
+    "skipped": 2,
+    "deselected": 14
+  },
+  "repository_checks": "passed",
+  "git_whitespace": "passed",
+  "sdpa": {
+    "passed": 6,
+    "failed": 0,
+    "report": "cpu-sdpa.json"
+  },
+  "gpu_jobs_submitted": 0,
+  "gpu_validation": "未執行",
+  "commit": {
+    "status": "blocked",
+    "reason": "worktree Git metadata mounted read-only; index.lock creation failed"
+  }
+}

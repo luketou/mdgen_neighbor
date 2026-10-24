@@ -1,0 +1,19 @@
+{
+  "source": "mdgen.train_step_matrix.make_manifest(1)",
+  "manifest_id": "2b0bf4459ad461b3d6d85951899053e840ae321644c812b286cd295f23219c05",
+  "contract_version": "1.1",
+  "case_count": 6642,
+  "shard_count": 1620,
+  "plan_status_counts": {
+    "ready": 1620,
+    "duplicate": 4536,
+    "phase1_infeasible": 486
+  },
+  "ready_by_protein": {
+    "6sms_A": 216,
+    "6lrd_A": 216,
+    "6l3r_E": 216,
+    "6sup_A": 972
+  },
+  "gpu_runs_executed": 0
+}
