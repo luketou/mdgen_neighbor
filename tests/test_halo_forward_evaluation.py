@@ -239,6 +239,61 @@ def test_not_evaluable_stratum_blocks_overall_pass():
     assert result['passed'] is False
 
 
+def long_inputs(deep_feasible_groups):
+    """Ticket 4 shape: two candidates, halo 2 feasible only for those listed."""
+    reports, contract = inputs(truncated=True, absolute=0.001, relative=0.001)
+    contract['forward_matrix']['tickets'] = {'4': ['prot']}
+    contract['seed_groups']['halo_rings'] = [1, 2]
+    report = reports[0]
+    report['settings']['halo_rings'] = [1, 2]
+    protein = report['proteins'][0]
+    protein.update({'residues': 10, 'regions': [], 'observations': [], 'candidates': []})
+    for rid, group in enumerate((95, 7)):
+        deep = group in deep_feasible_groups
+        by_halo = {}
+        for halo in ((1, 2) if deep else (1,)):
+            by_halo[str(halo)] = {'region_id': rid, 'loss_residue_indices': [rid],
+                'boundary_rings': [0], 'paired_common_subset': deep, 'truncated': True,
+                'region_residues': 3 + halo}
+            protein['observations'].append({**inputs(True)[0][0]['proteins'][0]['observations'][0],
+                'region_id': rid, 'residue_index': rid, 'halo_rings': halo,
+                'paired_common_subset': deep, 'absolute_rms': 0.001 * (1 + 3 * (not deep)),
+                'relative': 0.001})
+        protein['regions'].append({'by_halo': by_halo})
+        protein['candidates'].append({'seed_group': group, 'by_halo': {
+            '1': {'status': 'selected', 'region_id': rid, 'paired_common_subset': deep},
+            '2': ({'status': 'selected', 'region_id': rid, 'paired_common_subset': True}
+                  if deep else {'status': 'infeasible', 'reason': 'too big'})}})
+    return reports, contract
+
+
+def test_long_protein_reports_context_and_common_subset_bias():
+    reports, contract = long_inputs([95])
+    contract['seed_groups']['long_protein_halo2_feasible_candidates'] = [95]
+    result = evaluate_reports(reports, contract, ticket='4')
+    assert result['passed'] and not result['report_failures']
+    halo1 = [row for row in result['strata'] if row['halo_rings'] == 1]
+    assert {r['region_id']: r['outside_context_residues']
+            for row in halo1 for r in row['coverage']['regions']} == {0: 6, 1: 6}
+    assert {row['paired_common_subset'] for row in halo1} == {True, False}
+    halo2, = [row for row in result['strata'] if row['halo_rings'] == 2]
+    assert halo2['coverage']['skipped'] == 1 and halo2['coverage']['feasible'] == 1
+    bias, = result['common_subset_bias']
+    assert bias['all']['samples'] == 2 and bias['paired_common_subset']['samples'] == 1
+    # The common subset is the easier region here; the bias must show it, not average it away.
+    assert bias['common_minus_all']['absolute_rms']['max'] == pytest.approx(-0.003)
+
+
+@pytest.mark.parametrize('feasible', [[], [95, 7]])
+def test_long_protein_deep_halo_candidates_must_match_the_contract(feasible):
+    reports, contract = long_inputs(feasible)
+    contract['seed_groups']['long_protein_halo2_feasible_candidates'] = [95]
+    result = evaluate_reports(reports, contract, ticket='4')
+    failure, = result['report_failures']
+    assert failure['reason'] == 'deep_halo_candidates_mismatch'
+    assert sorted(failure['actual']) == sorted(feasible) and not result['passed']
+
+
 def test_missing_halo_settings_fails_the_report_without_crashing():
     reports, contract = inputs()
     del reports[0]['settings']['halo_rings']

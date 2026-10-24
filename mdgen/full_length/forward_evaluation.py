@@ -50,10 +50,19 @@ def coverage(protein, halo, expected):
     selected = [e for e in entries if e.get('region_id') in region_ids]
     skipped = sum(e.get('status') == 'infeasible' for e in entries)
     residues = {i for _, i in expected}
+    regions = protein.get('regions', [])
+    # Context the full-protein reference sees but each region omits.
+    context = [{'region_id': rid,
+                'region_residues': regions[rid]['by_halo'][str(halo)]['region_residues'],
+                'outside_context_residues': protein['residues'] -
+                    regions[rid]['by_halo'][str(halo)]['region_residues']}
+               for rid in sorted(region_ids) if rid < len(regions)
+               and 'region_residues' in regions[rid]['by_halo'].get(str(halo), {})]
     return {'attempted': len(selected) + skipped, 'feasible': len(selected), 'skipped': skipped,
             'duplicate': sum(e['status'] == 'duplicate' for e in selected),
             'deduplicated_regions': len(region_ids),
-            'loss_residue_union_fraction': len(residues) / protein['residues']}
+            'loss_residue_union_fraction': len(residues) / protein['residues'],
+            'regions': context}
 
 
 def verdict(rows, thresholds, full_coverage, incomplete=False, nonfinite=False):
@@ -88,6 +97,21 @@ def verdict(rows, thresholds, full_coverage, incomplete=False, nonfinite=False):
     return 'pass', None
 
 
+def common_subset_bias(rows):
+    """Descriptive, no verdict: the shallow halo on the paired common subset against all its rows."""
+    common = [row for row in rows if row['paired_common_subset']]
+    result = {name: {key: value for key, value in observation_stats(subset).items()
+                     if key in ('samples', 'effective_samples', 'absolute_rms', 'relative')}
+              for name, subset in (('all', rows), ('paired_common_subset', common))}
+    result['common_minus_all'] = {
+        metric: {stat: (None if None in (result['paired_common_subset'][metric][stat],
+                                         result['all'][metric][stat]) else
+                        result['paired_common_subset'][metric][stat] - result['all'][metric][stat])
+                 for stat in ('median', 'p95', 'max')}
+        for metric in ('absolute_rms', 'relative')}
+    return result
+
+
 def evaluate_reports(reports, contract, ticket='3'):
     """Require every matrix cell and every residue promised by region geometry."""
     matrix = contract['forward_matrix']
@@ -106,11 +130,20 @@ def evaluate_reports(reports, contract, ticket='3'):
             suffix = f'_R{replica}'
             name = name[:-len(suffix)] if name.endswith(suffix) else name
             frames = settings.get('num_frames') or settings.get('model', {}).get('num_frames')
+            deep = str(max(contract['seed_groups']['halo_rings']))
+            feasible = [c.get('seed_group') for c in protein.get('candidates', [])
+                        if c.get('by_halo', {}).get(deep, {}).get('status')
+                        in ('selected', 'duplicate')]
+            frozen = contract['seed_groups']['long_protein_halo2_feasible_candidates']
+            if str(ticket) == '4' and sorted(feasible, key=str) != sorted(frozen, key=str):
+                report_failures.append({'report_index': report_index, 'verdict': 'fail',
+                    'reason': 'deep_halo_candidates_mismatch', 'protein': protein['name'],
+                    'expected': frozen, 'actual': feasible})
             for t, noise, halo in product(settings.get('times', []),
                     settings.get('noise_seeds') or [settings.get('seed', 0)], settings.get('halo_rings', [])):
                 cells.setdefault((name, replica, frames, t, noise, halo), []).append((protein, fields))
-    strata = []
-    axes = (matrix['tickets'][str(ticket)], matrix['replicas'], map(int, matrix['frames']),
+    strata, biases = [], []
+    axes =(matrix['tickets'][str(ticket)], matrix['replicas'], map(int, matrix['frames']),
             matrix['t'], matrix['noise_seeds'], contract['seed_groups']['halo_rings'])
     for cell in product(*axes):
         base = dict(zip(STRATA[:6], cell))
@@ -122,6 +155,11 @@ def evaluate_reports(reports, contract, ticket='3'):
                 **observation_stats([]), 'coverage': None})
             continue
         (protein, fields), = proteins
+        halos = contract['seed_groups']['halo_rings']
+        if cell[5] == min(halos) < max(halos):
+            biases.append({**base, **common_subset_bias(
+                [row for row in protein.get('observations', [])
+                 if (row['t'], row.get('noise_seed'), row['halo_rings']) == cell[3:]])})
         expected, groups = {}, {}
         for region in protein.get('regions', []):
             entry = region['by_halo'].get(str(cell[5]))
@@ -156,15 +194,22 @@ def evaluate_reports(reports, contract, ticket='3'):
             ids = {rid for rid, _ in expected.get(key, set())}
             nonfinite = protein.get('nonfinite_counts', {}).get('input', 0)
             measurements = protein.get('measurements')
+            oom = []
             if measurements is None:
                 nonfinite += sum(protein.get('nonfinite_counts', {}).values())
             else:
                 for path in ('full', 'regions'):
-                    nonfinite += sum(m.get('nonfinite', 0) for m in measurements[path]
+                    matched = [m for m in measurements[path]
                         if (m['t'], m.get('noise_seed')) == cell[3:5] and
-                        (path == 'full' or (m['halo_rings'] == cell[5] and m.get('region_id') in ids)))
+                        (path == 'full' or (m['halo_rings'] == cell[5] and m.get('region_id') in ids))]
+                    nonfinite += sum(m.get('nonfinite', 0) for m in matched)
+                    oom += [{key: m.get(key) for key in (
+                        'failure_phase', 'region_id', 'peak_memory_allocated_bytes',
+                        'peak_memory_reserved_bytes')} for m in matched if m.get('status') == 'oom']
             status, reason = verdict(rows, thresholds, key[1] == 'full_coverage', incomplete,
                                      nonfinite)
+            if oom and status == 'incomplete':
+                reason = 'oom'
             candidates = protein.get('candidates', [])
             all_infeasible = bool(candidates) and all(
                 c.get('by_halo', {}).get(str(cell[5]), {}).get('status') == 'infeasible'
@@ -178,10 +223,12 @@ def evaluate_reports(reports, contract, ticket='3'):
                 **observation_stats(rows),
                 'verdict': status, 'reason': reason,
                 **({'settings_mismatches': fields} if fields else {}),
+                **({'oom': oom} if oom else {}),
                 'coverage': coverage(protein, cell[5], expected.get(key, set()))})
     counts = Counter(row['verdict'] for row in strata)
     return {'contract_version': contract['contract_version'], 'ticket': str(ticket),
             'thresholds': thresholds, 'strata': strata, 'verdict_counts': dict(counts),
+            'common_subset_bias': biases,
             'report_failures': report_failures,
             'passed': bool(strata) and not report_failures and counts['pass'] == len(strata)}
 

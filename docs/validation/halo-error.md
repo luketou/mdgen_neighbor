@@ -80,3 +80,18 @@ python -m mdgen.full_length.forward_evaluation \
 逐契約分層輸出 `pass`、`fail`（threshold／nonfinite）、`not_evaluable`（沒有 regular 樣本）、`incomplete`（缺少矩陣 cell、region 或 observation）。完整涵蓋套逐殘基包絡；截斷套各自的 linear p95／max 門檻。零／近零參考仍要求絕對誤差，relative 為 null；沒有 regular 樣本不能宣告通過。coverage 的 loss 殘基聯集按該邊界分層計算；無法指定邊界的 skipped 候選以該 halo 總數附列，不能跨邊界相加。全矩陣 `passed` 只在每個必要分層都為 `pass` 時為 true；即使其他分層通過，`not_evaluable` 也會阻止整體通過，不能以 pooled 數值替代。
 
 判定前會核對凍結的 checkpoint hash、候選選法／數量、預算、halo、暖機／重複、FP32／TF32、dropout、local spatial 與模型幀數；不符或缺少必要設定時，報 `fail`／`settings_mismatch` 並列出欄位。候選完整但某 halo 全部不可行時，該 cell 為 `no_feasible_region`（保留 attempted／skipped 計數），與缺漏結果的 `incomplete` 分開，兩者都不算通過。同一 loss-group set 在同一 halo 只量一次；淺圈候選若重複成對候選，保留候選對應與各自的共同子集標記，唯一量測仍屬成對共同子集。
+
+## Issue #43 Ticket 4 長蛋白 forward
+
+`long_forward` 模式執行凍結契約 v1.1 的 `6sup_A`（2128 殘基）矩陣，命令與 `baseline_forward` 相同，只把蛋白換成 `forward_matrix.tickets.4`：R1–R3 × 4／250 幀 × 三個 t × 三個 noise seed，共 54 個 CLI case。launcher 設定 `MDGEN_ISSUE43_MODE=long_forward`。halo1 用 selection seed 43002 的前八候選；halo2 只有 group 95 可行，其餘七個候選以各自的 1 圈結果報告，標為非共同子集，不補抽。`6sup_A` 約為上游已評估最長蛋白的 2.94 倍，結果屬外推。
+
+成對模式下任一路徑 OOM 時不中止程式：該路徑記為 `status: oom`，保存 `failure_phase`（`full_forward` 或 `region_forward`）、錯誤訊息與當時的 peak allocated／reserved，再繼續後續 t／seed／region。完整蛋白 OOM 時，同一 t／seed 的 region 全部不量（沒有 reference）。缺少的 observation 讓該分層為 `incomplete`，原因為 `oom`，並附上失敗路徑；不外推容量或誤差。其他階段（載入、prep）的 OOM 仍由 driver 記為 `failure_class: oom`。
+
+`--ticket 4` 判定時另外核對：每個 replica 在深圈可行的候選須等於契約的 `long_protein_halo2_feasible_candidates`（`[95]`），不符則 `report_failures` 記 `deep_halo_candidates_mismatch`。每個分層的 `coverage.regions` 列出各 region 的殘基數，以及完整蛋白在 region 以外的上下文殘基數（`outside_context_residues`）。`common_subset_bias` 對每個淺圈 cell 並列全部 region 與成對共同子集的 absolute／relative median、p95、max 及其差（共同子集減全部），只作描述，不參與判定。
+
+```bash
+python -m mdgen.full_length.forward_evaluation \
+  --contract docs/validation/43-contract/frozen-contract-v1.1.json \
+  --ticket 4 --manifest results/halo_error_JOBID/manifest.json \
+  --output results/issue43-t4-evaluation.json
+```
