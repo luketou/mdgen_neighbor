@@ -1,0 +1,1065 @@
+{
+  "source_manifest": [
+    {
+      "path": "mdgen/analysis.py",
+      "sha256": "f0e9823545fa66a3679fbac1cf3b36459a12b4845329c6a88d22a472794892d4"
+    },
+    {
+      "path": "mdgen/dataset.py",
+      "sha256": "79b43ef0655af3c5c53a729a3cb5a41e257eb06c6709e1e0adf096ed5b9c9470"
+    },
+    {
+      "path": "mdgen/ema.py",
+      "sha256": "6be0ae7e79c2e622bac5d65bfd873a311222f5342986cdd253d5c3c55d263888"
+    },
+    {
+      "path": "mdgen/full_length/__init__.py",
+      "sha256": "3bb5b237bf1c656b41529839c18d496d136d7f38769f0f2223ca6da3fa1d4961"
+    },
+    {
+      "path": "mdgen/full_length/attention.py",
+      "sha256": "87083e5ca6f83f5f49dc3e34234b6c34d188be6e2dbe3e521d9159d4295137dc"
+    },
+    {
+      "path": "mdgen/full_length/checkpoint.py",
+      "sha256": "950e06a59a99d974a71363f4bb3efd8acfed341ef3c732e2459688fe9e08592e"
+    },
+    {
+      "path": "mdgen/full_length/forward_evaluation.py",
+      "sha256": "d9de34ffe7613c97d5536ed0bd3290e66cf3382ce000673c221d52dc33d16336"
+    },
+    {
+      "path": "mdgen/full_length/generation_profile.py",
+      "sha256": "9bb000a4c53419acb41ac7201430d8586fed8c326d88a4616753983a1b819cdb"
+    },
+    {
+      "path": "mdgen/full_length/group_region.py",
+      "sha256": "cb9fe813cb3d311a47d0a2571329145caeead807a2b72712326a156f6ce5c78a"
+    },
+    {
+      "path": "mdgen/full_length/halo_error.py",
+      "sha256": "5edeeb308bfa8d18bea677830c2ad300625fa94abe1113a14ab7c02b5692b57a"
+    },
+    {
+      "path": "mdgen/full_length/local_ipa.py",
+      "sha256": "7a1cc61ab509780f4cff466b6eecd01904b755814b1de7b05f269a015fc82f63"
+    },
+    {
+      "path": "mdgen/full_length/model.py",
+      "sha256": "095e950736cf28d42465c1c9cdb7d64b1a3056559fa80399eb17635566240857"
+    },
+    {
+      "path": "mdgen/full_length/partition.py",
+      "sha256": "b2caa3d02158f6f4182a096e9113bfc7b583b94b963be618dc98bfa7b86dc81a"
+    },
+    {
+      "path": "mdgen/full_length/partition_store.py",
+      "sha256": "df49bf79ca6018475cd3f5985f98050d124acd1535c49bfb55e88c277206129e"
+    },
+    {
+      "path": "mdgen/full_length/region_batch.py",
+      "sha256": "f1ed695447370a5f9d72867b3dcb4e4d2aeb19cad71aac51b2e9ef4865238666"
+    },
+    {
+      "path": "mdgen/full_length/summaries.py",
+      "sha256": "baec142f799850f7fdfbc679078692175e94fc952e545a4b7224fcaf29db7b71"
+    },
+    {
+      "path": "mdgen/geometry.py",
+      "sha256": "d94835d537b354ca0fb58a8c0edf9e82fa3490ea09bac35a09eb4837d2ed52f2"
+    },
+    {
+      "path": "mdgen/logger.py",
+      "sha256": "3443dd4c6354fd7d4ea90bbcc8eacf6b90e4112775743be4333b3440d693f97d"
+    },
+    {
+      "path": "mdgen/model/ipa.py",
+      "sha256": "9bd380b05ebffcf92fbd36d2f8e61ac771d73928146d752721191437a63cad0f"
+    },
+    {
+      "path": "mdgen/model/latent_model.py",
+      "sha256": "aeaff4693669860b813e0ecb2dff8aa219fe228fa53419e5ac600c17a9f43a9e"
+    },
+    {
+      "path": "mdgen/model/layers.py",
+      "sha256": "fc6d4a7624fd60b80a2a924234d173625de331b225d61c82aac8b3f7c3a38ee2"
+    },
+    {
+      "path": "mdgen/model/mha.py",
+      "sha256": "46274ef7a50f368ae0534158b15a04840fd1f60aea24fcc678dabcdf42fbbe05"
+    },
+    {
+      "path": "mdgen/model/primitives.py",
+      "sha256": "9d37b57406771d9b53f60e42495dd2d29e8bb780fd062a8acb1e286715876b23"
+    },
+    {
+      "path": "mdgen/model/standalone_hyena.py",
+      "sha256": "fa8f64ba3bad557ebd05ed6c2e6f1b475b3314a67798ae392504871f56e4e05c"
+    },
+    {
+      "path": "mdgen/parsing.py",
+      "sha256": "9577122b8c526f4b190fbb0ea0503750190f9894bdd2c7434d997718466b6985"
+    },
+    {
+      "path": "mdgen/precision.py",
+      "sha256": "ea53e125449049f5ca129b135121911510eec83207d62c349b7ab79c9d022591"
+    },
+    {
+      "path": "mdgen/precision_parity.py",
+      "sha256": "c1693b0e2e16e53d2d4b6ca52a4b1a131ae06f81341c4e90f98d459fb3bb4191"
+    },
+    {
+      "path": "mdgen/protein.py",
+      "sha256": "ecc0ad83352c430813333935cb0e61ed98422a15f3815fbf53d98b625aed70d0"
+    },
+    {
+      "path": "mdgen/residue_constants.py",
+      "sha256": "2d047616bee3fadfbeacbdb6434497fd3bbcd4cae8da64428bd37bff4e46f5be"
+    },
+    {
+      "path": "mdgen/rigid_utils.py",
+      "sha256": "25b1ce32b5cc2cf1e8e02fec4d5e9fdfd0ea1720435516258c62b0625e4290d5"
+    },
+    {
+      "path": "mdgen/tensor_utils.py",
+      "sha256": "62189d6c353547ba35ec2a80e07ad6f4d6b1dfb3a8a0fa6959a905caeecb9d1e"
+    },
+    {
+      "path": "mdgen/topology.py",
+      "sha256": "205cbe51de944b15804e48c3c9f42b13e11f363d59ec9420e4171f829d6261fd"
+    },
+    {
+      "path": "mdgen/train_step_control.py",
+      "sha256": "3b94285afc731821fb0dd0c2c873bba8eac463dcadc4b48c5cd149fb2265b5d0"
+    },
+    {
+      "path": "mdgen/train_step_probe.py",
+      "sha256": "d38046b9f2d8cd86e01a7e3800a9422d26df8fafe7fbd1fd813987dacb843cb3"
+    },
+    {
+      "path": "mdgen/transport/integrators.py",
+      "sha256": "62cb55a2528f0b1b26399a41c2783a5b288309738b0894f256c6b2e24dd7b0e5"
+    },
+    {
+      "path": "mdgen/transport/path.py",
+      "sha256": "93c7ac97b4b69b618e626a25acd12bbe1ca727864cc8b428dbf24ef1b854a423"
+    },
+    {
+      "path": "mdgen/transport/transport.py",
+      "sha256": "a8dbeb0de514705869afeec542d3e7f02bff61c9d8d3566d9aa6d3ed882529fe"
+    },
+    {
+      "path": "mdgen/utils.py",
+      "sha256": "e5924ca5cbe7f9e7a476ff0948b8bf31cfd101a2fe9dd52f0d73590e92eb0a3a"
+    },
+    {
+      "path": "mdgen/wrapper.py",
+      "sha256": "4bc9de59778c0c08c7a7a8316e180b48375e7c02a666de9b9bb7fe95d34f0f4d"
+    },
+    {
+      "path": "scripts/issue43_pilot.py",
+      "sha256": "5c5d9f50580e7fbbf77f0c3910640df5ee359209ffe209b48ee74908faff8ee6"
+    },
+    {
+      "path": "job/submit_halo_error.sh",
+      "sha256": "5cfa9936825bf28cf23d2debdc57f4accbdeaaaf307cc7b39615b95bc0b4f44e"
+    },
+    {
+      "path": "docs/validation/43-contract/frozen-contract-v1.1.json",
+      "sha256": "ca770d0d6d3850fe3e23ccaf90cf178b126b63eddc7f190c12d32d883521d4c0"
+    }
+  ],
+  "shard_count": 6,
+  "shard_index": 3,
+  "mode": "long_forward",
+  "frames": null,
+  "checkpoint_sha256": "bc90c66e7539f52c9d0514aeddd96c552061150a1eef3b10c120bc3aaff08015",
+  "memory_settings": {
+    "group_batch_size": 4,
+    "ffn_chunk_size": 65536,
+    "expandable_segments": false
+  },
+  "selected_cases": null,
+  "budget_minutes": 27,
+  "sweep_rules": null,
+  "plan_only": false,
+  "driver_finished": true,
+  "policy_revision": 2,
+  "pilot_candidates": 8,
+  "case_order": "protein, replica, frames, t, noise_seed",
+  "input_manifest": [
+    {
+      "path": "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/validation.csv",
+      "bytes": 4275,
+      "sha256": "757c0754d1e7551f7c348ba6d7ae0740ba74161ba980ec5abe32e714c9d87a83"
+    },
+    {
+      "path": "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/arrays/6sms_A_R1_i400ps.npy",
+      "bytes": 30529760,
+      "sha256": "d9b29e68b417ec84430663c8ec2bafa39b1af8517afa8c556a540566385dd2d9"
+    },
+    {
+      "path": "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/arrays/6sms_A_R1_i400ps_chain.npz",
+      "bytes": 12112,
+      "sha256": "45fba7cdb4b663d23ea2566f0d4872ea89aa8c69c83c7074bcf278309b494c2c"
+    },
+    {
+      "path": "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/partitions/6sms_A_R1_i400ps_partition.npz",
+      "bytes": 86514,
+      "sha256": "30a271b2a799dd11f78b1cf85af444e5b3a7590acd400d22a4b2e774c6df9bca"
+    },
+    {
+      "path": "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/arrays/6lrd_A_R1_i400ps.npy",
+      "bytes": 29728568,
+      "sha256": "da0f69041eac0683ddc6846f415673272b211c8184fbb738a985e9ac25ab93c2"
+    },
+    {
+      "path": "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/arrays/6lrd_A_R1_i400ps_chain.npz",
+      "bytes": 11808,
+      "sha256": "8f995cac5be92542db11a5f4624c4ac410a77f4f814bd0c4695fd2b2404474c1"
+    },
+    {
+      "path": "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/partitions/6lrd_A_R1_i400ps_partition.npz",
+      "bytes": 87851,
+      "sha256": "f06dcece93b3a9dbb8cace36a1bb9ef09dea1c33a4fe4b4e0f0cecb02e46c851"
+    },
+    {
+      "path": "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/arrays/6l3r_E_R1_i400ps.npy",
+      "bytes": 28210520,
+      "sha256": "a6c39195cf8ecd671d165457d308dde0c5721e5baefc451b4776bd2facde32fd"
+    },
+    {
+      "path": "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/arrays/6l3r_E_R1_i400ps_chain.npz",
+      "bytes": 11232,
+      "sha256": "c430a0426b9aac94f219e4b2f29bd084238c3f1790561ef3830fca894f578c14"
+    },
+    {
+      "path": "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/partitions/6l3r_E_R1_i400ps_partition.npz",
+      "bytes": 80655,
+      "sha256": "46d5f14a44c5ccbcbae4ae0f4accbfe114303cf1957cf78b9ae498f81957873e"
+    },
+    {
+      "path": "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/arrays/6sup_A_R1_i400ps.npy",
+      "bytes": 89733632,
+      "sha256": "4e9a9fe631de6b06a6ef929f2c2a85ed8d9a068fe2f3ac8cb062eac4bc93a2f2"
+    },
+    {
+      "path": "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/arrays/6sup_A_R1_i400ps_chain.npz",
+      "bytes": 34576,
+      "sha256": "6baf00e0a37ff091bef3e304e19aea30a52bea5173741329c94ee30cb31d1c7d"
+    },
+    {
+      "path": "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/partitions/6sup_A_R1_i400ps_partition.npz",
+      "bytes": 257366,
+      "sha256": "6df5d741edd949688b2c31fd04df5d75fca6fdc8868e9efe1cf4c8e05dda1997"
+    },
+    {
+      "path": "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/arrays/6sms_A_R2_i400ps.npy",
+      "bytes": 30529760,
+      "sha256": "b6944c32751c022a667b8edcde3658b8a32c6b9d77c811640c26fc5ee3dd5cbc"
+    },
+    {
+      "path": "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/arrays/6sms_A_R2_i400ps_chain.npz",
+      "bytes": 12112,
+      "sha256": "45fba7cdb4b663d23ea2566f0d4872ea89aa8c69c83c7074bcf278309b494c2c"
+    },
+    {
+      "path": "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/partitions/6sms_A_R2_i400ps_partition.npz",
+      "bytes": 86514,
+      "sha256": "30a271b2a799dd11f78b1cf85af444e5b3a7590acd400d22a4b2e774c6df9bca"
+    },
+    {
+      "path": "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/arrays/6lrd_A_R2_i400ps.npy",
+      "bytes": 29728568,
+      "sha256": "30ef542afa7a4bc625425c9510cb1e3645fe391a214319f4711400641442e133"
+    },
+    {
+      "path": "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/arrays/6lrd_A_R2_i400ps_chain.npz",
+      "bytes": 11808,
+      "sha256": "8f995cac5be92542db11a5f4624c4ac410a77f4f814bd0c4695fd2b2404474c1"
+    },
+    {
+      "path": "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/partitions/6lrd_A_R2_i400ps_partition.npz",
+      "bytes": 87851,
+      "sha256": "f06dcece93b3a9dbb8cace36a1bb9ef09dea1c33a4fe4b4e0f0cecb02e46c851"
+    },
+    {
+      "path": "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/arrays/6l3r_E_R2_i400ps.npy",
+      "bytes": 28210520,
+      "sha256": "b3308b4275814e9f8e3f395f655822983c05658cf80dd98ddf4b2d4035f274d8"
+    },
+    {
+      "path": "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/arrays/6l3r_E_R2_i400ps_chain.npz",
+      "bytes": 11232,
+      "sha256": "c430a0426b9aac94f219e4b2f29bd084238c3f1790561ef3830fca894f578c14"
+    },
+    {
+      "path": "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/partitions/6l3r_E_R2_i400ps_partition.npz",
+      "bytes": 80655,
+      "sha256": "46d5f14a44c5ccbcbae4ae0f4accbfe114303cf1957cf78b9ae498f81957873e"
+    },
+    {
+      "path": "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/arrays/6sup_A_R2_i400ps.npy",
+      "bytes": 89733632,
+      "sha256": "9a00008e6f5621f3e473e5c8db521b4569a3449676e9a1d4ab959066576ad4e8"
+    },
+    {
+      "path": "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/arrays/6sup_A_R2_i400ps_chain.npz",
+      "bytes": 34576,
+      "sha256": "6baf00e0a37ff091bef3e304e19aea30a52bea5173741329c94ee30cb31d1c7d"
+    },
+    {
+      "path": "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/partitions/6sup_A_R2_i400ps_partition.npz",
+      "bytes": 257366,
+      "sha256": "6df5d741edd949688b2c31fd04df5d75fca6fdc8868e9efe1cf4c8e05dda1997"
+    },
+    {
+      "path": "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/arrays/6sms_A_R3_i400ps.npy",
+      "bytes": 30529760,
+      "sha256": "b6741ba399f88128ec6349d9f84aef7feb990159dd6b6c3be6a4226314a00996"
+    },
+    {
+      "path": "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/arrays/6sms_A_R3_i400ps_chain.npz",
+      "bytes": 12112,
+      "sha256": "45fba7cdb4b663d23ea2566f0d4872ea89aa8c69c83c7074bcf278309b494c2c"
+    },
+    {
+      "path": "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/partitions/6sms_A_R3_i400ps_partition.npz",
+      "bytes": 86514,
+      "sha256": "30a271b2a799dd11f78b1cf85af444e5b3a7590acd400d22a4b2e774c6df9bca"
+    },
+    {
+      "path": "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/arrays/6lrd_A_R3_i400ps.npy",
+      "bytes": 29728568,
+      "sha256": "9c3f4834275a713026eb37789b71ca64bffbfad7214fc8960a3c8e2160e460ae"
+    },
+    {
+      "path": "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/arrays/6lrd_A_R3_i400ps_chain.npz",
+      "bytes": 11808,
+      "sha256": "8f995cac5be92542db11a5f4624c4ac410a77f4f814bd0c4695fd2b2404474c1"
+    },
+    {
+      "path": "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/partitions/6lrd_A_R3_i400ps_partition.npz",
+      "bytes": 87851,
+      "sha256": "f06dcece93b3a9dbb8cace36a1bb9ef09dea1c33a4fe4b4e0f0cecb02e46c851"
+    },
+    {
+      "path": "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/arrays/6l3r_E_R3_i400ps.npy",
+      "bytes": 28210520,
+      "sha256": "54eca1aca548928438d3d3599e8e68c0013fc7473126609be05920cd147870dc"
+    },
+    {
+      "path": "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/arrays/6l3r_E_R3_i400ps_chain.npz",
+      "bytes": 11232,
+      "sha256": "c430a0426b9aac94f219e4b2f29bd084238c3f1790561ef3830fca894f578c14"
+    },
+    {
+      "path": "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/partitions/6l3r_E_R3_i400ps_partition.npz",
+      "bytes": 80655,
+      "sha256": "46d5f14a44c5ccbcbae4ae0f4accbfe114303cf1957cf78b9ae498f81957873e"
+    },
+    {
+      "path": "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/arrays/6sup_A_R3_i400ps.npy",
+      "bytes": 89733632,
+      "sha256": "ed11c2e72f416917908f7faad02d7a3aadda74cb59435afd5833d412a266ddb4"
+    },
+    {
+      "path": "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/arrays/6sup_A_R3_i400ps_chain.npz",
+      "bytes": 34576,
+      "sha256": "6baf00e0a37ff091bef3e304e19aea30a52bea5173741329c94ee30cb31d1c7d"
+    },
+    {
+      "path": "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/partitions/6sup_A_R3_i400ps_partition.npz",
+      "bytes": 257366,
+      "sha256": "6df5d741edd949688b2c31fd04df5d75fca6fdc8868e9efe1cf4c8e05dda1997"
+    }
+  ],
+  "slurm_job_id": "51240",
+  "warmup": 1,
+  "measured_repeats": 3,
+  "training_comparison": "capacity cases have different supervision; coverage controls align noise and supervision, no thresholds",
+  "memory_policy": "paired forward retains the full reference output; an OOM path is recorded with its phase and peaks and later paths still run",
+  "cases": [
+    {
+      "id": "6sup_A-R1-f250-t0.5-noise0",
+      "protein": "6sup_A",
+      "replica": 1,
+      "frames": 250,
+      "t": 0.5,
+      "noise_seed": 0,
+      "command": [
+        "/share/home/r15543056/.venvs/mdgen/bin/python",
+        "-m",
+        "mdgen.full_length.halo_error",
+        "--sim_ckpt",
+        "/share/home/r15543056/MDgen/mdgen/ckpt/atlas.ckpt",
+        "--data_dir",
+        "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/arrays",
+        "--split",
+        "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/validation.csv",
+        "--suffix",
+        "_i400ps",
+        "--partition_dir",
+        "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/partitions",
+        "--pdb_id",
+        "6sup_A",
+        "--replicate",
+        "1",
+        "--num_frames",
+        "250",
+        "--region_residues",
+        "896",
+        "--selection_seed",
+        "43002",
+        "--regions",
+        "8",
+        "--halo_rings",
+        "1",
+        "2",
+        "--times",
+        "0.5",
+        "--noise_seeds",
+        "0",
+        "--warmup",
+        "1",
+        "--repeats",
+        "3",
+        "--require_gpu",
+        "--local_spatial",
+        "--spatial_cell_width",
+        "16",
+        "--spatial_contact_radius",
+        "16",
+        "--core_capacity",
+        "128",
+        "--ghost_capacity",
+        "128",
+        "--no-cell_summaries",
+        "--group_batch_size",
+        "4",
+        "--ffn_chunk_size",
+        "65536",
+        "--output",
+        "results/halo_error_51240/6sup_A-R1-f250-t0.5-noise0.json"
+      ],
+      "memory": {
+        "group_batch_size": 4,
+        "ffn_chunk_size": 65536,
+        "expandable_segments": false
+      },
+      "timeout_s": 360,
+      "status": "completed",
+      "output": "results/halo_error_51240/6sup_A-R1-f250-t0.5-noise0.json",
+      "log": "results/halo_error_51240/6sup_A-R1-f250-t0.5-noise0.log",
+      "returncode": 0,
+      "elapsed_s": 76.26987121299317,
+      "output_sha256": "5a467dcf90048ac5f478d62655ace547fa62aa7648cac1df565bf34a8d5de61f"
+    },
+    {
+      "id": "6sup_A-R1-f4-t0.25-noise0",
+      "protein": "6sup_A",
+      "replica": 1,
+      "frames": 4,
+      "t": 0.25,
+      "noise_seed": 0,
+      "command": [
+        "/share/home/r15543056/.venvs/mdgen/bin/python",
+        "-m",
+        "mdgen.full_length.halo_error",
+        "--sim_ckpt",
+        "/share/home/r15543056/MDgen/mdgen/ckpt/atlas.ckpt",
+        "--data_dir",
+        "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/arrays",
+        "--split",
+        "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/validation.csv",
+        "--suffix",
+        "_i400ps",
+        "--partition_dir",
+        "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/partitions",
+        "--pdb_id",
+        "6sup_A",
+        "--replicate",
+        "1",
+        "--num_frames",
+        "4",
+        "--region_residues",
+        "896",
+        "--selection_seed",
+        "43002",
+        "--regions",
+        "8",
+        "--halo_rings",
+        "1",
+        "2",
+        "--times",
+        "0.25",
+        "--noise_seeds",
+        "0",
+        "--warmup",
+        "1",
+        "--repeats",
+        "3",
+        "--require_gpu",
+        "--local_spatial",
+        "--spatial_cell_width",
+        "16",
+        "--spatial_contact_radius",
+        "16",
+        "--core_capacity",
+        "128",
+        "--ghost_capacity",
+        "128",
+        "--no-cell_summaries",
+        "--group_batch_size",
+        "4",
+        "--ffn_chunk_size",
+        "65536",
+        "--output",
+        "results/halo_error_51240/6sup_A-R1-f4-t0.25-noise0.json"
+      ],
+      "memory": {
+        "group_batch_size": 4,
+        "ffn_chunk_size": 65536,
+        "expandable_segments": false
+      },
+      "timeout_s": 120,
+      "status": "completed",
+      "output": "results/halo_error_51240/6sup_A-R1-f4-t0.25-noise0.json",
+      "log": "results/halo_error_51240/6sup_A-R1-f4-t0.25-noise0.log",
+      "returncode": 0,
+      "elapsed_s": 28.523512853993452,
+      "output_sha256": "be0a18c660a77ffae54b506823793f1b81ffbf0ecf94cb5b6f084b7b9b83b7b4"
+    },
+    {
+      "id": "6sup_A-R1-f4-t0.75-noise0",
+      "protein": "6sup_A",
+      "replica": 1,
+      "frames": 4,
+      "t": 0.75,
+      "noise_seed": 0,
+      "command": [
+        "/share/home/r15543056/.venvs/mdgen/bin/python",
+        "-m",
+        "mdgen.full_length.halo_error",
+        "--sim_ckpt",
+        "/share/home/r15543056/MDgen/mdgen/ckpt/atlas.ckpt",
+        "--data_dir",
+        "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/arrays",
+        "--split",
+        "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/validation.csv",
+        "--suffix",
+        "_i400ps",
+        "--partition_dir",
+        "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/partitions",
+        "--pdb_id",
+        "6sup_A",
+        "--replicate",
+        "1",
+        "--num_frames",
+        "4",
+        "--region_residues",
+        "896",
+        "--selection_seed",
+        "43002",
+        "--regions",
+        "8",
+        "--halo_rings",
+        "1",
+        "2",
+        "--times",
+        "0.75",
+        "--noise_seeds",
+        "0",
+        "--warmup",
+        "1",
+        "--repeats",
+        "3",
+        "--require_gpu",
+        "--local_spatial",
+        "--spatial_cell_width",
+        "16",
+        "--spatial_contact_radius",
+        "16",
+        "--core_capacity",
+        "128",
+        "--ghost_capacity",
+        "128",
+        "--no-cell_summaries",
+        "--group_batch_size",
+        "4",
+        "--ffn_chunk_size",
+        "65536",
+        "--output",
+        "results/halo_error_51240/6sup_A-R1-f4-t0.75-noise0.json"
+      ],
+      "memory": {
+        "group_batch_size": 4,
+        "ffn_chunk_size": 65536,
+        "expandable_segments": false
+      },
+      "timeout_s": 120,
+      "status": "completed",
+      "output": "results/halo_error_51240/6sup_A-R1-f4-t0.75-noise0.json",
+      "log": "results/halo_error_51240/6sup_A-R1-f4-t0.75-noise0.log",
+      "returncode": 0,
+      "elapsed_s": 27.923643987000105,
+      "output_sha256": "0cb62a867e8447ca46d3811c95d342cbcddd8013b3429dd969e469009d60617a"
+    },
+    {
+      "id": "6sup_A-R2-f250-t0.5-noise0",
+      "protein": "6sup_A",
+      "replica": 2,
+      "frames": 250,
+      "t": 0.5,
+      "noise_seed": 0,
+      "command": [
+        "/share/home/r15543056/.venvs/mdgen/bin/python",
+        "-m",
+        "mdgen.full_length.halo_error",
+        "--sim_ckpt",
+        "/share/home/r15543056/MDgen/mdgen/ckpt/atlas.ckpt",
+        "--data_dir",
+        "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/arrays",
+        "--split",
+        "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/validation.csv",
+        "--suffix",
+        "_i400ps",
+        "--partition_dir",
+        "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/partitions",
+        "--pdb_id",
+        "6sup_A",
+        "--replicate",
+        "2",
+        "--num_frames",
+        "250",
+        "--region_residues",
+        "896",
+        "--selection_seed",
+        "43002",
+        "--regions",
+        "8",
+        "--halo_rings",
+        "1",
+        "2",
+        "--times",
+        "0.5",
+        "--noise_seeds",
+        "0",
+        "--warmup",
+        "1",
+        "--repeats",
+        "3",
+        "--require_gpu",
+        "--local_spatial",
+        "--spatial_cell_width",
+        "16",
+        "--spatial_contact_radius",
+        "16",
+        "--core_capacity",
+        "128",
+        "--ghost_capacity",
+        "128",
+        "--no-cell_summaries",
+        "--group_batch_size",
+        "4",
+        "--ffn_chunk_size",
+        "65536",
+        "--output",
+        "results/halo_error_51240/6sup_A-R2-f250-t0.5-noise0.json"
+      ],
+      "memory": {
+        "group_batch_size": 4,
+        "ffn_chunk_size": 65536,
+        "expandable_segments": false
+      },
+      "timeout_s": 360,
+      "status": "completed",
+      "output": "results/halo_error_51240/6sup_A-R2-f250-t0.5-noise0.json",
+      "log": "results/halo_error_51240/6sup_A-R2-f250-t0.5-noise0.log",
+      "returncode": 0,
+      "elapsed_s": 74.64098773100704,
+      "output_sha256": "76f513cb6c66996e1c15f6406c88c9776c3143d84eac873699b5470a966bf545"
+    },
+    {
+      "id": "6sup_A-R2-f4-t0.25-noise0",
+      "protein": "6sup_A",
+      "replica": 2,
+      "frames": 4,
+      "t": 0.25,
+      "noise_seed": 0,
+      "command": [
+        "/share/home/r15543056/.venvs/mdgen/bin/python",
+        "-m",
+        "mdgen.full_length.halo_error",
+        "--sim_ckpt",
+        "/share/home/r15543056/MDgen/mdgen/ckpt/atlas.ckpt",
+        "--data_dir",
+        "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/arrays",
+        "--split",
+        "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/validation.csv",
+        "--suffix",
+        "_i400ps",
+        "--partition_dir",
+        "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/partitions",
+        "--pdb_id",
+        "6sup_A",
+        "--replicate",
+        "2",
+        "--num_frames",
+        "4",
+        "--region_residues",
+        "896",
+        "--selection_seed",
+        "43002",
+        "--regions",
+        "8",
+        "--halo_rings",
+        "1",
+        "2",
+        "--times",
+        "0.25",
+        "--noise_seeds",
+        "0",
+        "--warmup",
+        "1",
+        "--repeats",
+        "3",
+        "--require_gpu",
+        "--local_spatial",
+        "--spatial_cell_width",
+        "16",
+        "--spatial_contact_radius",
+        "16",
+        "--core_capacity",
+        "128",
+        "--ghost_capacity",
+        "128",
+        "--no-cell_summaries",
+        "--group_batch_size",
+        "4",
+        "--ffn_chunk_size",
+        "65536",
+        "--output",
+        "results/halo_error_51240/6sup_A-R2-f4-t0.25-noise0.json"
+      ],
+      "memory": {
+        "group_batch_size": 4,
+        "ffn_chunk_size": 65536,
+        "expandable_segments": false
+      },
+      "timeout_s": 120,
+      "status": "completed",
+      "output": "results/halo_error_51240/6sup_A-R2-f4-t0.25-noise0.json",
+      "log": "results/halo_error_51240/6sup_A-R2-f4-t0.25-noise0.log",
+      "returncode": 0,
+      "elapsed_s": 30.614106737004477,
+      "output_sha256": "529a70174f7960e5309c928019e62d1a13940400e9bd6746c8500eae929b979e"
+    },
+    {
+      "id": "6sup_A-R2-f4-t0.75-noise0",
+      "protein": "6sup_A",
+      "replica": 2,
+      "frames": 4,
+      "t": 0.75,
+      "noise_seed": 0,
+      "command": [
+        "/share/home/r15543056/.venvs/mdgen/bin/python",
+        "-m",
+        "mdgen.full_length.halo_error",
+        "--sim_ckpt",
+        "/share/home/r15543056/MDgen/mdgen/ckpt/atlas.ckpt",
+        "--data_dir",
+        "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/arrays",
+        "--split",
+        "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/validation.csv",
+        "--suffix",
+        "_i400ps",
+        "--partition_dir",
+        "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/partitions",
+        "--pdb_id",
+        "6sup_A",
+        "--replicate",
+        "2",
+        "--num_frames",
+        "4",
+        "--region_residues",
+        "896",
+        "--selection_seed",
+        "43002",
+        "--regions",
+        "8",
+        "--halo_rings",
+        "1",
+        "2",
+        "--times",
+        "0.75",
+        "--noise_seeds",
+        "0",
+        "--warmup",
+        "1",
+        "--repeats",
+        "3",
+        "--require_gpu",
+        "--local_spatial",
+        "--spatial_cell_width",
+        "16",
+        "--spatial_contact_radius",
+        "16",
+        "--core_capacity",
+        "128",
+        "--ghost_capacity",
+        "128",
+        "--no-cell_summaries",
+        "--group_batch_size",
+        "4",
+        "--ffn_chunk_size",
+        "65536",
+        "--output",
+        "results/halo_error_51240/6sup_A-R2-f4-t0.75-noise0.json"
+      ],
+      "memory": {
+        "group_batch_size": 4,
+        "ffn_chunk_size": 65536,
+        "expandable_segments": false
+      },
+      "timeout_s": 120,
+      "status": "completed",
+      "output": "results/halo_error_51240/6sup_A-R2-f4-t0.75-noise0.json",
+      "log": "results/halo_error_51240/6sup_A-R2-f4-t0.75-noise0.log",
+      "returncode": 0,
+      "elapsed_s": 24.670713751998846,
+      "output_sha256": "760a0a9a55d7736b76c893cfa1fc1ad93946b807ee1bc4a03ec1c1b6270044b3"
+    },
+    {
+      "id": "6sup_A-R3-f250-t0.5-noise0",
+      "protein": "6sup_A",
+      "replica": 3,
+      "frames": 250,
+      "t": 0.5,
+      "noise_seed": 0,
+      "command": [
+        "/share/home/r15543056/.venvs/mdgen/bin/python",
+        "-m",
+        "mdgen.full_length.halo_error",
+        "--sim_ckpt",
+        "/share/home/r15543056/MDgen/mdgen/ckpt/atlas.ckpt",
+        "--data_dir",
+        "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/arrays",
+        "--split",
+        "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/validation.csv",
+        "--suffix",
+        "_i400ps",
+        "--partition_dir",
+        "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/partitions",
+        "--pdb_id",
+        "6sup_A",
+        "--replicate",
+        "3",
+        "--num_frames",
+        "250",
+        "--region_residues",
+        "896",
+        "--selection_seed",
+        "43002",
+        "--regions",
+        "8",
+        "--halo_rings",
+        "1",
+        "2",
+        "--times",
+        "0.5",
+        "--noise_seeds",
+        "0",
+        "--warmup",
+        "1",
+        "--repeats",
+        "3",
+        "--require_gpu",
+        "--local_spatial",
+        "--spatial_cell_width",
+        "16",
+        "--spatial_contact_radius",
+        "16",
+        "--core_capacity",
+        "128",
+        "--ghost_capacity",
+        "128",
+        "--no-cell_summaries",
+        "--group_batch_size",
+        "4",
+        "--ffn_chunk_size",
+        "65536",
+        "--output",
+        "results/halo_error_51240/6sup_A-R3-f250-t0.5-noise0.json"
+      ],
+      "memory": {
+        "group_batch_size": 4,
+        "ffn_chunk_size": 65536,
+        "expandable_segments": false
+      },
+      "timeout_s": 360,
+      "status": "completed",
+      "output": "results/halo_error_51240/6sup_A-R3-f250-t0.5-noise0.json",
+      "log": "results/halo_error_51240/6sup_A-R3-f250-t0.5-noise0.log",
+      "returncode": 0,
+      "elapsed_s": 74.36892131100467,
+      "output_sha256": "b5030410a2eee8ed5fa2f6acf2b0a8040057cba83ac5bd18efc8fb2f28946eb1"
+    },
+    {
+      "id": "6sup_A-R3-f4-t0.25-noise0",
+      "protein": "6sup_A",
+      "replica": 3,
+      "frames": 4,
+      "t": 0.25,
+      "noise_seed": 0,
+      "command": [
+        "/share/home/r15543056/.venvs/mdgen/bin/python",
+        "-m",
+        "mdgen.full_length.halo_error",
+        "--sim_ckpt",
+        "/share/home/r15543056/MDgen/mdgen/ckpt/atlas.ckpt",
+        "--data_dir",
+        "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/arrays",
+        "--split",
+        "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/validation.csv",
+        "--suffix",
+        "_i400ps",
+        "--partition_dir",
+        "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/partitions",
+        "--pdb_id",
+        "6sup_A",
+        "--replicate",
+        "3",
+        "--num_frames",
+        "4",
+        "--region_residues",
+        "896",
+        "--selection_seed",
+        "43002",
+        "--regions",
+        "8",
+        "--halo_rings",
+        "1",
+        "2",
+        "--times",
+        "0.25",
+        "--noise_seeds",
+        "0",
+        "--warmup",
+        "1",
+        "--repeats",
+        "3",
+        "--require_gpu",
+        "--local_spatial",
+        "--spatial_cell_width",
+        "16",
+        "--spatial_contact_radius",
+        "16",
+        "--core_capacity",
+        "128",
+        "--ghost_capacity",
+        "128",
+        "--no-cell_summaries",
+        "--group_batch_size",
+        "4",
+        "--ffn_chunk_size",
+        "65536",
+        "--output",
+        "results/halo_error_51240/6sup_A-R3-f4-t0.25-noise0.json"
+      ],
+      "memory": {
+        "group_batch_size": 4,
+        "ffn_chunk_size": 65536,
+        "expandable_segments": false
+      },
+      "timeout_s": 120,
+      "status": "completed",
+      "output": "results/halo_error_51240/6sup_A-R3-f4-t0.25-noise0.json",
+      "log": "results/halo_error_51240/6sup_A-R3-f4-t0.25-noise0.log",
+      "returncode": 0,
+      "elapsed_s": 30.524754746002145,
+      "output_sha256": "588d6399634918913a36bd2370aaf3778a1928f53731b4e77b552eb36aed329b"
+    },
+    {
+      "id": "6sup_A-R3-f4-t0.75-noise0",
+      "protein": "6sup_A",
+      "replica": 3,
+      "frames": 4,
+      "t": 0.75,
+      "noise_seed": 0,
+      "command": [
+        "/share/home/r15543056/.venvs/mdgen/bin/python",
+        "-m",
+        "mdgen.full_length.halo_error",
+        "--sim_ckpt",
+        "/share/home/r15543056/MDgen/mdgen/ckpt/atlas.ckpt",
+        "--data_dir",
+        "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/arrays",
+        "--split",
+        "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/validation.csv",
+        "--suffix",
+        "_i400ps",
+        "--partition_dir",
+        "/share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b/partitions",
+        "--pdb_id",
+        "6sup_A",
+        "--replicate",
+        "3",
+        "--num_frames",
+        "4",
+        "--region_residues",
+        "896",
+        "--selection_seed",
+        "43002",
+        "--regions",
+        "8",
+        "--halo_rings",
+        "1",
+        "2",
+        "--times",
+        "0.75",
+        "--noise_seeds",
+        "0",
+        "--warmup",
+        "1",
+        "--repeats",
+        "3",
+        "--require_gpu",
+        "--local_spatial",
+        "--spatial_cell_width",
+        "16",
+        "--spatial_contact_radius",
+        "16",
+        "--core_capacity",
+        "128",
+        "--ghost_capacity",
+        "128",
+        "--no-cell_summaries",
+        "--group_batch_size",
+        "4",
+        "--ffn_chunk_size",
+        "65536",
+        "--output",
+        "results/halo_error_51240/6sup_A-R3-f4-t0.75-noise0.json"
+      ],
+      "memory": {
+        "group_batch_size": 4,
+        "ffn_chunk_size": 65536,
+        "expandable_segments": false
+      },
+      "timeout_s": 120,
+      "status": "completed",
+      "output": "results/halo_error_51240/6sup_A-R3-f4-t0.75-noise0.json",
+      "log": "results/halo_error_51240/6sup_A-R3-f4-t0.75-noise0.log",
+      "returncode": 0,
+      "elapsed_s": 25.139513595000608,
+      "output_sha256": "f58af84a7de48f5465b43539f27ea136981df17539beb112499996ea6c32731a"
+    }
+  ],
+  "run": {
+    "run_id": "issue43-t4-forward-20261024T062450Z-34bc2cb",
+    "commit": "34bc2cb",
+    "dirty": false
+  },
+  "snapshot_manifest_sha256": "94a0617a9724d138abba81128c604e259eec926a4c068ecb06e4082a9d084379"
+}
