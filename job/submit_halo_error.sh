@@ -24,9 +24,10 @@ export PYTHONUNBUFFERED=1
 OUT="results/halo_error_${SLURM_JOB_ID}"
 mkdir -p "$OUT"
 
-# Ticket 3: MDGEN_ISSUE43_MODE=baseline_forward; pass --cases or shard options.
+# Ticket 3/4: MDGEN_ISSUE43_MODE=baseline_forward or long_forward; pass --cases or shard options.
 # Use a 30-minute scheduler limit for the frozen matrix. Planning calls the driver directly.
-if [ -n "${MDGEN_ISSUE43_FRAMES:-}" ] || [ "${MDGEN_ISSUE43_MODE:-}" = baseline_forward ]; then
+if [ -n "${MDGEN_ISSUE43_FRAMES:-}" ] || [ "${MDGEN_ISSUE43_MODE:-}" = baseline_forward ] \
+        || [ "${MDGEN_ISSUE43_MODE:-}" = long_forward ]; then
     frame_args=()
     if [ -n "${MDGEN_ISSUE43_FRAMES:-}" ]; then
         frame_args=(--frames "$MDGEN_ISSUE43_FRAMES")

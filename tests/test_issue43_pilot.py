@@ -292,6 +292,28 @@ def test_ticket3_plan_executes_the_frozen_paired_matrix(tmp_path, monkeypatch):
                                (0.25, 0.5, 0.75), (0, 1, 2)))
 
 
+def test_ticket4_plan_is_only_the_long_protein_paired_matrix(tmp_path, monkeypatch):
+    root, checkpoint = _pilot_inputs(tmp_path, monkeypatch)
+    monkeypatch.setattr(pilot.subprocess, 'run', lambda *a, **k: pytest.fail('plan ran a model'))
+    report = pilot.main(['--mode', 'long_forward', '--plan_only',
+                         '--data_root', str(root), '--checkpoint', str(checkpoint),
+                         '--output_dir', str(tmp_path / 'out')])
+    from itertools import product
+    assert {(c['protein'], c['replica'], c['frames'], c['t'], c['noise_seed'])
+            for c in report['cases']} == set(product(['6sup_A'], (1, 2, 3), (4, 250),
+                                                     (0.25, 0.5, 0.75), (0, 1, 2)))
+    assert len(report['cases']) == 54
+    for case in report['cases']:
+        cmd = case['command']
+        assert '--capacity_only' not in cmd and '--require_gpu' in cmd
+        assert cmd[cmd.index('--pdb_id') + 1] == '6sup_A'
+        assert cmd[cmd.index('--region_residues') + 1] == '896'
+    with pytest.raises(SystemExit):
+        pilot.main(['--mode', 'long_forward', '--frames', '64', '--plan_only',
+                    '--data_root', str(root), '--checkpoint', str(checkpoint),
+                    '--output_dir', str(tmp_path / 'bad')])
+
+
 def test_ticket3_shards_cover_every_case_once(tmp_path, monkeypatch):
     root, checkpoint = _pilot_inputs(tmp_path, monkeypatch)
     ids = []

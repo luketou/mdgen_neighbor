@@ -106,6 +106,15 @@ def seed_region_report(partition, halo_rings, budget):
     return report
 
 
+def oom_record(error, device, phase=None):
+    """Peaks since the last reset, i.e. those of the failed path."""
+    cuda = torch.device(device).type == 'cuda'
+    return {'status': 'oom', 'runs': [], 'error': str(error),
+            **({'failure_phase': phase} if phase else {}),
+            'peak_memory_allocated_bytes': torch.cuda.max_memory_allocated(device) if cuda else None,
+            'peak_memory_reserved_bytes': torch.cuda.max_memory_reserved(device) if cuda else None}
+
+
 def capacity_forward(call, device, warmup, repeats):
     """Release each output before the next path; a full-protein OOM does not hide regions."""
     try:
@@ -115,11 +124,20 @@ def capacity_forward(call, device, warmup, repeats):
         del output
         return result
     except torch.cuda.OutOfMemoryError as error:
-        result = {'status': 'oom', 'runs': [], 'error': str(error),
-                  'peak_memory_allocated_bytes': torch.cuda.max_memory_allocated(device),
-                  'peak_memory_reserved_bytes': torch.cuda.max_memory_reserved(device)}
+        result = oom_record(error, device)
     torch.cuda.empty_cache()
     return result
+
+
+def paired_forward(call, device, warmup, repeats, phase):
+    """measured_forward that keeps an OOM as a record so later paths still run."""
+    try:
+        return measured_forward(call, device, warmup, repeats)
+    except torch.cuda.OutOfMemoryError as error:
+        result = oom_record(error, device, phase)
+    if torch.device(device).type == 'cuda':
+        torch.cuda.empty_cache()
+    return None, result
 
 
 def observation_stats(rows):
@@ -227,6 +245,7 @@ def halo_errors(wrapper, batch, partition, ca, *, region_residues, halo_rings, r
                 'loss_groups': list(selection.loss_groups),
                 'halo_groups': len(region.partition.groups) - len(selection.loss_groups),
                 'region_residues': len(index), 'loss_residues': int(loss.sum()),
+                'outside_context_residues': partition.residue_mask.numel() - len(index),
                 'truncated': len(index) < partition.residue_mask.numel(), 'times': []}
             cases.append((k, entry, index, loss, region.partition.to(device)))
     residues = {k: [] for k in halo_rings}
@@ -256,8 +275,13 @@ def halo_errors(wrapper, batch, partition, ca, *, region_residues, halo_rings, r
                     'loss_groups': entry['loss_groups'], 'region_residues': len(index),
                     **region_measurement})
             continue
-        full, measured = measured_forward(
-            lambda: wrapper.model(xt, tt, **full_prep['model_kwargs']), device, warmup, repeats)
+        full = None  # release the previous reference before the next full forward
+        full, measured = paired_forward(
+            lambda: wrapper.model(xt, tt, **full_prep['model_kwargs']), device, warmup, repeats,
+            'full_forward')
+        if full is None:  # no reference: every region of this t and noise stays unmeasured
+            measurements['full'].append({'t': float(t), 'noise_seed': noise_seed, **measured})
+            continue
         nonfinite = max(int((~full.isfinite()).sum()),
             sum(run['nonfinite'] + run['warmup_nonfinite'] for run in measured))
         measurements['full'].append({'t': float(t), 'noise_seed': noise_seed,
@@ -265,14 +289,18 @@ def halo_errors(wrapper, batch, partition, ca, *, region_residues, halo_rings, r
         nonfinite_counts['full_output'] += nonfinite
         for k, entry, index, loss, sub in cases:
             prep = wrapper.prep_batch({**select_residues(batch, index, batched=True), 'partition': [sub]})
-            out, measured = measured_forward(
+            out, measured = paired_forward(
                 lambda: wrapper.model(xt[:, :, index], tt, **prep['model_kwargs']),
-                device, warmup, repeats)
+                device, warmup, repeats, 'region_forward')
+            path = {'t': float(t), 'noise_seed': noise_seed, 'halo_rings': k,
+                    'region_id': entry['region_id'], 'loss_groups': entry['loss_groups'],
+                    'region_residues': len(index)}
+            if out is None:
+                measurements['regions'].append({**path, **measured})
+                continue
             nonfinite = max(int((~out.isfinite()).sum()),
                 sum(run['nonfinite'] + run['warmup_nonfinite'] for run in measured))
-            measurements['regions'].append({'t': float(t), 'noise_seed': noise_seed, 'halo_rings': k,
-                'region_id': entry['region_id'], 'loss_groups': entry['loss_groups'],
-                'region_residues': len(index), 'runs': measured, 'nonfinite': nonfinite})
+            measurements['regions'].append({**path, 'runs': measured, 'nonfinite': nonfinite})
             nonfinite_counts['region_output'] += nonfinite
             supervised = prep['loss_mask'][0][unconditioned][:, loss]  # unsupervised torsions drop out
             reference = full[0][unconditioned][:, index[loss]] * supervised

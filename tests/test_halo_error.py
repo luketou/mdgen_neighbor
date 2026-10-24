@@ -343,6 +343,34 @@ def test_injected_region_output_fails_the_official_json(tmp_path, checkpoint, mo
         'full_coverage' if budget == L else 'truncated'}
 
 
+@pytest.mark.parametrize('oom_call,phase', [(1, 'full_forward'), (2, 'region_forward')])
+def test_paired_oom_is_recorded_and_its_comparison_stays_incomplete(
+        tmp_path, checkpoint, monkeypatch, oom_call, phase):
+    from mdgen.full_length import halo_error
+    original = halo_error.measured_forward
+    calls = []
+
+    def oom_once(*args):
+        calls.append(None)
+        if len(calls) == oom_call:  # full, region at t 0.3; then full, region at t 0.7
+            raise torch.cuda.OutOfMemoryError('CUDA out of memory')
+        return original(*args)
+
+    monkeypatch.setattr(halo_error, 'measured_forward', oom_once)
+    report = run(tmp_path, checkpoint, '--halo_rings', '1', '--seed_groups', '0',
+                 '--regions', '1')
+    protein, = report['proteins']
+    measurements = protein['measurements']['full' if phase == 'full_forward' else 'regions']
+    failed, = [m for m in measurements if m.get('status') == 'oom']
+    assert failed['failure_phase'] == phase and failed['t'] == 0.3 and failed['runs'] == []
+    assert 'peak_memory_allocated_bytes' in failed and 'peak_memory_reserved_bytes' in failed
+    assert {row['t'] for row in protein['observations']} == {0.7}  # later paths still ran
+    rows = tiny_verdict(report)
+    assert all(row['verdict'] == 'incomplete' and row['reason'] == 'oom'
+               and row['oom'][0]['failure_phase'] == phase for row in rows if row['t'] == 0.3)
+    assert not any(row.get('oom') for row in rows if row['t'] == 0.7)
+
+
 def test_nonfinite_in_an_earlier_measured_repeat_is_not_hidden():
     from mdgen.full_length.halo_error import measured_forward
     values = iter([torch.tensor(float('nan')), torch.tensor(1.0)])

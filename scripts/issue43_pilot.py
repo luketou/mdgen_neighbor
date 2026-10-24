@@ -196,12 +196,12 @@ def training_candidates(root, protein, replica):
     return result
 
 
-def baseline_forward_cases(root, checkpoint, contract):
+def baseline_forward_cases(root, checkpoint, contract, ticket='3'):
     from itertools import product
     matrix = contract['forward_matrix']
     cases = []
     for protein, replica, frames, t, noise in product(
-            matrix['tickets']['3'], matrix['replicas'], map(int, matrix['frames']),
+            matrix['tickets'][ticket], matrix['replicas'], map(int, matrix['frames']),
             matrix['t'], matrix['noise_seeds']):
         identity = f'{protein}-R{replica}-f{frames}-t{t}-noise{noise}'
         command = [sys.executable, '-m', 'mdgen.full_length.halo_error',
@@ -221,7 +221,8 @@ def baseline_forward_cases(root, checkpoint, contract):
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--mode', required=True,
-                        choices=('inventory', 'forward', 'baseline_forward', 'train', 'sweep'))
+                        choices=('inventory', 'forward', 'baseline_forward', 'long_forward',
+                                 'train', 'sweep'))
     parser.add_argument('--frames', type=int, help='required except sweep/baseline_forward')
     parser.add_argument('--shard_count', type=int, default=1)
     parser.add_argument('--shard_index', type=int, default=0)
@@ -245,9 +246,10 @@ def main(argv=None):
     args = parser.parse_args(argv)
     if args.shard_count < 1 or not 0 <= args.shard_index < args.shard_count:
         parser.error('require 0 <= shard_index < shard_count')
-    if args.mode == 'baseline_forward':
+    paired = args.mode in ('baseline_forward', 'long_forward')
+    if paired:
         if args.frames is not None or args.memory != DEFAULT_MEMORY:
-            parser.error('baseline_forward uses frozen frames and memory settings')
+            parser.error(f'{args.mode} uses frozen frames and memory settings')
     elif args.mode == 'sweep':
         if args.protein is None or args.replica is None or not args.step:
             parser.error('sweep mode requires --protein, --replica and --step')
@@ -279,9 +281,10 @@ def main(argv=None):
     cases = []
     contract_path = Path(__file__).resolve().parents[1] / (
         'docs/validation/43-contract/frozen-contract-v1.1.json')
-    if args.mode == 'baseline_forward':
+    if paired:
         contract = json.loads(contract_path.read_text())
-        cases = baseline_forward_cases(root, args.checkpoint, contract)
+        cases = baseline_forward_cases(root, args.checkpoint, contract,
+                                       '4' if args.mode == 'long_forward' else '3')
     elif args.mode == 'sweep':
         cases = sweep_cases(root, args.checkpoint, args.output_dir, args.protein, args.replica,
                             args.step)
@@ -341,15 +344,15 @@ def main(argv=None):
               'plan_only': args.plan_only, 'driver_finished': False,
               'policy_revision': 2, 'pilot_candidates': 8,
               'case_order': ('protein, replica, frames, t, noise_seed'
-                             if args.mode == 'baseline_forward' else
-                             'long protein R1, baselines R1, then R2/R3'),
+                             if paired else 'long protein R1, baselines R1, then R2/R3'),
               'input_manifest': input_manifest,
               'slurm_job_id': os.environ.get('SLURM_JOB_ID'),
               'warmup': 1, 'measured_repeats': 3,
               'training_comparison': 'capacity cases have different supervision; '
                                      'coverage controls align noise and supervision, no thresholds',
-              'memory_policy': ('paired forward retains the full reference output'
-                                if args.mode == 'baseline_forward' else
+              'memory_policy': ('paired forward retains the full reference output; an OOM path '
+                                'is recorded with its phase and peaks and later paths still run'
+                                if paired else
                                 'standalone full and region forward; reference output released'),
               'cases': cases}
     if os.environ.get('MDGEN_RUN_DIR'):
