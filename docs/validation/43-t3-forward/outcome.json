@@ -1,0 +1,1317 @@
+{
+  "run_id": "issue43-t3-forward-20261024T043915Z-a534fe4",
+  "source_commit": "a534fe4",
+  "contract_version": "1.1",
+  "plan_job_id": 49588,
+  "jobs": [
+    {
+      "job_id": 49590,
+      "shard_index": 0,
+      "shard_count": 6,
+      "driver_finished": true,
+      "cases": 27,
+      "status_counts": {
+        "completed": 27
+      },
+      "case_elapsed_s_sum": 1040.4824185319885,
+      "case_elapsed_s_max": 97.45586469200498,
+      "case_elapsed_s_min": 22.366074315999867,
+      "case_elapsed_s_by_frames": {
+        "4": {
+          "min": 22.366074315999867,
+          "max": 27.449208371996065
+        },
+        "250": {
+          "min": 38.18184886300878,
+          "max": 97.45586469200498
+        }
+      },
+      "snapshot_manifest_sha256": "a0693d67e855bc7c4883c79069d7bb9b63dbdb63b36a5e25c0ccfe0900381303",
+      "checkpoint_sha256": "bc90c66e7539f52c9d0514aeddd96c552061150a1eef3b10c120bc3aaff08015"
+    },
+    {
+      "job_id": 49598,
+      "shard_index": 1,
+      "shard_count": 6,
+      "driver_finished": true,
+      "cases": 27,
+      "status_counts": {
+        "completed": 27
+      },
+      "case_elapsed_s_sum": 969.7361855579802,
+      "case_elapsed_s_max": 44.99128446300165,
+      "case_elapsed_s_min": 21.75258763199963,
+      "case_elapsed_s_by_frames": {
+        "4": {
+          "min": 21.75258763199963,
+          "max": 27.490192199999
+        },
+        "250": {
+          "min": 37.14970372199605,
+          "max": 44.99128446300165
+        }
+      },
+      "snapshot_manifest_sha256": "a0693d67e855bc7c4883c79069d7bb9b63dbdb63b36a5e25c0ccfe0900381303",
+      "checkpoint_sha256": "bc90c66e7539f52c9d0514aeddd96c552061150a1eef3b10c120bc3aaff08015"
+    },
+    {
+      "job_id": 50303,
+      "shard_index": 2,
+      "shard_count": 6,
+      "driver_finished": true,
+      "cases": 27,
+      "status_counts": {
+        "completed": 27
+      },
+      "case_elapsed_s_sum": 964.846200244021,
+      "case_elapsed_s_max": 47.641475084994454,
+      "case_elapsed_s_min": 21.562291996000567,
+      "case_elapsed_s_by_frames": {
+        "4": {
+          "min": 21.562291996000567,
+          "max": 30.120186058004037
+        },
+        "250": {
+          "min": 37.21957728599955,
+          "max": 47.641475084994454
+        }
+      },
+      "snapshot_manifest_sha256": "a0693d67e855bc7c4883c79069d7bb9b63dbdb63b36a5e25c0ccfe0900381303",
+      "checkpoint_sha256": "bc90c66e7539f52c9d0514aeddd96c552061150a1eef3b10c120bc3aaff08015"
+    },
+    {
+      "job_id": 51194,
+      "shard_index": 3,
+      "shard_count": 6,
+      "driver_finished": true,
+      "cases": 27,
+      "status_counts": {
+        "completed": 27
+      },
+      "case_elapsed_s_sum": 808.0443299399631,
+      "case_elapsed_s_max": 44.310756113001844,
+      "case_elapsed_s_min": 21.37164567199943,
+      "case_elapsed_s_by_frames": {
+        "4": {
+          "min": 21.37164567199943,
+          "max": 29.02653032800299
+        },
+        "250": {
+          "min": 36.23678672799724,
+          "max": 44.310756113001844
+        }
+      },
+      "snapshot_manifest_sha256": "a0693d67e855bc7c4883c79069d7bb9b63dbdb63b36a5e25c0ccfe0900381303",
+      "checkpoint_sha256": "bc90c66e7539f52c9d0514aeddd96c552061150a1eef3b10c120bc3aaff08015"
+    },
+    {
+      "job_id": 51226,
+      "shard_index": 4,
+      "shard_count": 6,
+      "driver_finished": true,
+      "cases": 27,
+      "status_counts": {
+        "completed": 27
+      },
+      "case_elapsed_s_sum": 822.2455818689486,
+      "case_elapsed_s_max": 48.149538946003304,
+      "case_elapsed_s_min": 21.350608963999548,
+      "case_elapsed_s_by_frames": {
+        "4": {
+          "min": 21.350608963999548,
+          "max": 33.47629685199354
+        },
+        "250": {
+          "min": 37.96986668900354,
+          "max": 48.149538946003304
+        }
+      },
+      "snapshot_manifest_sha256": "a0693d67e855bc7c4883c79069d7bb9b63dbdb63b36a5e25c0ccfe0900381303",
+      "checkpoint_sha256": "bc90c66e7539f52c9d0514aeddd96c552061150a1eef3b10c120bc3aaff08015"
+    },
+    {
+      "job_id": 51229,
+      "shard_index": 5,
+      "shard_count": 6,
+      "driver_finished": true,
+      "cases": 27,
+      "status_counts": {
+        "completed": 27
+      },
+      "case_elapsed_s_sum": 822.7328454289818,
+      "case_elapsed_s_max": 44.70774015499046,
+      "case_elapsed_s_min": 22.066961407006602,
+      "case_elapsed_s_by_frames": {
+        "4": {
+          "min": 22.066961407006602,
+          "max": 28.42733201799274
+        },
+        "250": {
+          "min": 37.70761675199901,
+          "max": 44.70774015499046
+        }
+      },
+      "snapshot_manifest_sha256": "a0693d67e855bc7c4883c79069d7bb9b63dbdb63b36a5e25c0ccfe0900381303",
+      "checkpoint_sha256": "bc90c66e7539f52c9d0514aeddd96c552061150a1eef3b10c120bc3aaff08015"
+    }
+  ],
+  "cases_total": 162,
+  "case_status_counts": {
+    "completed": 162
+  },
+  "strata_total": 324,
+  "verdict_counts": {
+    "pass": 324
+  },
+  "passed": true,
+  "strata_by_coverage_and_frames": {
+    "full_coverage/250": 162,
+    "full_coverage/4": 162
+  },
+  "max_over_strata": {
+    "l2": 0.0,
+    "absolute_rms": 0.0,
+    "relative": 0.0
+  },
+  "model_output_nonfinite_total": 0,
+  "measured_forward_runs": 1458,
+  "peak_memory_reserved_bytes_max": 9284091904,
+  "peak_memory_allocated_bytes_max": 3472487936,
+  "raw_json_total_bytes": 150846454,
+  "raw_reports": [
+    {
+      "case": "6sms_A-R1-f250-t0.25-noise0",
+      "job_id": 49590,
+      "bytes": 966307,
+      "sha256": "644f5f6494eafe32b92d8e1edbfeb7f9dc3516fb31388a488a55e389502c7bd8",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_49590/6sms_A-R1-f250-t0.25-noise0.json"
+    },
+    {
+      "case": "6sms_A-R1-f250-t0.75-noise0",
+      "job_id": 49590,
+      "bytes": 966298,
+      "sha256": "1fee8b0becafe470ef7d2cd8ddf66a26424d7576adbd27c6984d3ed51fd43a3c",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_49590/6sms_A-R1-f250-t0.75-noise0.json"
+    },
+    {
+      "case": "6sms_A-R1-f4-t0.5-noise0",
+      "job_id": 49590,
+      "bytes": 958915,
+      "sha256": "6ec11572bf09ac31505b9d4bedfa7d274435ca3bf050d4e3c970832313ca36b4",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_49590/6sms_A-R1-f4-t0.5-noise0.json"
+    },
+    {
+      "case": "6sms_A-R2-f250-t0.25-noise0",
+      "job_id": 49590,
+      "bytes": 966282,
+      "sha256": "5238be10389257aa77278aae41a37b80ac51da1265677c08d5a4a25905ab8881",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_49590/6sms_A-R2-f250-t0.25-noise0.json"
+    },
+    {
+      "case": "6sms_A-R2-f250-t0.75-noise0",
+      "job_id": 49590,
+      "bytes": 966245,
+      "sha256": "2d750735c4f1bc8b8c4db2cb1ddf2b68381981d66a9862c1f5ab046437986dbb",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_49590/6sms_A-R2-f250-t0.75-noise0.json"
+    },
+    {
+      "case": "6sms_A-R2-f4-t0.5-noise0",
+      "job_id": 49590,
+      "bytes": 958895,
+      "sha256": "2e85122b5543260384d8e5dd885577cc0cb8c1d7591c2dea2a2aa33403f815b4",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_49590/6sms_A-R2-f4-t0.5-noise0.json"
+    },
+    {
+      "case": "6sms_A-R3-f250-t0.25-noise0",
+      "job_id": 49590,
+      "bytes": 966416,
+      "sha256": "8ba7bc171cb7d009b4ef2fb9a54505bbbe2eb3f415d21f8da98e353c62b9276d",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_49590/6sms_A-R3-f250-t0.25-noise0.json"
+    },
+    {
+      "case": "6sms_A-R3-f250-t0.75-noise0",
+      "job_id": 49590,
+      "bytes": 966363,
+      "sha256": "13cbc1ebcd23f7932dc0ef33006c1a056be56bf5d9a0e2fd446855a6c40efc54",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_49590/6sms_A-R3-f250-t0.75-noise0.json"
+    },
+    {
+      "case": "6sms_A-R3-f4-t0.5-noise0",
+      "job_id": 49590,
+      "bytes": 959116,
+      "sha256": "212767087ccb94dfc473a33ab462109ecf06dd8f70b6cfa3de60792665048250",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_49590/6sms_A-R3-f4-t0.5-noise0.json"
+    },
+    {
+      "case": "6lrd_A-R1-f250-t0.25-noise0",
+      "job_id": 49590,
+      "bytes": 943234,
+      "sha256": "136fa83d84adc3c55044bfe205c924a7529c4a2319d5bfeaaa5d0bbe01cd02ad",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_49590/6lrd_A-R1-f250-t0.25-noise0.json"
+    },
+    {
+      "case": "6lrd_A-R1-f250-t0.75-noise0",
+      "job_id": 49590,
+      "bytes": 943081,
+      "sha256": "85bbb4dc38703fa13ab57aa89f1d3f080e8f87224ff71f396e41fedd01888b76",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_49590/6lrd_A-R1-f250-t0.75-noise0.json"
+    },
+    {
+      "case": "6lrd_A-R1-f4-t0.5-noise0",
+      "job_id": 49590,
+      "bytes": 935723,
+      "sha256": "c69d6489f6cb9b7c88bf30bbd2fa6b977ee25405017ba68b587e285ed5fea776",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_49590/6lrd_A-R1-f4-t0.5-noise0.json"
+    },
+    {
+      "case": "6lrd_A-R2-f250-t0.25-noise0",
+      "job_id": 49590,
+      "bytes": 942851,
+      "sha256": "c24488628badc2c05df57af370a401d1b0c3694469d75c811bab561b45152c48",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_49590/6lrd_A-R2-f250-t0.25-noise0.json"
+    },
+    {
+      "case": "6lrd_A-R2-f250-t0.75-noise0",
+      "job_id": 49590,
+      "bytes": 942929,
+      "sha256": "c769645e3cd8d74223c3cda5371c148664c552a4d4969610a2deb0e687b3ac01",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_49590/6lrd_A-R2-f250-t0.75-noise0.json"
+    },
+    {
+      "case": "6lrd_A-R2-f4-t0.5-noise0",
+      "job_id": 49590,
+      "bytes": 935805,
+      "sha256": "d9edad19eac7cef90798a90b7295bee138b88a1a0ef39697a696300afcb5c61f",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_49590/6lrd_A-R2-f4-t0.5-noise0.json"
+    },
+    {
+      "case": "6lrd_A-R3-f250-t0.25-noise0",
+      "job_id": 49590,
+      "bytes": 942817,
+      "sha256": "7a1e515769d2e553c77368e95496af08e6b3320eaee08799ecd16d8681b34dd6",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_49590/6lrd_A-R3-f250-t0.25-noise0.json"
+    },
+    {
+      "case": "6lrd_A-R3-f250-t0.75-noise0",
+      "job_id": 49590,
+      "bytes": 942870,
+      "sha256": "88d01a6257517417356e776cb5e59c1c40c0406b7fa39a276137bd62fcd5ff94",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_49590/6lrd_A-R3-f250-t0.75-noise0.json"
+    },
+    {
+      "case": "6lrd_A-R3-f4-t0.5-noise0",
+      "job_id": 49590,
+      "bytes": 935767,
+      "sha256": "64d776d6b5f2cb7de91edff2ee1d5cc9b0e30988e7e5adb473605604fc6cbcb9",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_49590/6lrd_A-R3-f4-t0.5-noise0.json"
+    },
+    {
+      "case": "6l3r_E-R1-f250-t0.25-noise0",
+      "job_id": 49590,
+      "bytes": 894078,
+      "sha256": "db13fa5e0f4528adb366f542283675fe98654d623dda5f681227fff7e81e6606",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_49590/6l3r_E-R1-f250-t0.25-noise0.json"
+    },
+    {
+      "case": "6l3r_E-R1-f250-t0.75-noise0",
+      "job_id": 49590,
+      "bytes": 894096,
+      "sha256": "f7390bbb47b5967bbe88c1c68ddf32a6415094d4d320a55f05e193878a3d39cd",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_49590/6l3r_E-R1-f250-t0.75-noise0.json"
+    },
+    {
+      "case": "6l3r_E-R1-f4-t0.5-noise0",
+      "job_id": 49590,
+      "bytes": 887328,
+      "sha256": "50fac34693888aab366661563a5190feefb65f2db8054bddf2b5a8f57317f432",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_49590/6l3r_E-R1-f4-t0.5-noise0.json"
+    },
+    {
+      "case": "6l3r_E-R2-f250-t0.25-noise0",
+      "job_id": 49590,
+      "bytes": 894055,
+      "sha256": "a87f211ae6ea5aed400b79a4d95ab99e62dbfdffef04ca15a42208560dfd3955",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_49590/6l3r_E-R2-f250-t0.25-noise0.json"
+    },
+    {
+      "case": "6l3r_E-R2-f250-t0.75-noise0",
+      "job_id": 49590,
+      "bytes": 894055,
+      "sha256": "7d08b15d084bb8805614e71f08c8e8fc29c0ae7b8aa8e3eaefcc53aead5a7a6e",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_49590/6l3r_E-R2-f250-t0.75-noise0.json"
+    },
+    {
+      "case": "6l3r_E-R2-f4-t0.5-noise0",
+      "job_id": 49590,
+      "bytes": 887339,
+      "sha256": "fb29476560327b3e00094a92711e9b12edb16b7efdcff7b04600f758716b217e",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_49590/6l3r_E-R2-f4-t0.5-noise0.json"
+    },
+    {
+      "case": "6l3r_E-R3-f250-t0.25-noise0",
+      "job_id": 49590,
+      "bytes": 894015,
+      "sha256": "0b9dce5a2e6298133600c428b1099505d30374e8bb3ce7f83264b821d083d64a",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_49590/6l3r_E-R3-f250-t0.25-noise0.json"
+    },
+    {
+      "case": "6l3r_E-R3-f250-t0.75-noise0",
+      "job_id": 49590,
+      "bytes": 894073,
+      "sha256": "fab3854713b23982e8e9eededd96cec526d22fbc8305c88e7c8ef5ed0b6099ad",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_49590/6l3r_E-R3-f250-t0.75-noise0.json"
+    },
+    {
+      "case": "6l3r_E-R3-f4-t0.5-noise0",
+      "job_id": 49590,
+      "bytes": 887290,
+      "sha256": "63060f0a20e74da98cb7e6315dd56d0790646aadaee8f29500cf69f7c84efa76",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_49590/6l3r_E-R3-f4-t0.5-noise0.json"
+    },
+    {
+      "case": "6sms_A-R1-f250-t0.25-noise1",
+      "job_id": 49598,
+      "bytes": 966333,
+      "sha256": "1d04b42401d095d4b597c807784cdf608f68b8ab22c4a00a0ff4bf042f1d8a99",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_49598/6sms_A-R1-f250-t0.25-noise1.json"
+    },
+    {
+      "case": "6sms_A-R1-f250-t0.75-noise1",
+      "job_id": 49598,
+      "bytes": 966305,
+      "sha256": "c4028f37e6b60f2749ea738955c7ab213cf00a1f40437f798067d8b70aae6ddd",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_49598/6sms_A-R1-f250-t0.75-noise1.json"
+    },
+    {
+      "case": "6sms_A-R1-f4-t0.5-noise1",
+      "job_id": 49598,
+      "bytes": 958937,
+      "sha256": "4550a62aa2985740506dcda8abc80c22e276ea8fd4d185cb36b91f1f00b76039",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_49598/6sms_A-R1-f4-t0.5-noise1.json"
+    },
+    {
+      "case": "6sms_A-R2-f250-t0.25-noise1",
+      "job_id": 49598,
+      "bytes": 966279,
+      "sha256": "b64ecff19ee21c4cf08cb86e2986c17b020eb702c13720b304eff15043fa6f7f",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_49598/6sms_A-R2-f250-t0.25-noise1.json"
+    },
+    {
+      "case": "6sms_A-R2-f250-t0.75-noise1",
+      "job_id": 49598,
+      "bytes": 966261,
+      "sha256": "66f3e90b8b94058fbc05b76f5466968a63c864be8204eb9028e9e6ff284fe1ec",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_49598/6sms_A-R2-f250-t0.75-noise1.json"
+    },
+    {
+      "case": "6sms_A-R2-f4-t0.5-noise1",
+      "job_id": 49598,
+      "bytes": 958970,
+      "sha256": "ee6d61f0ac0252fa9f6ef33f66ffa4fe9f376efe0c3e8f6fbceaaeab36526333",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_49598/6sms_A-R2-f4-t0.5-noise1.json"
+    },
+    {
+      "case": "6sms_A-R3-f250-t0.25-noise1",
+      "job_id": 49598,
+      "bytes": 966416,
+      "sha256": "4cf3e7a09850d2ba4bfe39db915d398bc265d3d4e6b3791c85a94f009439025f",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_49598/6sms_A-R3-f250-t0.25-noise1.json"
+    },
+    {
+      "case": "6sms_A-R3-f250-t0.75-noise1",
+      "job_id": 49598,
+      "bytes": 966349,
+      "sha256": "5838d48d9d12a26560559033bd03b19221631da871c8746e0ba4b5c4899b6f3e",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_49598/6sms_A-R3-f250-t0.75-noise1.json"
+    },
+    {
+      "case": "6sms_A-R3-f4-t0.5-noise1",
+      "job_id": 49598,
+      "bytes": 959126,
+      "sha256": "d3aa5f5391837d8fe086b0f95834aefa02b1f2b695b34baa4323f2e0cb1863c7",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_49598/6sms_A-R3-f4-t0.5-noise1.json"
+    },
+    {
+      "case": "6lrd_A-R1-f250-t0.25-noise1",
+      "job_id": 49598,
+      "bytes": 943282,
+      "sha256": "2e1d210d008565324e3cb7accc7cb751932cc8bac1cc4fca76d7c984a21050b0",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_49598/6lrd_A-R1-f250-t0.25-noise1.json"
+    },
+    {
+      "case": "6lrd_A-R1-f250-t0.75-noise1",
+      "job_id": 49598,
+      "bytes": 943088,
+      "sha256": "6d834426847e6a085be0b9276f6a474733c3932ae6e4aca654d3b937bf3c618e",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_49598/6lrd_A-R1-f250-t0.75-noise1.json"
+    },
+    {
+      "case": "6lrd_A-R1-f4-t0.5-noise1",
+      "job_id": 49598,
+      "bytes": 935723,
+      "sha256": "518d4973ea1414f99603764226365fc8c85f929ed08b449ac4e0ad6a5d6161f7",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_49598/6lrd_A-R1-f4-t0.5-noise1.json"
+    },
+    {
+      "case": "6lrd_A-R2-f250-t0.25-noise1",
+      "job_id": 49598,
+      "bytes": 942824,
+      "sha256": "76c0c685d5c39334ee69205f3b6cd01c75818f6520e78c0d1e002ee569199e23",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_49598/6lrd_A-R2-f250-t0.25-noise1.json"
+    },
+    {
+      "case": "6lrd_A-R2-f250-t0.75-noise1",
+      "job_id": 49598,
+      "bytes": 942897,
+      "sha256": "4783f8a354014cb70338e3b66ede8cd731f4ac06f89e286b85b8327ed7abaff6",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_49598/6lrd_A-R2-f250-t0.75-noise1.json"
+    },
+    {
+      "case": "6lrd_A-R2-f4-t0.5-noise1",
+      "job_id": 49598,
+      "bytes": 935761,
+      "sha256": "bb5cbb1f6e99bb3d6c28c07ee917eeec2de18873548bb2ea0d6e2ccf5786aae3",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_49598/6lrd_A-R2-f4-t0.5-noise1.json"
+    },
+    {
+      "case": "6lrd_A-R3-f250-t0.25-noise1",
+      "job_id": 49598,
+      "bytes": 942802,
+      "sha256": "b8bffd9dc322c4de24929846359808392ed878e0265f59bfed5c0e21656e1c10",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_49598/6lrd_A-R3-f250-t0.25-noise1.json"
+    },
+    {
+      "case": "6lrd_A-R3-f250-t0.75-noise1",
+      "job_id": 49598,
+      "bytes": 942892,
+      "sha256": "e042ee03c42f4a6e438192d2bcedda5e69bcb37779bb21549f5973ba06c90832",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_49598/6lrd_A-R3-f250-t0.75-noise1.json"
+    },
+    {
+      "case": "6lrd_A-R3-f4-t0.5-noise1",
+      "job_id": 49598,
+      "bytes": 935771,
+      "sha256": "c9e2518c3df1a996b5a7957936d1b54e1706e2701001b6e7eba9f6fb9e114be4",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_49598/6lrd_A-R3-f4-t0.5-noise1.json"
+    },
+    {
+      "case": "6l3r_E-R1-f250-t0.25-noise1",
+      "job_id": 49598,
+      "bytes": 894112,
+      "sha256": "44c2ca07cedf1387b874e42f496b2c6cab0c4e6bfc5e27d7951ecebbb9287fe5",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_49598/6l3r_E-R1-f250-t0.25-noise1.json"
+    },
+    {
+      "case": "6l3r_E-R1-f250-t0.75-noise1",
+      "job_id": 49598,
+      "bytes": 894086,
+      "sha256": "89c3e4c77979517475b6f716b9f935cfa3c4fcce4888d956516ddfccdab1b038",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_49598/6l3r_E-R1-f250-t0.75-noise1.json"
+    },
+    {
+      "case": "6l3r_E-R1-f4-t0.5-noise1",
+      "job_id": 49598,
+      "bytes": 887306,
+      "sha256": "e7fb8e6456e18ab4a68388e9f6d45216532c5a2b034f483561f78b239be21168",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_49598/6l3r_E-R1-f4-t0.5-noise1.json"
+    },
+    {
+      "case": "6l3r_E-R2-f250-t0.25-noise1",
+      "job_id": 49598,
+      "bytes": 894084,
+      "sha256": "cea7127c64d29f05fd472bac4a0753ea28790ca78e5cfb2a2ff890f7d7b395a0",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_49598/6l3r_E-R2-f250-t0.25-noise1.json"
+    },
+    {
+      "case": "6l3r_E-R2-f250-t0.75-noise1",
+      "job_id": 49598,
+      "bytes": 894078,
+      "sha256": "3552a115facdd07a7d9bd45aae70ede9d54226b7ef3bdbcfc21afe6c00bd54f3",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_49598/6l3r_E-R2-f250-t0.75-noise1.json"
+    },
+    {
+      "case": "6l3r_E-R2-f4-t0.5-noise1",
+      "job_id": 49598,
+      "bytes": 887318,
+      "sha256": "798d6efe588717fad2eaaec412c7ad9c11eb9bc075edec6e9de7815dfe6000a4",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_49598/6l3r_E-R2-f4-t0.5-noise1.json"
+    },
+    {
+      "case": "6l3r_E-R3-f250-t0.25-noise1",
+      "job_id": 49598,
+      "bytes": 894086,
+      "sha256": "8389fcdc68ddfbc911fc64d7604f0734f2b764d31521eaa2130cd35d090800e9",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_49598/6l3r_E-R3-f250-t0.25-noise1.json"
+    },
+    {
+      "case": "6l3r_E-R3-f250-t0.75-noise1",
+      "job_id": 49598,
+      "bytes": 894038,
+      "sha256": "667057aa52c36ddd2ecc4b124ff469fd1f283757569f2048aca892f493004c0b",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_49598/6l3r_E-R3-f250-t0.75-noise1.json"
+    },
+    {
+      "case": "6l3r_E-R3-f4-t0.5-noise1",
+      "job_id": 49598,
+      "bytes": 887358,
+      "sha256": "0aac0e9043f4e787123211edb19484b53d2646914654e5a3b816b5b1eecfa0df",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_49598/6l3r_E-R3-f4-t0.5-noise1.json"
+    },
+    {
+      "case": "6sms_A-R1-f250-t0.25-noise2",
+      "job_id": 50303,
+      "bytes": 966313,
+      "sha256": "b6d9674850beba37dfddb9970339dd4cea388fdd4b3a3826e3f97416a15ea863",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_50303/6sms_A-R1-f250-t0.25-noise2.json"
+    },
+    {
+      "case": "6sms_A-R1-f250-t0.75-noise2",
+      "job_id": 50303,
+      "bytes": 966355,
+      "sha256": "d359b1ab5025a46b49678f3fa1da80e4a1cb048a0b07baf058134437af721d76",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_50303/6sms_A-R1-f250-t0.75-noise2.json"
+    },
+    {
+      "case": "6sms_A-R1-f4-t0.5-noise2",
+      "job_id": 50303,
+      "bytes": 958904,
+      "sha256": "6c5f6784ffa8bac14620162d8728e27bf2939589a5c38bce2d8571e38dc2aebb",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_50303/6sms_A-R1-f4-t0.5-noise2.json"
+    },
+    {
+      "case": "6sms_A-R2-f250-t0.25-noise2",
+      "job_id": 50303,
+      "bytes": 966239,
+      "sha256": "d0c8dddb310210747206cd3a1a91774b628cc104be0a6e866bccf4dcd0906470",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_50303/6sms_A-R2-f250-t0.25-noise2.json"
+    },
+    {
+      "case": "6sms_A-R2-f250-t0.75-noise2",
+      "job_id": 50303,
+      "bytes": 966280,
+      "sha256": "d27cef3ccbc35364040efb84296a9a76e47cbeb9156674d6800fdf3c312a698a",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_50303/6sms_A-R2-f250-t0.75-noise2.json"
+    },
+    {
+      "case": "6sms_A-R2-f4-t0.5-noise2",
+      "job_id": 50303,
+      "bytes": 958933,
+      "sha256": "4c58c99399f707bab873ecf87a8483fd8f8e54a46aef5cdc632e0a556daf5cee",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_50303/6sms_A-R2-f4-t0.5-noise2.json"
+    },
+    {
+      "case": "6sms_A-R3-f250-t0.25-noise2",
+      "job_id": 50303,
+      "bytes": 966413,
+      "sha256": "8d9a4ac34ba540dc6a8fe3f80f944021a309ff20fc81f4c858cee035baa204ff",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_50303/6sms_A-R3-f250-t0.25-noise2.json"
+    },
+    {
+      "case": "6sms_A-R3-f250-t0.75-noise2",
+      "job_id": 50303,
+      "bytes": 966400,
+      "sha256": "497871d9ab1c001ce629e345e3515f9e362dc84885fa09ecbd63f9d963e61fee",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_50303/6sms_A-R3-f250-t0.75-noise2.json"
+    },
+    {
+      "case": "6sms_A-R3-f4-t0.5-noise2",
+      "job_id": 50303,
+      "bytes": 959151,
+      "sha256": "6e3f26c9c2817699edcd26cd9f67519e953ccc7a77964405ebb7d95c802fc35e",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_50303/6sms_A-R3-f4-t0.5-noise2.json"
+    },
+    {
+      "case": "6lrd_A-R1-f250-t0.25-noise2",
+      "job_id": 50303,
+      "bytes": 943266,
+      "sha256": "b499f547e21e7eb08f176131df2e653a2c3afdb3e8be5485828d8d28a7762dfb",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_50303/6lrd_A-R1-f250-t0.25-noise2.json"
+    },
+    {
+      "case": "6lrd_A-R1-f250-t0.75-noise2",
+      "job_id": 50303,
+      "bytes": 943086,
+      "sha256": "1c13e2e5a565428e65c9e493b9435895128aee3aaec4da2f8ba77bc5b1ecfbc8",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_50303/6lrd_A-R1-f250-t0.75-noise2.json"
+    },
+    {
+      "case": "6lrd_A-R1-f4-t0.5-noise2",
+      "job_id": 50303,
+      "bytes": 935808,
+      "sha256": "16f4a3a5ae46359be3e0371ea96a1ea5528cf46cc28843de0ea093c638593408",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_50303/6lrd_A-R1-f4-t0.5-noise2.json"
+    },
+    {
+      "case": "6lrd_A-R2-f250-t0.25-noise2",
+      "job_id": 50303,
+      "bytes": 942825,
+      "sha256": "130aa434581751a92e24931b141482bde1fe11d348f8325c6c20acd0d20eedb6",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_50303/6lrd_A-R2-f250-t0.25-noise2.json"
+    },
+    {
+      "case": "6lrd_A-R2-f250-t0.75-noise2",
+      "job_id": 50303,
+      "bytes": 942903,
+      "sha256": "5e67d70d407ed13cbe6fde12d55c458f81f00f6904063c5ee2e524b45cb40209",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_50303/6lrd_A-R2-f250-t0.75-noise2.json"
+    },
+    {
+      "case": "6lrd_A-R2-f4-t0.5-noise2",
+      "job_id": 50303,
+      "bytes": 935854,
+      "sha256": "61f2a03a221dfa2dda550f1e93bca34a34d7f9b434ba370c088b02436cf9be98",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_50303/6lrd_A-R2-f4-t0.5-noise2.json"
+    },
+    {
+      "case": "6lrd_A-R3-f250-t0.25-noise2",
+      "job_id": 50303,
+      "bytes": 942846,
+      "sha256": "253476d0de8c7568db5eb2255f56bf0cd6b0ce0a4f9538233822c85621033ac3",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_50303/6lrd_A-R3-f250-t0.25-noise2.json"
+    },
+    {
+      "case": "6lrd_A-R3-f250-t0.75-noise2",
+      "job_id": 50303,
+      "bytes": 942884,
+      "sha256": "52bcbb6fe91ff0b4dec0bb52e8c7bbdcf8c9e850a457c9a5fcdaf8214ab3afa4",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_50303/6lrd_A-R3-f250-t0.75-noise2.json"
+    },
+    {
+      "case": "6lrd_A-R3-f4-t0.5-noise2",
+      "job_id": 50303,
+      "bytes": 935833,
+      "sha256": "5b446ed3a390f439d5b5bd2968850e872ab0533772fdeda989b48f0f3f31a2cd",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_50303/6lrd_A-R3-f4-t0.5-noise2.json"
+    },
+    {
+      "case": "6l3r_E-R1-f250-t0.25-noise2",
+      "job_id": 50303,
+      "bytes": 894092,
+      "sha256": "c4ecaf23ee3966d4346a41247cc66714244d140baea523d9fb68bcf4ebada79b",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_50303/6l3r_E-R1-f250-t0.25-noise2.json"
+    },
+    {
+      "case": "6l3r_E-R1-f250-t0.75-noise2",
+      "job_id": 50303,
+      "bytes": 894067,
+      "sha256": "d253ac5f9a9e8847e39810fc2e34a0afafe288ebeb58f441deab7ab3c228b6da",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_50303/6l3r_E-R1-f250-t0.75-noise2.json"
+    },
+    {
+      "case": "6l3r_E-R1-f4-t0.5-noise2",
+      "job_id": 50303,
+      "bytes": 887308,
+      "sha256": "3ba7ff39a6c14cd760332137b32fb5fcd4cd0171bef38dbab031dc208d85c2b3",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_50303/6l3r_E-R1-f4-t0.5-noise2.json"
+    },
+    {
+      "case": "6l3r_E-R2-f250-t0.25-noise2",
+      "job_id": 50303,
+      "bytes": 894060,
+      "sha256": "5e1a98b0a376ab4e12a2524cf1be34d3b03214a985591c0653776d8094434ca2",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_50303/6l3r_E-R2-f250-t0.25-noise2.json"
+    },
+    {
+      "case": "6l3r_E-R2-f250-t0.75-noise2",
+      "job_id": 50303,
+      "bytes": 894081,
+      "sha256": "71718d1e43bdf808dde1bdd1e2d95a429b08ae7d603c925d53bb1035703761f2",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_50303/6l3r_E-R2-f250-t0.75-noise2.json"
+    },
+    {
+      "case": "6l3r_E-R2-f4-t0.5-noise2",
+      "job_id": 50303,
+      "bytes": 887328,
+      "sha256": "13523314bbb5eae3b2333e01511583b056e218d8290c3d18e190a951c9943d43",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_50303/6l3r_E-R2-f4-t0.5-noise2.json"
+    },
+    {
+      "case": "6l3r_E-R3-f250-t0.25-noise2",
+      "job_id": 50303,
+      "bytes": 894066,
+      "sha256": "1296ed84ec8e2b8f71e66d635801e8f11c17c1df0a0a6a01b3796dda365e6704",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_50303/6l3r_E-R3-f250-t0.25-noise2.json"
+    },
+    {
+      "case": "6l3r_E-R3-f250-t0.75-noise2",
+      "job_id": 50303,
+      "bytes": 894069,
+      "sha256": "0918e5dd2d4ab8b9c6061b7994bcd70a72b87630f3586a8c00137d0200d881f8",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_50303/6l3r_E-R3-f250-t0.75-noise2.json"
+    },
+    {
+      "case": "6l3r_E-R3-f4-t0.5-noise2",
+      "job_id": 50303,
+      "bytes": 887303,
+      "sha256": "c1b4a308b049d673abb02b27d310dfc79121cb983995da449d2014ab0cb43322",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_50303/6l3r_E-R3-f4-t0.5-noise2.json"
+    },
+    {
+      "case": "6sms_A-R1-f250-t0.5-noise0",
+      "job_id": 51194,
+      "bytes": 964806,
+      "sha256": "6cc7753dcddc1a000e7721298c6e4aff267dd050eccd7537552cb10a9313a5c0",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_51194/6sms_A-R1-f250-t0.5-noise0.json"
+    },
+    {
+      "case": "6sms_A-R1-f4-t0.25-noise0",
+      "job_id": 51194,
+      "bytes": 960448,
+      "sha256": "1af90c8a755a3b3f46f3ddb58bb668f0b998e3ae369c312685a45c47b9951254",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_51194/6sms_A-R1-f4-t0.25-noise0.json"
+    },
+    {
+      "case": "6sms_A-R1-f4-t0.75-noise0",
+      "job_id": 51194,
+      "bytes": 960319,
+      "sha256": "0a91ebe3376ce8186cc2a1c8dc927643992ebda56ad58ea8d30a7e2c151dab01",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_51194/6sms_A-R1-f4-t0.75-noise0.json"
+    },
+    {
+      "case": "6sms_A-R2-f250-t0.5-noise0",
+      "job_id": 51194,
+      "bytes": 964801,
+      "sha256": "020480f53523c163da1352d0b2f924c044e6dee0738be190b8cdbe897199050d",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_51194/6sms_A-R2-f250-t0.5-noise0.json"
+    },
+    {
+      "case": "6sms_A-R2-f4-t0.25-noise0",
+      "job_id": 51194,
+      "bytes": 960497,
+      "sha256": "f3526c0db458cde3654621aa22061b20b6db3bc921db37e1736c86dceb8e6432",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_51194/6sms_A-R2-f4-t0.25-noise0.json"
+    },
+    {
+      "case": "6sms_A-R2-f4-t0.75-noise0",
+      "job_id": 51194,
+      "bytes": 960400,
+      "sha256": "221ffc3d298c51c08408f1ba9eb24f09d12ce6642ccc3ef8e1a82f2d7421aecd",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_51194/6sms_A-R2-f4-t0.75-noise0.json"
+    },
+    {
+      "case": "6sms_A-R3-f250-t0.5-noise0",
+      "job_id": 51194,
+      "bytes": 964904,
+      "sha256": "06914db8bbfab34d040ec24cedb421f974241a409cda9d82299b10421733c80f",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_51194/6sms_A-R3-f250-t0.5-noise0.json"
+    },
+    {
+      "case": "6sms_A-R3-f4-t0.25-noise0",
+      "job_id": 51194,
+      "bytes": 960738,
+      "sha256": "64f11ae75d99ef88b87cf708bf7e4efe534b3f15a548bbebeeba5275c6bc2503",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_51194/6sms_A-R3-f4-t0.25-noise0.json"
+    },
+    {
+      "case": "6sms_A-R3-f4-t0.75-noise0",
+      "job_id": 51194,
+      "bytes": 960385,
+      "sha256": "919c1e8204140d782dc665f8986e3d9b76a085599c00b39c5ed04a7368fd4b4a",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_51194/6sms_A-R3-f4-t0.75-noise0.json"
+    },
+    {
+      "case": "6lrd_A-R1-f250-t0.5-noise0",
+      "job_id": 51194,
+      "bytes": 941828,
+      "sha256": "5a25ad9986db5db4c7c2acc7fa4ffb8437a2e03f4c99dd7caa5c80f828e428c2",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_51194/6lrd_A-R1-f250-t0.5-noise0.json"
+    },
+    {
+      "case": "6lrd_A-R1-f4-t0.25-noise0",
+      "job_id": 51194,
+      "bytes": 937269,
+      "sha256": "a6743fd81bc87920a13dbb7dba5d0bfd5a8ce9afa0f71cc1d8db5fd395650659",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_51194/6lrd_A-R1-f4-t0.25-noise0.json"
+    },
+    {
+      "case": "6lrd_A-R1-f4-t0.75-noise0",
+      "job_id": 51194,
+      "bytes": 937220,
+      "sha256": "7f6223c58e341cb83ff722b6a2b183faf029f60bed06048547aeb421530e1dc0",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_51194/6lrd_A-R1-f4-t0.75-noise0.json"
+    },
+    {
+      "case": "6lrd_A-R2-f250-t0.5-noise0",
+      "job_id": 51194,
+      "bytes": 941447,
+      "sha256": "f2b65838075aec0499b8dc0b0dc9a3a0cd59d7ada5dcd58881b23aba76c39811",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_51194/6lrd_A-R2-f250-t0.5-noise0.json"
+    },
+    {
+      "case": "6lrd_A-R2-f4-t0.25-noise0",
+      "job_id": 51194,
+      "bytes": 937319,
+      "sha256": "fbd9758883b128e7f8f9b7dcff76c60d4132a8f757b77a3fc8ba708fcece4842",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_51194/6lrd_A-R2-f4-t0.25-noise0.json"
+    },
+    {
+      "case": "6lrd_A-R2-f4-t0.75-noise0",
+      "job_id": 51194,
+      "bytes": 937232,
+      "sha256": "912d2f94e95dc1784f4a89920d46fd36174f70f5e962b8871fdd55f748efed21",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_51194/6lrd_A-R2-f4-t0.75-noise0.json"
+    },
+    {
+      "case": "6lrd_A-R3-f250-t0.5-noise0",
+      "job_id": 51194,
+      "bytes": 941416,
+      "sha256": "51c7a44340583971377a0ab9cb85ea86f91d8efbc0337a187a39ab5763979c9d",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_51194/6lrd_A-R3-f250-t0.5-noise0.json"
+    },
+    {
+      "case": "6lrd_A-R3-f4-t0.25-noise0",
+      "job_id": 51194,
+      "bytes": 937335,
+      "sha256": "f49abee17576c50130520db08bce819f5a5a0a0b316b33f3ad96eed5cc19a074",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_51194/6lrd_A-R3-f4-t0.25-noise0.json"
+    },
+    {
+      "case": "6lrd_A-R3-f4-t0.75-noise0",
+      "job_id": 51194,
+      "bytes": 937176,
+      "sha256": "949045de652a036ad19e6d23640b982ce26fc2b851e168585f252930cf428ea2",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_51194/6lrd_A-R3-f4-t0.75-noise0.json"
+    },
+    {
+      "case": "6l3r_E-R1-f250-t0.5-noise0",
+      "job_id": 51194,
+      "bytes": 892639,
+      "sha256": "9f6fe2a036c0bf38f98f88fa18cf60da91948486964f724a2c7f64d8dd8bb307",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_51194/6l3r_E-R1-f250-t0.5-noise0.json"
+    },
+    {
+      "case": "6l3r_E-R1-f4-t0.25-noise0",
+      "job_id": 51194,
+      "bytes": 888738,
+      "sha256": "c8ea83e3e64f18112b19d379048dc2b803170e61956147340a42a1ae8c9f9939",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_51194/6l3r_E-R1-f4-t0.25-noise0.json"
+    },
+    {
+      "case": "6l3r_E-R1-f4-t0.75-noise0",
+      "job_id": 51194,
+      "bytes": 888662,
+      "sha256": "e0ec5a9f4cc88e0ecfce77ef9e1a56a6cb7c8b12c3f5d771a98244f8445aea00",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_51194/6l3r_E-R1-f4-t0.75-noise0.json"
+    },
+    {
+      "case": "6l3r_E-R2-f250-t0.5-noise0",
+      "job_id": 51194,
+      "bytes": 892586,
+      "sha256": "ef4f595d107bbcf6a8223aa8410e8b2c97128b893cecaddafb11baf80f58cb17",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_51194/6l3r_E-R2-f250-t0.5-noise0.json"
+    },
+    {
+      "case": "6l3r_E-R2-f4-t0.25-noise0",
+      "job_id": 51194,
+      "bytes": 888735,
+      "sha256": "ebe41f11f6ce6d082b405964b828d1d49e31e05eb07c010a7998531fb247b891",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_51194/6l3r_E-R2-f4-t0.25-noise0.json"
+    },
+    {
+      "case": "6l3r_E-R2-f4-t0.75-noise0",
+      "job_id": 51194,
+      "bytes": 888674,
+      "sha256": "2771eedb734cf7e9e5c327e7754249e0f6cfb38e9ab9b1500b35052b0e7a8805",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_51194/6l3r_E-R2-f4-t0.75-noise0.json"
+    },
+    {
+      "case": "6l3r_E-R3-f250-t0.5-noise0",
+      "job_id": 51194,
+      "bytes": 892624,
+      "sha256": "c17713dc2eaea6c5328d26e5a2b29f32b0d2bc28c85a0a67ff5e5ae5e6f8a708",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_51194/6l3r_E-R3-f250-t0.5-noise0.json"
+    },
+    {
+      "case": "6l3r_E-R3-f4-t0.25-noise0",
+      "job_id": 51194,
+      "bytes": 888751,
+      "sha256": "87c039db624e883150b8c613776641ce80d14d9096f8b16634972a8a115e62d3",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_51194/6l3r_E-R3-f4-t0.25-noise0.json"
+    },
+    {
+      "case": "6l3r_E-R3-f4-t0.75-noise0",
+      "job_id": 51194,
+      "bytes": 888680,
+      "sha256": "6045454ec8ed41ab26ef2efe6d7561a970c5915d0ca2df3ff5716a57f729073c",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_51194/6l3r_E-R3-f4-t0.75-noise0.json"
+    },
+    {
+      "case": "6sms_A-R1-f250-t0.5-noise1",
+      "job_id": 51226,
+      "bytes": 964826,
+      "sha256": "bd330a7b54d8a113742adc2059aef2512d58b8c319575170771365c4fba88a68",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_51226/6sms_A-R1-f250-t0.5-noise1.json"
+    },
+    {
+      "case": "6sms_A-R1-f4-t0.25-noise1",
+      "job_id": 51226,
+      "bytes": 960386,
+      "sha256": "4af747bd56880acd48bf157bbd0c218cf1a743f4c5c2489180d4f1063a3d6ddb",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_51226/6sms_A-R1-f4-t0.25-noise1.json"
+    },
+    {
+      "case": "6sms_A-R1-f4-t0.75-noise1",
+      "job_id": 51226,
+      "bytes": 960390,
+      "sha256": "aae49af54b55c5a0638ed43471fef6412d518e9cc86d015589a49743e314f2be",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_51226/6sms_A-R1-f4-t0.75-noise1.json"
+    },
+    {
+      "case": "6sms_A-R2-f250-t0.5-noise1",
+      "job_id": 51226,
+      "bytes": 964788,
+      "sha256": "e2dcc2e711025091cd6368e9cf40d055c57964c60bd0b9ff8caf58074e6e180c",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_51226/6sms_A-R2-f250-t0.5-noise1.json"
+    },
+    {
+      "case": "6sms_A-R2-f4-t0.25-noise1",
+      "job_id": 51226,
+      "bytes": 960491,
+      "sha256": "8350bf713484944d839843e9d97d8bc842ed87cd8380d443d41aee438dee9da4",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_51226/6sms_A-R2-f4-t0.25-noise1.json"
+    },
+    {
+      "case": "6sms_A-R2-f4-t0.75-noise1",
+      "job_id": 51226,
+      "bytes": 960388,
+      "sha256": "27e4659e6fcde58851bc75974f12bd22a9dc3eadf5bbddaf14ca6cb45293e329",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_51226/6sms_A-R2-f4-t0.75-noise1.json"
+    },
+    {
+      "case": "6sms_A-R3-f250-t0.5-noise1",
+      "job_id": 51226,
+      "bytes": 964946,
+      "sha256": "a3115f08be08069eef45a294f5dd6c6eae5f50e3da1ebaad9277e27f95f8c731",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_51226/6sms_A-R3-f250-t0.5-noise1.json"
+    },
+    {
+      "case": "6sms_A-R3-f4-t0.25-noise1",
+      "job_id": 51226,
+      "bytes": 960708,
+      "sha256": "ee3a35c083d6ba22167db389d4fd4b9078742514efebf988545283ad99f8996f",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_51226/6sms_A-R3-f4-t0.25-noise1.json"
+    },
+    {
+      "case": "6sms_A-R3-f4-t0.75-noise1",
+      "job_id": 51226,
+      "bytes": 960398,
+      "sha256": "f6276fe6de07bdfe18fd386e03cb04eefe28276d594cdf015bb44b3574d49e54",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_51226/6sms_A-R3-f4-t0.75-noise1.json"
+    },
+    {
+      "case": "6lrd_A-R1-f250-t0.5-noise1",
+      "job_id": 51226,
+      "bytes": 941851,
+      "sha256": "bd71c99606a19ae9d1fbf2d725aae2a8f286eef8f3ffed7ea9f3671c0ef0b5ec",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_51226/6lrd_A-R1-f250-t0.5-noise1.json"
+    },
+    {
+      "case": "6lrd_A-R1-f4-t0.25-noise1",
+      "job_id": 51226,
+      "bytes": 937273,
+      "sha256": "58d676f6dcb6d772fd2965d991db9f3df23f7416f53ecb50a3b81cd9a048ee5a",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_51226/6lrd_A-R1-f4-t0.25-noise1.json"
+    },
+    {
+      "case": "6lrd_A-R1-f4-t0.75-noise1",
+      "job_id": 51226,
+      "bytes": 937194,
+      "sha256": "3aacef7287bfe1e1912919fa480798abfb3697925e015f6f245b7966ada33c23",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_51226/6lrd_A-R1-f4-t0.75-noise1.json"
+    },
+    {
+      "case": "6lrd_A-R2-f250-t0.5-noise1",
+      "job_id": 51226,
+      "bytes": 941401,
+      "sha256": "13a236fbbc498e7b2d9aac20cc6e32a940ed5d04963ad218093df4e9da09df44",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_51226/6lrd_A-R2-f250-t0.5-noise1.json"
+    },
+    {
+      "case": "6lrd_A-R2-f4-t0.25-noise1",
+      "job_id": 51226,
+      "bytes": 937315,
+      "sha256": "6bf80da761818c7bd3214ce741bc585a3a8d71fef927988d3ab0e16a1ddc1ea9",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_51226/6lrd_A-R2-f4-t0.25-noise1.json"
+    },
+    {
+      "case": "6lrd_A-R2-f4-t0.75-noise1",
+      "job_id": 51226,
+      "bytes": 937172,
+      "sha256": "6b781f81704bf632966d9f00b5f70808c5121f853d73a24f553b5c1f4efc26ad",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_51226/6lrd_A-R2-f4-t0.75-noise1.json"
+    },
+    {
+      "case": "6lrd_A-R3-f250-t0.5-noise1",
+      "job_id": 51226,
+      "bytes": 941441,
+      "sha256": "d38391efe7d1beb61a6031913d7f2c9cebb1bf27e58992af8dbe8d6ced9e86ec",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_51226/6lrd_A-R3-f250-t0.5-noise1.json"
+    },
+    {
+      "case": "6lrd_A-R3-f4-t0.25-noise1",
+      "job_id": 51226,
+      "bytes": 937350,
+      "sha256": "62992fae38de2fc6b9f24a8766acc2ca7bf77a19d085b1b34c7929df2fd1da97",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_51226/6lrd_A-R3-f4-t0.25-noise1.json"
+    },
+    {
+      "case": "6lrd_A-R3-f4-t0.75-noise1",
+      "job_id": 51226,
+      "bytes": 937201,
+      "sha256": "d78f0530365ead9eef97d9130578aa5d7e8acfdad7f8ac4d1b74d00b6d650438",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_51226/6lrd_A-R3-f4-t0.75-noise1.json"
+    },
+    {
+      "case": "6l3r_E-R1-f250-t0.5-noise1",
+      "job_id": 51226,
+      "bytes": 892628,
+      "sha256": "f89401801ddafa56db926d5fb1f9eebe8f0c68664424e38801c0b66d01e23907",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_51226/6l3r_E-R1-f250-t0.5-noise1.json"
+    },
+    {
+      "case": "6l3r_E-R1-f4-t0.25-noise1",
+      "job_id": 51226,
+      "bytes": 888743,
+      "sha256": "4f95b77ccdf336c45c597cb8e549aef2532bc53dcbe51532b999e1731c8b6c6b",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_51226/6l3r_E-R1-f4-t0.25-noise1.json"
+    },
+    {
+      "case": "6l3r_E-R1-f4-t0.75-noise1",
+      "job_id": 51226,
+      "bytes": 888705,
+      "sha256": "503922452ca8926ea475c37d0880603cea27254f668e6804027314609e567ee2",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_51226/6l3r_E-R1-f4-t0.75-noise1.json"
+    },
+    {
+      "case": "6l3r_E-R2-f250-t0.5-noise1",
+      "job_id": 51226,
+      "bytes": 892616,
+      "sha256": "d44a0980877e0c3b1d540fb9f8351eba73193aa361d5f7003e3a16cf76902d74",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_51226/6l3r_E-R2-f250-t0.5-noise1.json"
+    },
+    {
+      "case": "6l3r_E-R2-f4-t0.25-noise1",
+      "job_id": 51226,
+      "bytes": 888752,
+      "sha256": "cd1a6c2cf3f5e1e84f31ab070985ce134fa223c2abad6ad7ddd8867f0b1bf040",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_51226/6l3r_E-R2-f4-t0.25-noise1.json"
+    },
+    {
+      "case": "6l3r_E-R2-f4-t0.75-noise1",
+      "job_id": 51226,
+      "bytes": 888702,
+      "sha256": "7a02c13767234dfa91bddd4fa6cb7c7ba8b8fb98611e4c73d06887278c67dd03",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_51226/6l3r_E-R2-f4-t0.75-noise1.json"
+    },
+    {
+      "case": "6l3r_E-R3-f250-t0.5-noise1",
+      "job_id": 51226,
+      "bytes": 892620,
+      "sha256": "7a271d7b4bb609a91667988939e3097beb51157191cd122b27ecedef3df02195",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_51226/6l3r_E-R3-f250-t0.5-noise1.json"
+    },
+    {
+      "case": "6l3r_E-R3-f4-t0.25-noise1",
+      "job_id": 51226,
+      "bytes": 888718,
+      "sha256": "bc46f001115fb9019618530978f0d5061caa3b355aa9c2141c4744fc4c3a43ca",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_51226/6l3r_E-R3-f4-t0.25-noise1.json"
+    },
+    {
+      "case": "6l3r_E-R3-f4-t0.75-noise1",
+      "job_id": 51226,
+      "bytes": 888704,
+      "sha256": "81d04da3b5a4bc3015da286d90cca76c6ffb5ad65859f8c3aa7b0f4bf8b15eaa",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_51226/6l3r_E-R3-f4-t0.75-noise1.json"
+    },
+    {
+      "case": "6sms_A-R1-f250-t0.5-noise2",
+      "job_id": 51229,
+      "bytes": 964822,
+      "sha256": "81c23b322156a2aea412679c43a1a8ae7a6b1a5446205d8475d75f24fe4e16a6",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_51229/6sms_A-R1-f250-t0.5-noise2.json"
+    },
+    {
+      "case": "6sms_A-R1-f4-t0.25-noise2",
+      "job_id": 51229,
+      "bytes": 960462,
+      "sha256": "7a16133fe9ffa72b7a1ac407198e134952af4ee94ae08c2df2efe6d6888f9195",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_51229/6sms_A-R1-f4-t0.25-noise2.json"
+    },
+    {
+      "case": "6sms_A-R1-f4-t0.75-noise2",
+      "job_id": 51229,
+      "bytes": 960366,
+      "sha256": "5a7c8f5717ba9ffa6ee382505238f3b05ede9e94f4906b984ce2be8c2322e0aa",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_51229/6sms_A-R1-f4-t0.75-noise2.json"
+    },
+    {
+      "case": "6sms_A-R2-f250-t0.5-noise2",
+      "job_id": 51229,
+      "bytes": 964759,
+      "sha256": "8b6eacfd5abe13b1df2d22b383d3aee5a59b5b4304672e4a6e3fd31915c8a8df",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_51229/6sms_A-R2-f250-t0.5-noise2.json"
+    },
+    {
+      "case": "6sms_A-R2-f4-t0.25-noise2",
+      "job_id": 51229,
+      "bytes": 960507,
+      "sha256": "8736ce3137dc112b4e27aeaab991b7fdf1dbe1cd60479a6f7f893a922be89ebc",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_51229/6sms_A-R2-f4-t0.25-noise2.json"
+    },
+    {
+      "case": "6sms_A-R2-f4-t0.75-noise2",
+      "job_id": 51229,
+      "bytes": 960382,
+      "sha256": "445e4870e2b873e80639112dd77e3476c93c5279699911341ecc0f3b7457e3ab",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_51229/6sms_A-R2-f4-t0.75-noise2.json"
+    },
+    {
+      "case": "6sms_A-R3-f250-t0.5-noise2",
+      "job_id": 51229,
+      "bytes": 964947,
+      "sha256": "7425f4d6cc3a62e3bf8f0e162ac653f9ab38b0d108f329fed21e3b28458f48c3",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_51229/6sms_A-R3-f250-t0.5-noise2.json"
+    },
+    {
+      "case": "6sms_A-R3-f4-t0.25-noise2",
+      "job_id": 51229,
+      "bytes": 960727,
+      "sha256": "d6bedd3d263cb48d99cc61e98c427fa9ec6be474da6382ffcb1e9dae338b3c4e",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_51229/6sms_A-R3-f4-t0.25-noise2.json"
+    },
+    {
+      "case": "6sms_A-R3-f4-t0.75-noise2",
+      "job_id": 51229,
+      "bytes": 960424,
+      "sha256": "3e681117ce3a782809b3a8cb1eca59d5016e66af41e4958476a76c942e234337",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_51229/6sms_A-R3-f4-t0.75-noise2.json"
+    },
+    {
+      "case": "6lrd_A-R1-f250-t0.5-noise2",
+      "job_id": 51229,
+      "bytes": 941878,
+      "sha256": "4930c97281dc506d98dd4b23b0581621b462dcdadd111e7cc92b3c9eb835df1d",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_51229/6lrd_A-R1-f250-t0.5-noise2.json"
+    },
+    {
+      "case": "6lrd_A-R1-f4-t0.25-noise2",
+      "job_id": 51229,
+      "bytes": 937282,
+      "sha256": "0740f3b1946b7499841a9d35faeb107fc276d965564b0a82e7611587116e0425",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_51229/6lrd_A-R1-f4-t0.25-noise2.json"
+    },
+    {
+      "case": "6lrd_A-R1-f4-t0.75-noise2",
+      "job_id": 51229,
+      "bytes": 937172,
+      "sha256": "d2bcb2b452c69b70fb88db300ba3f2e7a8cf6a1575bebe758d570464066d1065",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_51229/6lrd_A-R1-f4-t0.75-noise2.json"
+    },
+    {
+      "case": "6lrd_A-R2-f250-t0.5-noise2",
+      "job_id": 51229,
+      "bytes": 941453,
+      "sha256": "d17c2172d5bbc9670bb37a6acdb978b135aab455d8e33f45a8d8ee9070a338b2",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_51229/6lrd_A-R2-f250-t0.5-noise2.json"
+    },
+    {
+      "case": "6lrd_A-R2-f4-t0.25-noise2",
+      "job_id": 51229,
+      "bytes": 937255,
+      "sha256": "4c3e1ab0497db88e468d72775be3a27327ccbeb37401bbd760e684a60c4bf8e5",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_51229/6lrd_A-R2-f4-t0.25-noise2.json"
+    },
+    {
+      "case": "6lrd_A-R2-f4-t0.75-noise2",
+      "job_id": 51229,
+      "bytes": 937171,
+      "sha256": "cac6a13d6593aee04b5fe2765a10f873ee5eb0221bfc33d1a87de92f98c0637e",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_51229/6lrd_A-R2-f4-t0.75-noise2.json"
+    },
+    {
+      "case": "6lrd_A-R3-f250-t0.5-noise2",
+      "job_id": 51229,
+      "bytes": 941412,
+      "sha256": "16731bac5355ef10e95ceb9b6c3f89e1c6df7e12d96e009d8a7462100ea52788",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_51229/6lrd_A-R3-f250-t0.5-noise2.json"
+    },
+    {
+      "case": "6lrd_A-R3-f4-t0.25-noise2",
+      "job_id": 51229,
+      "bytes": 937287,
+      "sha256": "56820abf967fd6da7839234b2ce3fd30613a78ee86137cf660d337883e491be4",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_51229/6lrd_A-R3-f4-t0.25-noise2.json"
+    },
+    {
+      "case": "6lrd_A-R3-f4-t0.75-noise2",
+      "job_id": 51229,
+      "bytes": 937197,
+      "sha256": "53f414be19ff6179679e804079387882d02c22bc2ffa5eded917d4c6302f9c77",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_51229/6lrd_A-R3-f4-t0.75-noise2.json"
+    },
+    {
+      "case": "6l3r_E-R1-f250-t0.5-noise2",
+      "job_id": 51229,
+      "bytes": 892605,
+      "sha256": "3728a60836e3b9b2fce1a02c014151405f91f1652599b4923c89871f9bd3df5f",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_51229/6l3r_E-R1-f250-t0.5-noise2.json"
+    },
+    {
+      "case": "6l3r_E-R1-f4-t0.25-noise2",
+      "job_id": 51229,
+      "bytes": 888759,
+      "sha256": "268a1574136b93d6dd6f9ee58bce63c3ae8a7cf2a51d495c28cc52a8d4be2be6",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_51229/6l3r_E-R1-f4-t0.25-noise2.json"
+    },
+    {
+      "case": "6l3r_E-R1-f4-t0.75-noise2",
+      "job_id": 51229,
+      "bytes": 888694,
+      "sha256": "d3884d0efe4f5d5016e2fb8ef591fb1170ebb260ecf61badefa1929fb0422b35",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_51229/6l3r_E-R1-f4-t0.75-noise2.json"
+    },
+    {
+      "case": "6l3r_E-R2-f250-t0.5-noise2",
+      "job_id": 51229,
+      "bytes": 892594,
+      "sha256": "d18df577b38a236762e1954b0b9e987800754982393b44834a63b98100465c33",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_51229/6l3r_E-R2-f250-t0.5-noise2.json"
+    },
+    {
+      "case": "6l3r_E-R2-f4-t0.25-noise2",
+      "job_id": 51229,
+      "bytes": 888812,
+      "sha256": "1c3bcc90b91709be81492a7634c79707cebad1c206e24ab346a72a0c7c36f35f",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_51229/6l3r_E-R2-f4-t0.25-noise2.json"
+    },
+    {
+      "case": "6l3r_E-R2-f4-t0.75-noise2",
+      "job_id": 51229,
+      "bytes": 888704,
+      "sha256": "b4cff9a3afcd2f49c1b854be01638e85042341d16edb35da2c9864dba722aa7f",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_51229/6l3r_E-R2-f4-t0.75-noise2.json"
+    },
+    {
+      "case": "6l3r_E-R3-f250-t0.5-noise2",
+      "job_id": 51229,
+      "bytes": 892594,
+      "sha256": "a77753dd4a50ce0a4014027970a5e4f3bb3294ccb235c35494a8208e6eb9308b",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_51229/6l3r_E-R3-f250-t0.5-noise2.json"
+    },
+    {
+      "case": "6l3r_E-R3-f4-t0.25-noise2",
+      "job_id": 51229,
+      "bytes": 888736,
+      "sha256": "ea0a5fcb23a38df5f53c5cdc0d1ac7b8801cba30eabf27230843f97215925303",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_51229/6l3r_E-R3-f4-t0.25-noise2.json"
+    },
+    {
+      "case": "6l3r_E-R3-f4-t0.75-noise2",
+      "job_id": 51229,
+      "bytes": 888725,
+      "sha256": "f811f3fad995c6f5512fba3fa4ed72f8884499a86ea4b31dd4ac0675bcb1cda1",
+      "remote_path": "/share/home/r15543056/MDgen/hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/results/halo_error_51229/6l3r_E-R3-f4-t0.75-noise2.json"
+    }
+  ]
+}
