@@ -1,0 +1,66 @@
+FFFFF                                                                    [100%]
+=================================== FAILURES ===================================
+_______________ test_paired_nonfinite_fails_even_when_truncated ________________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7818d6f508d0>
+
+    def test_paired_nonfinite_fails_even_when_truncated(monkeypatch):
+>       from mdgen.train_step_control import compare_paired_runs, PairedRun
+E       ImportError: cannot import name 'PairedRun' from 'mdgen.train_step_control' (/mnt/c/Users/toulu/Desktop/Remote_CMI/MDgen2026/mdgen_neighbor-t5/mdgen/train_step_control.py)
+
+tests/test_train_step_probe.py:406: ImportError
+________________ test_shared_run_finiteness[loss_finite-False] _________________
+
+field = 'loss_finite', value = False
+
+    @pytest.mark.parametrize('field,value', [
+        ('loss_finite', False), ('gradient_nonfinite', 1),
+        ('parameters_nonfinite_after_step', 1), ('nonfinite_counts', {'model_output': 1})])
+    def test_shared_run_finiteness(field, value):
+>       from mdgen.train_step_control import run_is_finite
+E       ImportError: cannot import name 'run_is_finite' from 'mdgen.train_step_control' (/mnt/c/Users/toulu/Desktop/Remote_CMI/MDgen2026/mdgen_neighbor-t5/mdgen/train_step_control.py)
+
+tests/test_train_step_matrix.py:283: ImportError
+_______________ test_shared_run_finiteness[gradient_nonfinite-1] _______________
+
+field = 'gradient_nonfinite', value = 1
+
+    @pytest.mark.parametrize('field,value', [
+        ('loss_finite', False), ('gradient_nonfinite', 1),
+        ('parameters_nonfinite_after_step', 1), ('nonfinite_counts', {'model_output': 1})])
+    def test_shared_run_finiteness(field, value):
+>       from mdgen.train_step_control import run_is_finite
+E       ImportError: cannot import name 'run_is_finite' from 'mdgen.train_step_control' (/mnt/c/Users/toulu/Desktop/Remote_CMI/MDgen2026/mdgen_neighbor-t5/mdgen/train_step_control.py)
+
+tests/test_train_step_matrix.py:283: ImportError
+________ test_shared_run_finiteness[parameters_nonfinite_after_step-1] _________
+
+field = 'parameters_nonfinite_after_step', value = 1
+
+    @pytest.mark.parametrize('field,value', [
+        ('loss_finite', False), ('gradient_nonfinite', 1),
+        ('parameters_nonfinite_after_step', 1), ('nonfinite_counts', {'model_output': 1})])
+    def test_shared_run_finiteness(field, value):
+>       from mdgen.train_step_control import run_is_finite
+E       ImportError: cannot import name 'run_is_finite' from 'mdgen.train_step_control' (/mnt/c/Users/toulu/Desktop/Remote_CMI/MDgen2026/mdgen_neighbor-t5/mdgen/train_step_control.py)
+
+tests/test_train_step_matrix.py:283: ImportError
+_____________ test_shared_run_finiteness[nonfinite_counts-value3] ______________
+
+field = 'nonfinite_counts', value = {'model_output': 1}
+
+    @pytest.mark.parametrize('field,value', [
+        ('loss_finite', False), ('gradient_nonfinite', 1),
+        ('parameters_nonfinite_after_step', 1), ('nonfinite_counts', {'model_output': 1})])
+    def test_shared_run_finiteness(field, value):
+>       from mdgen.train_step_control import run_is_finite
+E       ImportError: cannot import name 'run_is_finite' from 'mdgen.train_step_control' (/mnt/c/Users/toulu/Desktop/Remote_CMI/MDgen2026/mdgen_neighbor-t5/mdgen/train_step_control.py)
+
+tests/test_train_step_matrix.py:283: ImportError
+=========================== short test summary info ============================
+FAILED tests/test_train_step_probe.py::test_paired_nonfinite_fails_even_when_truncated
+FAILED tests/test_train_step_matrix.py::test_shared_run_finiteness[loss_finite-False]
+FAILED tests/test_train_step_matrix.py::test_shared_run_finiteness[gradient_nonfinite-1]
+FAILED tests/test_train_step_matrix.py::test_shared_run_finiteness[parameters_nonfinite_after_step-1]
+FAILED tests/test_train_step_matrix.py::test_shared_run_finiteness[nonfinite_counts-value3]
+5 failed, 60 deselected in 2.81s

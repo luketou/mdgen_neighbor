@@ -1,0 +1,313 @@
+.....................FFFFFFF                                             [100%]
+=================================== FAILURES ===================================
+_______________ test_timeout_preserves_exit_and_last_stage[side] _______________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7a5007382ad0>
+tmp_path = PosixPath('/tmp/pytest-of-luketou/pytest-65/test_timeout_preserves_exit_an0')
+progress = 'side'
+
+    @pytest.mark.parametrize('progress', ['side', 'failure', 'absent', 'malformed'])
+    def test_timeout_preserves_exit_and_last_stage(monkeypatch, tmp_path, progress):
+        from pathlib import Path
+        import mdgen.train_step_matrix as matrix
+        manifest = make_manifest()
+        checkpoint = tmp_path / 'checkpoint'
+        checkpoint.write_bytes(b'checkpoint')
+        real_digest = matrix.hashlib.file_digest
+        class Approved:
+            def hexdigest(self):
+                return json.loads((matrix.CONTRACT_DIR / 'frozen-contract-v1.1.json').read_text())['fixed_settings']['checkpoint_sha256']
+        monkeypatch.setattr(matrix.hashlib, 'file_digest', lambda *args: Approved())
+        monkeypatch.setattr(matrix, 'case_command', lambda case, root, ckpt, output, raw: [str(output)])
+        def timeout(command, **kwargs):
+            output = Path(command[0])
+            if progress == 'side':
+                output.with_suffix('').mkdir()
+                (output.with_suffix('') / '0-full.json').write_text('{}')
+            elif progress == 'failure':
+                (output.parent / 'failure.json').write_text(json.dumps({
+                    'failure_category': 'program_error', 'stage': 'backward', 'side': 'candidate', 'iteration': 0}))
+            elif progress == 'malformed':
+                (output.parent / 'failure.json').write_text('{')
+            raise subprocess.TimeoutExpired(command, 1)
+        monkeypatch.setattr(subprocess, 'run', timeout)
+        path = run_shard(manifest, manifest['shards'][0]['shard_id'], tmp_path, tmp_path, checkpoint)
+        record = json.loads(path.read_text())['cases'][0]
+>       evidence = json.loads((Path(record['artifact_dir']) / 'failure.json').read_text())
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_train_step_matrix.py:250:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+/home/luketou/.local/share/uv/python/cpython-3.11.17-linux-x86_64-gnu/lib/python3.11/pathlib.py:1058: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = PosixPath('/tmp/pytest-of-luketou/pytest-65/test_timeout_preserves_exit_an0/s-4aac8d8764b31ee7df2f/08e1368102d9455fb5972e78d65e3338/c-0e515692778586dca5dc/failure.json')
+mode = 'r', buffering = -1, encoding = 'locale', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/tmp/pytest-of-luketou/pytest-65/test_timeout_preserves_exit_an0/s-4aac8d8764b31ee7df2f/08e1368102d9455fb5972e78d65e3338/c-0e515692778586dca5dc/failure.json'
+
+/home/luketou/.local/share/uv/python/cpython-3.11.17-linux-x86_64-gnu/lib/python3.11/pathlib.py:1044: FileNotFoundError
+_____________ test_timeout_preserves_exit_and_last_stage[failure] ______________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7a5007fb3e90>
+tmp_path = PosixPath('/tmp/pytest-of-luketou/pytest-65/test_timeout_preserves_exit_an1')
+progress = 'failure'
+
+    @pytest.mark.parametrize('progress', ['side', 'failure', 'absent', 'malformed'])
+    def test_timeout_preserves_exit_and_last_stage(monkeypatch, tmp_path, progress):
+        from pathlib import Path
+        import mdgen.train_step_matrix as matrix
+        manifest = make_manifest()
+        checkpoint = tmp_path / 'checkpoint'
+        checkpoint.write_bytes(b'checkpoint')
+        real_digest = matrix.hashlib.file_digest
+        class Approved:
+            def hexdigest(self):
+                return json.loads((matrix.CONTRACT_DIR / 'frozen-contract-v1.1.json').read_text())['fixed_settings']['checkpoint_sha256']
+        monkeypatch.setattr(matrix.hashlib, 'file_digest', lambda *args: Approved())
+        monkeypatch.setattr(matrix, 'case_command', lambda case, root, ckpt, output, raw: [str(output)])
+        def timeout(command, **kwargs):
+            output = Path(command[0])
+            if progress == 'side':
+                output.with_suffix('').mkdir()
+                (output.with_suffix('') / '0-full.json').write_text('{}')
+            elif progress == 'failure':
+                (output.parent / 'failure.json').write_text(json.dumps({
+                    'failure_category': 'program_error', 'stage': 'backward', 'side': 'candidate', 'iteration': 0}))
+            elif progress == 'malformed':
+                (output.parent / 'failure.json').write_text('{')
+            raise subprocess.TimeoutExpired(command, 1)
+        monkeypatch.setattr(subprocess, 'run', timeout)
+        path = run_shard(manifest, manifest['shards'][0]['shard_id'], tmp_path, tmp_path, checkpoint)
+        record = json.loads(path.read_text())['cases'][0]
+        evidence = json.loads((Path(record['artifact_dir']) / 'failure.json').read_text())
+>       assert record['failure_category'] == evidence['failure_category'] == 'timeout'
+E       AssertionError: assert 'program_error' == 'timeout'
+E
+E         - timeout
+E         + program_error
+
+tests/test_train_step_matrix.py:251: AssertionError
+______________ test_timeout_preserves_exit_and_last_stage[absent] ______________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7a5006ef5850>
+tmp_path = PosixPath('/tmp/pytest-of-luketou/pytest-65/test_timeout_preserves_exit_an2')
+progress = 'absent'
+
+    @pytest.mark.parametrize('progress', ['side', 'failure', 'absent', 'malformed'])
+    def test_timeout_preserves_exit_and_last_stage(monkeypatch, tmp_path, progress):
+        from pathlib import Path
+        import mdgen.train_step_matrix as matrix
+        manifest = make_manifest()
+        checkpoint = tmp_path / 'checkpoint'
+        checkpoint.write_bytes(b'checkpoint')
+        real_digest = matrix.hashlib.file_digest
+        class Approved:
+            def hexdigest(self):
+                return json.loads((matrix.CONTRACT_DIR / 'frozen-contract-v1.1.json').read_text())['fixed_settings']['checkpoint_sha256']
+        monkeypatch.setattr(matrix.hashlib, 'file_digest', lambda *args: Approved())
+        monkeypatch.setattr(matrix, 'case_command', lambda case, root, ckpt, output, raw: [str(output)])
+        def timeout(command, **kwargs):
+            output = Path(command[0])
+            if progress == 'side':
+                output.with_suffix('').mkdir()
+                (output.with_suffix('') / '0-full.json').write_text('{}')
+            elif progress == 'failure':
+                (output.parent / 'failure.json').write_text(json.dumps({
+                    'failure_category': 'program_error', 'stage': 'backward', 'side': 'candidate', 'iteration': 0}))
+            elif progress == 'malformed':
+                (output.parent / 'failure.json').write_text('{')
+            raise subprocess.TimeoutExpired(command, 1)
+        monkeypatch.setattr(subprocess, 'run', timeout)
+        path = run_shard(manifest, manifest['shards'][0]['shard_id'], tmp_path, tmp_path, checkpoint)
+        record = json.loads(path.read_text())['cases'][0]
+>       evidence = json.loads((Path(record['artifact_dir']) / 'failure.json').read_text())
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_train_step_matrix.py:250:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+/home/luketou/.local/share/uv/python/cpython-3.11.17-linux-x86_64-gnu/lib/python3.11/pathlib.py:1058: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = PosixPath('/tmp/pytest-of-luketou/pytest-65/test_timeout_preserves_exit_an2/s-4aac8d8764b31ee7df2f/33fb0cd69aac4994a63fca34f893df18/c-0e515692778586dca5dc/failure.json')
+mode = 'r', buffering = -1, encoding = 'locale', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/tmp/pytest-of-luketou/pytest-65/test_timeout_preserves_exit_an2/s-4aac8d8764b31ee7df2f/33fb0cd69aac4994a63fca34f893df18/c-0e515692778586dca5dc/failure.json'
+
+/home/luketou/.local/share/uv/python/cpython-3.11.17-linux-x86_64-gnu/lib/python3.11/pathlib.py:1044: FileNotFoundError
+____________ test_timeout_preserves_exit_and_last_stage[malformed] _____________
+
+command = ['/tmp/pytest-of-luketou/pytest-65/test_timeout_preserves_exit_an3/s-4aac8d8764b31ee7df2f/b26d874dc3994633a5af10850c323c9d/c-0e515692778586dca5dc/probe.json']
+kwargs = {'env': {'CODEX_APPLY_PATCH_PRESERVE_LINE_ENDINGS': '1', 'CODEX_CI': '1', 'CODEX_MANAGED_BY_NPM': '1', 'CODEX_MANAGED_...e7df2f/b26d874dc3994633a5af10850c323c9d/c-0e515692778586dca5dc/stdout.log' mode='w' encoding='UTF-8'>, 'timeout': 1800}
+output = PosixPath('/tmp/pytest-of-luketou/pytest-65/test_timeout_preserves_exit_an3/s-4aac8d8764b31ee7df2f/b26d874dc3994633a5af10850c323c9d/c-0e515692778586dca5dc/probe.json')
+
+    def timeout(command, **kwargs):
+        output = Path(command[0])
+        if progress == 'side':
+            output.with_suffix('').mkdir()
+            (output.with_suffix('') / '0-full.json').write_text('{}')
+        elif progress == 'failure':
+            (output.parent / 'failure.json').write_text(json.dumps({
+                'failure_category': 'program_error', 'stage': 'backward', 'side': 'candidate', 'iteration': 0}))
+        elif progress == 'malformed':
+            (output.parent / 'failure.json').write_text('{')
+>       raise subprocess.TimeoutExpired(command, 1)
+E       subprocess.TimeoutExpired: Command '['/tmp/pytest-of-luketou/pytest-65/test_timeout_preserves_exit_an3/s-4aac8d8764b31ee7df2f/b26d874dc3994633a5af10850c323c9d/c-0e515692778586dca5dc/probe.json']' timed out after 1 seconds
+
+tests/test_train_step_matrix.py:246: TimeoutExpired
+
+During handling of the above exception, another exception occurred:
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7a500765dc50>
+tmp_path = PosixPath('/tmp/pytest-of-luketou/pytest-65/test_timeout_preserves_exit_an3')
+progress = 'malformed'
+
+    @pytest.mark.parametrize('progress', ['side', 'failure', 'absent', 'malformed'])
+    def test_timeout_preserves_exit_and_last_stage(monkeypatch, tmp_path, progress):
+        from pathlib import Path
+        import mdgen.train_step_matrix as matrix
+        manifest = make_manifest()
+        checkpoint = tmp_path / 'checkpoint'
+        checkpoint.write_bytes(b'checkpoint')
+        real_digest = matrix.hashlib.file_digest
+        class Approved:
+            def hexdigest(self):
+                return json.loads((matrix.CONTRACT_DIR / 'frozen-contract-v1.1.json').read_text())['fixed_settings']['checkpoint_sha256']
+        monkeypatch.setattr(matrix.hashlib, 'file_digest', lambda *args: Approved())
+        monkeypatch.setattr(matrix, 'case_command', lambda case, root, ckpt, output, raw: [str(output)])
+        def timeout(command, **kwargs):
+            output = Path(command[0])
+            if progress == 'side':
+                output.with_suffix('').mkdir()
+                (output.with_suffix('') / '0-full.json').write_text('{}')
+            elif progress == 'failure':
+                (output.parent / 'failure.json').write_text(json.dumps({
+                    'failure_category': 'program_error', 'stage': 'backward', 'side': 'candidate', 'iteration': 0}))
+            elif progress == 'malformed':
+                (output.parent / 'failure.json').write_text('{')
+            raise subprocess.TimeoutExpired(command, 1)
+        monkeypatch.setattr(subprocess, 'run', timeout)
+>       path = run_shard(manifest, manifest['shards'][0]['shard_id'], tmp_path, tmp_path, checkpoint)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_train_step_matrix.py:248:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+mdgen/train_step_matrix.py:203: in run_shard
+    record['evidence'] = json.loads(evidence.read_text())
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/home/luketou/.local/share/uv/python/cpython-3.11.17-linux-x86_64-gnu/lib/python3.11/json/__init__.py:346: in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+/home/luketou/.local/share/uv/python/cpython-3.11.17-linux-x86_64-gnu/lib/python3.11/json/decoder.py:337: in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <json.decoder.JSONDecoder object at 0x7a5055cbc890>, s = '{', idx = 0
+
+    def raw_decode(self, s, idx=0):
+        """Decode a JSON document from ``s`` (a ``str`` beginning with
+        a JSON document) and return a 2-tuple of the Python
+        representation and the index in ``s`` where the document ended.
+
+        This can be used to decode a JSON document from a string that may
+        have extraneous data at the end.
+
+        """
+        try:
+>           obj, end = self.scan_once(s, idx)
+                       ^^^^^^^^^^^^^^^^^^^^^^
+E           json.decoder.JSONDecodeError: Expecting property name enclosed in double quotes: line 1 column 2 (char 1)
+
+/home/luketou/.local/share/uv/python/cpython-3.11.17-linux-x86_64-gnu/lib/python3.11/json/decoder.py:353: JSONDecodeError
+_ test_missing_shard_requires_scheduler_timeout_evidence[slurmstepd: JOB 123 CANCELLED DUE TO TIME LIMIT-timeout] _
+
+tmp_path = PosixPath('/tmp/pytest-of-luketou/pytest-65/test_missing_shard_requires_sc0')
+message = 'slurmstepd: JOB 123 CANCELLED DUE TO TIME LIMIT'
+expected = 'timeout'
+
+    @pytest.mark.parametrize('message,expected', [
+        ('slurmstepd: JOB 123 CANCELLED DUE TO TIME LIMIT', 'timeout'),
+        ('CUDA out of memory', 'missing_shard'),
+        ('', 'missing_shard')])
+    def test_missing_shard_requires_scheduler_timeout_evidence(tmp_path, message, expected):
+        manifest = make_manifest()
+        shard = manifest['shards'][0]
+        stderr = tmp_path / 'job.err'
+        stderr.write_text(message)
+>       report = aggregate(manifest, [], scheduler_logs={shard['shard_id']: stderr})
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: aggregate() got an unexpected keyword argument 'scheduler_logs'
+
+tests/test_train_step_matrix.py:269: TypeError
+_ test_missing_shard_requires_scheduler_timeout_evidence[CUDA out of memory-missing_shard] _
+
+tmp_path = PosixPath('/tmp/pytest-of-luketou/pytest-65/test_missing_shard_requires_sc1')
+message = 'CUDA out of memory', expected = 'missing_shard'
+
+    @pytest.mark.parametrize('message,expected', [
+        ('slurmstepd: JOB 123 CANCELLED DUE TO TIME LIMIT', 'timeout'),
+        ('CUDA out of memory', 'missing_shard'),
+        ('', 'missing_shard')])
+    def test_missing_shard_requires_scheduler_timeout_evidence(tmp_path, message, expected):
+        manifest = make_manifest()
+        shard = manifest['shards'][0]
+        stderr = tmp_path / 'job.err'
+        stderr.write_text(message)
+>       report = aggregate(manifest, [], scheduler_logs={shard['shard_id']: stderr})
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: aggregate() got an unexpected keyword argument 'scheduler_logs'
+
+tests/test_train_step_matrix.py:269: TypeError
+____ test_missing_shard_requires_scheduler_timeout_evidence[-missing_shard] ____
+
+tmp_path = PosixPath('/tmp/pytest-of-luketou/pytest-65/test_missing_shard_requires_sc2')
+message = '', expected = 'missing_shard'
+
+    @pytest.mark.parametrize('message,expected', [
+        ('slurmstepd: JOB 123 CANCELLED DUE TO TIME LIMIT', 'timeout'),
+        ('CUDA out of memory', 'missing_shard'),
+        ('', 'missing_shard')])
+    def test_missing_shard_requires_scheduler_timeout_evidence(tmp_path, message, expected):
+        manifest = make_manifest()
+        shard = manifest['shards'][0]
+        stderr = tmp_path / 'job.err'
+        stderr.write_text(message)
+>       report = aggregate(manifest, [], scheduler_logs={shard['shard_id']: stderr})
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: aggregate() got an unexpected keyword argument 'scheduler_logs'
+
+tests/test_train_step_matrix.py:269: TypeError
+=========================== short test summary info ============================
+FAILED tests/test_train_step_matrix.py::test_timeout_preserves_exit_and_last_stage[side]
+FAILED tests/test_train_step_matrix.py::test_timeout_preserves_exit_and_last_stage[failure]
+FAILED tests/test_train_step_matrix.py::test_timeout_preserves_exit_and_last_stage[absent]
+FAILED tests/test_train_step_matrix.py::test_timeout_preserves_exit_and_last_stage[malformed]
+FAILED tests/test_train_step_matrix.py::test_missing_shard_requires_scheduler_timeout_evidence[slurmstepd: JOB 123 CANCELLED DUE TO TIME LIMIT-timeout]
+FAILED tests/test_train_step_matrix.py::test_missing_shard_requires_scheduler_timeout_evidence[CUDA out of memory-missing_shard]
+FAILED tests/test_train_step_matrix.py::test_missing_shard_requires_scheduler_timeout_evidence[-missing_shard]
+7 failed, 21 passed in 3.61s

@@ -1,0 +1,46 @@
+Repository checks passed: LF line endings, agent navigation links and launcher GPU preflight.
+{"status": "skipped", "passed": false, "python": "/home/luketou/.local/share/mdgen/venvs/cpu-py311/bin/python", "env": {"CUDA_VISIBLE_DEVICES": "", "GPU_DEVICE_ORDINAL": null, "SLURM_JOB_GPUS": null}, "torch": "2.11.0+cpu"}
+........................................................................ [ 23%]
+........................................................................ [ 46%]
+........................................................................ [ 70%]
+................................................................ss...... [ 93%]
+...................                                                      [100%]
+=============================== warnings summary ===============================
+../../../../../../../../home/luketou/.local/share/mdgen/venvs/cpu-py311/lib/python3.11/site-packages/torch/jit/_script.py:1488
+../../../../../../../../home/luketou/.local/share/mdgen/venvs/cpu-py311/lib/python3.11/site-packages/torch/jit/_script.py:1488
+../../../../../../../../home/luketou/.local/share/mdgen/venvs/cpu-py311/lib/python3.11/site-packages/torch/jit/_script.py:1488
+  /home/luketou/.local/share/mdgen/venvs/cpu-py311/lib/python3.11/site-packages/torch/jit/_script.py:1488: DeprecationWarning: `torch.jit.script` is deprecated. Please switch to `torch.compile` or `torch.export`.
+    warnings.warn(
+
+tests/test_dataset_training_region.py::test_region_fields_match_the_full_protein_at_region_residues
+  /mnt/c/Users/toulu/Desktop/Remote_CMI/MDgen2026/mdgen_neighbor-t5/mdgen/dataset.py:191: UserWarning: The given NumPy array is not writable, and PyTorch does not support non-writable tensors. This means writing to this tensor will result in undefined behavior. You may want to copy the array to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /pytorch/torch/csrc/utils/tensor_numpy.cpp:213.)
+    torch.from_numpy(ca), mask=torch.ones(len(ca), dtype=torch.bool),
+
+tests/test_dataset_training_region.py: 1 warning
+tests/test_train_step_probe.py: 17 warnings
+  /home/luketou/.local/share/mdgen/venvs/cpu-py311/lib/python3.11/site-packages/pytorch_lightning/trainer/configuration_validator.py:70: You defined a `validation_step` but have no `val_dataloader`. Skipping val loop.
+
+tests/test_dataset_training_region.py: 1 warning
+tests/test_precision.py: 2 warnings
+tests/test_train_step_probe.py: 17 warnings
+  /home/luketou/.local/share/mdgen/venvs/cpu-py311/lib/python3.11/site-packages/pytorch_lightning/utilities/_pytree.py:21: `isinstance(treespec, LeafSpec)` is deprecated, use `isinstance(treespec, TreeSpec) and treespec.is_leaf()` instead.
+
+tests/test_dataset_training_region.py: 1 warning
+tests/test_precision.py: 2 warnings
+tests/test_train_step_probe.py: 17 warnings
+  /home/luketou/.local/share/mdgen/venvs/cpu-py311/lib/python3.11/site-packages/pytorch_lightning/trainer/connectors/data_connector.py:434: The 'train_dataloader' does not have many workers which may be a bottleneck. Consider increasing the value of the `num_workers` argument` to `num_workers=19` in the `DataLoader` to improve performance.
+
+tests/test_train_step_probe.py::test_nonfinite_batch_is_counted
+tests/test_train_step_probe.py::test_control_identifies_nonfinite_predictions_separately_from_inputs
+  /mnt/c/Users/toulu/Desktop/Remote_CMI/MDgen2026/mdgen_neighbor-t5/mdgen/wrapper.py:36: RuntimeWarning: Mean of empty slice
+    out[key] = np.nanmean(log[key])
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+305 passed, 2 skipped, 14 deselected, 64 warnings in 60.63s (0:01:00)
+residue_no_padding: output=4.012e-07, gradient=3.755e-07, path=sdpa, pass=True
+residue_padding: output=3.431e-07, gradient=4.220e-07, path=sdpa, pass=True
+time_no_padding: output=3.849e-07, gradient=3.892e-07, path=sdpa, pass=True
+time_padding: output=2.844e-07, gradient=4.414e-07, path=sdpa, pass=True
+time_full_row_padding: output=3.329e-07, gradient=3.788e-07, path=sdpa, pass=True
+no_rope_padding: output=3.307e-07, gradient=1.036e-05, manual_padding=0.000e+00, sdpa_padding=0.000e+00, pass=True
+summary: results/sdpa/check-hbPoGL1v/summary.json

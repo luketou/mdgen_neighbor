@@ -328,3 +328,180 @@ def test_control_identifies_nonfinite_predictions_separately_from_inputs(monkeyp
         assert run['nonfinite_counts']['model_output'] > 0
         assert run['gradient_nonfinite'] > 0
     json.dumps(report, allow_nan=False)
+
+
+@pytest.mark.parametrize('residues,budget,halo,expected', [
+    (12, 20, 1, 'passed'), (60, 48, 1, 'descriptive')])
+def test_paired_region_uses_same_objective_and_real_optimizer(tmp_path, residues, budget, halo, expected):
+    output = tmp_path / 'paired.json'
+    report = main(['--output', str(output), '--paired_region', '--raw-tensors', 'all',
+        '--synthetic_residues', str(residues),
+        '--seed_group', '0', '--time', '0.5', '--warmup', '0', '--repeats', '1', '--',
+        *TINY, *LOCAL, '--batch_size', '1', '--region_residues', str(budget),
+        '--halo_rings', str(halo), '--grad_checkpointing'])
+    assert report['status'] == expected
+    alignment = report['alignment']
+    assert alignment['full_denominator'] == alignment['region_denominator'] > 0
+    assert alignment['full_noise_sha256'] == alignment['region_noise_sha256']
+    assert alignment['full_mask_sha256'] == alignment['region_mask_sha256']
+    measured = report['measurements'][0]
+    assert measured['full']['initial_state_sha256'] == measured['candidate']['initial_state_sha256']
+    for side in ('full', 'candidate'):
+        run = measured[side]
+        assert run['parameters_nonfinite_after_step'] == 0
+        assert run['loss_components']['denominator'] == alignment['full_denominator']
+        assert run['loss_components']['numerator'] / run['loss_components']['denominator'] == pytest.approx(run['loss'])
+        saved = torch.load(run['artifact_path'], weights_only=True)
+        assert saved['pre_clip_gradients'] and saved['updates']
+    if expected == 'descriptive':
+        assert measured['comparison']['control_passed'] is None
+        assert len(alignment['region_residue_ids']) < residues
+        assert len(alignment['loss_residue_ids']) < residues
+    else:
+        assert measured['comparison']['control_passed']
+    json.dumps(report, allow_nan=False)
+    with pytest.raises(FileExistsError):
+        main(['--output', str(output), '--paired_region'])
+
+
+def test_paired_denominators_reject_unequal_and_zero_is_not_failure():
+    from mdgen.train_step_control import check_denominators
+    with pytest.raises(ValueError, match='denominators differ'):
+        check_denominators(torch.ones(2), torch.ones(3))
+    assert check_denominators(torch.zeros(2), torch.zeros(3))['status'] == 'no_supervision'
+    with pytest.raises(ValueError, match='invalid'):
+        check_denominators(torch.tensor([float('nan')]), torch.ones(1))
+
+
+def test_paired_zero_supervision_skips_backward(monkeypatch, tmp_path):
+    import mdgen.train_step_control as control
+    args = tiny_args(monkeypatch, [*LOCAL, '--batch_size', '1', '--region_residues', '20',
+                                   '--cond_interval', '1'])
+    args.region_seed_group, args.probe_time = 0, 0.5
+    def forbidden(*args, **kwargs):
+        pytest.fail('zero supervision must not run a training step')
+    monkeypatch.setattr(control, 'run_step', forbidden)
+    items = synthetic_items(args, 12, 1, 0)
+    items[0]['torsions'][0, 0, 0, 0] = float('nan')
+    report = control.run_paired_region(args, items, 0, synthetic=True, artifact_dir=tmp_path)
+    assert report['status'] == 'no_supervision' and report['measurements'] == []
+
+
+def test_halo_change_keeps_loss_group_and_mask(monkeypatch):
+    from mdgen.train_step_control import prepare_paired_items
+    args = tiny_args(monkeypatch, [*LOCAL, '--batch_size', '1', '--region_residues', '60'])
+    args.region_seed_group, args.probe_time = 0, 0.5
+    item = synthetic_items(args, 80, 1, 0)[0]
+    args.halo_rings = 1
+    _, _, a = prepare_paired_items(args, item, 0, synthetic=True, use_sdpa=True)
+    args.halo_rings = 2
+    _, _, b = prepare_paired_items(args, item, 0, synthetic=True, use_sdpa=True)
+    assert a['paired_common_subset'] and b['paired_common_subset']
+    assert a['loss_group_ids'] == b['loss_group_ids']
+    assert a['loss_residue_ids'] == b['loss_residue_ids']
+    assert a['full_denominator'] == b['full_denominator']
+
+
+def test_paired_nonfinite_fails_even_when_truncated(monkeypatch):
+    from mdgen.train_step_control import compare_paired_runs, PairedRun
+    run = dict(loss=1., loss_finite=True, gradient_nonfinite=0,
+               parameters_nonfinite_after_step=0, missing_gradients=[],
+               initial_state_sha256='same', optimizer_initial_state='fresh_empty', optimizer={})
+    a, b = {'group': torch.ones(3)}, {'group': torch.tensor([float('nan'), 1., 1.])}
+    comparison = compare_paired_runs(PairedRun(run, a, a), PairedRun(run, b, a), control=False)
+    assert comparison['status'] == 'failed' and comparison['control_passed'] is None
+    assert comparison['gradients']['group']['nonfinite'] == 1
+    json.dumps(comparison, allow_nan=False)
+
+
+def test_paired_oom_evidence_keeps_full_backward_stage(monkeypatch, tmp_path):
+    import mdgen.train_step_control as control
+    from mdgen.train_step_matrix import failure_category
+    args = tiny_args(monkeypatch, [*LOCAL, '--batch_size', '1', '--region_residues', '20'])
+    args.region_seed_group, args.probe_time = 0, .5
+    def oom(*args, **kwargs):
+        error = torch.OutOfMemoryError('CUDA out of memory')
+        error.probe_evidence = {'stage': 'backward', 'peak_memory_allocated_bytes': 123}
+        raise error
+    monkeypatch.setattr(control, 'run_step', oom)
+    with pytest.raises(torch.OutOfMemoryError) as caught:
+        control.run_paired_region(args, synthetic_items(args, 12, 1, 0), 0, synthetic=True)
+    assert caught.value.probe_evidence['stage'] == 'backward'
+    assert caught.value.probe_evidence['side'] == 'full'
+    assert failure_category(caught.value) == 'oom'
+
+
+def test_paired_control_enforces_relative_option_b_and_near_zero_policy():
+    from mdgen.train_step_control import compare_paired_runs, PairedRun
+    run = dict(loss=1., loss_finite=True, gradient_nonfinite=0,
+               parameters_nonfinite_after_step=0, missing_gradients=[],
+               initial_state_sha256='same', optimizer_initial_state='fresh_empty', optimizer={})
+    gradient = {'active': torch.full((4,), 1e-5), 'zero': torch.zeros(4)}
+    changed = {**gradient, 'active': gradient['active'] * 1.001}
+    update = {'active': torch.full((4,), 1e-3), 'zero': torch.zeros(4)}
+    comparison = compare_paired_runs(PairedRun(run, gradient, update), PairedRun(run, changed, update), control=True)
+    assert comparison['status'] == 'failed'
+    assert comparison['gradients']['active']['difference_rms'] < 1e-7
+    assert comparison['gradients']['active']['relative_difference'] > 5e-4
+    assert comparison['gradients']['zero']['cosine'] is None
+    assert comparison['gradients']['zero']['near_zero_reference']
+
+
+def test_paired_missing_gpu_writes_failure_evidence(monkeypatch, tmp_path):
+    monkeypatch.setenv('MDGEN_PAIRED_REQUIRE_GPU', '1')
+    monkeypatch.setattr(torch.cuda, 'is_available', lambda: False)
+    with pytest.raises(RuntimeError, match='missing_gpu'):
+        main(['--paired_region', '--output', str(tmp_path / 'probe.json')])
+    failure = json.loads((tmp_path / 'failure.json').read_text())
+    assert failure['failure_category'] == 'missing_gpu'
+    assert 'missing_gpu' in failure['traceback']
+
+
+def test_actual_backward_oom_callback_records_stage_and_traceback(monkeypatch, tmp_path):
+    from mdgen.wrapper import NewMDGenWrapper
+    original = NewMDGenWrapper.training_step
+    def fail_backward(self, batch, batch_idx):
+        loss = original(self, batch, batch_idx)
+        def oom(gradient):
+            raise torch.OutOfMemoryError('CUDA out of memory: CPU 測試注入')
+        loss.register_hook(oom)
+        return loss
+    monkeypatch.setattr(NewMDGenWrapper, 'training_step', fail_backward)
+    with pytest.raises(torch.OutOfMemoryError):
+        main(['--paired_region', '--output', str(tmp_path / 'probe.json'),
+              '--synthetic_residues', '12', '--seed_group', '0', '--time', '.5',
+              '--warmup', '0', '--repeats', '1', '--', *TINY, *LOCAL,
+              '--batch_size', '1', '--region_residues', '20'])
+    evidence = json.loads((tmp_path / 'failure.json').read_text())
+    assert evidence['stage'] == 'backward' and evidence['side'] == 'full'
+    assert evidence['failure_category'] == 'oom'
+    assert evidence['alignment']['full_denominator'] > 0
+    assert 'CPU 測試注入' in evidence['traceback']
+
+
+def test_paired_raw_tensors_none_keeps_complete_json_summaries(tmp_path):
+    reports = []
+    for mode in ('all', 'none'):
+        output = tmp_path / f'{mode}.json'
+        report = main(['--output', str(output), '--paired_region', '--raw-tensors', mode,
+            '--synthetic_residues', '12', '--seed_group', '0', '--time', '0.5',
+            '--warmup', '0', '--repeats', '1', '--', *TINY, *LOCAL,
+            '--batch_size', '1', '--region_residues', '16'])
+        reports.append(report)
+        assert bool(list(output.with_suffix('').glob('*.pt'))) == (mode == 'all')
+        for side in ('full', 'candidate'):
+            run = report['measurements'][0][side]
+            assert bool(run['artifact_path']) == (mode == 'all')
+            assert run['gradients'] and run['updates']
+            assert (output.with_suffix('') / f'0-{side}.json').exists()
+    assert reports[0]['measurements'][0]['comparison'] == reports[1]['measurements'][0]['comparison']
+    for side in ('full', 'candidate'):
+        for category in ('gradients', 'updates'):
+            assert reports[0]['measurements'][0][side][category] == reports[1]['measurements'][0][side][category]
+
+
+def test_paired_raw_tensor_default_is_none():
+    # 每 case 原始張量約 2.3 GB；共享磁碟放不下整個矩陣，保存須明確指定 all。
+    from mdgen.train_step_probe import parse_probe_args
+    args, _ = parse_probe_args(['--output', 'unused'])
+    assert args.raw_tensors == 'none'

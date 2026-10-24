@@ -1,0 +1,56 @@
+{
+  "head": "903971b",
+  "scope": "working-tree review fixes; no commit/push/HPC submission",
+  "python": "3.11.17",
+  "torch": "2.11.0+cpu",
+  "device": "cpu",
+  "requested_check": {
+    "command": "MDGEN_CPU_VENV=/home/luketou/.local/share/mdgen/venvs/cpu-py311 bash scripts/check.sh",
+    "exit_code": 2,
+    "repository_checks": "passed",
+    "working_tree_whitespace": "passed",
+    "index_whitespace": "passed",
+    "head_whitespace": "failed",
+    "reason": "Existing HEAD 903971b adds a blank line at docs/validation/43-ticket5/README.md:111. Working-tree EOF is fixed; Git history unchanged as requested.",
+    "log": "results/issue43-t5-fix-check.log"
+  },
+  "independent_remaining_checks": {
+    "pytest": {
+      "command": "PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 CUDA_VISIBLE_DEVICES= OMP_NUM_THREADS=1 PYTHONPATH=\"$PWD${PYTHONPATH:+:$PYTHONPATH}\" /home/luketou/.local/share/mdgen/venvs/cpu-py311/bin/python -m pytest tests -m \"not gpu and not checkpoint\" -q",
+      "exit_code": 0,
+      "passed": 290,
+      "failed": 0,
+      "skipped": 2,
+      "deselected": 14,
+      "log": "results/issue43-t5-fix-pytest.log"
+    },
+    "sdpa": {
+      "command": "CUDA_VISIBLE_DEVICES= OMP_NUM_THREADS=1 PYTHONPATH=\"$PWD${PYTHONPATH:+:$PYTHONPATH}\" /home/luketou/.local/share/mdgen/venvs/cpu-py311/bin/python scripts/diagnostics/test_sdpa.py --device cpu --output_dir results/sdpa/issue43-t5-fix",
+      "exit_code": 0,
+      "passed": 6,
+      "failed": 0,
+      "report": "review-fix-sdpa.json"
+    },
+    "cpu_preflight": {
+      "status": "skipped",
+      "exit_code": 0
+    },
+    "bash_syntax": "passed"
+  },
+  "test_first": {
+    "initial_regressions": {
+      "failed": 10,
+      "passed": 2,
+      "deselected": 43
+    },
+    "launcher_initial": {
+      "failed": 4
+    },
+    "explicit_setup_exit_regressions": {
+      "failed": 2
+    },
+    "final_added_cases": 19
+  },
+  "gpu_jobs_submitted": 0,
+  "gpu_validation": "未執行"
+}

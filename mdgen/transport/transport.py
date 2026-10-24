@@ -199,6 +199,11 @@ class Transport:
         if not (self.args.dynamic_mpnn or self.args.mpnn):
             if self.model_type == ModelType.VELOCITY:
                 terms['loss'] = mean_flat(((model_output - ut) ** 2), mask)
+                if noise is not None:
+                    # 探針保存實際 masked squared-error 分子／分母，不改訓練正規化。
+                    terms['probe_loss_components'] = {
+                        'numerator': (((model_output.detach() - ut.detach()) ** 2) * mask).sum(),
+                        'denominator': mask.sum()}
             else:
                 _, drift_var = self.path_sampler.compute_drift(xt, t)
                 sigma_t, _ = self.path_sampler.compute_sigma_t(path.expand_t_like_x(t, xt))

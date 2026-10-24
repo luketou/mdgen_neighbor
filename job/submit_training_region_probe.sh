@@ -18,6 +18,24 @@
 # An OOM ends the job non-zero; the traceback in logs/ is the result.
 
 set -eo pipefail
+# #43 每個 Job 只跑一個分片；由 probe 保存缺 GPU 與失敗分類。
+if [ "${1:-}" = --paired-shard ]; then
+    shift
+    export MDGEN_REQUIRE_GPU=1
+    mkdir -p "${MDGEN_RUN_DIR:-$PWD}/results"
+    paired_setup="$(mktemp -d "${MDGEN_RUN_DIR:-$PWD}/results/paired-setup-${SLURM_JOB_ID:-manual}-XXXXXX")"
+    export MDGEN_PREFLIGHT_OUTPUT="$paired_setup/preflight.json"
+    export MDGEN_DEFER_MISSING_GPU=1
+    # 保持 source 內的 errexit；setup 證據不依賴 venv 或 Python 成功啟動。
+    trap 'paired_exit=$?; if [ "$paired_exit" -ne 0 ]; then printf "exit=%s command=%s\n" "$paired_exit" "$BASH_COMMAND" > "$paired_setup/setup-failure.txt"; fi' EXIT
+    source job/env.sh > >(tee "$paired_setup/setup.log") 2> >(tee -a "$paired_setup/setup.log" >&2)
+    trap - EXIT
+    export OMP_NUM_THREADS="${SLURM_CPUS_PER_TASK:-2}"
+    export MODEL_DIR="$paired_setup/model"
+    exec python -m mdgen.train_step_probe --matrix-shard \
+        --output-root "${MDGEN_RUN_DIR:-$PWD}/results/paired" \
+        --preflight-report "$MDGEN_PREFLIGHT_OUTPUT" "$@"
+fi
 source job/env.sh
 export OMP_NUM_THREADS="${SLURM_CPUS_PER_TASK}"
 export PYTHONUNBUFFERED=1

@@ -78,3 +78,7 @@ batch：資料集由 `MDGenDataset` 取樣，合成鏈則對第 0 幀完整分�
 ## L40S 小尺寸實測
 
 2026-10-23 的 [Ticket 2 GPU 驗證](l40s-ticket2/2026-10-23/README.md) 包含 global/local 真實訓練步、FP32 重複、BF16 梯度比較、NaN/Inf 注入與跨程序重現性。僅限報告所列的小尺寸合成 batch；不代表 Training region × 250 幀或長蛋白容量驗收。
+
+## 同一 supervision 的分片比較
+
+`--paired_region` 支援完整蛋白與真正截斷 Training region 的 loss、clipping 前梯度與 optimizer 單步比較；manifest、獨立分片、失敗分類、彙整及提交指令見 [Ticket 5 工具說明](43-ticket5/README.md)。原有精度探針與校準控制介面保留。

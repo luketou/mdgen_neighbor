@@ -1,0 +1,22 @@
+{
+  "source": "review finding: estimated lower bound, not a GPU/storage measurement",
+  "raw_tensors_default": "all",
+  "warmup": 1,
+  "measured_repeats": 3,
+  "sides": 2,
+  "saved_tensor_kinds": [
+    "pre_clip_gradients",
+    "updates"
+  ],
+  "per_case_lower_bound_gib": 2.04,
+  "ready_cases": 1620,
+  "matrix_lower_bound_gib": 3304.8,
+  "matrix_lower_bound_tib": 3.22734375,
+  "excludes": [
+    "serialization overhead",
+    "JSON/logs",
+    "reruns"
+  ],
+  "submission_in_flight_cap_example": 4,
+  "estimate_scope": "all ready cases, raw-tensors all, warmup and repeats saved"
+}
