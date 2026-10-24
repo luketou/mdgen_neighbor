@@ -13,6 +13,7 @@ import hashlib
 import json
 import os
 import platform
+from pathlib import Path
 import socket
 import subprocess
 import sys
@@ -137,6 +138,10 @@ def describe_batch(items):
     }
 
 
+def tensor_hash(tensor):
+    return hashlib.sha256(tensor.detach().cpu().contiguous().numpy().tobytes()).hexdigest()
+
+
 def file_sha256(path):
     with open(path, 'rb') as stream:
         return hashlib.file_digest(stream, 'sha256').hexdigest()
@@ -208,7 +213,14 @@ class StepProbe(pl.Callback):
         self._sync(pl_module)
         if pl_module.device.type == 'cuda':
             torch.cuda.reset_peak_memory_stats(pl_module.device)
+        self.phase = 'forward'
         self.start = time.perf_counter()
+
+    def on_before_backward(self, trainer, pl_module, loss):
+        self.phase = 'backward'
+
+    def on_after_backward(self, trainer, pl_module):
+        self.phase = 'optimizer'
 
     def on_before_optimizer_step(self, trainer, pl_module, optimizer):
         # Raw gradients after backward, before clipping and the optimizer step.
@@ -235,6 +247,10 @@ class StepProbe(pl.Callback):
         counts = getattr(pl_module, 'probe_nonfinite_counts', None)
         if counts is not None:
             self.result['nonfinite_counts'] = counts
+        components = getattr(pl_module, 'probe_loss_components', None)
+        if components is not None:
+            self.result['loss_components'] = {key: float(value) if value.isfinite() else None
+                                              for key, value in components.items()}
         recorded_time = pl_module._log.get('train_time', [])
         self.result['training_time'] = float(np.mean(recorded_time)) if len(recorded_time) else None
         self.result['parameters_nonfinite_after_step'] = sum(
@@ -249,7 +265,8 @@ class StepProbe(pl.Callback):
             self.result['pre_clip_norm'] = None
 
 
-def run_step(args, items, name, seed, initial_state=None, use_sdpa=True, capture_updates=False):
+def run_step(args, items, name, seed, initial_state=None, use_sdpa=True, capture_updates=False,
+             artifact_path=None):
     """One real step; returns (report, grouped gradients, initial weights, optional updates)."""
     from .wrapper import NewMDGenWrapper
     args.precision_config, args.precision = name, LIGHTNING_PRECISION[name]
@@ -279,13 +296,29 @@ def run_step(args, items, name, seed, initial_state=None, use_sdpa=True, capture
         enable_progress_bar=False, callbacks=[probe])
     # Fixed items keep the batch identical; reseeding fixes t, noise and dropout.
     pl.seed_everything(seed, verbose=False)
-    trainer.fit(model, torch.utils.data.DataLoader(items, batch_size=len(items),
-                                                   collate_fn=collate))
+    try:
+        trainer.fit(model, torch.utils.data.DataLoader(items, batch_size=len(items),
+                                                       collate_fn=collate))
+    except Exception as error:
+        error.probe_evidence = {
+            'stage': getattr(probe, 'phase', 'setup'),
+            'peak_memory_allocated_bytes': torch.cuda.max_memory_allocated() if torch.cuda.is_available() else None,
+            'peak_memory_reserved_bytes': torch.cuda.max_memory_reserved() if torch.cuda.is_available() else None}
+        raise
     groups = group_gradients(probe.gradients)
     summary = gradient_summary(groups)
     updates = (group_gradients({n: p.detach().cpu() - initial_state[f'model.{n}']
                 for n, p in model.model.named_parameters()}) if capture_updates else None)
+    if artifact_path is not None:
+        Path(artifact_path).parent.mkdir(parents=True, exist_ok=True)
+        torch.save({'pre_clip_gradients': probe.gradients, 'updates': updates}, artifact_path)
+    state_hash = hashlib.sha256(''.join(
+        key + tensor_hash(value) for key, value in sorted(initial_state.items())).encode()).hexdigest()
     report = {
+        'initial_state_sha256': state_hash,
+        'optimizer_initial_state': 'fresh_empty',
+        'clipping_rule': {'algorithm': 'norm', 'value': args.grad_clip},
+        'artifact_path': str(artifact_path) if artifact_path is not None else None,
         'precision_config': name,
         'initial_parameter_norm': initial_norm if np.isfinite(initial_norm) else None,
         **probe.result,
@@ -354,6 +387,10 @@ def parse_probe_args(argv):
     parser.add_argument('--time', type=float, default=None, help='fixed transport time for capacity probes')
     parser.add_argument('--seed_group', type=int, default=None,
                         help='explicit Training region candidate group')
+    parser.add_argument('--paired_region', action='store_true', help='同一 supervision 的完整蛋白／截斷 region 比較')
+    parser.add_argument('--warmup', type=int, default=1)
+    parser.add_argument('--repeats', type=int, default=3)
+    parser.add_argument('--control_type', choices=('paired', 'same_path_repeat'), default='paired')
     parser.add_argument('--coverage_control', action='store_true',
                         help='FP32 repeat and full-coverage control; no thresholds applied')
     source = parser.add_mutually_exclusive_group()
@@ -368,8 +405,16 @@ def parse_probe_args(argv):
     return args, train_argv
 
 
-def main(argv=None):
+def _main(argv=None):
     probe_args, train_argv = parse_probe_args(sys.argv[1:] if argv is None else argv)
+    if probe_args.paired_region:
+        output = Path(probe_args.output)
+        if output.exists() or output.with_suffix('').exists():
+            raise FileExistsError(f'paired output already exists: {output}')
+        if probe_args.coverage_control or probe_args.configs != ['fp32-reference']:
+            raise ValueError('paired probe requires only fp32-reference')
+        if os.environ.get('MDGEN_PAIRED_REQUIRE_GPU') == '1' and not torch.cuda.is_available():
+            raise RuntimeError('missing_gpu: CUDA unavailable')
     from .parsing import parse_train_args
     saved_argv = sys.argv
     sys.argv = [saved_argv[0], *train_argv]
@@ -388,7 +433,7 @@ def main(argv=None):
             raise ValueError('coverage control requires fp32-reference')
         args.probe_time = 0.5 if probe_args.time is None else probe_args.time
     args.region_seed_group = probe_args.seed_group
-    if args.region_seed_group is not None and not (args.training_region or probe_args.coverage_control):
+    if args.region_seed_group is not None and not (args.training_region or probe_args.coverage_control or probe_args.paired_region):
         raise ValueError('--seed_group requires --training_region or --coverage_control')
     if args.sim_ckpt:
         saved = torch.load(args.sim_ckpt, map_location='cpu', weights_only=False)
@@ -419,7 +464,14 @@ def main(argv=None):
                     item['region']['seed_group'] = args.region_seed_group
     else:
         items = dataset_items(args, probe_args.dataset_index)
-    if probe_args.coverage_control:
+    if probe_args.paired_region:
+        from .train_step_control import run_paired_region
+        report = run_paired_region(args, items, probe_args.seed,
+            synthetic=probe_args.synthetic_residues is not None,
+            warmup=probe_args.warmup, repeats=probe_args.repeats,
+            control_type=probe_args.control_type,
+            artifact_dir=Path(probe_args.output).with_suffix(''), use_sdpa=use_sdpa)
+    elif probe_args.coverage_control:
         from .train_step_control import run_coverage_control
         report = run_coverage_control(args, items, probe_args.seed,
             synthetic=probe_args.synthetic_residues is not None,
@@ -435,9 +487,29 @@ def main(argv=None):
         report['checkpoint'] = {'path': args.sim_ckpt, 'sha256': file_sha256(args.sim_ckpt),
                                 'optimizer_state': 'fresh'}
     os.makedirs(os.path.dirname(os.path.abspath(probe_args.output)), exist_ok=True)
-    with open(probe_args.output, 'w') as f:
+    with open(probe_args.output, 'x' if probe_args.paired_region else 'w') as f:
         json.dump(report, f, indent=2, default=str, allow_nan=False)
     return report
+
+
+def main(argv=None):
+    argv = sys.argv[1:] if argv is None else argv
+    if argv and argv[0] == '--matrix-shard':
+        from .train_step_matrix import main as matrix_main
+        return matrix_main(['run', *argv[1:]])
+    try:
+        return _main(argv)
+    except Exception as error:
+        if '--paired_region' in argv and '--output' in argv:
+            import traceback
+            from .train_step_matrix import failure_category, write_json
+            output = Path(argv[argv.index('--output') + 1])
+            path = output.parent / 'failure.json'
+            if not path.exists():
+                write_json(path, {'failure_category': failure_category(error),
+                    'error': str(error), 'traceback': traceback.format_exc(),
+                    'environment': environment(), **getattr(error, 'probe_evidence', {})})
+        raise
 
 
 if __name__ == '__main__':

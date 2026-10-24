@@ -414,6 +414,7 @@ class NewMDGenWrapper(Wrapper):
         )
         self.log('model_dur', time.time() - start)
         self.probe_nonfinite_counts = out_dict.get('probe_nonfinite_counts')
+        self.probe_loss_components = out_dict.get('probe_loss_components')
         loss = out_dict['loss']
         self.log('loss', loss)
 
