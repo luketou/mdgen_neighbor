@@ -24,6 +24,10 @@ Ticket 2 的 [L40S 實測報告](../l40s-ticket2/2026-10-23/README.md) 記錄 GP
 - `sacct` 的資料庫連不上；查 job 用 `squeue -j`（結束後會回 `Invalid job id`），再讀 `logs/*.out`／`.err`。
 - 結束的 job 先查 `.out` 開頭：`nvidia-smi` 印出 `No devices were found` 代表沒拿到 GPU，不是 OOM，不可當作量測結果；同一快照重送時在 run 目錄的 `job_history` 記下失敗的 job。
 - `hpc_run.py` 只上傳 `job/`、`scripts/`、`mdgen/`、`hpc/` 底下的未追蹤檔；新的 `tests/` 檔案要先 commit，否則 pytest 找不到。
+- 在 WSL 建立的 worktree，Windows 的 git 讀不到（`git ls-files` exit 128），`hpc_run.py submit` 在打包快照前就失敗。從 Windows 提交前先設 `$env:GIT_DIR='<主 repo>\.git\worktrees\<目錄名>'` 與 `$env:GIT_WORK_TREE='<worktree 的 Windows 路徑>'`。
+- 契約用的單張 L40S 只有 `l40s` 分區（node-201，2 張，常有一張被其他使用者佔用）。`llm` 分區（node-181）只收 `llm` account，本帳號的 Job 會掛在 `users` 而永遠 pending（`Job's account not permitted`）；`sbatch --test-only` 不會發現這個限制。
+- 排程器是 `priority/basic`：先送先跑。一次送大量 Job 時，送出時加 `--sbatch=--nice=10000`，讓之後送的其他工作先跑；需要優先的少量 Job 用 nice 0。一般使用者只能調高 nice；`scontrol update Priority=` 不會持久保存，且無法再調回。
+- `/share/home` 約 360 GB、2026-10-24 剩約 105 GB，與其他使用者共用。會寫大檔的矩陣（例如每 case 2.3 GB 的原始梯度）送出前先估算總量。
 
 ### 較早的 preflight 診斷工具 `scripts/hpc.py`
 
