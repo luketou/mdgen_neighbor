@@ -233,6 +233,14 @@ def test_driver_rejects_a_split_whose_sequence_length_differs_from_the_crop(tmp_
                     '--plan_only'])
 
 
+def test_candidate_seed_groups_keep_the_approved_permutation():
+    import torch
+    from mdgen.full_length.group_region import CANDIDATE_SELECTION_SEED, candidate_seed_groups
+    assert pilot.SELECTION_SEED == CANDIDATE_SELECTION_SEED == 43002
+    expected = torch.randperm(190, generator=torch.Generator().manual_seed(43002))[:8].tolist()
+    assert candidate_seed_groups(190, 8) == expected
+
+
 def test_train_mode_requires_positive_frames(tmp_path):
     with pytest.raises(SystemExit):
         pilot.main(['--mode', 'train', '--frames', '0', '--data_root', str(tmp_path),

@@ -136,6 +136,11 @@ def describe_batch(items):
     }
 
 
+def file_sha256(path):
+    with open(path, 'rb') as stream:
+        return hashlib.file_digest(stream, 'sha256').hexdigest()
+
+
 def environment():
     try:
         commit = subprocess.run(['git', 'rev-parse', 'HEAD'], capture_output=True, text=True,
@@ -426,9 +431,7 @@ def main(argv=None):
                                  else f'{args.train_split}[{probe_args.dataset_index}]')
     report['model_args']['use_sdpa'] = use_sdpa
     if args.sim_ckpt:
-        with open(args.sim_ckpt, 'rb') as stream:
-            digest = hashlib.file_digest(stream, 'sha256').hexdigest()
-        report['checkpoint'] = {'path': args.sim_ckpt, 'sha256': digest,
+        report['checkpoint'] = {'path': args.sim_ckpt, 'sha256': file_sha256(args.sim_ckpt),
                                 'optimizer_state': 'fresh'}
     os.makedirs(os.path.dirname(os.path.abspath(probe_args.output)), exist_ok=True)
     with open(probe_args.output, 'w') as f:

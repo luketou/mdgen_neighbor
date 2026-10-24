@@ -52,6 +52,16 @@ def _residues(partition, groups):
     return torch.unique(torch.cat([partition.groups[g].indices.cpu() for g in groups]))
 
 
+# Issue #43 fixed its candidate seed groups with this permutation seed.
+CANDIDATE_SELECTION_SEED = 43002
+
+
+def candidate_seed_groups(groups, count, selection_seed=CANDIDATE_SELECTION_SEED):
+    """First `count` group ids of a seeded permutation: candidates fixed before any error is seen."""
+    generator = torch.Generator().manual_seed(selection_seed)
+    return torch.randperm(groups, generator=generator)[:count].tolist()
+
+
 def sample_region_groups(partition, ca_coordinates, *, region_residues, halo_rings=1,
                          generator=None, seed_group=None):
     """Grow loss groups around a random seed group until the next would exceed the budget.

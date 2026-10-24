@@ -19,7 +19,6 @@ from __future__ import annotations
 
 import argparse
 import copy
-import hashlib
 import json
 import os
 import time
@@ -28,7 +27,8 @@ from types import SimpleNamespace
 import numpy as np
 import torch
 
-from .group_region import region_subpartition, sample_region_groups, with_halo
+from .group_region import (candidate_seed_groups, region_subpartition, sample_region_groups,
+                           with_halo)
 from .region_batch import select_residues
 
 
@@ -329,7 +329,7 @@ def protein_dataset(cli_args, model_args):
 
 def main(argv=None):
     from ..parsing import add_local_override_args, positive_int
-    from ..train_step_probe import batch_shapes, environment
+    from ..train_step_probe import batch_shapes, environment, file_sha256
     parser = argparse.ArgumentParser(description=__doc__.split('\n\n')[0])
     parser.add_argument('--sim_ckpt', required=True)
     parser.add_argument('--data_dir', required=True)
@@ -389,10 +389,9 @@ def main(argv=None):
             proteins.append({'name': name, 'residues': len(ca), 'groups': len(partition.groups),
                              'seed_regions': seed_region_report(partition, args.halo_rings,
                                                                 args.region_residues),
-                             'candidate_seed_groups': torch.randperm(len(partition.groups),
-                                 generator=torch.Generator().manual_seed(
-                                     43002 if args.selection_seed is None else args.selection_seed)
-                                 )[:args.regions].tolist()})
+                             'candidate_seed_groups': candidate_seed_groups(
+                                 len(partition.groups), args.regions,
+                                 *([] if args.selection_seed is None else [args.selection_seed]))})
             continue
         item = dataset[idx]
         batch = {key: value.to(device) if torch.is_tensor(value) else value
@@ -402,9 +401,9 @@ def main(argv=None):
                              regions=args.regions, times=args.times, seed=args.seed,
                              warmup=args.warmup, repeats=args.repeats,
                              capacity_only=args.capacity_only,
-                             seed_groups=(torch.randperm(len(partition.groups), generator=
-                                 torch.Generator().manual_seed(args.selection_seed))[:args.regions].tolist()
-                                 if args.selection_seed is not None else args.seed_groups))
+                             seed_groups=(candidate_seed_groups(len(partition.groups), args.regions,
+                                                                args.selection_seed)
+                                          if args.selection_seed is not None else args.seed_groups))
         for k in args.halo_rings:
             residues[k].extend(result['residues'][k])
         proteins.append({'name': name, 'residues': len(item['seqres']),
@@ -437,8 +436,7 @@ def main(argv=None):
                   'cuda_matmul_allow_tf32': torch.backends.cuda.matmul.allow_tf32,
                   'cudnn_allow_tf32': torch.backends.cudnn.allow_tf32,
                   'autocast_enabled': torch.is_autocast_enabled(device)}
-    with open(args.sim_ckpt, 'rb') as stream:
-        report['checkpoint_sha256'] = hashlib.file_digest(stream, 'sha256').hexdigest()
+    report['checkpoint_sha256'] = file_sha256(args.sim_ckpt)
     os.makedirs(os.path.dirname(os.path.abspath(args.output)), exist_ok=True)
     with open(args.output, 'w') as f:
         json.dump(report, f, indent=2, allow_nan=False)

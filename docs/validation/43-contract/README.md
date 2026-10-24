@@ -1,6 +1,6 @@
 # 比較契約與先導進度
 
-**比較契約 v1 已於 2026-10-24 凍結，見 [frozen-contract-v1.md](frozen-contract-v1.md) 與 [JSON](frozen-contract-v1.json)。** Ticket 3–5 照此版本執行；修改需另立新版本並重新確認。
+**目前生效的是比較契約 v1.1，見 [frozen-contract-v1.1.md](frozen-contract-v1.1.md) 與 [JSON](frozen-contract-v1.1.json)；它在 [v1](frozen-contract-v1.md) 之上只新增 loss 分母為零的規則。** Ticket 3–5 照此版本執行；修改需另立新版本並重新確認。
 
 Forward 門檻、候選矩陣、測試介面與先導額度先前已獲確認，見 [核准設定](approved-forward.json) 與 [完整提案](proposal.md)。工具已實作並經雙軸 [審查](review.md)；Ticket 2 工具初版的完整 CPU 檢查為 218 passed（之後的檢查數見各 commit），證據見 [檢查設定](tool-checks.json) 與 [log](tool-checks.log)。
 

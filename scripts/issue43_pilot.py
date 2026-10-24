@@ -19,10 +19,18 @@ LENGTHS = (724, 705, 669, 2128)
 LOCAL_SPATIAL = ['--local_spatial', '--spatial_cell_width', '16', '--spatial_contact_radius', '16',
                  '--core_capacity', '128', '--ghost_capacity', '128', '--no-cell_summaries']
 CHECKPOINT_SHA256 = 'bc90c66e7539f52c9d0514aeddd96c552061150a1eef3b10c120bc3aaff08015'
+# Equals mdgen.full_length.group_region.CANDIDATE_SELECTION_SEED (asserted in tests); kept here
+# so planning does not import torch.
+SELECTION_SEED = 43002
 DEFAULT_MEMORY = {'group_batch_size': 4, 'ffn_chunk_size': 65536, 'expandable_segments': False}
 # A full-protein 2128-residue step with reduced group batching is far slower than the 4/250
 # frame capacity cases, so sweep cases get a longer default timeout.
 SWEEP_CASE_TIMEOUT_S = 900
+
+
+def file_sha256(path):
+    with open(path, 'rb') as stream:
+        return hashlib.file_digest(stream, 'sha256').hexdigest()
 
 
 def parse_memory(text):
@@ -156,8 +164,7 @@ def sweep_cases(root, checkpoint, output_dir, protein, replica, steps):
 
 def training_candidates(root, protein, replica):
     import numpy as np
-    import torch
-    from mdgen.full_length.group_region import sample_region_groups
+    from mdgen.full_length.group_region import candidate_seed_groups, sample_region_groups
     from mdgen.full_length.partition import PartitionParams
     from mdgen.full_length.partition_store import load_partition
     from mdgen.topology import load_chain_numbering
@@ -167,8 +174,7 @@ def training_candidates(root, protein, replica):
     ca = np.asarray(arr[0, :, 1], dtype=np.float32)
     partition = load_partition(root / 'partitions' / f'{stem}_partition.npz',
                                PartitionParams(16., 16., 128, 128), ca=ca, **chain)
-    candidates = torch.randperm(len(partition.groups), generator=
-                                torch.Generator().manual_seed(43002))[:8].tolist()
+    candidates = candidate_seed_groups(len(partition.groups), 8)
     result = []
     for k in (1, 2):
         seen = {}
@@ -218,8 +224,7 @@ def main(argv=None):
     elif args.frames is None or args.frames <= 0:
         parser.error('--frames must be a positive integer')
     args.output_dir.mkdir(parents=True, exist_ok=True)
-    with args.checkpoint.open('rb') as stream:
-        checkpoint_hash = hashlib.file_digest(stream, 'sha256').hexdigest()
+    checkpoint_hash = file_sha256(args.checkpoint)
     if checkpoint_hash != CHECKPOINT_SHA256:
         raise ValueError('checkpoint hash differs from approved Ticket 1 checkpoint')
     root = args.data_root
@@ -233,14 +238,13 @@ def main(argv=None):
                            root / 'partitions' / f'{stem}_partition.npz'])
     input_manifest = []
     for path in inputs:
-        with path.open('rb') as stream:
-            digest = hashlib.file_digest(stream, 'sha256').hexdigest()
-        input_manifest.append({'path': str(path), 'bytes': path.stat().st_size, 'sha256': digest})
+        input_manifest.append({'path': str(path), 'bytes': path.stat().st_size,
+                               'sha256': file_sha256(path)})
     halo = [sys.executable, '-m', 'mdgen.full_length.halo_error',
             '--sim_ckpt', str(args.checkpoint), '--data_dir', str(root / 'arrays'),
             '--split', str(root / 'validation.csv'), '--suffix', '_i400ps',
             '--partition_dir', str(root / 'partitions'), '--region_residues', '896',
-            '--num_frames', str(args.frames), '--selection_seed', '43002', '--seed', '0',
+            '--num_frames', str(args.frames), '--selection_seed', str(SELECTION_SEED), '--seed', '0',
             '--times', '0.5', *local_args(args.memory)]
     cases = []
     if args.mode == 'sweep':
