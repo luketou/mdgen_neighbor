@@ -113,7 +113,8 @@ def dataset_items(args, index):
     if args.atlas and not args.training_region:
         # A full-protein step must neither randomly crop nor pad the protein.
         for i in range(index, index + args.batch_size):
-            name = dataset.df.index[i % len(dataset.df)]
+            # Same row selection as MDGenDataset.__getitem__: --overfit always loads row 0.
+            name = dataset.df.index[0 if args.overfit else i % len(dataset.df)]
             if len(dataset.df.seqres[name]) != args.crop:
                 raise ValueError(f'--crop {args.crop} differs from {name} length '
                                  f'{len(dataset.df.seqres[name])}; full-protein mode needs them equal')

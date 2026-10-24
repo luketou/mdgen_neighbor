@@ -220,6 +220,19 @@ def test_full_protein_mode_rejects_a_crop_that_differs_from_the_protein(tmp_path
     assert not (tmp_path / 'cropped.json').exists()
 
 
+def test_full_protein_crop_check_uses_the_row_overfit_actually_loads(tmp_path):
+    np.save(tmp_path / 'prot_R1.npy',
+            np.random.default_rng(0).normal(size=(5, 12, 14, 3)).astype(np.float32))
+    split = tmp_path / 'split.csv'
+    split.write_text('name,seqres\nprot,ACDEFGHIKLMN\nshort,ACDEFGHI\n')
+    output = tmp_path / 'overfit.json'
+    main(['--output', str(output), '--time', '0.5', '--dataset_index', '1', '--', *TINY,
+          '--data_dir', str(tmp_path), '--train_split', str(split), '--val_split', str(split),
+          '--batch_size', '1', '--atlas', '--replicates', '1', '--crop', '12', '--overfit',
+          '--overfit_frame'])
+    assert json.loads(output.read_text())['batch']['names'] == ['prot_R1']
+
+
 def test_cli_training_region_accepts_an_explicit_candidate_group(tmp_path):
     output = tmp_path / 'fixed.json'
     main(['--output', str(output), '--synthetic_residues', '60', '--seed_group', '0',
