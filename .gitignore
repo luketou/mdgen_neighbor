@@ -18,6 +18,9 @@ ckpt
 .scratch/
 results/
 logs/
+# 驗收紀錄的 manifest 與 log 是 README 引用的原始證據，必須進版控。
+!docs/validation/**/results/
+!docs/validation/**/logs/
 outputs/
 .venv-cpu
 *.xtc
