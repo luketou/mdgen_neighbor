@@ -265,3 +265,162 @@ def test_capacity_mode_measures_regions_without_retaining_a_reference(tmp_path, 
     assert protein['measurements']['full'][0]['status'] == 'completed'
     assert len(protein['measurements']['regions']) == 4  # two t, two halos
     assert all(row['status'] == 'completed' for row in protein['measurements']['regions'])
+
+
+def test_noise_matrix_is_independent_of_loss_selection(tmp_path, checkpoint):
+    report = run(tmp_path, checkpoint, '--halo_rings', '0', '1', '--selection_seed', '43002',
+                 '--noise_seeds', '0', '1', '2')
+    protein, = report['proteins']
+    assert {row['noise_seed'] for row in protein['observations']} == {0, 1, 2}
+    assert all(row['protein'] == 'prot' and row['replica'] == 1 and row['frames'] == T
+               and row['paired_common_subset'] for row in protein['strata'])
+    assert len(protein['measurements']['full']) == 6
+    for region in protein['regions']:
+        assert region['by_halo']['0']['loss_groups'] == region['by_halo']['1']['loss_groups']
+
+
+def test_deep_infeasible_fixed_seed_keeps_its_shallow_result(tmp_path, checkpoint, monkeypatch):
+    def shallow_only(partition, ca, **kwargs):
+        if kwargs['halo_rings'] == 2:
+            raise ValueError('deep halo exceeds budget')
+        return sample_region_groups(partition, ca, **kwargs)
+    monkeypatch.setattr('mdgen.full_length.halo_error.sample_region_groups', shallow_only)
+    protein, = run(tmp_path, checkpoint, '--halo_rings', '1', '2',
+                   '--seed_groups', '0', '0')['proteins']
+    assert len(protein['regions']) == 1
+    assert set(protein['regions'][0]['by_halo']) == {'1'}
+    assert all(not row['paired_common_subset'] for row in protein['observations'])
+    assert protein['coverage']['by_halo']['1']['duplicate'] == 1
+    assert protein['coverage']['by_halo']['1']['feasible'] == 2
+    assert protein['coverage']['by_halo']['2']['skipped'] == 2
+    assert protein['coverage']['by_halo']['2']['attempted'] == 2
+
+
+def tiny_verdict(report):
+    from pathlib import Path
+    from mdgen.full_length.forward_evaluation import evaluate_reports
+    contract = json.loads((Path(__file__).resolve().parents[1] /
+        'docs/validation/43-contract/frozen-contract-v1.1.json').read_text())
+    settings = report['settings']
+    contract['forward_matrix'].update({'tickets': {'3': ['prot']}, 'replicas': [1],
+        'frames': {str(settings['model']['num_frames']): 'tiny'}, 't': settings['times'],
+        'noise_seeds': settings['noise_seeds'] or [settings['seed']]})
+    fixed = contract['fixed_settings']
+    fixed.update({'checkpoint_sha256': report['checkpoint_sha256'],
+        'region_budget': settings['region_residues'], 'warmup': settings['warmup'],
+        'measured_repeats': settings['repeats'], 'dropout': settings['model']['dropout']})
+    fixed['local_spatial'] = {
+        key: settings['model']['spatial_' + key if key in ('cell_width', 'contact_radius') else key]
+        for key in fixed['local_spatial']}
+    contract['seed_groups']['selection_seed'] = settings['selection_seed']
+    contract['seed_groups']['halo_rings'] = settings['halo_rings']
+    contract['seed_groups']['candidates_per_protein_replica'] = len(
+        report['proteins'][0]['candidates'])
+    return evaluate_reports([report], contract)['strata']
+
+
+@pytest.mark.parametrize('budget,offset,reason', [(L, 1e-3, 'threshold'),
+                                                (80, 1.0, 'threshold'),
+                                                (L, float('nan'), 'nonfinite')])
+def test_injected_region_output_fails_the_official_json(tmp_path, checkpoint, monkeypatch,
+                                                       budget, offset, reason):
+    from mdgen.full_length import halo_error
+    original = halo_error.measured_forward
+    calls = []
+
+    def injected(call, *args):
+        output, measurements = original(call, *args)
+        calls.append(None)
+        # One deduplicated region: full and region alternate for each t.
+        return (output + offset if len(calls) % 2 == 0 else output), measurements
+
+    monkeypatch.setattr(halo_error, 'measured_forward', injected)
+    report = run(tmp_path, checkpoint, '--halo_rings', '1', '--seed_groups', '0',
+                 '--region_residues', str(budget), '--regions', '1')
+    rows = tiny_verdict(report)
+    assert rows and all(row['verdict'] == 'fail' and row['reason'] == reason for row in rows)
+    assert {row['full_coverage_or_truncated'] for row in rows} == {
+        'full_coverage' if budget == L else 'truncated'}
+
+
+@pytest.mark.parametrize('oom_call,phase', [(1, 'full_forward'), (2, 'region_forward')])
+def test_paired_oom_is_recorded_and_its_comparison_stays_incomplete(
+        tmp_path, checkpoint, monkeypatch, oom_call, phase):
+    from mdgen.full_length import halo_error
+    original = halo_error.measured_forward
+    calls = []
+
+    def oom_once(*args):
+        calls.append(None)
+        if len(calls) == oom_call:  # full, region at t 0.3; then full, region at t 0.7
+            raise torch.cuda.OutOfMemoryError('CUDA out of memory')
+        return original(*args)
+
+    monkeypatch.setattr(halo_error, 'measured_forward', oom_once)
+    report = run(tmp_path, checkpoint, '--halo_rings', '1', '--seed_groups', '0',
+                 '--regions', '1')
+    protein, = report['proteins']
+    measurements = protein['measurements']['full' if phase == 'full_forward' else 'regions']
+    failed, = [m for m in measurements if m.get('status') == 'oom']
+    assert failed['failure_phase'] == phase and failed['t'] == 0.3 and failed['runs'] == []
+    assert 'peak_memory_allocated_bytes' in failed and 'peak_memory_reserved_bytes' in failed
+    assert {row['t'] for row in protein['observations']} == {0.7}  # later paths still ran
+    rows = tiny_verdict(report)
+    assert all(row['verdict'] == 'incomplete' and row['reason'] == 'oom'
+               and row['oom'][0]['failure_phase'] == phase for row in rows if row['t'] == 0.3)
+    assert not any(row.get('oom') for row in rows if row['t'] == 0.7)
+
+
+def test_nonfinite_in_an_earlier_measured_repeat_is_not_hidden():
+    from mdgen.full_length.halo_error import measured_forward
+    values = iter([torch.tensor(float('nan')), torch.tensor(1.0)])
+    output, runs = measured_forward(lambda: next(values), 'cpu', 0, 2)
+    assert output.isfinite()
+    assert runs[0]['nonfinite'] == 1
+    assert runs[1]['nonfinite'] == 0
+
+
+def test_multiple_noise_seeds_reproduce_the_single_seed_result(tmp_path, checkpoint):
+    common = ('--halo_rings', '1', '2', '--selection_seed', '43002')
+    multiple = run(tmp_path, checkpoint, *common, '--noise_seeds', '0', '1', '2')
+    single = run(tmp_path, checkpoint, *common, '--noise_seeds', '2')
+    rows = [r for r in multiple['proteins'][0]['observations'] if r['noise_seed'] == 2]
+    assert rows == single['proteins'][0]['observations']
+    assert multiple['proteins'][0]['candidates'] == single['proteins'][0]['candidates']
+
+
+def test_formal_cli_requires_gpu_before_loading_a_model(tmp_path, monkeypatch):
+    monkeypatch.setattr(torch.cuda, 'is_available', lambda: False)
+    split = write_protein(tmp_path)
+    with pytest.raises(RuntimeError, match='missing_gpu'):
+        main(['--sim_ckpt', 'missing.ckpt', '--data_dir', str(tmp_path),
+              '--split', str(split), '--output', str(tmp_path / 'r.json'), '--require_gpu'])
+
+
+def test_capacity_report_cannot_be_used_as_forward_evidence(tmp_path, checkpoint):
+    report = run(tmp_path, checkpoint, '--halo_rings', '1', '2', '--capacity_only',
+                 '--seed_groups', '0', '--regions', '1')
+    assert all(row['verdict'] == 'incomplete' for row in tiny_verdict(report))
+
+
+@pytest.mark.parametrize('seeds', [(0, 1), (1, 0)])
+def test_dedup_loss_groups_per_halo_across_candidate_subsets(tmp_path, checkpoint, monkeypatch,
+                                                          seeds):
+    def same_loss_set(partition, ca, **kwargs):
+        if kwargs['seed_group'] == 1 and kwargs['halo_rings'] == 2:
+            raise ValueError('deep halo exceeds budget')
+        return with_halo(partition, (0,), kwargs['halo_rings'])
+
+    monkeypatch.setattr('mdgen.full_length.halo_error.sample_region_groups', same_loss_set)
+    protein, = run(tmp_path, checkpoint, '--halo_rings', '1', '2', '--seed_groups',
+                   *map(str, seeds))['proteins']
+    assert len(protein['regions']) == 1
+    shallow = [c['by_halo']['1'] for c in protein['candidates']]
+    assert [c['status'] for c in shallow] == ['selected', 'duplicate']
+    assert shallow[0]['region_id'] == shallow[1]['region_id']
+    assert protein['coverage']['by_halo']['1']['duplicate'] == 1
+    assert protein['coverage']['by_halo']['1']['deduplicated_regions'] == 1
+    measurements = protein['measurements']['regions']
+    assert sum(row['halo_rings'] == 1 for row in measurements) == 2  # one per t
+    assert all(row['paired_common_subset'] for row in protein['observations'])
+    assert [c['paired_common_subset'] for c in shallow] == [g == 0 for g in seeds]

@@ -19,18 +19,27 @@
 set -eo pipefail
 source job/env.sh
 : "${MDGEN_ATLAS_CKPT:?set MDGEN_ATLAS_CKPT to the ATLAS checkpoint path}"
-: "${MDGEN_HALO_DATA:?set MDGEN_HALO_DATA to the NPY directory}"
-: "${MDGEN_HALO_SPLIT:?set MDGEN_HALO_SPLIT to the split CSV}"
 export OMP_NUM_THREADS="${SLURM_CPUS_PER_TASK}"
 export PYTHONUNBUFFERED=1
 OUT="results/halo_error_${SLURM_JOB_ID}"
 mkdir -p "$OUT"
 
-if [ -n "${MDGEN_ISSUE43_FRAMES:-}" ]; then
-    exec python scripts/issue43_pilot.py --mode forward --frames "$MDGEN_ISSUE43_FRAMES" \
+# Ticket 3/4: MDGEN_ISSUE43_MODE=baseline_forward or long_forward; pass --cases or shard options.
+# Use a 30-minute scheduler limit for the frozen matrix. Planning calls the driver directly.
+if [ -n "${MDGEN_ISSUE43_FRAMES:-}" ] || [ "${MDGEN_ISSUE43_MODE:-}" = baseline_forward ] \
+        || [ "${MDGEN_ISSUE43_MODE:-}" = long_forward ]; then
+    frame_args=()
+    if [ -n "${MDGEN_ISSUE43_FRAMES:-}" ]; then
+        frame_args=(--frames "$MDGEN_ISSUE43_FRAMES")
+    fi
+    exec python scripts/issue43_pilot.py --mode "${MDGEN_ISSUE43_MODE:-forward}" \
+        "${frame_args[@]}" \
         --data_root "${MDGEN_ISSUE43_DATA:?set the Ticket 1 data root}" \
-        --checkpoint "$MDGEN_ATLAS_CKPT" --output_dir "$OUT"
+        --checkpoint "$MDGEN_ATLAS_CKPT" --output_dir "$OUT" "$@"
 fi
+
+: "${MDGEN_HALO_DATA:?set MDGEN_HALO_DATA to the NPY directory}"
+: "${MDGEN_HALO_SPLIT:?set MDGEN_HALO_SPLIT to the split CSV}"
 
 nvidia-smi --query-gpu=name,uuid,memory.total --format=csv
 python -c "import torch; print('PyTorch:', torch.__version__); print('GPU:', torch.cuda.get_device_name(0)); assert torch.cuda.is_available()"

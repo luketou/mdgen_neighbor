@@ -196,10 +196,36 @@ def training_candidates(root, protein, replica):
     return result
 
 
+def baseline_forward_cases(root, checkpoint, contract, ticket='3'):
+    from itertools import product
+    matrix = contract['forward_matrix']
+    cases = []
+    for protein, replica, frames, t, noise in product(
+            matrix['tickets'][ticket], matrix['replicas'], map(int, matrix['frames']),
+            matrix['t'], matrix['noise_seeds']):
+        identity = f'{protein}-R{replica}-f{frames}-t{t}-noise{noise}'
+        command = [sys.executable, '-m', 'mdgen.full_length.halo_error',
+            '--sim_ckpt', str(checkpoint), '--data_dir', str(root / 'arrays'),
+            '--split', str(root / 'validation.csv'), '--suffix', '_i400ps',
+            '--partition_dir', str(root / 'partitions'), '--pdb_id', protein,
+            '--replicate', str(replica), '--num_frames', str(frames),
+            '--region_residues', '896', '--selection_seed', str(SELECTION_SEED),
+            '--regions', '8', '--halo_rings', '1', '2', '--times', str(t),
+            '--noise_seeds', str(noise), '--warmup', '1', '--repeats', '3',
+            '--require_gpu', *LOCAL]
+        cases.append({'id': identity, 'protein': protein, 'replica': replica,
+                      'frames': frames, 't': t, 'noise_seed': noise, 'command': command})
+    return cases
+
+
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--mode', choices=('inventory', 'forward', 'train', 'sweep'), required=True)
-    parser.add_argument('--frames', type=int, help='frame count; required except in sweep mode')
+    parser.add_argument('--mode', required=True,
+                        choices=('inventory', 'forward', 'baseline_forward', 'long_forward',
+                                 'train', 'sweep'))
+    parser.add_argument('--frames', type=int, help='required except sweep/baseline_forward')
+    parser.add_argument('--shard_count', type=int, default=1)
+    parser.add_argument('--shard_index', type=int, default=0)
     parser.add_argument('--data_root', type=Path, required=True)
     parser.add_argument('--checkpoint', type=Path, required=True)
     parser.add_argument('--output_dir', type=Path, required=True)
@@ -218,7 +244,13 @@ def main(argv=None):
                         help=f'seconds per case; default {SWEEP_CASE_TIMEOUT_S} in sweep mode, '
                              'otherwise 120 for <=4 frames, else 360')
     args = parser.parse_args(argv)
-    if args.mode == 'sweep':
+    if args.shard_count < 1 or not 0 <= args.shard_index < args.shard_count:
+        parser.error('require 0 <= shard_index < shard_count')
+    paired = args.mode in ('baseline_forward', 'long_forward')
+    if paired:
+        if args.frames is not None or args.memory != DEFAULT_MEMORY:
+            parser.error(f'{args.mode} uses frozen frames and memory settings')
+    elif args.mode == 'sweep':
         if args.protein is None or args.replica is None or not args.step:
             parser.error('sweep mode requires --protein, --replica and --step')
     elif args.frames is None or args.frames <= 0:
@@ -247,7 +279,13 @@ def main(argv=None):
             '--num_frames', str(args.frames), '--selection_seed', str(SELECTION_SEED), '--seed', '0',
             '--times', '0.5', *local_args(args.memory)]
     cases = []
-    if args.mode == 'sweep':
+    contract_path = Path(__file__).resolve().parents[1] / (
+        'docs/validation/43-contract/frozen-contract-v1.1.json')
+    if paired:
+        contract = json.loads(contract_path.read_text())
+        cases = baseline_forward_cases(root, args.checkpoint, contract,
+                                       '4' if args.mode == 'long_forward' else '3')
+    elif args.mode == 'sweep':
         cases = sweep_cases(root, args.checkpoint, args.output_dir, args.protein, args.replica,
                             args.step)
     elif args.mode == 'inventory':
@@ -282,13 +320,20 @@ def main(argv=None):
                                                 candidate.get('seed_group'), args.memory)
                     cases.append({'id': identity, 'protein': protein, 'replica': replica,
                                   **candidate, 'command': command})
-    cases = select_cases(cases, args.cases)
+    cases = select_cases(cases, args.cases)[args.shard_index::args.shard_count]
     for case in cases:
         case.setdefault('frames', args.frames)
         case['memory'] = memory_of(case.get('step', args.memory))
         case['timeout_s'] = args.case_timeout or (
             SWEEP_CASE_TIMEOUT_S if args.mode == 'sweep' else 120 if case['frames'] <= 4 else 360)
-    report = {'mode': args.mode, 'frames': args.frames, 'checkpoint_sha256': checkpoint_hash,
+    source_root = Path(__file__).resolve().parents[1]
+    source_paths = sorted((source_root / 'mdgen').rglob('*.py')) + [
+        Path(__file__).resolve(), source_root / 'job/submit_halo_error.sh', contract_path]
+    source_manifest = [{'path': str(path.relative_to(source_root)), 'sha256': file_sha256(path)}
+                       for path in source_paths]
+    report = {'source_manifest': source_manifest,
+              'shard_count': args.shard_count, 'shard_index': args.shard_index,
+              'mode': args.mode, 'frames': args.frames, 'checkpoint_sha256': checkpoint_hash,
               # Sweep steps carry their own settings; each case records its actual `memory`.
               'memory_settings': None if args.mode == 'sweep' else args.memory,
               'selected_cases': args.cases,
@@ -298,13 +343,17 @@ def main(argv=None):
                               if args.mode == 'sweep' else None),
               'plan_only': args.plan_only, 'driver_finished': False,
               'policy_revision': 2, 'pilot_candidates': 8,
-              'case_order': 'long protein R1, baselines R1, then R2/R3',
+              'case_order': ('protein, replica, frames, t, noise_seed'
+                             if paired else 'long protein R1, baselines R1, then R2/R3'),
               'input_manifest': input_manifest,
               'slurm_job_id': os.environ.get('SLURM_JOB_ID'),
               'warmup': 1, 'measured_repeats': 3,
               'training_comparison': 'capacity cases have different supervision; '
                                      'coverage controls align noise and supervision, no thresholds',
-              'memory_policy': 'standalone full and region forward; reference output released',
+              'memory_policy': ('paired forward retains the full reference output; an OOM path '
+                                'is recorded with its phase and peaks and later paths still run'
+                                if paired else
+                                'standalone full and region forward; reference output released'),
               'cases': cases}
     if os.environ.get('MDGEN_RUN_DIR'):
         run = Path(os.environ['MDGEN_RUN_DIR'])
@@ -357,26 +406,37 @@ def main(argv=None):
                                         env=child_env(case['memory'], os.environ))
                 case['returncode'] = result.returncode
                 case['status'] = 'completed' if result.returncode == 0 else 'failed'
+            except OSError as error:
+                stream.write(str(error))
+                case.update({'status': 'failed', 'returncode': None})
             except subprocess.TimeoutExpired:
-                case['status'] = 'timeout'
+                case.update({'status': 'timeout', 'failure_class': 'timeout',
+                             'failure_phase': 'child_process', 'returncode': None})
         case['elapsed_s'] = time.monotonic() - before
         text = log.read_text(errors='replace')
         if case['status'] == 'failed':
             case['failure_class'] = ('oom' if 'out of memory' in text.lower() else
+                'missing_gpu' if 'missing_gpu' in text else
                 'infeasible_seed' if 'cannot hold seed group' in text else 'program_error')
             case['failure_phase'] = ('backward' if 'backward(' in text or 'run_backward' in text
                 else 'optimizer' if 'optimizer.step' in text else 'forward_or_setup')
         if case['status'] == 'completed' and not Path(case['output']).is_file():
-            case['status'] = 'missing_report'
+            case.update({'status': 'missing_report', 'failure_class': 'program_error',
+                         'failure_phase': 'report_validation'})
         elif case['status'] == 'completed':
             payload = Path(case['output']).read_bytes()
-            child = json.loads(payload)
             case['output_sha256'] = hashlib.sha256(payload).hexdigest()
-            # Raw residue observations stay at the recorded output path on the server.
-            for protein in child.get('proteins', []):
-                protein.pop('observations', None)
-            summary['reports'][case['id']] = child
-            (args.output_dir / 'summary.json').write_text(json.dumps(summary, indent=2))
+            try:
+                child = json.loads(payload)
+            except (ValueError, UnicodeError) as error:
+                case.update({'status': 'failed', 'failure_class': 'program_error',
+                             'failure_phase': 'report_validation', 'reason': str(error)})
+            else:
+                # Raw residue observations stay at the recorded output path on the server.
+                for protein in child.get('proteins', []):
+                    protein.pop('observations', None)
+                summary['reports'][case['id']] = child
+                (args.output_dir / 'summary.json').write_text(json.dumps(summary, indent=2))
         save()
         print(case['id'], case['status'], flush=True)
     report['driver_finished'] = True
