@@ -266,3 +266,81 @@ def test_sweep_plans_full_protein_training_steps(tmp_path):
     command = second['command']
     assert command[command.index('--group_batch_size') + 1] == '1'
     assert (out / '6sup_A.csv').read_text().splitlines()[1] == '6sup_A,GGG'
+
+
+def test_ticket3_plan_executes_the_frozen_paired_matrix(tmp_path, monkeypatch):
+    root, checkpoint = _pilot_inputs(tmp_path, monkeypatch)
+    monkeypatch.setattr(pilot.subprocess, 'run', lambda *a, **k: pytest.fail('plan ran a model'))
+    report = pilot.main(['--mode', 'baseline_forward', '--plan_only',
+                         '--data_root', str(root), '--checkpoint', str(checkpoint),
+                         '--output_dir', str(tmp_path / 'out')])
+    assert len(report['cases']) == 162
+    assert report['source_manifest']
+    axes = set()
+    for case in report['cases']:
+        cmd = case['command']
+        assert '--capacity_only' not in cmd
+        assert cmd[cmd.index('--halo_rings') + 1:cmd.index('--halo_rings') + 3] == ['1', '2']
+        assert cmd[cmd.index('--regions') + 1] == '8'
+        assert cmd[cmd.index('--selection_seed') + 1] == '43002'
+        assert cmd[cmd.index('--warmup') + 1] == '1'
+        assert cmd[cmd.index('--repeats') + 1] == '3'
+        assert '--require_gpu' in cmd
+        axes.add((case['protein'], case['replica'], case['frames'], case['t'], case['noise_seed']))
+    from itertools import product
+    assert axes == set(product(pilot.PROTEINS[:3], (1, 2, 3), (4, 250),
+                               (0.25, 0.5, 0.75), (0, 1, 2)))
+
+
+def test_ticket3_shards_cover_every_case_once(tmp_path, monkeypatch):
+    root, checkpoint = _pilot_inputs(tmp_path, monkeypatch)
+    ids = []
+    for shard in range(3):
+        report = pilot.main(['--mode', 'baseline_forward', '--plan_only',
+            '--data_root', str(root), '--checkpoint', str(checkpoint),
+            '--output_dir', str(tmp_path / f'out{shard}'),
+            '--shard_count', '3', '--shard_index', str(shard)])
+        assert len(report['cases']) == 54
+        ids.extend(case['id'] for case in report['cases'])
+    assert len(set(ids)) == len(ids) == 162
+
+
+@pytest.mark.parametrize('failure', ['oom', 'missing_gpu', 'timeout', 'program_error'])
+def test_ticket3_driver_keeps_execution_failure_classes(tmp_path, monkeypatch, failure):
+    import subprocess
+    root, checkpoint = _pilot_inputs(tmp_path, monkeypatch)
+
+    def failed(command, stdout, **kwargs):
+        if failure == 'timeout':
+            raise subprocess.TimeoutExpired(command, 1)
+        stdout.write('CUDA out of memory' if failure == 'oom' else failure)
+        return subprocess.CompletedProcess(command, 1)
+
+    monkeypatch.setattr(pilot.subprocess, 'run', failed)
+    report = pilot.main(['--mode', 'baseline_forward', '--data_root', str(root),
+        '--checkpoint', str(checkpoint), '--output_dir', str(tmp_path / 'out'),
+        '--cases', '6sms_A-R1-f4-t0.25-noise0'])
+    case, = report['cases']
+    assert case['failure_class'] == failure
+    assert case['status'] == ('timeout' if failure == 'timeout' else 'failed')
+    assert Path(case['log']).is_file()
+    assert 'returncode' in case and case['failure_phase']
+
+
+@pytest.mark.parametrize('payload', [None, '{invalid json'])
+def test_ticket3_invalid_child_report_is_a_recorded_program_error(tmp_path, monkeypatch, payload):
+    import subprocess
+    root, checkpoint = _pilot_inputs(tmp_path, monkeypatch)
+
+    def invalid(command, **kwargs):
+        if payload is not None:
+            Path(command[command.index('--output') + 1]).write_text(payload)
+        return subprocess.CompletedProcess(command, 0)
+
+    monkeypatch.setattr(pilot.subprocess, 'run', invalid)
+    report = pilot.main(['--mode', 'baseline_forward', '--data_root', str(root),
+        '--checkpoint', str(checkpoint), '--output_dir', str(tmp_path / 'out'),
+        '--cases', '6sms_A-R1-f4-t0.25-noise0'])
+    case, = report['cases']
+    assert report['driver_finished'] and case['failure_class'] == 'program_error'
+    assert case['failure_phase'] == 'report_validation'

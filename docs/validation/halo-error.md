@@ -44,3 +44,39 @@ L40S 上用 `job/submit_halo_error.sh`（見 `job/README.md`）。實測結果�
 零／近零參考（參考 RMS 不超過 `1e-6`）與無 supervision 的相對誤差為 `null`；`strata` 分別計數，不當成非有限模型輸出。`summary.relative.undefined` 計 undefined 分母，`nonfinite` 計模型 NaN／Inf。正式判定應使用分層結果及已確認的門檻。
 
 本次先導的核准範圍見 [比較提案](43-contract/proposal.md) 與 [門檻設定](43-contract/approved-forward.json)。設定 `MDGEN_ISSUE43_FRAMES`、`MDGEN_ISSUE43_DATA` 後，既有 launcher 透過 `scripts/issue43_pilot.py` 依固定次序呼叫本 CLI，保存每個 case 的參數、原始 JSON、log 與失敗狀態。`summary.json` 只省略逐殘基 observations；原始輸出 SHA-256 及路徑保留在 `manifest.json`。
+
+## Issue #43 Ticket 3 正式 forward
+
+`baseline_forward` 模式執行[凍結契約 v1.1](43-contract/frozen-contract-v1.1.json) 的三個基準蛋白矩陣，呼叫上述正式 Halo CLI，保留完整蛋白 reference 作成對比較。原有 `forward` 模式仍是容量先導。CPU 規劃指令（須能讀到 Ticket 1 資料與 checkpoint）：
+
+```bash
+python scripts/issue43_pilot.py --mode baseline_forward --plan_only \
+  --data_root /share/home/r15543056/MDgen/mdgen/data/atlas_validation_ticket1_20261023b \
+  --checkpoint /share/home/r15543056/MDgen/mdgen/ckpt/atlas.ckpt \
+  --output_dir results/issue43-t3-plan
+```
+
+共有 162 個 CLI case：三蛋白 × R1–R3 × 4／250 幀 × 三個 t × 三個 noise seed。每個 case 同時比較 halo 1／2，以 selection seed 43002 的 randperm 前八候選、預算 896、暖機一次加三次量測執行。基準蛋白應全部完整涵蓋；這只能提供工具一致性證據。`--require_gpu` 防止正式執行時靜默退回 CPU。
+
+省略 `--plan_only` 即執行；`--cases ID ...` 選擇明列 case，或加 `--shard_count N --shard_index I`（I 從 0 起）作互斥分片。分片不等於增加 job 配額；orchestrator 仍須遵守已核准資源上限。driver 預設 27 分鐘後停止啟動 case，未執行者留在 manifest；單 case 預設 timeout 為短幀 120 秒／250 幀 360 秒，會受剩餘 job 預算限制。可從 manifest 的未執行 ID 規劃下一批，使用新的輸出目錄以保留證據。實際成對模式總時間與容量尚待 GPU 驗證。
+
+launcher 設定 `MDGEN_ISSUE43_MODE=baseline_forward`、`MDGEN_ISSUE43_DATA`、`MDGEN_ATLAS_CKPT`，並透過 `scripts/hpc_run.py` 的固定快照流程使用 `job/submit_halo_error.sh`；orchestrator 應指定 30 分鐘 scheduler limit。此模式不需要舊的 `MDGEN_ISSUE43_FRAMES`、`MDGEN_HALO_DATA`／`MDGEN_HALO_SPLIT`。launcher 會傳遞 case／shard 選項。manifest 保存來源檔 SHA-256、輸入 SHA-256、原始輸出 SHA-256、命令、log、Job ID，並沿用 `MDGEN_RUN_DIR` 的快照證據。
+
+Halo CLI 可用 `--noise_seeds 0 1 2` 在同一呼叫重現雜訊矩陣；候選選擇與 noise seed 無關。同一 noise seed 在每個 t 重建同一份 CPU 常態雜訊，完整蛋白與各 region 共用該輸入。逐殘基 observation／stratum 明列 protein、replica、frames、noise seed 與 `paired_common_subset`。固定候選的深圈不可行時，會用同一候選選出可行淺圈的 loss groups，標為非共同子集；不補抽。只有全部 halo 都不可行才從模型比較中跳過該候選。舊隨機 `--seed` 選樣介面保留深圈不可行即跳過的行為。
+
+`candidates[].by_halo` 保存每個候選在各 halo 的狀態與實際 region ID；重複 loss-group 集合只計算一次。`coverage.by_halo` 報 attempted、feasible、skipped、duplicate、deduplicated_regions、loss_residue_union_fraction，另報去重後的 full_coverage_regions／full_coverage_fraction；分母為零時 fraction 為 null。`seed_regions` 仍保留全部 seed group 的可行率。region geometry 保存 loss 殘基索引與邊界圈數，讓判定器能偵測缺少的 observation。非有限值在暖機及每次量測中分別保留，不會因最後一次輸出有限而消失。
+
+以 CPU 判定原始 JSON（不要使用省略 observations 的 `summary.json`）：
+
+```bash
+python -m mdgen.full_length.forward_evaluation \
+  --contract docs/validation/43-contract/frozen-contract-v1.1.json \
+  --ticket 3 --manifest results/halo_error_JOBID/manifest.json \
+  --output results/issue43-t3-evaluation.json
+```
+
+也可直接在選項前提供多個原始 JSON 路徑；多份 manifest 可一起傳入 `--manifest`。manifest 的原始輸出 hash 須相符；檔案路徑沿用執行時路徑，取回本機後需讓原始路徑可讀，或直接提供原始 JSON。判定器保存契約／manifest／原始 JSON 的 SHA-256，另保留 OOM、missing_gpu、timeout、program_error 等執行失敗。它不執行模型。
+
+逐契約分層輸出 `pass`、`fail`（threshold／nonfinite）、`not_evaluable`（沒有 regular 樣本）、`incomplete`（缺少矩陣 cell、region 或 observation）。完整涵蓋套逐殘基包絡；截斷套各自的 linear p95／max 門檻。零／近零參考仍要求絕對誤差，relative 為 null；沒有 regular 樣本不能宣告通過。coverage 的 loss 殘基聯集按該邊界分層計算；無法指定邊界的 skipped 候選以該 halo 總數附列，不能跨邊界相加。全矩陣 `passed` 只在每個必要分層都為 `pass` 時為 true；即使其他分層通過，`not_evaluable` 也會阻止整體通過，不能以 pooled 數值替代。
+
+判定前會核對凍結的 checkpoint hash、候選選法／數量、預算、halo、暖機／重複、FP32／TF32、dropout、local spatial 與模型幀數；不符或缺少必要設定時，報 `fail`／`settings_mismatch` 並列出欄位。候選完整但某 halo 全部不可行時，該 cell 為 `no_feasible_region`（保留 attempted／skipped 計數），與缺漏結果的 `incomplete` 分開，兩者都不算通過。同一 loss-group set 在同一 halo 只量一次；淺圈候選若重複成對候選，保留候選對應與各自的共同子集標記，唯一量測仍屬成對共同子集。
