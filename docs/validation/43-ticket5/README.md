@@ -16,9 +16,9 @@
 
 每個分片內各 case 都是獨立子程序；同一成對 case 的兩側、暖機與重複量測在同一程序、同一 GPU 執行。時間在 training batch 起訖同步 CUDA；包含梯度複製至 CPU 的探針成本，不是純 kernel 時間。每側記錄 peak allocated／reserved，CPU 為 null。暖機與量測均由相同初始狀態起步，不連續訓練。原始梯度與更新預設保留在 server，勿整包取回大型 `.pt`。
 
-成對 probe 與 matrix `run`（含 launcher 的 `--paired-shard`）都接受 `--raw-tensors {all,none}`，預設仍是 `all`，包含暖機與所有重複量測。使用 `none` 只省略原始 `.pt`；逐參數群梯度／更新摘要、比較、控制判定與每側 `.json` 證據仍完整保存，`artifact_path` 為 null。此選項不改變計算或凍結矩陣。
+成對 probe 與 matrix `run`（含 launcher 的 `--paired-shard`）都接受 `--raw-tensors {all,none}`，預設是 `none`；`all` 保存暖機與所有重複量測的原始 `.pt`，必須明確指定。`none` 只省略原始 `.pt`；逐參數群梯度／更新摘要、比較、控制判定與每側 `.json` 證據仍完整保存，`artifact_path` 為 null。此選項不改變計算或凍結矩陣。
 
-[儲存預估](storage-estimate.json)記錄審查提供的下限估算，並非 GPU 或檔案實測：預設每 case 原始張量至少 2.04 GiB，全部 1,620 個可執行 case 至少約 3.2 TiB；尚未計入序列化額外成本、JSON／log 與重跑。完整矩陣提交前應核對共享儲存配額，需節省磁碟時在下列 launcher 指令加上 `--raw-tensors none`。
+[儲存預估](storage-estimate.json)記錄審查提供的下限估算：`all` 每 case 原始張量至少 2.04 GiB（smoke 49597 實測 2.3 GB），全部 1,620 個可執行 case 至少約 3.2 TiB；尚未計入序列化額外成本、JSON／log 與重跑。因此預設不保存；需要原始張量的 case 才加 `--raw-tensors all`，並先核對共享儲存配額。
 
 正式執行採使用者 2026-10-24 確認的存法：`/share/home` 只剩約 107 GB，全部保存放不下；因此所有分片以 `--raw-tensors none` 執行，只有 [代表 case 清單](raw-tensor-cases.json) 的 16 個 case 以 `all` 保存原始張量（約 32 GB）。代表 case 涵蓋三個基準的 250／4 幀完整涵蓋、`6sup_A` 的 64／4 幀截斷、halo 1／2、同路徑控制與 t 0.25／0.75。
 

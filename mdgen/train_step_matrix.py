@@ -101,7 +101,7 @@ def failure_category(error, log=''):
     return 'program_error'
 
 
-def case_command(case, root, checkpoint, output, raw_tensors='all'):
+def case_command(case, root, checkpoint, output, raw_tensors='none'):
     """每個個案透過正式 probe CLI，固定第一幀及核准空間／數值設定。"""
     root, output = Path(root), Path(output)
     with (root / 'validation.csv').open() as stream:
@@ -130,7 +130,7 @@ def case_command(case, root, checkpoint, output, raw_tensors='all'):
 
 
 def run_shard(manifest, shard_id, output_root, data_root, checkpoint, timeout=1800,
-              preflight_report=None, raw_tensors='all'):
+              preflight_report=None, raw_tensors='none'):
     """每個分片獨立輸出；每個 case 用子程序隔離 CUDA/OOM。"""
     validate_manifest(manifest)
     shard = next(s for s in manifest['shards'] if s['shard_id'] == shard_id)
@@ -363,7 +363,7 @@ def main(argv=None):
     run.add_argument('--checkpoint', required=True)
     run.add_argument('--timeout', type=int, default=1800)
     run.add_argument('--preflight-report')
-    run.add_argument('--raw-tensors', choices=('all', 'none'), default='all')
+    run.add_argument('--raw-tensors', choices=('all', 'none'), default='none')
     merge = sub.add_parser('aggregate')
     merge.add_argument('--manifest', required=True)
     merge.add_argument('--results', nargs='*', default=[])

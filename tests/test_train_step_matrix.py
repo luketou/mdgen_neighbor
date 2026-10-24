@@ -203,3 +203,18 @@ def test_matrix_raw_tensor_option_reaches_probe_command(tmp_path, monkeypatch, m
     monkeypatch.setattr('mdgen.train_step_matrix.run_shard', run)
     main(['run', '--shard-id', manifest['shards'][0]['shard_id'], '--output-root', str(tmp_path),
           '--data-root', str(tmp_path), '--checkpoint', 'checkpoint', '--raw-tensors', mode])
+
+
+def test_matrix_run_omitting_raw_tensors_saves_none(tmp_path, monkeypatch):
+    from mdgen.train_step_matrix import case_command, main
+    manifest = make_manifest()
+    case = next(c for c in manifest['cases'] if c['plan_status'] == 'ready')
+    assert case_command.__defaults__[-1] == 'none'
+    shard_result = tmp_path / 'shard.json'
+    shard_result.write_text('{"status":"completed"}')
+    def run(*args):
+        assert args[-1] == 'none'
+        return shard_result
+    monkeypatch.setattr('mdgen.train_step_matrix.run_shard', run)
+    main(['run', '--shard-id', manifest['shards'][0]['shard_id'], '--output-root', str(tmp_path),
+          '--data-root', str(tmp_path), '--checkpoint', 'checkpoint'])

@@ -334,7 +334,8 @@ def test_control_identifies_nonfinite_predictions_separately_from_inputs(monkeyp
     (12, 20, 1, 'passed'), (60, 48, 1, 'descriptive')])
 def test_paired_region_uses_same_objective_and_real_optimizer(tmp_path, residues, budget, halo, expected):
     output = tmp_path / 'paired.json'
-    report = main(['--output', str(output), '--paired_region', '--synthetic_residues', str(residues),
+    report = main(['--output', str(output), '--paired_region', '--raw-tensors', 'all',
+        '--synthetic_residues', str(residues),
         '--seed_group', '0', '--time', '0.5', '--warmup', '0', '--repeats', '1', '--',
         *TINY, *LOCAL, '--batch_size', '1', '--region_residues', str(budget),
         '--halo_rings', str(halo), '--grad_checkpointing'])
@@ -499,7 +500,8 @@ def test_paired_raw_tensors_none_keeps_complete_json_summaries(tmp_path):
             assert reports[0]['measurements'][0][side][category] == reports[1]['measurements'][0][side][category]
 
 
-def test_paired_raw_tensor_default_is_all():
+def test_paired_raw_tensor_default_is_none():
+    # 每 case 原始張量約 2.3 GB；共享磁碟放不下整個矩陣，保存須明確指定 all。
     from mdgen.train_step_probe import parse_probe_args
     args, _ = parse_probe_args(['--output', 'unused'])
-    assert args.raw_tensors == 'all'
+    assert args.raw_tensors == 'none'

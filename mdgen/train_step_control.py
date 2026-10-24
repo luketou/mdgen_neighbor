@@ -235,7 +235,7 @@ def compare_paired_runs(a, b, ga, gb, ua, ub, *, control):
 
 
 def run_paired_region(args, items, seed, *, synthetic, warmup=1, repeats=3,
-                      control_type='paired', artifact_dir=None, use_sdpa=True, raw_tensors='all'):
+                      control_type='paired', artifact_dir=None, use_sdpa=True, raw_tensors='none'):
     """沿用 Lightning、Adam、clipping；每次皆由相同權重與空 optimizer 起步。"""
     from pathlib import Path
     if raw_tensors not in ('all', 'none'):
