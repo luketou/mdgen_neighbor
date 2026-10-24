@@ -30,3 +30,5 @@
 GPU Job 使用者核准上限為 7 個（6 個 shard 加 1 次重試），每個 1 張 L40S、2 CPU、32 GiB、30 分鐘，逐一執行；重試未使用。六個 GPU Job 共用 run `issue43-t3-forward-20261024T043915Z-a534fe4` 的唯讀快照（commit `a534fe4`），規劃 Job 使用同一 commit 的另一個快照。各 Job 的 preflight（`results/preflight_<job>.json`）均通過，stdout 以 manifest 完成標記結束；終態依據是完成標記與 manifest 的 `driver_finished`，未保存佇列查詢或 `sacct` 輸出。
 
 manifest 保存命令、checkpoint hash（`bc90c66e…`）、輸入檔 hash 與來源檔 hash。原始逐 case JSON 共 150846454 bytes，留在 server 的 run 目錄；[彙整](outcome.json) 的 `raw_reports` 列出每個檔案的遠端路徑、大小與 SHA-256，[契約判定](evaluation.json) 的 `sources` 另記錄判定時讀取的檔案 hash。判定在本機以 `python -m mdgen.full_length.forward_evaluation <raw JSON> --manifest <manifest> --ticket 3` 執行。
+
+表中的 manifest 與 log 於 2026-10-24 從 server 取回，取回後的 SHA-256 與 server 原檔相同：GPU Job 的檔案來自 `hpc_runs/issue43-t3-forward-20261024T043915Z-a534fe4/` 的 `results/halo_error_<job>/manifest.json` 與 `logs/<job>.out`，這 6 份 manifest 的 hash 與[契約判定](evaluation.json)的 `sources` 一致。規劃 Job 的檔案來自 `hpc_runs/issue43-t3-plan-20261024T043723Z-a534fe4/`，manifest 在 server 上的路徑是 `results/issue43-t3-plan/manifest.json`，這裡存為 `plan/results/manifest.json`；規劃 manifest 與各 log 先前未記錄 hash，無法與判定當時的檔案比對。
