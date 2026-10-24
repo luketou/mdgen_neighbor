@@ -106,3 +106,100 @@ def test_manifest_changes_are_rejected_before_execution_or_aggregation(tmp_path)
     with pytest.raises(ValueError, match='frozen matrix'):
         run_shard(manifest, manifest['shards'][0]['shard_id'], tmp_path, tmp_path, tmp_path / 'absent')
     assert not list(tmp_path.iterdir())
+
+
+def summary_record(identity='case', status='passed'):
+    metrics = dict(difference_rms=3., reference_zero=True, candidate_zero=False,
+                   one_sided_zero=True, near_zero_reference=True, nonfinite=0)
+    comparison = {'loss': dict(signed_difference=1., absolute_difference=1., relative_difference=None),
+                  'gradients': {'group': metrics}, 'updates': {'group': metrics.copy()}}
+    measurement = {'warmup': False, 'comparison': comparison,
+                   'full': {'step_time_s': 2., 'loss_finite': True},
+                   'candidate': {'step_time_s': 1., 'loss_finite': True}}
+    return {'case_id': identity, 'status': status, 'report': {
+        'alignment': {'loss_group_ids': [1], 'loss_residue_ids': [2, 3], 'full_length': 10},
+        'measurements': [measurement]}}
+
+
+@pytest.mark.parametrize('category', ['control_failure', 'nonfinite'])
+def test_dedup_preserves_failed_status_and_evidence(category):
+    manifest = make_manifest()
+    cases = [c for c in manifest['cases'] if c['plan_status'] == 'ready' and c['protein'] == '6sup_A'
+             and c['frames'] == 64 and c['halo'] == 1 and c['t'] == .25
+             and c['noise_seed'] == 0 and c['control_type'] == 'paired'][:2]
+    results = []
+    for index, case in enumerate(cases):
+        shard = next(s for s in manifest['shards'] if case['case_id'] in s['case_ids'])
+        record = summary_record(case['case_id'], 'failed' if index else 'descriptive')
+        record['failure_category'] = category
+        results.append(dict(manifest_id=manifest['manifest_id'], shard_id=shard['shard_id'], cases=[record]))
+    report = aggregate(manifest, results)
+    group = next(g for g in report['strata'] if any(c['case_id'] == cases[1]['case_id'] for c in g['cases']))
+    duplicate = next(c for c in group['cases'] if c['case_id'] == cases[1]['case_id'])
+    assert duplicate['status'] == 'failed'
+    assert duplicate['failure_category'] == category
+    assert duplicate['deduplicated'] is True
+    assert duplicate['duplicate_of'] == cases[0]['case_id']
+    assert group['status'] == '未完成'
+    assert group['statistics']['metrics']['loss.absolute_difference']['measurement_count'] == 1
+    assert not group['statistics']['failed_diagnostics']['metrics']
+
+
+def test_failed_diagnostics_counts_flags_and_filters_nonfinite_quantiles():
+    from mdgen.train_step_matrix import summarize
+    failed = summary_record('failed', 'failed')
+    bad = summary_record('nonfinite', 'failed')
+    bad['report']['measurements'][0]['comparison']['loss']['absolute_difference'] = float('nan')
+    bad['report']['measurements'][0]['comparison']['gradients']['group'].update(
+        difference_rms=float('inf'), reference_zero=None, nonfinite=2)
+    stats = summarize([summary_record(), failed, bad])
+    assert stats['metrics']['loss.absolute_difference']['measurement_count'] == 1
+    diagnostic = stats['failed_diagnostics']
+    assert diagnostic['metrics']['loss.absolute_difference']['median'] == 1
+    assert diagnostic['metrics']['loss.absolute_difference']['measurement_count'] == 1
+    assert diagnostic['counts']['loss.absolute_difference.nonfinite'] == 1
+    assert diagnostic['counts']['gradients.group.nonfinite'] == 2
+    assert diagnostic['counts']['gradients.group.reference_zero'] == 1
+    assert diagnostic['counts']['updates.group.one_sided_zero'] == 2
+    assert diagnostic['counts']['updates.group.near_zero_reference'] == 2
+    assert 'gradients.group.reference_zero' not in diagnostic['metrics']
+    json.dumps(stats, allow_nan=False)
+
+
+@pytest.mark.parametrize('message', [
+    'CUDA error: no CUDA-capable device is detected',
+    'cudaErrorNoDevice: no CUDA-capable device is detected',
+    'CUDA error: no devices supporting CUDA',
+    'CUDA_ERROR_NO_DEVICE: no CUDA-capable device is detected'])
+def test_real_cuda_no_device_errors(message):
+    assert failure_category(RuntimeError(message)) == 'missing_gpu'
+
+
+def test_preflight_structured_category_takes_precedence(tmp_path):
+    manifest = make_manifest()
+    preflight = tmp_path / 'structured.json'
+    preflight.write_text(json.dumps({'passed': False, 'failure_category': 'missing_gpu',
+                                    'error': 'localized driver message'}))
+    path = run_shard(manifest, manifest['shards'][0]['shard_id'], tmp_path,
+                     tmp_path, tmp_path / 'absent', preflight_report=preflight)
+    assert json.loads(path.read_text())['cases'][0]['failure_category'] == 'missing_gpu'
+
+
+@pytest.mark.parametrize('mode', ['all', 'none'])
+def test_matrix_raw_tensor_option_reaches_probe_command(tmp_path, monkeypatch, mode):
+    from mdgen.train_step_matrix import case_command, main, CONTRACT_DIR
+    manifest = make_manifest()
+    case = next(c for c in manifest['cases'] if c['plan_status'] == 'ready')
+    inventory = json.loads((CONTRACT_DIR / 'infeasible-groups.json').read_text())['proteins']
+    length = inventory[f"{case['protein']}_R{case['replica']}"]['residues']
+    (tmp_path / 'validation.csv').write_text(f"name,seqres\n{case['protein']},{'A' * length}\n")
+    command = case_command(case, tmp_path, 'checkpoint', tmp_path / 'probe.json', mode)
+    assert command[command.index('--raw-tensors') + 1] == mode
+    shard_result = tmp_path / 'shard.json'
+    shard_result.write_text('{"status":"completed"}')
+    def run(*args):
+        assert args[-1] == mode
+        return shard_result
+    monkeypatch.setattr('mdgen.train_step_matrix.run_shard', run)
+    main(['run', '--shard-id', manifest['shards'][0]['shard_id'], '--output-root', str(tmp_path),
+          '--data-root', str(tmp_path), '--checkpoint', 'checkpoint', '--raw-tensors', mode])

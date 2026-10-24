@@ -14,7 +14,11 @@
 
 控制套用契約選項 B，逐群判定，近零群組的相對差、norm ratio、cosine 為 null。截斷 case 的 `status: descriptive` 與 `control_passed: null` 不代表訓練近似通過。非有限值仍使 case 失敗。
 
-每個分片內各 case 都是獨立子程序；同一成對 case 的兩側、暖機與重複量測在同一程序、同一 GPU 執行。時間在 training batch 起訖同步 CUDA；包含梯度複製至 CPU 的探針成本，不是純 kernel 時間。每側記錄 peak allocated／reserved，CPU 為 null。暖機與量測均由相同初始狀態起步，不連續訓練。原始梯度與更新保留在 server，勿整包取回大型 `.pt`。
+每個分片內各 case 都是獨立子程序；同一成對 case 的兩側、暖機與重複量測在同一程序、同一 GPU 執行。時間在 training batch 起訖同步 CUDA；包含梯度複製至 CPU 的探針成本，不是純 kernel 時間。每側記錄 peak allocated／reserved，CPU 為 null。暖機與量測均由相同初始狀態起步，不連續訓練。原始梯度與更新預設保留在 server，勿整包取回大型 `.pt`。
+
+成對 probe 與 matrix `run`（含 launcher 的 `--paired-shard`）都接受 `--raw-tensors {all,none}`，預設仍是 `all`，包含暖機與所有重複量測。使用 `none` 只省略原始 `.pt`；逐參數群梯度／更新摘要、比較、控制判定與每側 `.json` 證據仍完整保存，`artifact_path` 為 null。此選項不改變計算或凍結矩陣。
+
+[儲存預估](storage-estimate.json)記錄審查提供的下限估算，並非 GPU 或檔案實測：預設每 case 原始張量至少 2.04 GiB，全部 1,620 個可執行 case 至少約 3.2 TiB；尚未計入序列化額外成本、JSON／log 與重跑。完整矩陣提交前應核對共享儲存配額，需節省磁碟時在下列 launcher 指令加上 `--raw-tensors none`。
 
 ## 分片與 JSON schema
 
@@ -31,11 +35,11 @@
 | shard | `manifest_id`、`shard_id`、唯一 `run_id`、`slurm_job_id`、`checkpoint_sha256`、`status`、`cases` |
 | 成對 probe | `alignment`（兩側 hash、分母、loss／region 全蛋白索引、t）、`warmup`、`measured_repeats`、`measurements`、`status` |
 | 每次量測 | `warmup`、`full`／`candidate`（loss 分子／分母、精度、時間、顯存、nonfinite、初始權重 hash、optimizer／clipping／缺梯度）、`comparison`（loss 差、逐群梯度與更新 norm／RMS／cosine／near-zero／控制判定） |
-| 原始 tensor | `probe/ITER-SIDE.pt` 的 `pre_clip_gradients`（逐參數）、`updates`（逐參數群）；同名 `.json` 保留已完成側證據 |
+| 原始 tensor | 預設 `probe/ITER-SIDE.pt` 的 `pre_clip_gradients`（逐參數）、`updates`（逐參數群）；同名 `.json` 保留已完成側證據 |
 | 失敗 | `failure_category`：`oom`／`missing_gpu`／`timeout`／`program_error`；`failure.json` 保存 traceback、stage、side、iteration、可取得的峰值；case record 保存 exit code、命令、log 路徑 |
-| 彙整 | `status`、`missing_shards`、`strata`（逐層 counts、原始 records、median／p95／max／有效量測數、去重與 loss 殘基聯集比例） |
+| 彙整 | `status`、`missing_shards`、`strata`（逐層 counts、原始 records、`statistics.metrics` 的 median／p95／max／有效量測數、`statistics.counts`、`statistics.failed_diagnostics`、去重與 loss 殘基聯集比例） |
 
-`boundary_ring: all_loss_residues` 表示 training loss／參數群梯度是整個固定 loss 集合的量，沒有把整體梯度冒充逐邊界梯度。彙整另依蛋白、replica、幀、t、noise seed、halo、完整涵蓋／截斷、控制類型與共同子集分層，不作跨蛋白 pooled 通過判定。量測重複次數不當獨立空間樣本。失敗與 `no_supervision` 個別計數；長蛋白若出現重複 loss-group 集合，保留原結果但不再當獨立 region。
+`boundary_ring: all_loss_residues` 表示 training loss／參數群梯度是整個固定 loss 集合的量，沒有把整體梯度冒充逐邊界梯度。彙整另依蛋白、replica、幀、t、noise seed、halo、完整涵蓋／截斷、控制類型與共同子集分層，不作跨蛋白 pooled 通過判定。量測重複次數不當獨立空間樣本。失敗與 `no_supervision` 個別計數；長蛋白若出現重複 loss-group 集合，以 `deduplicated: true` 與 `duplicate_of` 標記，保留原 `status`／失敗證據並排除統計。完成但失敗的控制保留在 `failed_diagnostics`，不混入通過／描述性樣本；zero、one-sided-zero、near-zero 與 nonfinite 使用明確 counts，非有限數值不進入分位數。環境設定失敗停止 launcher 並保留 `paired-setup-*/setup.log`／`setup-failure.txt`；只有結構化 `missing_gpu` preflight 失敗交給分片保存分類。
 
 ## 後續提交指令（本次未執行）
 
@@ -76,15 +80,25 @@ Job 結束時 stdout 最後印出獨立 `.../results/paired/SHARD/RUN/shard.json
 py -3 scripts/hpc_run.py fetch $runId results/t5-collected results/paired/SHARD/RUN/shard.json
 ```
 
-Smoke 通過後，用以下迴圈提交其餘所有分片，各一個獨立 Job；不等待前一個計算完成，因此排程器可分散至不同節點。同一分片重跑會產生新的 UUID 子目錄，不覆寫舊結果。連線或提交未知時迴圈停止，先查 `job_history`／排程器，勿整個迴圈重跑。
+Smoke 完成並通過後，用以下迴圈分批提交其餘分片，各一個獨立 Job。範例採人工節流：同時 pending／running 上限為 4 個；每批達上限後停止提交，核對本批全部 Job 已結束，再輸入 `completed` 繼續。執行期間不要從其他終端向同一 run 提交，以維持上限。同一分片重跑會產生新的 UUID 子目錄，不覆寫舊結果。連線或提交未知時迴圈停止，先查 `job_history`／排程器，勿整個迴圈重跑。
 
 ```powershell
+$maxInFlight = 4
+$inFlight = 0
 foreach ($shard in $manifest.shards) {
     if ($shard.shard_id -eq $smoke.shard_id) { continue }
+    if ($inFlight -ge $maxInFlight) {
+        py -3 scripts/hpc_run.py status $runId
+        if ($LASTEXITCODE -ne 0) { throw '查詢失敗，停止提交' }
+        $confirmed = Read-Host '核對排程器與 log，確認本批全部結束後輸入 completed；否則停止'
+        if ($confirmed -ne 'completed') { throw '尚未確認容量，停止提交' }
+        $inFlight = 0
+    }
     py -3 scripts/hpc_run.py submit --run $runId --tag $shard.shard_id `
         job/submit_training_region_probe.sh --paired-shard --shard-id $shard.shard_id `
         --data-root $data --checkpoint $checkpoint
     if ($LASTEXITCODE -ne 0) { throw "停止提交：$($shard.shard_id)，先核對狀態" }
+    $inFlight++
 }
 ```
 
@@ -107,5 +121,6 @@ foreach ($shard in $manifest.shards) {
 MDGEN_CPU_VENV=/home/luketou/.local/share/mdgen/venvs/cpu-py311 bash scripts/check.sh
 ```
 
-結果：271 passed、0 failed、2 skipped、14 deselected；獨立 CPU SDPA 6 組通過。測試涵蓋真正截斷／完整涵蓋、分母不等、零監督、非有限值、固定 halo loss groups、控制相對容差、原始梯度／更新保存、實際 backward hook 注入 OOM、preflight 缺 GPU、分片穩定性／完整性、重跑不覆寫及彙整缺口。這些都是 CPU 工具測試，沒有真實 GPU 資源或蛋白數值驗收結果。
+原始提交紀錄：271 passed、0 failed、2 skipped、14 deselected；獨立 CPU SDPA 6 組通過。測試涵蓋真正截斷／完整涵蓋、分母不等、零監督、非有限值、固定 halo loss groups、控制相對容差、原始梯度／更新保存、實際 backward hook 注入 OOM、preflight 缺 GPU、分片穩定性／完整性、重跑不覆寫及彙整缺口。這些都是 CPU 工具測試，沒有真實 GPU 資源或蛋白數值驗收結果。
 
+本次審查修正的 [CPU 紀錄](review-fix-validation.json)與 [SDPA 結果](review-fix-sdpa.json)：獨立完整 CPU pytest 為 290 passed、0 failed、2 skipped、14 deselected，SDPA 為 6 組通過；新增反例先重現失敗再修正。指定的 `scripts/check.sh` 退出碼仍為 2：工作樹與 index 的空白檢查通過，但歷史 `903971b` 的 README EOF 空白仍被 `HEAD^1..HEAD` 檢查擋下。本次已修正工作樹 EOF，依要求不改寫 Git 歷史、不 commit／push，也未提交 HPC Job。

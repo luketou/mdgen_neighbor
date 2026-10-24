@@ -95,12 +95,13 @@ def failure_category(error, log=''):
         return 'oom'
     if any(token in message for token in ('missing_gpu', 'No CUDA GPUs', 'No devices were found',
                                           'CUDA_ERROR_NO_DEVICE', 'no NVIDIA driver',
-                                          'CUDA driver initialization failed')):
+                                          'CUDA driver initialization failed', 'no CUDA-capable device is detected',
+                                          'no devices supporting CUDA')):
         return 'missing_gpu'
     return 'program_error'
 
 
-def case_command(case, root, checkpoint, output):
+def case_command(case, root, checkpoint, output, raw_tensors='all'):
     """每個個案透過正式 probe CLI，固定第一幀及核准空間／數值設定。"""
     root, output = Path(root), Path(output)
     with (root / 'validation.csv').open() as stream:
@@ -114,7 +115,7 @@ def case_command(case, root, checkpoint, output):
         writer.writeheader()
         writer.writerow(row)
     return [sys.executable, '-m', 'mdgen.train_step_probe', '--output', str(output),
-        '--paired_region', '--control_type', case['control_type'],
+        '--paired_region', '--raw-tensors', raw_tensors, '--control_type', case['control_type'],
         '--sim_ckpt', str(checkpoint), '--time', str(case['t']), '--seed', str(case['noise_seed']),
         '--seed_group', str(case['group']), '--warmup', '1', '--repeats', '3', '--',
         '--train_split', str(split), '--val_split', str(split), '--data_dir', str(root / 'arrays'),
@@ -129,7 +130,7 @@ def case_command(case, root, checkpoint, output):
 
 
 def run_shard(manifest, shard_id, output_root, data_root, checkpoint, timeout=1800,
-              preflight_report=None):
+              preflight_report=None, raw_tensors='all'):
     """每個分片獨立輸出；每個 case 用子程序隔離 CUDA/OOM。"""
     validate_manifest(manifest)
     shard = next(s for s in manifest['shards'] if s['shard_id'] == shard_id)
@@ -168,7 +169,7 @@ def run_shard(manifest, shard_id, output_root, data_root, checkpoint, timeout=18
                 raise preflight_error
             if checkpoint_error is not None:
                 raise checkpoint_error
-            command = case_command(case, data_root, checkpoint, child / 'probe.json')
+            command = case_command(case, data_root, checkpoint, child / 'probe.json', raw_tensors)
             record['command'] = command
             with (child / 'stdout.log').open('w') as stdout, (child / 'stderr.log').open('w') as stderr:
                 process = subprocess.run(command, stdout=stdout, stderr=stderr, timeout=timeout,
@@ -193,7 +194,10 @@ def run_shard(manifest, shard_id, output_root, data_root, checkpoint, timeout=18
                     for run in (measurement['full'], measurement['candidate']))
                 record['failure_category'] = 'nonfinite' if nonfinite else 'control_failure'
         except Exception as error:
-            record.update(failure_category=failure_category(error), error=str(error)[-16000:])
+            category = failure_category(error)
+            if record.get('stage') == 'preflight':
+                category = result.get('preflight', {}).get('failure_category', category)
+            record.update(failure_category=category, error=str(error)[-16000:])
             evidence = child / 'failure.json'
             if evidence.exists():
                 record['evidence'] = json.loads(evidence.read_text())
@@ -247,7 +251,8 @@ def aggregate(manifest, results):
             for measurement in record.get('report', {}).get('measurements', []):
                 if not measurement['warmup']:
                     group['counts']['nonfinite'] += sum(
-                        run.get('gradient_nonfinite', 0) + run.get('parameters_nonfinite_after_step', 0)
+                        int(not run.get('loss_finite', True))
+                        + run.get('gradient_nonfinite', 0) + run.get('parameters_nonfinite_after_step', 0)
                         + sum(run.get('nonfinite_counts', {}).values())
                         for run in (measurement['full'], measurement['candidate']))
             if record['status'] in ('missing', 'failed'):
@@ -263,7 +268,7 @@ def aggregate(manifest, results):
             identity = tuple(alignment['loss_group_ids'])
             if identity in unique:
                 # 長蛋白候選若也重複，保留原始量測但不當獨立 region。
-                record = {**record, 'status': 'duplicate', 'duplicate_of': unique[identity]}
+                record = {**record, 'deduplicated': True, 'duplicate_of': unique[identity]}
                 group['counts']['duplicate'] += 1
             else:
                 unique[identity] = record['case_id']
@@ -277,50 +282,68 @@ def aggregate(manifest, results):
 
 def summarize(records):
     import numpy as np
-    values, sources = {}, {}
+    buckets = {name: {'values': {}, 'sources': {}, 'counts': {}}
+               for name in ('completed', 'failed')}
     loss_ids, region_ids, length = set(), set(), None
     for record in records:
+        if record.get('deduplicated'):
+            continue
         report = record.get('report', {})
         alignment = report.get('alignment', {})
         loss_ids.update(alignment.get('loss_residue_ids', []))
         if alignment:
             region_ids.add(tuple(alignment['loss_group_ids']))
             length = alignment['full_length']
-        if record['status'] not in ('passed', 'descriptive'):
+        if record['status'] not in ('passed', 'descriptive', 'failed'):
             continue
+        bucket = buckets['failed' if record['status'] == 'failed' else 'completed']
+        values, sources, counts = (bucket[k] for k in ('values', 'sources', 'counts'))
+
+        def sample(key, value):
+            if value is None:
+                return
+            if not np.isfinite(value):
+                counts[key + '.nonfinite'] = counts.get(key + '.nonfinite', 0) + 1
+                return
+            values.setdefault(key, []).append(value)
+            sources.setdefault(key, set()).add(record['case_id'])
+
         for measurement in report.get('measurements', []):
             if measurement['warmup']:
                 continue
             for side in ('full', 'candidate'):
                 for metric in ('step_time_s', 'peak_memory_allocated_bytes', 'peak_memory_reserved_bytes'):
-                    name = f'{side}.{metric}'
-                    values.setdefault(name, []).append(measurement[side].get(metric))
-                    sources.setdefault(name, set()).add(record['case_id'])
+                    sample(f'{side}.{metric}', measurement[side].get(metric))
+                for metric in ('gradient_nonfinite', 'parameters_nonfinite_after_step'):
+                    key = f'{side}.{metric}'
+                    counts[key] = counts.get(key, 0) + measurement[side].get(metric, 0)
+                key = f'{side}.loss_nonfinite'
+                counts[key] = counts.get(key, 0) + int(not measurement[side].get('loss_finite', True))
+                for metric, count in measurement[side].get('nonfinite_counts', {}).items():
+                    key = f'{side}.nonfinite_counts.{metric}'
+                    counts[key] = counts.get(key, 0) + count
             comparison = measurement['comparison']
             for key in ('signed_difference', 'absolute_difference', 'relative_difference'):
-                name = 'loss.' + key
-                values.setdefault(name, []).append(comparison['loss'][key])
-                if comparison['loss'][key] is not None:
-                    sources.setdefault(name, set()).add(record['case_id'])
+                sample('loss.' + key, comparison['loss'][key])
             for category in ('gradients', 'updates'):
                 for name, metrics in comparison[category].items():
                     for metric, value in metrics.items():
-                        if isinstance(value, (float, int)) and not isinstance(value, bool):
-                            key = f'{category}.{name}.{metric}'
-                            values.setdefault(key, []).append(value)
-                            sources.setdefault(key, set()).add(record['case_id'])
-                    for metric in ('reference_zero', 'one_sided_zero', 'near_zero_reference'):
                         key = f'{category}.{name}.{metric}'
-                        values.setdefault(key, []).append(int(metrics[metric]))
-                        sources.setdefault(key, set()).add(record['case_id'])
-    stats = {}
-    for key, samples in values.items():
-        samples = [v for v in samples if v is not None]
-        if samples:
+                        if metric in ('reference_zero', 'candidate_zero', 'one_sided_zero',
+                                      'near_zero_reference', 'control_passed', 'nonfinite'):
+                            counts[key] = counts.get(key, 0) + int(value or 0)
+                        elif isinstance(value, (float, int)) and not isinstance(value, bool):
+                            sample(key, value)
+    summaries = {}
+    for name, bucket in buckets.items():
+        stats = {}
+        for key, samples in bucket['values'].items():
             stats[key] = {'median': float(np.median(samples)), 'p95': float(np.quantile(samples, .95)),
                           'max': max(samples), 'measurement_count': len(samples),
-                          'effective_samples': len(sources.get(key, set()))}
-    return {'metrics': stats, 'deduplicated_regions': len(region_ids),
+                          'effective_samples': len(bucket['sources'][key])}
+        summaries[name] = {'metrics': stats, 'counts': bucket['counts']}
+    return {**summaries['completed'], 'failed_diagnostics': summaries['failed'],
+            'deduplicated_regions': len(region_ids),
             'loss_residue_union_fraction': len(loss_ids) / length if length else None,
             'repeat_policy': '重複量測不是獨立空間樣本'}
 
@@ -340,6 +363,7 @@ def main(argv=None):
     run.add_argument('--checkpoint', required=True)
     run.add_argument('--timeout', type=int, default=1800)
     run.add_argument('--preflight-report')
+    run.add_argument('--raw-tensors', choices=('all', 'none'), default='all')
     merge = sub.add_parser('aggregate')
     merge.add_argument('--manifest', required=True)
     merge.add_argument('--results', nargs='*', default=[])
@@ -351,7 +375,7 @@ def main(argv=None):
         manifest = json.loads(Path(args.manifest).read_text()) if args.manifest else make_manifest(args.cases_per_shard)
         if args.action == 'run':
             output = run_shard(manifest, args.shard_id, args.output_root, args.data_root,
-                               args.checkpoint, args.timeout, args.preflight_report)
+                               args.checkpoint, args.timeout, args.preflight_report, args.raw_tensors)
             print(output)
             if json.loads(output.read_text())['status'] == 'failed':
                 raise SystemExit(1)

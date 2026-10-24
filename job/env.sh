@@ -38,6 +38,17 @@ fi
 # Use the activated project's interpreter for the shared readiness gate.
 # CPU-partition launchers set MDGEN_REQUIRE_GPU=0 to skip it.
 if [ "${MDGEN_REQUIRE_GPU:-1}" != 0 ]; then
-    "$MDGEN_VENV/bin/python" scripts/diagnostics/gpu_preflight.py --require-gpu \
-        --output "${MDGEN_PREFLIGHT_OUTPUT:-results/preflight_${SLURM_JOB_ID:-manual}.json}" || return $?
+    if "$MDGEN_VENV/bin/python" scripts/diagnostics/gpu_preflight.py --require-gpu \
+        --output "${MDGEN_PREFLIGHT_OUTPUT:-results/preflight_${SLURM_JOB_ID:-manual}.json}"; then
+        :
+    else
+        mdgen_preflight_exit=$?
+        # 只允許成對 launcher 將已確認的缺 GPU 交給分片工具；其他失敗立即停止。
+        if [ "${MDGEN_DEFER_MISSING_GPU:-0}" = 1 ] && [ "$mdgen_preflight_exit" = 1 ] &&
+            "$MDGEN_VENV/bin/python" -c 'import json, sys; r = json.load(open(sys.argv[1])); sys.exit(0 if r.get("passed") is False and r.get("failure_category") == "missing_gpu" else 1)' "$MDGEN_PREFLIGHT_OUTPUT"; then
+            :
+        else
+            return "$mdgen_preflight_exit"
+        fi
+    fi
 fi

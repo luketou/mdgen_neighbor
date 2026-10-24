@@ -25,8 +25,11 @@ if [ "${1:-}" = --paired-shard ]; then
     mkdir -p "${MDGEN_RUN_DIR:-$PWD}/results"
     paired_setup="$(mktemp -d "${MDGEN_RUN_DIR:-$PWD}/results/paired-setup-${SLURM_JOB_ID:-manual}-XXXXXX")"
     export MDGEN_PREFLIGHT_OUTPUT="$paired_setup/preflight.json"
-    # 保留共用 readiness gate，失敗則交給分片工具保存分類，不執行模型。
-    source job/env.sh || true
+    export MDGEN_DEFER_MISSING_GPU=1
+    # 保持 source 內的 errexit；setup 證據不依賴 venv 或 Python 成功啟動。
+    trap 'paired_exit=$?; if [ "$paired_exit" -ne 0 ]; then printf "exit=%s command=%s\n" "$paired_exit" "$BASH_COMMAND" > "$paired_setup/setup-failure.txt"; fi' EXIT
+    source job/env.sh > >(tee "$paired_setup/setup.log") 2> >(tee -a "$paired_setup/setup.log" >&2)
+    trap - EXIT
     export OMP_NUM_THREADS="${SLURM_CPUS_PER_TASK:-2}"
     export MODEL_DIR="$paired_setup/model"
     exec python -m mdgen.train_step_probe --matrix-shard \

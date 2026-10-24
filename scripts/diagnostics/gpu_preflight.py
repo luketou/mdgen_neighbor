@@ -21,6 +21,8 @@ def main():
         if not torch.cuda.is_available() and not required:
             report['status'] = 'skipped'
         else:
+            if not torch.cuda.is_available():
+                raise RuntimeError('missing_gpu: CUDA unavailable')
             x = torch.ones((2, 2), device='cuda')
             y = x @ x
             torch.cuda.synchronize()
@@ -28,6 +30,10 @@ def main():
                 raise RuntimeError('CUDA matmul returned an incorrect result')
             report.update(status='passed', passed=True, gpu=torch.cuda.get_device_name(0))
     except Exception as error:
+        # 直接執行腳本時也能使用與分片相同的分類，不依賴呼叫端 PYTHONPATH。
+        sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+        from mdgen.train_step_matrix import failure_category
+        report['failure_category'] = failure_category(error)
         report['error'] = str(error)
     args.output.parent.mkdir(parents=True, exist_ok=True)
     temporary = args.output.with_suffix(args.output.suffix + '.tmp')

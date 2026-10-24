@@ -476,3 +476,30 @@ def test_actual_backward_oom_callback_records_stage_and_traceback(monkeypatch, t
     assert evidence['failure_category'] == 'oom'
     assert evidence['alignment']['full_denominator'] > 0
     assert 'CPU 測試注入' in evidence['traceback']
+
+
+def test_paired_raw_tensors_none_keeps_complete_json_summaries(tmp_path):
+    reports = []
+    for mode in ('all', 'none'):
+        output = tmp_path / f'{mode}.json'
+        report = main(['--output', str(output), '--paired_region', '--raw-tensors', mode,
+            '--synthetic_residues', '12', '--seed_group', '0', '--time', '0.5',
+            '--warmup', '0', '--repeats', '1', '--', *TINY, *LOCAL,
+            '--batch_size', '1', '--region_residues', '16'])
+        reports.append(report)
+        assert bool(list(output.with_suffix('').glob('*.pt'))) == (mode == 'all')
+        for side in ('full', 'candidate'):
+            run = report['measurements'][0][side]
+            assert bool(run['artifact_path']) == (mode == 'all')
+            assert run['gradients'] and run['updates']
+            assert (output.with_suffix('') / f'0-{side}.json').exists()
+    assert reports[0]['measurements'][0]['comparison'] == reports[1]['measurements'][0]['comparison']
+    for side in ('full', 'candidate'):
+        for category in ('gradients', 'updates'):
+            assert reports[0]['measurements'][0][side][category] == reports[1]['measurements'][0][side][category]
+
+
+def test_paired_raw_tensor_default_is_all():
+    from mdgen.train_step_probe import parse_probe_args
+    args, _ = parse_probe_args(['--output', 'unused'])
+    assert args.raw_tensors == 'all'

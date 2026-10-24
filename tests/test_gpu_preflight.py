@@ -39,3 +39,12 @@ def test_allocated_slurm_gpu_requires_real_cuda_even_without_flag(tmp_path):
                             capture_output=True)
     assert result.returncode == 1
     assert json.loads(report.read_text())['status'] == 'failed'
+
+
+def test_required_preflight_emits_structured_failure(tmp_path):
+    report = tmp_path / 'structured.json'
+    result = subprocess.run([sys.executable, str(ROOT / 'scripts/diagnostics/gpu_preflight.py'),
+                             '--require-gpu', '--output', str(report)],
+                            env={**os.environ, 'CUDA_VISIBLE_DEVICES': '-1'}, capture_output=True)
+    assert result.returncode == 1
+    assert json.loads(report.read_text())['failure_category'] == 'missing_gpu'

@@ -235,9 +235,13 @@ def compare_paired_runs(a, b, ga, gb, ua, ub, *, control):
 
 
 def run_paired_region(args, items, seed, *, synthetic, warmup=1, repeats=3,
-                      control_type='paired', artifact_dir=None, use_sdpa=True):
+                      control_type='paired', artifact_dir=None, use_sdpa=True, raw_tensors='all'):
     """沿用 Lightning、Adam、clipping；每次皆由相同權重與空 optimizer 起步。"""
     from pathlib import Path
+    if raw_tensors not in ('all', 'none'):
+        raise ValueError('raw_tensors must be all or none')
+    if artifact_dir is not None:
+        Path(artifact_dir).mkdir(parents=True, exist_ok=True)
     if (len(items) != 1 or not args.local_spatial or args.training_region or args.dropout != 0
             or args.probe_time is None or args.region_seed_group is None or warmup < 0 or repeats < 1):
         raise ValueError('paired probe requires full local batch 1, dropout 0, fixed t and valid repeats')
@@ -249,7 +253,7 @@ def run_paired_region(args, items, seed, *, synthetic, warmup=1, repeats=3,
                                                  synthetic=synthetic, use_sdpa=use_sdpa)
     report = {'probe': 'paired-training-region', 'schema_version': 1, 'contract_version': '1.1',
         'seed': seed, 'alignment': alignment, 'warmup': warmup, 'measured_repeats': repeats,
-        'control_type': control_type, 'batch': describe_batch(items), 'model_args': vars(args).copy(),
+        'raw_tensors': raw_tensors, 'control_type': control_type, 'batch': describe_batch(items), 'model_args': vars(args).copy(),
         'environment': environment(), 'measurements': []}
     if alignment['status'] == 'no_supervision':
         return {**report, 'status': 'no_supervision'}
@@ -262,7 +266,7 @@ def run_paired_region(args, items, seed, *, synthetic, warmup=1, repeats=3,
         for side, config, item in (('full', args, full),
                 ('candidate', args if control_type == 'same_path_repeat' else region_args,
                  full if control_type == 'same_path_repeat' else region)):
-            path = (Path(artifact_dir) / f'{iteration}-{side}.pt') if artifact_dir is not None else None
+            path = (Path(artifact_dir) / f'{iteration}-{side}.pt') if artifact_dir is not None and raw_tensors == 'all' else None
             try:
                 result, grad, initial, update = run_step(config, [item], 'fp32-reference', seed,
                     initial, use_sdpa=use_sdpa, capture_updates=True, artifact_path=path)
